@@ -5,7 +5,7 @@
 setopt prompt_subst
 
 # Load required modules.
-autoload -U add-zsh-hook
+autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
 autoload -Uz prompt
 

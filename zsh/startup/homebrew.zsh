@@ -15,18 +15,10 @@ if (( $+commands[brew] )); then
     type compdef >/dev/null && compdef hub=git
   fi
 
-  # Extra ZSH completions from Homebrew packages
-  if [[ -d /usr/local/share/zsh/site-completions ]]; then
-    fpath=(/usr/local/share/zsh/site-completions $fpath)
-  fi
-  if [[ -d /usr/local/share/zsh-completions ]]; then
-    fpath=(/usr/local/share/zsh-completions $fpath)
-  fi
-
   # Enable super help
   if [ -d /usr/local/share/zsh/helpfiles ]; then
     unalias run-help
-    autoload run-help
+    autoload -Uz run-help
     export HELPDIR=/usr/local/share/zsh/helpfiles
   fi
 
