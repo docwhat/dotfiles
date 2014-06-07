@@ -2,6 +2,6 @@
 
 set -eu
 
-exec mkdir -p "${HOME}/.dotfile-review"
+exec mkdir -p "${HOME}/.dotfiles-review"
 
 # EOF
