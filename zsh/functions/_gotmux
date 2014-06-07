@@ -1,0 +1,24 @@
+#compdef gotmux
+
+local context state line expl
+typeset -A opt_args
+
+_arguments \
+  '(-d --directory)'{-d,--directory}'[directory]:target directory:_files -/' \
+  '-l[list of sessions]' \
+  '-p[list of projects]' \
+  ':arg:->sessionorproject' \
+  && return 0
+
+
+case "${state}" in
+  (sessionorproject)
+    local -a sessions projects
+    sessions=( ${(f)"$(command gotmux -l -s)"} )
+    projects=( ${(f)"$(command gotmux -p -s)"} )
+    _describe -t sessions 'sessions' sessions
+    _describe -t projects 'projects' projects
+    ;;
+esac
+
+return 0
