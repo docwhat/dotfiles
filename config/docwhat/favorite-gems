@@ -1,0 +1,14 @@
+yard
+gem-ctags
+gem-browse
+bundler
+terminal-notifier
+pry
+irbtools
+irbtools-more
+powder
+seeing_is_believing
+ruby-lint
+tmuxinator
+rubocop
+debugger-ruby_core_source

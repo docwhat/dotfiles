@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+
+Socket.ip_address_list.select { |a| a.ipv4? and !a.ipv4_loopback? }.each do |address|
+  ip = address.ip_address
+
+  puts "http://foobar.#{ip}.xip.io   #{ip}"
+end
+
+

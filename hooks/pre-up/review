@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -eu
+
+exec mkdir -p "${HOME}/.dotfile-review"
+
+# EOF

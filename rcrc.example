@@ -1,0 +1,2 @@
+DOTFILES_DIRS="${HOME}/.dotfiles-review ${HOME}/.dotfiles-personal ${HOME}/.dotfiles"
+EXCLUDES="README.md LICENSE *.example"

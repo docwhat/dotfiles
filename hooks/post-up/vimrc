@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ ! -d "${HOME}/.vim/vimrc" ]; then
+  mkdir -p $HOME/.vim
+  git clone https://github.com/docwhat/homedir-vim.git "${HOME}/.vim/vimrc"
+else
+  pushd "${HOME}/.vim/vimrc" > /dev/null
+  if git diff-index --quiet HEAD; then
+    git pull --rebase
+  else
+    echo "Can't update ~/.vim/vimrc repository due to changes."
+  fi
+  popd > /dev/null
+fi
+
+if [ ! -d $HOME/.vim/bundle/vundle  ]; then
+  mkdir -p $HOME/.vim/bundle
+  git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+fi
+# vim +BundleInstall +qa

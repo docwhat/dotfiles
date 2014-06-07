@@ -1,0 +1,70 @@
+# vim: ft=gitconfig :
+
+[color]
+	ui = auto
+
+[alias]
+	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/'
+	lc       = log ORIG_HEAD.. --stat --no-merges
+	share    = !git daemon --reuseaddr --base-path                                                                         = ./.git --verbose --export-all
+	squash   = commit --amend -C HEAD
+	root     = !pwd -P
+	unstaged = reset HEAD --
+
+	create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+	delete-branch = !sh -c 'git push origin :refs/heads/$1 && git branch -D $1' -
+	merge-branch = !git checkout master && git merge @{-1}
+
+	lg = log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold) <%an>%Creset%C(yellow) %d%Creset'
+	pr = !hub pull-request
+	up = !git fetch origin && git rebase origin/master
+
+### shorts
+	aa = add --all
+	ap = add --patch
+	ca = commit --amend
+	ci = commit -v
+	co = checkout
+	w  = whatchanged
+	s  = status --short --branch
+	cm = commit -m
+	l  = log -1
+	d  = diff
+	dc = diff --cached
+	ss = status
+	st = status
+	rv = remote -v
+
+[instaweb]
+	port = 2001
+
+[merge]
+	tool = opendiff
+	ff = only
+
+[core]
+	excludesfile = ~/.config/docwhat/gitignore_global
+	attributesfile = ~/.config/docwhat/gitattributes
+	autocrlf = input
+
+[fetch]
+	prune = true
+
+[difftool]
+	prompt = false
+
+[diff]
+	tool = opendiff
+	renames = copy
+
+[push]
+	default = current
+
+[log]
+	decorate = short
+
+[advice]
+	statusHints = false
+
+[include]
+	path = .gitconfig.local

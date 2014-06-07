@@ -1,0 +1,209 @@
+# -*- sh -*-
+# vim: set ft=zsh ts=2 sw=2 et:
+# docwhat's theme -- http://docwhat.org/
+
+setopt prompt_subst
+
+# Load required modules.
+autoload -U add-zsh-hook
+autoload -Uz vcs_info
+autoload -Uz prompt
+
+typeset prompt_docwhat_is_debugging=false
+
+function prompt_docwhat {
+  [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
+  local vcs="${vcs_info_msg_1_}"
+
+  if [[ -z "${vcs_info_msg_0_}" ]]; then
+    local path_char="%9~"
+  else
+    local path_char="%7~"
+  fi
+
+  print "\
+%F{$_prompt_docwhat_alt_color}\
+%{╓╼%2G%}\
+%F{$_prompt_docwhat_color} \
+${prompt_docwhat_user}\
+@\
+${prompt_docwhat_hostname}\
+${vcs_info_msg_0_}\
+$(prompt_docwhat_ruby) \
+${path_char} \
+%F{$_prompt_docwhat_alt_color}\
+%{━╾%2G%}\
+"
+
+  printf "%%F{$_prompt_docwhat_alt_color}"
+
+  printf "%%{╙%%G%%} "
+
+  # Exit Code
+  ec_text="$1"; shift
+  ec_sum="${ec_text}"
+  if [[ "${ec_text}" -gt 0 ]]; then
+    ec_text="%%F{red}${ec_text}"
+  else
+    ec_text="%%F{green}${ec_text}"
+  fi
+  for ec in "$@"; do
+    if [[ "${ec}" -gt 0 ]]; then
+      ec_text="${ec_text}%%f|%%F{red}${ec}"
+    else
+      ec_text="${ec_text}%%f|%%F{green}${ec}"
+    fi
+    ec_sum=$(( $ec_sum + $ec ))
+  done
+
+  if [[ "${ec_sum}" -gt 0 ]]; then
+    printf "${ec_text}%%k%%F{$_prompt_docwhat_alt_color} "
+  fi
+
+  # VCS type
+  printf '%%{'
+  case "$vcs" in
+    git|git-*) printf '∓';;
+    hg|hg-*)  printf '☿';;
+    svn) printf '⚡';;
+    bzr) printf '⚘';;
+    *) printf '∵';;
+  esac
+  printf '%%G%%}'
+
+  #
+  printf "%%f%%b%%k "
+}
+
+function prompt_docwhat_ruby {
+  [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
+  if [[ -n "$commands[rbenv]" ]]; then
+    local ver=$(rbenv version-name 2>/dev/null)
+    if [[ -n "${ver}" && "${ver}" != system ]]; then
+      print " %F{red}ruby-${ver}%F{$_prompt_docwhat_color}"
+    fi
+  elif [[ -n "$commands[(I)rvm-prompt]" ]]; then
+    local p=$(rvm-prompt s)
+    if [[ -n "${p}" ]]; then
+      local color=red
+      if [[ $(echotc Co) -ge 256 ]]; then
+        color=58
+      fi
+      print " %F{${color}}${p}%F{$_prompt_docwhat_color}"
+    fi
+  fi
+}
+
+function +vi-git-untracked {
+  if [[ "$(command git status --porcelain -z 2> /dev/null)" = *\?\?*  ]]; then
+    hook_com[unstaged]+='%{%F{red}●%G%}'
+  fi
+}
+
+function prompt_docwhat_hook_precmd {
+  [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
+  vcs_info 2>/dev/null
+}
+
+function prompt_docwhat_setup {
+  [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
+  local vcs_dot='%{●%G%}'
+  local num_of_colors=$(echotc Co)
+
+  # Color map
+  if [[ "$num_of_colors" -ge 256 ]]; then
+    # 256 color
+    _prompt_docwhat_color=27
+    _prompt_docwhat_alt_color=34
+    zstyle ':vcs_info:*' stagedstr   "%{%F{40}●%G%}"
+    zstyle ':vcs_info:*' unstagedstr "%{%F{190}●%G%}"
+
+  elif [[ "$num_of_colors" -ge 8 ]]; then
+    # 8 Color
+    _prompt_docwhat_color=blue
+    _prompt_docwhat_alt_color=green
+    zstyle ':vcs_info:*' stagedstr   "%{%F{green}●%G%}"
+    zstyle ':vcs_info:*' unstagedstr "%{%F{yellow}●%G%}"
+
+  else
+    # monochrome
+    _prompt_docwhat_color='white'
+    _prompt_docwhat_alt_color='white'
+    zstyle ':vcs_info:*' stagedstr   "%{●%G%}"
+    zstyle ':vcs_info:*' unstagedstr "%{●%G%}"
+  fi
+
+  # Host name & coloring
+  if [ -n "${SHORT_HOST}" ]; then
+    prompt_docwhat_hostname="${SHORT_HOST}"
+  else
+    prompt_docwhat_hostname="%m"
+  fi
+  if [[ -n "${SSH_CLIENT}" ]]; then
+    prompt_docwhat_hostname="%F{yellow}${prompt_docwhat_hostname}%F{$_prompt_docwhat_color}"
+  fi
+
+  # User & coloring
+  prompt_docwhat_user="%(!.%F{red}%n%F{$_prompt_docwhat_color}.%n)"
+
+  zstyle ':vcs_info:*' max-exports 2
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{red}:%F{11}%r'
+  #zstyle ':vcs_info:*' enable git svn bzr hg
+  zstyle ':vcs_info:*' formats       " [%s:%F{green}%b%c%u%F{$_prompt_docwhat_color}]" '%s'
+  zstyle ':vcs_info:*' actionformats " [%F{green}%b%c%u|%F{yellow}%a%F{$_prompt_docwhat_color}]"  '%s'
+  zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+
+  PROMPT='$(prompt_docwhat "$pipestatus[@]")'
+
+  unset RPROMPT1
+  unset RPROMPT2
+
+  # The secondary prompt, printed when the shell needs more information
+  # to complete a command.  It is expanded in the same way as PS1.
+  # The default is `%_> ', which displays any shell constructs or quotation
+  # marks which are currently being processed.
+  PS2="\
+%F{$_prompt_docwhat_alt_color}\
+%L:\
+%_\
+%F{$_prompt_docwhat_color}\
+>\
+%{$reset_color%} "
+
+  # Selection prompt used within a select loop.  It is expanded in the same
+  # way as PS1.  The default is `?# '.
+  # http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
+  PS3="\
+%F{$_prompt_docwhat_color}\
+select:\
+%{$reset_color%} "
+
+  # The execution trace prompt.  Default is `+%N:%i> ', which displays the
+  # name of the current shell structure and the line number within
+  # it. In sh or ksh emulation, the default is `+ '.
+  PS4="\
+%b%(!.%F{red}.%F{blue})\
++\
+%B%F{black}\
+%3N\
+:\
+%i\
+%(?..:%F{red}%?%F{black}) \
+%_\
+%b%(!.%F{red}.%F{blue})\
+>\
+%f%b%k "
+
+  # Add our precmd to the precmd list
+  add-zsh-hook precmd prompt_docwhat_hook_precmd
+}
+
+function prompt_docwhat_teardown {
+  [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
+  add-zsh-hook -D prompt_docwhat\*
+}
+
+prompt_docwhat_setup "$@"
+
+#EOF

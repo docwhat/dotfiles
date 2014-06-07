@@ -1,0 +1,96 @@
+# Configuration file for ccze
+#
+# Available 'pre' attributes: bold, underline, underscore, blink, reverse
+# Available colors:  black, red, green, yellow, blue, magenta, cyan, white
+# Available bgcolors: on_black, on_red, on_green, on_yellow, on_blue, on_magenta, on_cyan, on_white
+#
+# You can also use item names in color definition, like:
+#
+# default   blue
+# date      'default'
+#
+# Here you defined default color to blue, and date color to default value's color, so
+# your date color is blue. (You can only use predefined item names!)
+
+# item          color                   # comment (what is color, or why it's that ;)
+
+date            bold cyan               # Dates and times
+host            bold blue               # Host names and IP numbers
+process         green                   # Sender process
+pid             bold white              # PIDs (Process IDs)
+pid-sqbr        bold green              # Brackets around PIDs
+default         cyan                    # Default (not colorised)
+email           bold green              # E-mail addresses
+subject         magenta                 # Subject lines (procmail)
+dir             bold cyan               # Directory names
+file            bold cyan               # File names
+size            bold white              # Sizes
+user            bold yellow             # Usernames
+httpcodes       bold white              # HTTP status codes (200, 404, etc)
+getsize         magenta                 # Transfer sizes
+get             green                   # HTTP GET
+post            bold green              # HTTP POST
+head            green                   # HTTP HEAD
+put             bold green              # HTTP PUT
+connect         green                   # HTTP CONNECT
+trace           green                   # HTTP TRACE
+unknown         cyan                    # Unknown message
+gettime         bold magenta            # Transfer times
+uri             bold green              # URIs (http://, ftp://, etc)
+ident           bold white              # Remote user (proxy/http)
+ctype           white                   # Content type (http/proxy)
+error           bold red                # Error messages
+miss            red                     # Proxy MISS
+hit             bold yellow             # Proxy HIT
+deny            bold red                # Proxy DENIED
+refresh         bold white              # Proxy REFRESH
+swapfail        bold white              # Proxy SWAPFAIL
+debug           white                   # Debug messages
+warning         red                     # Warnings
+direct          bold white              # Proxy DIRECT
+parent          bold yellow             # Proxy PARENT
+swapnum         blue on_white           # Proxy swap number
+create          bold white              # Proxy CREATE
+swapin          bold white              # Proxy SWAPIN
+swapout         bold white              # Proxy SWAPOUT
+release         bold white              # Proxy RELEASE
+mac             bold white              # MAC addresses
+version         bold white              # Version numbers
+address         bold white              # Memory addresses
+numbers         white                   # Numbers
+signal          bold yellow             # Signal names
+service         bold magenta            # Services
+prot            magenta                 # Protocols
+bad             bold yellow             # "Bad words"
+good            bold green              # "Good words"
+system          bold cyan               # "System words"
+incoming        bold white              # Incoming mail (exim)
+outgoing        white                   # Outgoing mail (exim)
+uniqn           bold white              # Unique ID (exim)
+repeat          white                   # 'last message repeated N times'
+field           green                   # RFC822 Field
+chain           cyan                    # Chain names (ulogd)
+percentage      bold yellow             # Percentages
+ftpcodes        cyan                    # FTP codes
+keyword         bold yellow             # Various keywords (like PHP in php.log, etc)
+pkgstatus       green                   # package status (dpkg)
+pkg             bold red                # package name (dpkg)
+
+# CSS codes for the HTML output
+cssblack        black
+cssboldblack    black
+cssred          darkred
+cssboldred      red
+cssgreen        #00C000
+cssboldgreen    lime
+cssyellow       brown
+cssboldyellow   yellow
+cssblue         blue
+cssboldblue     slateblue
+csscyan         darkcyan
+cssboldcyan     cyan
+cssmagenta      darkmagenta
+cssboldmagenta  magenta
+csswhite        grey
+cssboldwhite    white
+cssbody         #404040
