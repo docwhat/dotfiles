@@ -21,7 +21,7 @@ if (( $+commands[rbenv] )); then
     function rbenv-update-plugins
     {
       local -a plugins
-      plugins=( $(cat "$ZSH_CUSTOM/rbenv-plugins") )
+      plugins=( $(cat "${HOME}/.config/docwhat/rbenv-plugins") )
       local -a plugin_names
 
       if ! command -v ruby-build >/dev/null; then
