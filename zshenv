@@ -28,8 +28,6 @@ manpath=(
   /usr/share/man
 )
 
-export RBENV_ROOT=/usr/local/var/rbenv
-
 # Load my customized environment.
 for config_file (~/.zsh/startup/*.zshenv(N)); do
   source $config_file
