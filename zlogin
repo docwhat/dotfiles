@@ -1,1 +1,15 @@
-# vim: ft=zsh :
+# vi: ft=zsh :
+
+if (( $+commands[archey] )); then
+  "${commands[archey]}"
+fi
+
+# Execute code that does not affect the current session in the background.
+{
+  # Compile the completion dump to increase startup speed.
+  if [[ -s "$ZSH_COMPDUMP" && (! -s "${ZSH_COMPDUMP}.zwc" || "$ZSH_COMPDUMP" -nt "${ZSH_COMPDUMP}.zwc") ]]; then
+    zcompile "$ZSH_COMPDUMP"
+  fi
+} &!
+
+# EOF
