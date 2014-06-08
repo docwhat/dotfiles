@@ -17,4 +17,20 @@ if (( $+commands[brew] )); then
   if [[ -d /usr/local/opt/groovy/libexec ]]; then
     export GROOVY_HOME=/usr/local/opt/groovy/libexec
   fi
+
+  # I like the latest Curl.
+  if [ -d "/usr/local/opt/curl/share/man" ]; then
+    manpath=("${manpath[@]}" "/usr/local/opt/curl/share/man")
+  fi
+  if [ -d "/usr/local/opt/curl/bin" ]; then
+    path=("/usr/local/opt/curl/bin" "${path[@]}")
+  fi
+
+  # I also prefer the non-gprefix gnubins
+  if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
+    path=(/usr/local/opt/coreutils/libexec/gnubin "${path[@]}")
+  fi
+  if [ -d /usr/local/opt/coreutils/libexec/gnuman ]; then
+    manpath=(/usr/local/opt/coreutils/libexec/gnuman "${manpath[@]}")
+  fi
 fi

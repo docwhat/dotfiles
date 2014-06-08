@@ -8,9 +8,6 @@ path=(
   "$HOME/.gocode/bin"
   /usr/local/sbin
   /usr/local/bin
-  /usr/local/opt/coreutils/libexec/gnubin
-  /usr/local/opt/ruby/bin
-  /usr/local/opt/curl/bin
   /usr/local/share/npm/bin
   /usr/bin
   /bin
@@ -22,10 +19,9 @@ path=(
 
 manpath=(
   /usr/local/share/man
-  /usr/local/opt/coreutils/libexec/gnuman
-  /usr/local/opt/ruby/share/man
-  /usr/local/opt/curl/share/man
   /usr/share/man
+  /usr/X11/man
+  /opt/X11/share/man
 )
 
 # Load my customized environment.
