@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+if (( $+commands[mvim] )); then
+  mvim -f "$@"
+elif (( $+commands[gvim] )); then
+  gvim "$@"
+else
+  vim "$@"
+fi
+
+# EOF
