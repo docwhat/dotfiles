@@ -1,10 +1,14 @@
+#!/bin/bash
+
+set -eu
+
 # Finds a matching work or project directory.
 function connect {
   local session="${1:-}"
   if [[ -n "${session}" && -z "${start_dir}" ]]; then
-    start_dir=$(find ~/work ~/projects ~/git -maxdepth 2 -type d -iregex ".*/${session}/.git" | head -n 1)
+    start_dir=$(find ~/work ~/projects -maxdepth 2 -type d -iregex ".*/${session}/.git" | head -n 1)
     if [[ -n "${start_dir}" ]]; then
-      start_dir=$(dirname "${start_dir}")
+      start_dir=${start_dir%/*}
     fi
   fi
   if [[ -z "${session}" ]]; then
@@ -20,37 +24,34 @@ function connect {
 }
 
 function simple_connect {
+  set -eu
 
   local session="${1:-main}"
   [[ -n "${start_dir}" ]] && cd "${start_dir}"
 
   if tmux has-session -t "${session}"; then
     echo -n "[attaching '${session}']"
-    tmux -u attach -t "${session}"
+    exec tmux -u attach -t "${session}"
   else
     echo -n "[starting '${session}']"
-    tmux -u new-session -s "${session}"
+    exec tmux -u new-session -s "${session}"
   fi
 }
 
 function list {
   if [[ $show_headers = true ]]; then
     echo "Sessions:"
-    tmux list-sessions
+    tmux list-sessions 2> /dev/null
   else
-    tmux list-sessions | sed 's/:.*//g'
+    tmux list-sessions 2> /dev/null | sed 's/:.*//g'
   fi
-  return 0
+  exit 0
 }
 
 function projects {
   [[ $show_headers = true ]] && echo "Projects:"
-  local pdir
-  find -L ~/work ~/projects ~/git -maxdepth 2 -type d -name '.git' | while read pdir; do
-    local name=$(basename $(dirname "${pdir}"))
-    echo "${name}"
-  done | sort -u
-  return 0
+  find -L  ~/work ~/projects -maxdepth 2 -type d -regex '.*/\(\.svn\|\.git\|\.hg\|CVS\)' -print | perl -p -e 's!.*/([^/]*)/[^/]+$!$1\n!g' | sort -u
+  exit 0
 }
 
 function help {
@@ -62,7 +63,7 @@ Usage: $0 [options] <session>
   -p --projects       List all known projects.
   -h --help           You're soaking in it.
 EOF
-  return 0
+  exit 0
 }
 
 mode="connect"
@@ -70,7 +71,7 @@ typeset -a args
 typeset start_dir=""
 typeset show_headers=true
 args=(   )
-while (( $#* > 0 )); do
+while (( "${#*}" > 0 )); do
   case "${1}" in
     --list|-l) mode="list" ;;
     --projects|-p) mode="projects" ;;
@@ -83,11 +84,11 @@ while (( $#* > 0 )); do
 done
 
 case "${mode}" in
-  list) list ; return $? ;;
-  help) help ; return $? ;;
-  projects) projects ; return $? ;;
-  connect) set +u ; connect "${args[@]}" ; return $? ;;
+  list) list ;;
+  help) help ;;
+  projects) projects ;;
+  connect) set +u ; connect "${args[@]}" ;;
 esac
 
 echo "Something has gone wrong."
-return 11
+exit 11
