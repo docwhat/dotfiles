@@ -15,8 +15,7 @@ for dir in \
   ~/.dotfiles \
   ~/.dotfiles-personal \
   ~/.oh-my-zsh \
-  ~/.zsh/plugins/zsh-syntax-highlighting \
-  ~/.homedir/packages/*(N/)
+  ~/.zsh/plugins/zsh-syntax-highlighting
   do
     cd "${dir}"
     echo
