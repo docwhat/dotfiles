@@ -80,7 +80,11 @@ function prompt_docwhat_ruby {
   if [[ -n "$commands[rbenv]" ]]; then
     local ver=$(rbenv version-name 2>/dev/null)
     if [[ -n "${ver}" && "${ver}" != system ]]; then
-      print " %F{red}ruby-${ver}%F{$_prompt_docwhat_color}"
+      if [[ "${ver}" = [0-9]* ]]; then
+        print " %F{red}ruby-${ver}%F{$_prompt_docwhat_color}"
+      else
+        print " %F{red}${ver}%F{$_prompt_docwhat_color}"
+      fi
     fi
   elif [[ -n "$commands[(I)rvm-prompt]" ]]; then
     local p=$(rvm-prompt s)
