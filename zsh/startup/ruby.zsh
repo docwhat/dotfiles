@@ -5,8 +5,8 @@ if (( $+commands[rbenv] )) || (( $+commands[rvm] )); then
 
     if ! "$HOME/.zsh/startup/rubygems_needs_update.rb" --debug; then
       echo "$fg[red]You should upgrade rubygems!"
-      echo "  gem update --system"
-      echo "  gem pristine --all$reset_color"
+      echo "  gem update --system && gem pristine --all"
+      echo "$reset_color"
       return 11
     fi
 
