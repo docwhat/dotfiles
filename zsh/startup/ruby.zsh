@@ -15,14 +15,15 @@ if (( $+commands[rbenv] )) || (( $+commands[rvm] )); then
     fi
 
     echo "${fg[blue]}Upgrading builtin gems:$reset_color"
-    gem update --conservative rdoc
     ruby -e 'Gem::Specification.select(&:default_gem?).map(&:name).each {|g| print "#{g}\0"}'\
-      | $xargs --no-run-if-empty -0 gem update --conservative
+      | $xargs --no-run-if-empty -0 sh -c 'gem update --conservative "$@" < /dev/tty' gem
+
     echo "${fg[blue]}Installing missing favorite gems:$reset_color"
     perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
-      | $xargs --no-run-if-empty -0 gem install --conservative
+      | $xargs --no-run-if-empty -0 'gem install --conservative "$0" < /dev/tty' gem
+
     echo "${fg[blue]}Upgrading favorite gems:$reset_color"
     perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
-      | $xargs --no-run-if-empty -0 gem update --conservative
+      | $xargs --no-run-if-empty -0 'gem update --conservative "$0" < /dev/tty' gem
   }
 fi
