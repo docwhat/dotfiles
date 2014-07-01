@@ -24,7 +24,6 @@ plugins=(
   redis-cli
   cp
   rsync
-  ssh-agent
 
   # Languages
   node
@@ -55,8 +54,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 # Load my customized environment.
 for config_file (~/.zsh/startup/*.zsh(N)); do
