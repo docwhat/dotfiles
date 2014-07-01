@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+for broken_link in \
+  ~/.zsh/**/*(N-@) \
+  ~/.bin/**/*(N-@) \
+  ~/.config/**/*(N-@)
+do
+  rm -vf "${broken_link}"
+done
+
+# EOF
