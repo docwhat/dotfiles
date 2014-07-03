@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -eu
+
+vim_chksum="$(md5sum ~/.vimrc)"
+
+echo -n 'Vimrc: '
 if [ ! -d "${HOME}/.vim/vimrc" ]; then
   mkdir -p $HOME/.vim
   git clone https://github.com/docwhat/homedir-vim.git "${HOME}/.vim/vimrc"
@@ -17,4 +22,9 @@ if [ ! -d $HOME/.vim/bundle/vundle  ]; then
   mkdir -p $HOME/.vim/bundle
   git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 fi
-# vim +BundleInstall +qa
+
+new_vim_chksum="$(md5sum ~/.vimrc)"
+if [ "${vim_chksum}" != "${new_vim_chksum}" ]; then
+  # Install any new vim plugins.
+  vim -c ':PluginInstall' -c ':qa'
+fi

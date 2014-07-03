@@ -8,8 +8,6 @@ colors
 
 local orig_dir=$(pwd -L)
 
-local vim_chksum="$(md5sum ~/.vimrc)"
-
 echo "$fg[blue]" '🔨 Updating dotfiles and tools🔧 ' "$reset_color"
 
 if [ ! -d ~/.zsh/plugins/zsh-syntax-highlighting ]; then
@@ -21,7 +19,6 @@ local dir
 for dir in \
   ~/.dotfiles \
   ~/.dotfiles-personal \
-  ~/.oh-my-zsh \
   ~/.zsh/plugins/zsh-syntax-highlighting
 do
   cd "${dir}"
@@ -45,12 +42,6 @@ else
 fi
 
 cd "${orig_dir}"
-
-local new_vim_chksum="$(md5sum ~/.vimrc)"
-if [ "${vim_chksum}" != "${new_vim_chksum}" ]; then
-  # Install any new vim plugins.
-  vim -c ':PluginInstall' -c ':qa'
-fi
 
 echo
 echo -n "$fg[green]"

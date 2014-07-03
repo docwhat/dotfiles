@@ -1,5 +1,16 @@
 #!/bin/bash
 
+set -eu
+
+echo -n 'Oh My Zsh: '
 if [ ! -d "${HOME}/.oh-my-zsh" ]; then
   git clone https://github.com/robbyrussell/oh-my-zsh.git "${HOME}/.oh-my-zsh"
+else
+  pushd "${HOME}/.oh-my-zsh" > /dev/null
+  if git diff-index --quiet HEAD; then
+    git pull --rebase
+  else
+    echo "Can't update ~/.oh-my-zsh repository due to changes."
+  fi
+  popd > /dev/null
 fi
