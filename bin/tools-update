@@ -3,31 +3,25 @@
 
 set -eu
 
-autoload colors
-colors
+# autoload colors
+# colors
 
 local orig_dir=$(pwd -L)
 
-echo "$fg[blue]" '🔨 Updating dotfiles and tools🔧 ' "$reset_color"
-
-if [ ! -d ~/.zsh/plugins/zsh-syntax-highlighting ]; then
-  mkdir -p ~/.zsh/plugins
-  git clone git://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
-fi
+print -P '%F{blue} 🔨 Updating dotfiles and tools🔧  %F{reset}'
 
 local dir
 for dir in \
   ~/.dotfiles \
-  ~/.dotfiles-personal \
-  ~/.zsh/plugins/zsh-syntax-highlighting
+  ~/.dotfiles-personal
 do
   cd "${dir}"
   echo
-  echo "${fg[blue]}===> ${fg[green]}$( pwd -L )${reset_color}"
+  print -P "%F{blue}===> %F{green}$(pwd -L)%F{reset}"
   if git diff-index --quiet HEAD; then
     git pull --rebase
   else
-    echo "${fg[red]} * skipping -- checkout is dirty${reset_color}"
+    print -P "%F{red} * skipping -- checkout is dirty%F{reset}"
     git status -s -b
   fi
   git log '@{u}..'
@@ -35,7 +29,7 @@ done
 
 echo
 if (( $+commands[rcup] )); then
-  echo "${fg[blue]}===> ${fg[green]}rcup${reset_color}"
+  print -P "%F{blue}===> %F{green}rcup%F{reset}"
   rcup
 else
   echo "You need to install 'rcup'." 1>&2
@@ -44,8 +38,6 @@ fi
 cd "${orig_dir}"
 
 echo
-echo -n "$fg[green]"
-echo -n "You may wish to consider running 'rbenv-update-plugins' or 'update-gems'"
-echo "${reset_color}"
+print -P "%F{green}You may wish to consider running 'rbenv-update-plugins' or 'update-gems'%F{reset}"
 
 # EOF

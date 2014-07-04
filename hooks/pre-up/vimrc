@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+DOTFILE_DIR="$(dirname "$(dirname "$(dirname "$0")")")"
+source "${DOTFILE_DIR}/bin/hook-helpers.zsh"
+
+if [ -f "${DOTFILE_DIR}/vimrc" ]; then
+  vim_chksum="$(md5sum "${DOTFILE_DIR}/vimrc")"
+fi
+
+hh_git 'Vimrc'  'https://github.com/docwhat/homedir-vim.git' 'vim/vimrc'
+hh_git 'Vundle' 'https://github.com/gmarik/vundle.git'       ~/.vim/bundle/vundle
+
+new_vim_chksum="$(md5sum "${DOTFILE_DIR}/vimrc")"
+if [ "${vim_chksum:-nope}" != "${new_vim_chksum}" ]; then
+  # Install any new vim plugins.
+  vim -c ':PluginInstall' -c ':qa'
+fi

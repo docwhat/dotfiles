@@ -1,4 +1,1 @@
-" Use my vimrc
-source ~/.vim/vimrc/vimrc/.vimrc
-
-" EOF
+vim/vimrc/vimrc/.vimrc
