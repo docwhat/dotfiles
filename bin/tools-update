@@ -3,39 +3,20 @@
 
 set -eu
 
-# autoload colors
-# colors
-
-local orig_dir=$(pwd -L)
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
 
 print -P '%F{blue} 🔨 Updating dotfiles and tools🔧  %F{reset}'
-
-local dir
-for dir in \
-  ~/.dotfiles \
-  ~/.dotfiles-personal
-do
-  cd "${dir}"
-  echo
-  print -P "%F{blue}===> %F{green}$(pwd -L)%F{reset}"
-  if git diff-index --quiet HEAD; then
-    git pull --rebase
-  else
-    print -P "%F{red} * skipping -- checkout is dirty%F{reset}"
-    git status -s -b
-  fi
-  git log '@{u}..'
-done
-
 echo
-if (( $+commands[rcup] )); then
-  print -P "%F{blue}===> %F{green}rcup%F{reset}"
-  rcup
-else
-  echo "You need to install 'rcup'." 1>&2
+
+hh_git 'Dotfiles' https://github.com/docwhat/dotfiles.git ~/.dotfiles
+
+if [ -d ~/.dotfiles-personal ]; then
+  hh_git 'Personal Dotfiles' 'none' ~/.dotfiles-personal
 fi
 
-cd "${orig_dir}"
+echo
+rcup
 
 echo
 print -P "%F{green}You may wish to consider running 'rbenv-update-plugins' or 'update-gems'%F{reset}"

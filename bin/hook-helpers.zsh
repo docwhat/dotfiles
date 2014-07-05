@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-if [ -z "${DOTFILE_DIR:-}" ]; then
-  echo "You must only source $0 after setting DOTFILE_DIR." 1>&2
+if [ -z "${DOTFILES_DIR:-}" ]; then
+  echo "You must only source $0 after setting DOTFILES_DIR." 1>&2
   exit 1
 fi
 
@@ -27,15 +27,19 @@ function hh_git
     dir="$(basename "${url}" .git)"
   fi
 
-  cd "${DOTFILE_DIR}"
+  cd "${DOTFILES_DIR}"
 
   print -P "%F{cyan}∓ %F{blue}${name} %F{reset}"
   if [ ! -d "${dir}" ]; then
-    if [ -n "${parent}" ]; then
-      mkdir -pv "${parent}" | offset yellow
+    if [ "${url}" = none ]; then
+      print -P "skipping...clone manually into ${dir} if you want." | offset magenta
+    else
+      if [ -n "${parent}" ]; then
+        mkdir -pv "${parent}" | offset yellow
+      fi
+      git clone "${url}" "${dir}" | offset yellow
+      echo 'cloned.'
     fi
-    git clone "${url}" "${dir}" | offset yellow
-    echo 'cloned.'
   else
     pushd "${dir}" > /dev/null
     if git diff-index --quiet HEAD; then

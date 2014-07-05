@@ -2,8 +2,8 @@
 
 set -eu
 
-DOTFILE_DIR="$(dirname "$(dirname "$(dirname "$0")")")"
-source "${DOTFILE_DIR}/bin/hook-helpers.zsh"
+DOTFILES_DIR="$(dirname "$(dirname "$(dirname "$0")")")"
+source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
 
 hh_git 'Zsh Syntax Highlighting' \
   https://github.com/zsh-users/zsh-syntax-highlighting.git \
