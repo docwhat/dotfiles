@@ -1,3 +1,26 @@
+function compute_host_completion
+{
+  local -a completions
+
+  for i in /etc/ssh_config /etc/ssh/ssh_config ~/.ssh/config; do
+    if [ -r "$i" ]; then
+      completions=(${(@)completions} ${(z)${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*}})
+    fi
+  done
+
+  for i in /etc/ssh_known_hosts /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts; do
+    if [ -r "$i" ]; then
+      completions=( \
+        ${(@)completions} \
+        ${${${${${(f)"$(<$HOME/.ssh/known_hosts)"}%%\ *}%%,*}#\[}%\]*} \
+        )
+    fi
+  done
+
+  zstyle ':completion:*:*:*' hosts "${(@u)completions}"
+}
+compute_host_completion
+
 function reload
 {
   for rcfile in zshenv zprofile zshrc zlogin; do
@@ -6,6 +29,7 @@ function reload
       source ~/.${rcfile}
     fi
   done
+  compute_host_completion
 }
 
 zstyle ':completion:*' use-cache on
