@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-My personal dotfiles
+My personal dotfiles (e.g. `.bashrc`, `.zshrc`, etc.)
 
 How to use
 ----------
