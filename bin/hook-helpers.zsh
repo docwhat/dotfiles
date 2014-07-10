@@ -44,6 +44,7 @@ function hh_git
     pushd "${dir}" > /dev/null
     if git diff-index --quiet HEAD; then
       git pull --rebase | offset yellow
+      git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | offset
     else
       print -P "%F{red}Can't update ${dir} repository due to changes."
     fi
