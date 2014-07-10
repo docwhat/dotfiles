@@ -187,17 +187,21 @@ select:\
   # name of the current shell structure and the line number within
   # it. In sh or ksh emulation, the default is `+ '.
   PS4="\
-%b%(!.%F{red}.%F{blue})\
+%b%k%(!.%F{red}.%F{cyan})\
 +\
-%B%F{black}\
+%B%F{magenta}\
 %3N\
+%b%(!.%F{red}.%F{cyan})\
 :\
+%B%F{magenta}\
 %i\
-%(?..:%F{red}%?%F{black}) \
-%_\
-%b%(!.%F{red}.%F{blue})\
+%b%f\
+%(?..%(!.%F{red}.%F{cyan}):%F{red}%?%F{black}) \
+%F{yellow}%_\
+%(!.%F{red}.%F{cyan})\
 >\
 %f%b%k "
+
 
   # Add our precmd to the precmd list
   add-zsh-hook precmd prompt_docwhat_hook_precmd
