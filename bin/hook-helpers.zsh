@@ -43,10 +43,10 @@ function hh_git
   else
     pushd "${dir}" > /dev/null
     if git diff-index --quiet HEAD; then
-      git pull --rebase | offset yellow
+      git pull --rebase 2>/dev/null | offset yellow
       git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | offset
     else
-      print -P "%F{red}Can't update ${dir} repository due to changes."
+      echo "Can't update ${dir} repository due to changes." | offset red
     fi
     popd > /dev/null
   fi

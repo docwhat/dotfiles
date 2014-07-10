@@ -15,7 +15,6 @@ if [ -d ~/.dotfiles-personal ]; then
   hh_git 'Personal Dotfiles' 'none' ~/.dotfiles-personal
 fi
 
-echo
 rcup
 
 echo
