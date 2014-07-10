@@ -2,8 +2,8 @@
 if (( $+commands[brew] )); then
 
   # Autojump brew
-  if [[ -f `brew --prefix`/etc/autojump ]]; then
-    source `brew --prefix`/etc/autojump
+  if [[ -f "$(brew --prefix)/etc/autojump" ]]; then
+    source "$(brew --prefix)/etc/autojump"
   fi
 
   # Enable github support
@@ -27,7 +27,6 @@ if (( $+commands[brew] )); then
     # We want to use the system ruby to compile vim.
     env \
       RBENV_VERSION=system \
-      HOMEBREW_GITHUB_API_TOKEN=1fb431ef5362f2c16e3bf308306838839358c2b3 \
       =brew "$@"
     if [[ "$1" == *install* ]]; then
       rehash
@@ -36,7 +35,7 @@ if (( $+commands[brew] )); then
 
   function enccache()
   {
-    if [[ -d `brew --prefix ccache` ]]; then
+    if [[ -d "$(brew --prefix ccache)" ]]; then
       export PATH="$(brew --prefix ccache)/libexec:${PATH}"
       typeset -U path
     else
