@@ -16,6 +16,7 @@ install git
 install git-extras
 install graphviz
 install grep
+install jq
 install htop-osx
 install hub
 install less
