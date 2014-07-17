@@ -1,7 +1,128 @@
 #!/usr/bin/env ruby
 
 require 'json'
+require 'optparse'
 
-puts JSON.pretty_generate(JSON.parse(ARGF.read))
+# JSON Pretty Printer
+class App
+  # Renders code as pretty
+  class PrettyRenderer
+    # Renders code in plain text
+    def json(json)
+      JSON.pretty_generate(JSON.parse(json))
+    end
+  end
+
+  # Renders code as minimized
+  class MinimizeRenderer
+    # Renders code in plain text
+    def json(json)
+      JSON.parse(json).to_json
+    end
+  end
+
+  # Renders code in pretty color
+  class PrettyColorRenderer < PrettyRenderer
+    def json(json)
+      CodeRay.scan(super(json), :json).term
+    end
+  end
+
+  # Renders code in minimal color
+  class MinimizeColorRenderer < MinimizeRenderer
+    def json(json)
+      CodeRay.scan(super(json), :json).term
+    end
+  end
+
+  def color_available?
+    require 'coderay'
+    true
+  rescue LoadError
+    false
+  end
+
+  def options
+    @options ||= {
+      color: $stdout.isatty,
+      minimize: false,
+      files: []
+    }
+  end
+
+  def renderer
+    if color_available? && options[:color]
+      options[:minimize] ? MinimizeColorRenderer.new : PrettyColorRenderer.new
+    else
+      options[:minimize] ? MinimizeColorRenderer.new : MinimizeRenderer.new
+    end
+  end
+
+  def show_help_and_exit
+    puts opt_parser
+    exit
+  end
+
+  def opt_parser # rubocop:disable MethodLength
+    @opt_parser ||= OptionParser.new do |opts|
+      opts.banner = unindent(<<-EOF)
+        Usage: #{opts.program_name} [options] [-|file...]
+
+        Pretty-prints (and colorizes) JSON using Ruby's built in JSON parser.
+
+        If no file names are specified or if '-' is used as a filename then
+        stdin will be used as the input.
+      EOF
+      if color_available?
+        color_help = 'Force color on'
+      else
+        color_help = 'Would force color on if you '\
+          "first ran 'gem install coderay'"
+      end
+      opts.separator ''
+      opts.on('-c', '--color', color_help) { options[:color] = true }
+      opts.on('-C', '--no-color', 'Force color off') { options[:color] = false }
+      opts.on('-m', '--minimize', 'Minimizes the JSON') do
+        options[:minimize] = true
+      end
+
+      opts.separator ''
+      opts.on_tail('-h', '--help', 'Show this message') { show_help_and_exit }
+    end
+  end
+
+  def unindent(text)
+    first_indent = text.match(/\A(\s+)\S/)[1]
+    text.gsub(/^#{Regexp.quote first_indent}/, '')
+  end
+
+  def parse(args)
+    options[:files] = opt_parser.parse!(args)
+
+    show_help_and_exit if $stdin.tty? && options[:files].empty?
+  end
+
+  def streams
+    @streams ||= if options[:files].empty?
+                   [$stdin]
+                 else
+                   options[:files].map { |f| f == '-' ? $stdin : open(f, 'r') }
+                 end
+  end
+
+  def run
+    parse(ARGV)
+
+    streams.each_with_index do |stream, i|
+      if streams.count > 1
+        puts if i > 0
+        puts "File: #{stream.path}"
+      end
+      puts renderer.json(stream.read)
+    end
+  end
+end
+
+App.new.run
 
 # EOF
