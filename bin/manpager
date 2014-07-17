@@ -5,10 +5,4 @@ set -eu
 exec \
   col -bx |\
   iconv -c |\
-  view \
-  -R\
-  -c 'set ft=man nonu nolist nomod'\
-  -c 'noremap q :q!<CR>'\
-  -c 'noremap <SPACE> <C-D>'\
-  -c 'noremap b <C-U>'\
-  -
+  vim -R -c 'set ft=man nonu nolist nomod' -
