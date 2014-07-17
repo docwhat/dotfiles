@@ -9,7 +9,7 @@ function offset
 {
   local color="${1:-}"
 
-  while read line; do
+  while IFS='' read line; do
     [ -z "${color}" ] || print -nP "%F{$color}"
     echo "  $line"
     [ -z "${color}" ] || print -nP "%F{reset}"
@@ -47,6 +47,7 @@ function hh_git
       git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | offset
     else
       echo "Can't update ${dir} repository due to changes." | offset red
+      git -c color.status=always status --short | offset | offset
     fi
     popd > /dev/null
   fi
