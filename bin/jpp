@@ -96,6 +96,33 @@ class App
     text.gsub(/^#{Regexp.quote first_indent}/, '')
   end
 
+  def patch_colors! # rubocop:disable MethodLength
+    return unless color_available?
+    return unless CodeRay::Encoders::Terminal.const_defined? :TOKEN_COLORS
+    unless CodeRay::Encoders::Terminal::TOKEN_COLORS[:debug] == "\e[1;37;44m"
+      return
+    end
+
+    # This sets up solarized colors
+
+    CodeRay::Encoders::Terminal::TOKEN_COLORS.merge!(
+      operator: "\e[31m",
+      value: "\e[34m",
+      integer: "\e[32m"
+    )
+
+    CodeRay::Encoders::Terminal::TOKEN_COLORS[:key].merge!(
+      content: "\e[32m",
+      delimiter: "\e[1;34m"
+    )
+
+    CodeRay::Encoders::Terminal::TOKEN_COLORS[:string].merge!(
+      char: "\e[31m",
+      content: "\e[32m",
+      delimiter: "\e[1;34m"
+    )
+  end
+
   def parse(args)
     options[:files] = opt_parser.parse!(args)
 
@@ -111,6 +138,7 @@ class App
   end
 
   def run
+    patch_colors!
     parse(ARGV)
 
     streams.each_with_index do |stream, i|
