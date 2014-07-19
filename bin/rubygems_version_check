@@ -15,8 +15,8 @@ class Application
   end
 
   def run
-    puts "current: #{current}"
-    puts "latest:  #{latest}"
+    puts "  current: #{current}"
+    puts "  latest:  #{latest}"
 
     exit 3 if upgrade_required?
     exit 2 if upgrade_recommended?
@@ -41,14 +41,17 @@ class Application
   end
 
   def upgradable?
+    debug "#{current} < #{latest}"
     current < latest
   end
 
   def upgrade_recommended?
+    debug "#{current.bump} < #{latest.bump}"
     current.bump < latest.bump
   end
 
   def upgrade_required?
+    debug "#{current.bump} < #{minimum.bump}"
     current.bump < minimum.bump
   end
 end

@@ -11,7 +11,7 @@ function verify_rubygems_or_exit
   echo 'Checking rubygems:' | colorize blue
 
   local needs_update=0
-  "$HOME/.bin/rubygems_version_check" --debug | offset || needs_update=$?
+  "$HOME/.bin/rubygems_version_check" || needs_update=$?
 
   case "$needs_update" in
     0)
@@ -30,6 +30,7 @@ function verify_rubygems_or_exit
     *)
       echo 'You should upgrade rubygems!' | offset red
       echo '  gem update --system && gem pristine --all' | offset yellow
+      return $needs_update
       ;;
   esac
 }
