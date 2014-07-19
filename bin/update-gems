@@ -48,7 +48,7 @@ function upgrade_builtin_gems
 
   echo 'Upgrading builtin gems:' | colorize blue
   ruby -e "${ruby}" \
-    | $xargs --no-run-if-empty -0 sh -c 'gem update --conservative "$@" < /dev/tty' \
+    | $xargs --no-run-if-empty -0 sh -c 'yes y | gem update --conservative "$@"' \
     | offset
 }
 
@@ -56,7 +56,7 @@ function install_missing_favorites
 {
   echo 'Installing missing favorite gems:' | colorize blue
   perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
-    | $xargs --no-run-if-empty -0 sh -c "gem install --conservative \"\$0\" < /dev/tty" \
+    | $xargs --no-run-if-empty -0 sh -c "yes y | gem install --conservative \"\$0\"" \
     | offset
 }
 
@@ -64,7 +64,7 @@ function upgrade_favorites
 {
   echo 'Upgrading favorite gems:' | colorize blue
   perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
-    | $xargs --no-run-if-empty -0 sh -c "gem update --conservative \"\$0\" < /dev/tty" \
+    | $xargs --no-run-if-empty -0 sh -c "yes y | gem update --conservative \"\$0\"" \
     | offset
 }
 
