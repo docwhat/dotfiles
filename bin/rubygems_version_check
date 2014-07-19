@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#
+
 require 'rubygems' unless defined? Gem # Old rubygems.
 
 # My Application
@@ -10,14 +10,17 @@ class Application
 
   def initialize(argv = ARGV)
     @debug = argv.include?('-d') || argv.include?('--debug')
+    $stdout.sync = true
+    $stderr.sync = true
   end
 
   def run
-    debug "Current version: #{current}"
-    debug "Latest version:  #{latest}"
+    puts "current: #{current}"
+    puts "latest:  #{latest}"
 
-    exit 2 if upgrade_required?
-    exit 1 if upgrade_nice?
+    exit 3 if upgrade_required?
+    exit 2 if upgrade_recommended?
+    exit 1 if upgradable?
     exit 0
   end
 
@@ -37,7 +40,11 @@ class Application
     @minimum ||= Gem::Version.new(MINIMUM_VERSION)
   end
 
-  def upgrade_nice?
+  def upgradable?
+    current < latest
+  end
+
+  def upgrade_recommended?
     current.bump < latest.bump
   end
 

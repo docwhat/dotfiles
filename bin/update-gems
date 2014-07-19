@@ -1,0 +1,83 @@
+#!/usr/bin/env zsh
+# vi: ft=zsh :
+
+set -eu
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+
+function verify_rubygems_or_exit
+{
+  echo 'Checking rubygems:' | colorize blue
+
+  local needs_update=0
+  "$HOME/.bin/rubygems_version_check" --debug | offset || needs_update=$?
+
+  case "$needs_update" in
+    0)
+      echo 'up-to-date' | offset green
+      return 0
+      ;;
+    1)
+      echo 'Minor update is available' | offset yellow
+      return 0
+      ;;
+    2)
+      echo 'Consider upgrading rubygems:' | offset red
+      echo '  gem update --system' | offset
+      return 0
+      ;;
+    *)
+      echo 'You should upgrade rubygems!' | offset red
+      echo '  gem update --system && gem pristine --all' | offset yellow
+      ;;
+  esac
+}
+
+function upgrade_builtin_gems
+{
+  ruby='
+    Gem::Specification
+      .select(&:default_gem?)
+      .map(&:name)
+      .each do |gem|
+        print "#{gem}\0"
+    end
+  '
+
+  echo 'Upgrading builtin gems:' | colorize blue
+  ruby -e "${ruby}" \
+    | $xargs --no-run-if-empty -0 sh -c 'gem update --conservative "$@" < /dev/tty' \
+    | offset
+}
+
+function install_missing_favorites
+{
+  echo 'Installing missing favorite gems:' | colorize blue
+  perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
+    | $xargs --no-run-if-empty -0 sh -c "gem install --conservative \"\$0\" < /dev/tty" \
+    | offset
+}
+
+function upgrade_favorites
+{
+  echo 'Upgrading favorite gems:' | colorize blue
+  perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
+    | $xargs --no-run-if-empty -0 sh -c "gem update --conservative \"\$0\" < /dev/tty" \
+    | offset
+}
+
+## Main ##
+
+# Detect xargs
+xargs=xargs
+if (( $+commands[gxargs] )); then
+  xargs=gxargs
+fi
+
+verify_rubygems_or_exit
+upgrade_builtin_gems
+install_missing_favorites
+upgrade_favorites
+
+# EOF

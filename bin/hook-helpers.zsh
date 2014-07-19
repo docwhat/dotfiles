@@ -5,14 +5,25 @@ if [ -z "${DOTFILES_DIR:-}" ]; then
   exit 1
 fi
 
+function colorize
+{
+  local color="${1:-}"
+
+  if [ -z "${color}" ]; then
+    cat
+  else
+    while IFS='' read line; do
+      print -P "%F{$color}$line%F{reset}"
+    done
+  fi
+}
+
 function offset
 {
   local color="${1:-}"
 
   while IFS='' read line; do
-    [ -z "${color}" ] || print -nP "%F{$color}"
-    echo "  $line"
-    [ -z "${color}" ] || print -nP "%F{reset}"
+    echo "  $line" | colorize "$color"
   done
 }
 
