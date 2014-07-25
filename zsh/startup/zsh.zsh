@@ -32,10 +32,13 @@ function reload
   compute_host_completion
 }
 
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "$ZSH/cache"
+# Overwrite Oh-My-Zsh's settings
+zstyle ':completion:*'           use-cache on
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "$ZSH/cache"
+zstyle ':completion:*'           cache-path ~/.zsh/cache
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+
+zstyle ':completion:*' accept-exact '*(N)'
 
 setopt dvorak
 
