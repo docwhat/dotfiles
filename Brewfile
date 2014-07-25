@@ -12,8 +12,10 @@ install ctags
 install curl
 install file-formula
 install findutils
+install gawk
 install git
 install git-extras
+install gnu-sed
 install graphviz
 install grep
 install jq
