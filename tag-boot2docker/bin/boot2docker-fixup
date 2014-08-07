@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -eux
+
+# Fix `sudo -i`
+boot2docker ssh -- rm -f /etc/sysconfig/superuser
+boot2docker ssh -- sudo sh -c 'echo root > /etc/sysconfig/superuser'
+
+# Fix NTP/Time
+boot2docker ssh -- sudo killall -9 ntpd
+boot2docker ssh -- sudo ntpclient -s -h pool.ntp.org
+boot2docker ssh -- sudo ntpd -p pool.ntp.org
+
+# Fix TZ
+boot2docker ssh -- sudo sh -c 'echo "export TZ=EST5EDT" > /etc/profile.d/timezone.sh'
+
+# Create /data
+boot2docker ssh -- sudo mkdir -p /data
+boot2docker ssh -- sudo chown 1000:1000 /data
+
+# EOF
