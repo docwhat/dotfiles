@@ -11,5 +11,5 @@ function boot2docker-fixup
 
   sudo -H ruby ~/.zsh/startup/boot2docker-host.rb "${ip}"
 
-  ~/.zsh/startup/boot2docker-fixup
+  ~/.zsh/startup/boot2docker-fixup.sh
 }

@@ -4,16 +4,30 @@ HOSTFILE = '/etc/hosts'
 
 ip = ARGV.first
 
+fail 'You need to pass in an ip address' unless ip =~ /\A[0-9.]+\Z/
+
 original_hosts = File.read(HOSTFILE)
 original_lines = original_hosts.split("\n").map(&:strip)
 
+domains = File.read('/etc/resolv.conf').split(/\n+/)
+  .grep(/^search\s(.*)$/)
+  .first
+  .split(/\s+/)
+  .compact
+  .reject { |s| s == 'search' }
+hosts = domains.map { |d| "boot2docker.#{d}" } + ['boot2docker']
+
 new_lines = original_lines.reject { |l| l =~ /\sboot2docker\s*$/ }
-new_lines << "#{ip}\tboot2docker"
+new_lines << "#{ip}\t#{hosts.join ' '}"
 new_hosts = new_lines.join("\n") + "\n"
 
 if new_hosts != original_hosts
   puts "Updating #{HOSTFILE}..."
-  File.open(HOSTFILE, 'w') { |f| f.write new_hosts }
+  begin
+    File.open(HOSTFILE, 'w') { |f| f.write new_hosts }
+  rescue Errno::EACCES
+    puts "Permission denied. I would have written:\n#{new_hosts}"
+  end
 end
 
 # EOF
