@@ -56,7 +56,7 @@ function install_missing_favorites
 {
   echo 'Installing missing favorite gems:' | colorize blue
   perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
-    | $xargs --no-run-if-empty -0 sh -c "yes y | gem install --conservative \"\$0\"" \
+    | $xargs --no-run-if-empty -0 sh -c "yes y | gem install --conservative \"\$@\"" \
     | offset
 }
 
@@ -64,7 +64,7 @@ function upgrade_favorites
 {
   echo 'Upgrading favorite gems:' | colorize blue
   perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
-    | $xargs --no-run-if-empty -0 sh -c "yes y | gem update --conservative \"\$0\"" \
+    | $xargs --no-run-if-empty -0 sh -c "yes y | gem update --conservative \"\$@\"" \
     | offset
 }
 
