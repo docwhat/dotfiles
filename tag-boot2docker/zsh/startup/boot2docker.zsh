@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-function boot2docker-reshell
+function boot2docker-fixup
 {
   sudo -v
   ip=$(boot2docker ip 2>/dev/null)
@@ -10,4 +10,6 @@ function boot2docker-reshell
   echo "export DOCKER_HOST=${DOCKER_HOST}" > ~/.zsh/startup/boot2docker.zshenv
 
   sudo -H ruby ~/.zsh/startup/boot2docker-host.rb "${ip}"
+
+  ~/.zsh/startup/boot2docker-fixup
 }
