@@ -43,7 +43,6 @@ plugins=(
   thor
   cap
   knife
-  tmuxinator
   #bundler # must be last
 
   # My plugins
