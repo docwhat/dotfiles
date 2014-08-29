@@ -22,7 +22,6 @@ end
 %w(
   hirb-unicode
   hirb
-  awesome_print
 ).each do |gem|
   begin
     require gem
