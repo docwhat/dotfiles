@@ -1,11 +1,19 @@
 # vi: ft=ruby :
 
 # Test Data
-def toy(element)
-  case element.to_s
-  when /^a/i then (1..6).to_a
-  when /^h/i then { fish: 'red', mouse: 'blue', prisoner: 6 }
-  end
+TEST_DATA = {
+  array: -> { (1..6).to_a },
+  hash: -> { { fish: 'red', mouse: 'blue', prisoner: 6 } }
+}
+
+def toy(element = nil)
+  help_message = [
+    'I can make test data for you:',
+    TEST_DATA.keys.map { |l| " * #{l}" }
+  ].flatten.join("\n")
+  TEST_DATA.fetch(element) do
+    -> { puts help_message }
+  end.call
 end
 
 Pry.config.pager = true
