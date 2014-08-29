@@ -52,10 +52,20 @@ function upgrade_builtin_gems
     | offset
 }
 
+function favorite-gems
+{
+  ruby='
+    require "yaml"
+    yml_file = File.expand_path "~/.config/docwhat/favorite-gems.yml"
+    print YAML.load_file(yml_file)[:gems].join("\0")
+  '
+  ruby -e "${ruby}"
+}
+
 function install_missing_favorites
 {
   echo 'Installing missing favorite gems:' | colorize blue
-  perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
+  favorite-gems \
     | $xargs --no-run-if-empty -0 sh -c "yes y | gem install --conservative \"\$@\"" \
     | offset
 }
@@ -63,7 +73,7 @@ function install_missing_favorites
 function upgrade_favorites
 {
   echo 'Upgrading favorite gems:' | colorize blue
-  perl -p -e 's/\n/\0/g' ~/.config/docwhat/favorite-gems \
+  favorite-gems \
     | $xargs --no-run-if-empty -0 sh -c "yes y | gem update --conservative \"\$@\"" \
     | offset
 }

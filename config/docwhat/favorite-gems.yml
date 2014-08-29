@@ -1,0 +1,15 @@
+:gems:
+  - yard
+  - gem-ctags
+  - gem-browse
+  - bundler
+  - terminal-notifier
+  - pry
+  - pry-doc
+  - pry-theme
+  # - irbtools
+  # - irbtools-more
+  - powder
+  - seeing_is_believing
+  - ruby-lint
+  - rubocop
