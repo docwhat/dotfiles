@@ -7,6 +7,11 @@
   - pry
   - pry-doc
   - pry-theme
+  - pry-clipboard
+  - pry-git
+  - pry-coolline
+  - hirb
+  - hirb-unicode
   # - irbtools
   # - irbtools-more
   - powder

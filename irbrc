@@ -11,7 +11,8 @@ end
 
 begin
   require 'pry'
-  puts "Welcome to PRY. You are using #{RUBY_DESCRIPTION} with RubyGems #{Gem::VERSION}. Have fun ;)"
+  puts "Welcome to Pry. You are using #{RUBY_DESCRIPTION} " \
+    "with RubyGems #{Gem::VERSION}. Have fun ;)"
   Pry.start
   exit
 rescue LoadError
@@ -24,3 +25,5 @@ rescue LoadError
   Irbtools.add_package :more
   Irbtools.start
 end
+
+# EOF

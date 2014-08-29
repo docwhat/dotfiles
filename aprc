@@ -1,0 +1,39 @@
+# vi: ft=ruby :
+
+require 'awesome_print'
+
+AwesomePrint.defaults ||= {}
+AwesomePrint.defaults.merge!(
+  indent: 2
+)
+
+AwesomePrint.defaults[:color] ||= {}
+AwesomePrint.defaults[:color].merge!(
+  class:       :yellowish,
+  method:      :blueish,
+  args:        :blue,
+
+  array:       :purple,
+  hash:        :purple,
+  struct:      :purple,
+
+  bigdecimal:  :cyanish,
+  fixnum:      :cyanish,
+  float:       :cyanish,
+  rational:    :cyanish,
+
+  date:        :blueish,
+  time:        :blueish,
+
+  string:      :yellowish,
+  symbol:      :cyanish,
+
+  keyword:     :cyanish,
+  variable:    :cyanish,
+
+  nilclass:    :redish,
+  falseclass:  :redish,
+  trueclass:   :greenish
+)
+
+# EOF
