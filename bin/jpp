@@ -54,7 +54,7 @@ class App
     if color_available? && options[:color]
       options[:minimize] ? MinimizeColorRenderer.new : PrettyColorRenderer.new
     else
-      options[:minimize] ? MinimizeColorRenderer.new : MinimizeRenderer.new
+      options[:minimize] ? MinimizeRenderer.new : PrettyRenderer.new
     end
   end
 
@@ -151,6 +151,9 @@ class App
   end
 end
 
-App.new.run
+if __FILE__ == $PROGRAM_NAME
+  App.new.run
+  exit
+end
 
 # EOF
