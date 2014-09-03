@@ -1,11 +1,38 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 
 require 'socket'
 
-Socket.ip_address_list.select { |a| a.ipv4? and !a.ipv4_loopback? }.each do |address|
-  ip = address.ip_address
+def default_ip
+  # turn off reverse DNS resolution temporarily
+  orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
 
-  puts "http://foobar.#{ip}.xip.io   #{ip}"
+  @default_ip ||= UDPSocket.open do |s|
+    s.connect '64.233.187.99', 1
+    s.addr.last
+  end
+ensure
+  Socket.do_not_reverse_lookup = orig
 end
 
+def all_ips
+  @all_ips ||= Socket
+    .ip_address_list
+    .select { |a| a.ipv4? && !a.ipv4_loopback? }
+    .map(&:ip_address)
+end
 
+def print_ip(ip, default = false)
+  puts format(
+    '%3s %-38s %s',
+    (default ? '=>' : ' '),
+    "http://foobar.#{ip}.xip.io",
+    ip
+  )
+end
+
+print_ip default_ip, true
+all_ips
+  .reject { |ip| ip == default_ip }
+  .each { |ip| print_ip ip }
+
+# EOF
