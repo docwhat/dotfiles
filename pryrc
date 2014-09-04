@@ -21,7 +21,7 @@ Pry.config.color = true
 Pry.config.editor = 'vim'
 Pry.config.prompt = Pry::NAV_PROMPT
 Pry.config.theme = 'solarized'
-Pry.config.history.file = '~/.irb_history'
+Pry.config.history.file = File.expand_path '~/.irb_history'
 
 Pry.config.commands.instance_eval do
   alias_command 'h', 'hist --tail 20', desc: 'Last 20 commands'
