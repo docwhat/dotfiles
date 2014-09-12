@@ -57,6 +57,10 @@
 	tool = opendiff
 	renames = copy
 
+[diff "scpt"]
+	textconv = osadecompile
+	binary = true
+
 [push]
 	default = current
 
