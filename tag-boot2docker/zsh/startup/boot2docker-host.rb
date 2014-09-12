@@ -9,12 +9,18 @@ fail 'You need to pass in an ip address' unless ip =~ /\A[0-9.]+\Z/
 original_hosts = File.read(HOSTFILE)
 original_lines = original_hosts.split("\n").map(&:strip)
 
-domains = File.read('/etc/resolv.conf').split(/\n+/)
-  .grep(/^search\s(.*)$/)
-  .first
-  .split(/\s+/)
-  .compact
-  .reject { |s| s == 'search' }
+def domains
+  resolv_conf = File.read('/etc/resolv.conf').split(/\n+/)
+  domains = resolv_conf.grep(/^search\s(.*)$/)
+  domains = resolv_conf.grep(/^domain\s(.*)$/) if domains.empty?
+  return %w(home) if domains.empty?
+  domains
+    .first
+    .split(/\s+/)
+    .compact
+    .tap(&:shift)
+end
+
 hosts = domains.map { |d| "boot2docker.#{d}" } + ['boot2docker']
 
 new_lines = original_lines.reject { |l| l =~ /\sboot2docker\s*$/ }
