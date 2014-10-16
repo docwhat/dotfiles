@@ -24,6 +24,7 @@ function prompt_docwhat {
   print "\
 %F{$_prompt_docwhat_alt_color}\
 %{╓╼%2G%}\
+${prompt_docwhat_sdk}\
 %F{$_prompt_docwhat_color} \
 ${prompt_docwhat_user}\
 @\
@@ -149,6 +150,14 @@ function prompt_docwhat_setup {
 
   # User & coloring
   prompt_docwhat_user="%(!.%F{red}%n%F{$_prompt_docwhat_color}.%n)"
+
+  # What SDK mode am I running (for broken SDKs that all or nothing)
+  if [ "${ZSH_ENABLECHEFDK}" = true ]; then
+    prompt_docwhat_sdk="%{┥%G%}%F{yellow}ChefDK%F{$_prompt_docwhat_alt_color}%{┝%G%}"
+  else
+    prompt_docwhat_sdk=""
+  fi
+
 
   zstyle ':vcs_info:*' max-exports 2
   zstyle ':vcs_info:*' check-for-changes true
