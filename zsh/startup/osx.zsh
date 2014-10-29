@@ -23,5 +23,23 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     fi
   }
 
+  function saydone()
+  {
+    local ec=$?
+
+    local prog='
+    phrases=%w(done over finished ended concluded terminated dead gone) + ["over and done with", "at an end", "no more", "in the past"]
+    puts "The process is #{phrases.sample}"
+    '
+
+    local phrase="$(ruby -e "${prog}")"
+    if [ 0 != "${ec}" ]; then
+      say "Uh-oh!"
+      echo " ** ${phrase} with exit code $ec **" 1>&2
+    fi
+
+    say "${phrase} with $ec"
+  }
+
   export BROWSER='open'
 fi
