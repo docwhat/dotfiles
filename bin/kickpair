@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -euo pipefail
+
+search="$*"
+
+echo "Looking for process groups matching '${search}':"
+echo -ne "\t"
+
+if !  pgrep -ailf -U pair "bash.*bin/pairprogger.*${search}"; then
+  echo "No pair programmers found matching ${search}, aborting."
+  exit 1
+fi
+
+typeset -a group_ids=( $(pgrep -aif -U pair "bash.*bin/pairprogger.*${search}") )
+group_id="${group_ids[0]}"
+
+echo "Processes to be killed:"
+pgrep -lf -U pair -g $group_id | while read line; do
+  echo -e "\t${line}"
+done
+
+echo
+echo "Press <enter> to kill them, or control-C to abort"
+read
+
+sudo -u pair /usr/bin/pkill -QUIT -lf -U pair -g $group_id
+
+# EOF
