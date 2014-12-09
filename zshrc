@@ -24,13 +24,14 @@ plugins=(
   redis-cli
   cp
   rsync
+  urltools
 
   # Languages
   node
   npm
   python
   pip
-  urltools
+  go
 
   # Ruby
   ruby
