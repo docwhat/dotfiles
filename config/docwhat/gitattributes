@@ -20,9 +20,12 @@
 *.zsh  text eol=lf
 
 # Windows things
-.sln   text eol=crlf
+*.sln  text eol=crlf
+*.asp  text eol=crlf
+*.bat  text eol=crlf
 
 # Images
 *.dif  binary
 *.png  binary
 *.jpg  binary
+*.pdf  binary
