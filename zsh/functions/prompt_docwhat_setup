@@ -24,7 +24,6 @@ function prompt_docwhat {
   print "\
 %F{$_prompt_docwhat_alt_color}\
 %{╓╼%2G%}\
-${prompt_docwhat_sdk}\
 %F{$_prompt_docwhat_color} \
 ${prompt_docwhat_user}\
 @\
@@ -78,7 +77,10 @@ ${path_char} \
 
 function prompt_docwhat_ruby {
   [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
-  if [[ -n "$commands[rbenv]" ]]; then
+  # What SDK mode am I running (for broken SDKs that all or nothing)
+  if [ "${ZSH_ENABLECHEFDK}" = true ]; then
+   print " %F{yellow}ChefDK%F{$_prompt_docwhat_alt_color}"
+  elif [[ -n "$commands[rbenv]" ]]; then
     local ver=$(rbenv version-name 2>/dev/null)
     if [[ -n "${ver}" && "${ver}" != system ]]; then
       if [[ "${ver}" = [0-9]* ]]; then
@@ -150,13 +152,6 @@ function prompt_docwhat_setup {
 
   # User & coloring
   prompt_docwhat_user="%(!.%F{red}%n%F{$_prompt_docwhat_color}.%n)"
-
-  # What SDK mode am I running (for broken SDKs that all or nothing)
-  if [ "${ZSH_ENABLECHEFDK}" = true ]; then
-    prompt_docwhat_sdk="%{┥%G%}%F{yellow}ChefDK%F{$_prompt_docwhat_alt_color}%{┝%G%}"
-  else
-    prompt_docwhat_sdk=""
-  fi
 
 
   zstyle ':vcs_info:*' max-exports 2
