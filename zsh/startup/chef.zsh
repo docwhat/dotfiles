@@ -1,4 +1,4 @@
-if [ -x /opt/chef/bin/knife ]; then
+if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
   alias kl="kitchen list"
   alias kc="kitchen converge"
   alias kv="kitchen verify"
