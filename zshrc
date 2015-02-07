@@ -25,7 +25,6 @@ plugins=(
   cp
   rsync
   urltools
-  ssh-agent
 
   # Languages
   node
@@ -53,8 +52,6 @@ plugins=(
   task
   ack
 )
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 source $ZSH/oh-my-zsh.sh
 

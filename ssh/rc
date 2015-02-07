@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ -n "$SSH_AUTH_SOCK" ]; then
+  ln -nsf "$SSH_AUTH_SOCK" "$HOME/.ssh/ssh_auth_sock"
+fi
+
+if read proto cookie && [ -n "$DISPLAY" ]; then
+  case "$DISPLAY" in
+    localhost:*)
+      # X11UseLocalhost=yes
+      echo "add unix:$( echo "$DISPLAY "| cut -c11- ) $proto $cookie"
+      ;;
+    *)
+      # X11UseLocalhost=no
+      echo "add $DISPLAY $proto $cookie"
+      ;;
+  esac | xauth -q -
+fi
+
+# EOF
