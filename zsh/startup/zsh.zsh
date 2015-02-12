@@ -46,5 +46,8 @@ unsetopt correctall
 setopt correct
 
 alias copy-last-command='fc -l -n -1 -1 | tr -d "\n" | pbcopy'
+if (( $+commands[resize] )); then
+  alias resize='eval "$(\resize)"'
+fi
 
 # EOF
