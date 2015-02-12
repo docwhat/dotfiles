@@ -1,6 +1,6 @@
 # vi: set ft=zsh :
 
-if [ "${SSH_AUTH_SOCK}" != "$HOME/.ssh/ssh_auth_sock" ]; then
+if [ "${SSH_AUTH_SOCK:-}" != "$HOME/.ssh/ssh_auth_sock" ]; then
   if (( $+commands[ssh-add] )); then
     if (( $+commands[keychain] )); then
       eval "$(keychain --quiet --quick --agents ssh --inherit any-once --eval)"
