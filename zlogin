@@ -1,7 +1,9 @@
 # vi: ft=zsh :
 
-if (( $+commands[archey] )); then
-  "${commands[archey]}"
+if (( $+commands[mackey] )); then
+  mackey
+elif (( $+commands[archey] )); then
+  archey
 fi
 
 # Execute code that does not affect the current session in the background.
