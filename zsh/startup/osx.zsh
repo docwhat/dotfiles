@@ -37,7 +37,7 @@ if [[ "${OSTYPE}" == darwin* ]]; then
       say "Uh-oh! ${phrase} The exit code was $ec."
       echo " ** ${phrase} The exit code was $ec **" 1>&2
     else
-      say "${phrase}."
+      say -r 300 "${phrase}."
     fi
 
     return $ec
