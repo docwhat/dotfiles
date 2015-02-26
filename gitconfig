@@ -15,7 +15,9 @@
 	delete-branch = !sh -c 'git push origin :refs/heads/$1 && git branch -D $1' -
 	merge-branch = !git checkout master && git merge @{-1}
 
-	lg = log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold) <%an>%Creset%C(yellow) %d%Creset'
+	graph = log --graph --abbrev-commit --decorate --date=relative --all
+	lg = log --graph --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
+	ls = log --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
 	pr = !hub pull-request
 	up = !git fetch origin && git rebase origin/master
 
@@ -76,5 +78,14 @@
 [advice]
 	statusHints = false
 
+[help]
+	autocorrect = 1
+
 [include]
 	path = .gitconfig.local
+
+; Added by the GitHub.app
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
