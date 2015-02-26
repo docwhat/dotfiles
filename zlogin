@@ -3,7 +3,7 @@
 if (( $+commands[mackey] )); then
   mackey
 elif (( $+commands[archey] )); then
-  archey --color
+  archey
 fi
 
 # Execute code that does not affect the current session in the background.
