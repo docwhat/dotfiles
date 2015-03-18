@@ -23,6 +23,11 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     fi
   }
 
+  function set_iterm_profile()
+  {
+    echo -e "\033]50;SetProfile=$1\a"
+  }
+
   function saydone()
   {
     local ec=$?
