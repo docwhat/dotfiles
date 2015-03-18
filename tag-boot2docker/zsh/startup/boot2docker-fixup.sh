@@ -11,5 +11,7 @@ boot2docker ssh -- sudo cp /tmp/localtime /etc/localtime
 echo 'Create /data used for volume data.'
 boot2docker ssh -- sudo mkdir -p /data
 boot2docker ssh -- sudo chown 1000:1000 /data
+boot2docker ssh -- sudo addgroup -g 1000 data '||' :
+boot2docker ssh -- sudo addgroup docker data
 
 # EOF
