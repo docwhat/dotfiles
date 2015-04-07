@@ -25,6 +25,7 @@
 	aa = add --all
 	ap = add --patch
 	ca = commit --amend
+	cah = commit --amend -CHEAD
 	ci = commit -v
 	co = checkout
 	w  = whatchanged
