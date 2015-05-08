@@ -1,3 +1,2 @@
-export RBENV_ROOT="/usr/local/var/rbenv"
 eval "$(rbenv init -)"
 export POW_WORKERS=3
