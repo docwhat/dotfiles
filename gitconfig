@@ -46,8 +46,8 @@
 	ff = only
 
 [core]
-	excludesfile = ~/.config/docwhat/gitignore_global
-	attributesfile = ~/.config/docwhat/gitattributes
+	excludesfile = ~/.config/personal/gitignore_global
+	attributesfile = ~/.config/personal/gitattributes
 	autocrlf = input
 
 [fetch]

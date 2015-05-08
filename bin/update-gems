@@ -56,7 +56,7 @@ function favorite-gems
 {
   ruby='
     require "yaml"
-    yml_file = File.expand_path "~/.config/docwhat/favorite-gems.yml"
+    yml_file = File.expand_path "~/.config/personal/favorite-gems.yml"
     print YAML.load_file(yml_file)[:gems].join("\0")
   '
   ruby -e "${ruby}"
