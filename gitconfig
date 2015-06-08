@@ -37,6 +37,7 @@
 	ss = status
 	st = status
 	rv = remote -v
+	home = rev-parse --show-toplevel
 
 [instaweb]
 	port = 2001
