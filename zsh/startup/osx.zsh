@@ -48,5 +48,36 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     return $ec
   }
 
+  function exclude-from-backup
+  {
+    local fname="$1"
+
+    if [ ! -r "$fname" ]; then
+      echo "No such file or directory: $fname" 1>&2
+      return 2
+    elif [[ "${fname:A}" =~ '.*/\..*' ]]; then
+      echo "Hidden files cannot be controlled by xattr: $fname" 1>&2
+      return 3
+    else
+      xattr \
+        -w 'com.apple.metadata:com_apple_backup_excludeItem' 'com.apple.backupd' \
+        "$fname"
+    fi
+  }
+
+  function include-in-backup
+  {
+    local fname="$1"
+
+    if [ ! -r "$fname" ]; then
+      echo "No such file or directory: $fname" 1>&2
+      return 2
+    else
+      xattr \
+        -d 'com.apple.metadata:com_apple_backup_excludeItem' \
+        "$fname"
+    fi
+  }
+
   export BROWSER='open'
 fi
