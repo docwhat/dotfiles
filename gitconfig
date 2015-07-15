@@ -37,6 +37,7 @@
 	ss = status
 	st = status
 	rv = remote -v
+	pt = !git push && git push --tags
 	home = rev-parse --show-toplevel
 
 [instaweb]
