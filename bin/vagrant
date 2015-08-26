@@ -1,0 +1,9 @@
+#!/bin/bash
+
+unset RUBY_VERSION
+unset RBENV_VERSION
+unset GEM_HOME
+unset GEM_PATH
+export PATH='/usr/bin/:/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/sbin'
+
+exec /usr/bin/vagrant "$@"
