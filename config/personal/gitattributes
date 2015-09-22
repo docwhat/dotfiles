@@ -19,10 +19,10 @@
 *.sh   text eol=lf
 *.zsh  text eol=lf
 
-# Windows things
-*.sln  text eol=crlf
-*.asp  text eol=crlf
-*.bat  text eol=crlf
+# # Windows things
+# *.sln  text eol=crlf
+# *.asp  text eol=crlf
+# *.bat  text eol=crlf
 
 # Images
 *.dif  binary
