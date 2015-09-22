@@ -92,3 +92,5 @@
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
+[diff "plist"]
+	textconv = plutil -convert xml1 -o -
