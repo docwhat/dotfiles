@@ -16,10 +16,10 @@ if (( $+commands[brew] )); then
   fi
 
   # Enable super help
-  if [ -d /usr/local/share/zsh/helpfiles ]; then
+  if [ -d /usr/local/share/zsh/help ]; then
     unalias run-help
-    autoload -Uz run-help
-    export HELPDIR=/usr/local/share/zsh/helpfiles
+    autoload run-help
+    HELPDIR=/usr/local/share/zsh/help
   fi
 
   function brew()
