@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 unset RUBY_VERSION
 unset RBENV_VERSION
 unset GEM_HOME
