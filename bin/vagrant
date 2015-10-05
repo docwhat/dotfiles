@@ -8,4 +8,11 @@ unset GEM_HOME
 unset GEM_PATH
 export PATH='/usr/bin/:/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/sbin'
 
-exec /usr/bin/vagrant "$@"
+if [ -x /usr/local/bin/vagrant ]; then
+  exec /usr/local/bin/vagrant "$@"
+elif [ -x /usr/bin/vagrant ]; then
+  exec /usr/bin/vagrant "$@"
+else
+  echo "Unable to locate vagrant." 1>&2
+  exit 10
+fi
