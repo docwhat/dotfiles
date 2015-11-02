@@ -1,7 +1,32 @@
 # vim: set ft=zsh :
 
-# This is an interesting idea... http://deenewcum.github.io/termdetect/
-# curl -L http://is.gd/termdetect -o ~/bin/termdetect;  chmod +x ~/bin/termdetect
-if (( $+commands[termdetect] )); then
-  export TERM=$("${commands[termdetect]}" -t)
-fi
+# The path has to be set *first*
+path=(
+  "$HOME/bin"
+  "$HOME/.cabal/bin"
+  "$HOME/.gocode/bin"
+  /usr/local/sbin
+  /usr/local/bin
+  /usr/local/share/npm/bin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+  /opt/X11/bin
+  $path
+)
+
+manpath=(
+  /usr/local/share/man
+  /usr/share/man
+  /usr/X11/man
+  /opt/X11/share/man
+)
+
+# Load my customized profile.
+for config_file (~/.zsh/startup/*.zprofile(rN)); do
+  source "${config_file}"
+done
+unset config_file
+
+# EOF

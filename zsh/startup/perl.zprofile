@@ -1,3 +1,5 @@
+# vim: set ft=zsh :
+
 # This is for bootstrapping local::lib
 # http://search.cpan.org/dist/local-lib/lib/local/lib.pm#The_bootstrapping_technique
 
