@@ -1,9 +1,14 @@
 # To use this globally, run:
 #     git config --global core.attributesfile /path/to/gitattributes
-# Found on http://urbanautomaton.com/blog/2011/07/28/git-grep-and-language-specific-diffs/
+# Helpful links:
+#   * https://github.com/Danimoth/gitattributes
+#   * http://urbanautomaton.com/blog/2011/07/28/git-grep-and-language-specific-diffs/
+#   * http://www.davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/
+#
 *.cpp  diff=cpp
 *.c    diff=cpp
 *.h    diff=cpp
+*.cs   diff=csharp
 *.html diff=html
 *.java diff=java
 *.m    diff=objc
@@ -25,7 +30,7 @@
 # *.bat  text eol=crlf
 
 # Images
-*.dif  binary
+*.gif  binary
 *.png  binary
 *.jpg  binary
 *.pdf  binary
