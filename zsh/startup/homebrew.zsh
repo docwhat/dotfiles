@@ -17,7 +17,9 @@ if (( $+commands[brew] )); then
 
   # Enable super help
   if [ -d /usr/local/share/zsh/help ]; then
-    unalias run-help
+    if (( $+aliases[run-help] )); then
+      unalias run-help
+    fi
     autoload run-help
     HELPDIR=/usr/local/share/zsh/help
   fi
