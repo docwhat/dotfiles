@@ -6,20 +6,27 @@ set -eu
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
 
+function trap_exit
+{
+  if [[ -n "${update_tmp:-}" && -d "${update_tmp}" ]]; then
+    rm -rf "${update_tmp}"
+  fi
+}
+
+trap trap_exit EXIT
+
 function verify_rubygems_or_exit
 {
-  echo 'Checking rubygems:' | colorize blue
-
   local needs_update=0
   "$HOME/.bin/rubygems_version_check" || needs_update=$?
 
   case "$needs_update" in
     0)
-      echo 'up-to-date' | offset green
       return 0
       ;;
     1)
-      echo 'Minor update is available' | offset yellow
+      echo 'Minor update is available if you want:' | offset yellow
+      echo '  gem update --system' | offset
       return 0
       ;;
     2)
@@ -35,60 +42,37 @@ function verify_rubygems_or_exit
   esac
 }
 
-function upgrade_builtin_gems
+function do_update
 {
+  cp ~/.config/personal/Gemfile.favorites Gemfile
+
+  # Add builtin gems
   ruby='
     Gem::Specification
       .select(&:default_gem?)
       .map(&:name)
       .each do |gem|
-        print "#{gem}\0"
+        puts "gem #{gem.inspect}"
     end
   '
+  ruby -e "${ruby}" >> Gemfile
 
-  echo 'Upgrading builtin gems:' | colorize blue
-  ruby -e "${ruby}" \
-    | $xargs --no-run-if-empty -0 sh -c 'yes y | gem update --conservative "$@"' \
-    | offset
-}
-
-function favorite-gems
-{
-  ruby='
-    require "yaml"
-    yml_file = File.expand_path "~/.config/personal/favorite-gems.yml"
-    print YAML.load_file(yml_file)[:gems].join("\0")
-  '
-  ruby -e "${ruby}"
-}
-
-function install_missing_favorites
-{
-  echo 'Installing missing favorite gems:' | colorize blue
-  favorite-gems \
-    | $xargs --no-run-if-empty -0 sh -c "yes y | gem install --conservative \"\$@\"" \
-    | offset
-}
-
-function upgrade_favorites
-{
-  echo 'Upgrading favorite gems:' | colorize blue
-  favorite-gems \
-    | $xargs --no-run-if-empty -0 sh -c "yes y | gem update --conservative \"\$@\"" \
-    | offset
+  bundle install --jobs=3
 }
 
 ## Main ##
 
-# Detect xargs
-xargs=xargs
-if (( $+commands[gxargs] )); then
-  xargs=gxargs
-fi
+# Set up the temp directory.
+update_tmp="$(mktemp -d "${TMPDIR:-/tmp}/update-gems.XXXXXXXXXX")"
+cd "${update_tmp}"
 
+echo 'Checking rubygems:' | colorize blue
 verify_rubygems_or_exit
-upgrade_builtin_gems
-install_missing_favorites
-upgrade_favorites
+
+echo "Verifying bundler is installed:" | colorize blue
+gem install --conservative bundler | offset green
+
+echo "Installing gems:" | colorize blue
+do_update
 
 # EOF

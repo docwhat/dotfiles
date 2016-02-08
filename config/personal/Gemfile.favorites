@@ -1,0 +1,18 @@
+# vi: ft=ruby :
+source 'https://rubygems.org/'
+
+gem 'yard'
+gem 'gem-ctags'
+gem 'gem-browse'
+gem 'pry'
+gem 'pry-doc'
+gem 'pry-theme'
+gem 'hirb'
+gem 'hirb-unicode'
+gem 'powder'
+gem 'seeing_is_believing'
+gem 'ruby-lint'
+gem 'rubocop'
+gem 'brew-cask-upgrade'
+
+# EOF
