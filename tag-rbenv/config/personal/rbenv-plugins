@@ -5,5 +5,5 @@ mlafeldt/rbenv-man
 ianheggie/rbenv-binstubs
 rkh/rbenv-whatis
 rkh/rbenv-use
-sstephenson/rbenv-gem-rehash
+rbenv/rbenv-each
 docwhat/rbenv-chefdk
