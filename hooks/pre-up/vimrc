@@ -10,10 +10,9 @@ if [ -f "${DOTFILES_DIR}/vimrc" ]; then
 fi
 
 hh_git 'Vimrc'  'https://github.com/docwhat/homedir-vim.git' 'vim/vimrc'
-hh_git 'Vundle' 'https://github.com/gmarik/vundle.git'       ~/.vim/bundle/vundle
 
 new_vim_chksum="$(md5sum "${DOTFILES_DIR}/vimrc")"
 if [ "${vim_chksum:-nope}" != "${new_vim_chksum}" ]; then
   # Install any new vim plugins.
-  vim -c ':PluginInstall' -c ':qa'
+  env VIMRC_FORCE_BOOTSTRAP=1 vim -c ':qa'
 fi
