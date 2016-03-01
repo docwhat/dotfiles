@@ -3,7 +3,7 @@
 if [ "${SSH_AUTH_SOCK:-}" != "$HOME/.ssh/ssh_auth_sock" ]; then
   if (( $+commands[ssh-add] )); then
     if (( $+commands[keychain] )); then
-      eval "$(keychain --quiet --quick --agents ssh --inherit any-once --eval)"
+      eval "$(keychain --quiet --quick --noask --agents ssh --inherit any-once --eval)"
       if [[ "${OSTYPE}" != darwin* ]] && ! ssh-add -l >/dev/null; then
         [ -r ~/.ssh/id_rsa ] && ssh-add ~/.ssh/id_rsa
         [ -r ~/.ssh/id_dsa ] && ssh-add ~/.ssh/id_dsa
