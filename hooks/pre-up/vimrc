@@ -5,14 +5,9 @@ set -eu
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
 
-if [ -f "${DOTFILES_DIR}/vimrc" ]; then
-  vim_chksum="$(md5sum "${DOTFILES_DIR}/vimrc")"
+# Cleanup old cruft.
+if [ -d "${DOTFILES_DIR}/vim/vimrc" ]; then
+  rm -rf "${DOTFILES_DIR}/vim"
 fi
 
-hh_git 'Vimrc'  'https://github.com/docwhat/homedir-vim.git' 'vim/vimrc'
-
-new_vim_chksum="$(md5sum "${DOTFILES_DIR}/vimrc")"
-if [ "${vim_chksum:-nope}" != "${new_vim_chksum}" ]; then
-  # Install any new vim plugins.
-  env VIMRC_FORCE_BOOTSTRAP=1 vim -c ':qa'
-fi
+# EOF
