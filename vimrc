@@ -600,8 +600,8 @@ function! LoadPlugins()
   "   iI (alias for ii)
   Plug 'michaeljsmith/vim-indent-object'
 
-  if filereadable(g:my_vimrc . '.bundles')
-    execute 'source ' . g:my_vimrc . '.bundles'
+  if filereadable(g:my_vimrc . '.plugins')
+    execute 'source ' . g:my_vimrc . '.plugins'
   endif
 endfunction
 
@@ -658,7 +658,7 @@ augroup END
 
 " Post Plugin Initialization
 "-----------------------------------------------------------------------------
-" More complicated stuff that can only work after the bundles are loaded.
+" More complicated stuff that can only work after the plugins are loaded.
 " e.g. detecting if something *isn't* loaded.
 function! PostPluginSetup()
   " CtrlP auto cache clearing.
