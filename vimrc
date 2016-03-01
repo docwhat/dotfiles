@@ -552,6 +552,9 @@ function! LoadPlugins()
     let g:gist_clip_command = 'pbcopy'
   endif
 
+  " WebAPI libraries for vim itself.
+  Plug 'mattn/webapi-vim'
+
   " Like Command T for TextMate.
   " <leader>t to activate
   " <C-d> to toggle between just matching filename or whole path.
@@ -607,14 +610,14 @@ endfunction
 
 " Only install the plugin system if we have the tools.
 if executable('git') && executable('curl') && has('autocmd')
-  let s:bootstrap=$VIMRC_FORCE_BOOTSTRAP
+  let g:my_bootstrap=$VIMRC_FORCE_BOOTSTRAP
 
   let s:vim_plug_path = g:my_vim_dir . "/autoload/plug.vim"
   if !filereadable(s:vim_plug_path)
-    let s:bootstrap=1
+    let g:my_bootstrap=1
   endif
 
-  if s:bootstrap
+  if g:my_bootstrap
     execute 'silent !curl -qSLo ' . s:vim_plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     execute 'source ' . s:vim_plug_path
   endif
@@ -624,17 +627,16 @@ if executable('git') && executable('curl') && has('autocmd')
   call plug#begin()
   call LoadPlugins()
   call plug#end()
-  filetype plugin indent on
 
-  if s:bootstrap
-    " TODO Run PluginInstall whenever the .vimrc changes (specifically the
-    " Pluginsettings).
+  if has('python')
+    execute 'source ' . g:my_vim_dir . '/startup/check_for_plugin_changes.vim'
+  endif
+
+  if g:my_bootstrap
     silent :PlugUpdate
     quit " Close the plugin install window.
   endif
-  unlet s:bootstrap
-elseif has('autocmd')
-  filetype plugin indent on
+  unlet g:my_bootstrap
 endif
 
 " Create Parent Directories
