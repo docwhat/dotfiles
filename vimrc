@@ -266,7 +266,7 @@ function! LoadPlugins()
 
     Plug 'honza/vim-snippets'
     " Tell NeoSnippet about these snippets
-    let g:neosnippet#snippets_directory = g:my_vim_dir . '/bundle/vim-snippets/snippets'
+    let g:neosnippet#snippets_directory = g:plug_home . '/vim-snippets/snippets'
 
     Plug 'Shougo/neosnippet'
     Plug 'Shougo/neosnippet-snippets'
