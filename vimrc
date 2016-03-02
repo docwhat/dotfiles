@@ -445,8 +445,6 @@ function! LoadPlugins()
   Plug 'wting/rust.vim'
 
   " GoLang
-  " https://github.com/fatih/vim-go
-  Plug 'fatih/vim-go', { 'for': 'go' }
   let g:go_highlight_functions = 1
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
@@ -457,6 +455,8 @@ function! LoadPlugins()
   let g:go_fmt_autosave = 1
   let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+  Plug 'fatih/vim-go', { 'for': 'go' }
+  Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go-explorer/src/getool' }
 
   " GraphViz
   Plug 'wannesm/wmgraphviz.vim'
