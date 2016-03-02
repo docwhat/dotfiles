@@ -1,4 +1,4 @@
 # vim: ft=zsh :
 
-export GOPATH="$HOME/.gocode"
+export GOPATH="$HOME/.go"
 [ -d "$GOPATH" ] || mkdir -p "$GOPATH"
