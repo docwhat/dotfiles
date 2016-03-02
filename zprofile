@@ -4,7 +4,6 @@
 path=(
   "$HOME/bin"
   "$HOME/.cabal/bin"
-  "$HOME/.gocode/bin"
   /usr/local/sbin
   /usr/local/bin
   /usr/local/share/npm/bin
