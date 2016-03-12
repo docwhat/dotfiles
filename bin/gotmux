@@ -1,16 +1,9 @@
 #!/bin/bash
+# vi: set ft=sh et sw=2 ts=2 :
 
 set -euo pipefail
 
-# Finds a matching work or project directory.
 function connect {
-  local session="${1:-}"
-  if [[ -n "${session}" && -z "${start_dir}" ]]; then
-    start_dir=$(find ~/work ~/projects -maxdepth 2 -type d -iregex ".*/${session}/.git" | head -n 1)
-    if [[ -n "${start_dir}" ]]; then
-      start_dir=${start_dir%/*}
-    fi
-  fi
   if [[ -z "${session}" ]]; then
     session=main
   fi
@@ -24,7 +17,6 @@ function connect {
 }
 
 function simple_connect {
-  local session="${1:-main}"
   [[ -n "${start_dir}" ]] && cd "${start_dir}"
 
   if tmux has-session -t "${session}"; then
@@ -46,47 +38,67 @@ function list {
   exit 0
 }
 
-function projects {
-  [[ $show_headers = true ]] && echo "Projects:"
-  find -L  ~/work ~/projects -maxdepth 2 -type d -regex '.*/\(\.svn\|\.git\|\.hg\|CVS\)' -print | perl -p -e 's!.*/([^/]*)/[^/]+$!$1\n!g' | sort -u
+define(){ IFS='\n' read -r -d '' ${1} || true; }
+
+function help {
+  echo "$help_text"
   exit 0
 }
 
-function help {
-    cat <<EOF
-Usage: $0 [options] <session>
-
-  -d --directory DIR  Start tmux in this directory.
-  -l --list           List all sessions.
-  -p --projects       List all known projects.
-  -h --help           You're soaking in it.
-EOF
-  exit 0
+function helperr {
+  echo "ERROR: $*" 1>&2
+  echo "$help_text"
+  exit 125
 }
 
 mode="connect"
-typeset -a args
-typeset start_dir=""
+typeset start_dir=''
 typeset show_headers=true
-args=(   )
+typeset session=''
+
+define help_text <<HELPTEXT
+Usage: $0 [options] [<session>]
+
+-d --directory DIR  Start tmux in this directory.
+-l --list           List all sessions.
+-h --help           You're soaking in it.
+HELPTEXT
+
 while (( "${#*}" > 0 )); do
   case "${1}" in
-    --list|-l) mode="list" ;;
-    --projects|-p) mode="projects" ;;
-    --help|-h) mode="help" ;;
-    --no-headers|-s) show_headers=false ;;
-    --dir*|-d) shift; start_dir="${1}" ;;
-    *) args+="${1}";;
+  --list|-l)
+    mode="list"
+    ;;
+  --help|-h)
+    mode="help"
+    ;;
+  --no-headers|-s)
+    show_headers=false
+    ;;
+  --dir*|-d)
+    shift; start_dir="${1}"
+    ;;
+  *)
+    if [ -z "$session" ]; then
+      session=$1
+    else
+      helperr "Only one session can be specified"
+    fi
+    ;;
   esac
   shift
 done
 
+if [ -z "$session" ]; then
+  session=main
+fi
+
 case "${mode}" in
-  list) list ;;
-  help) help ;;
-  projects) projects ;;
-  connect) connect "${args[@]:-}" ;;
+list) list ;;
+help) help ;;
+connect) connect "${args[@]:-}" ;;
 esac
 
-echo "Something has gone wrong."
-exit 11
+helperr "Something has gone wrong."
+
+# EOF
