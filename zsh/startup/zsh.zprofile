@@ -23,5 +23,5 @@ fi
 # Save the location of the current completion dump file.
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zsh/cache/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
-export PROMPT_EOL_MARK ZSH_COMPDUMP
+export PROMPT_EOL_MARK ZSH_COMPDUMP SHORT_HOST
 # EOF
