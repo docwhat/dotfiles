@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -euo pipefail
 
 # Finds a matching work or project directory.
 function connect {
@@ -24,8 +24,6 @@ function connect {
 }
 
 function simple_connect {
-  set -eu
-
   local session="${1:-main}"
   [[ -n "${start_dir}" ]] && cd "${start_dir}"
 
@@ -87,7 +85,7 @@ case "${mode}" in
   list) list ;;
   help) help ;;
   projects) projects ;;
-  connect) set +u ; connect "${args[@]}" ;;
+  connect) connect "${args[@]:-}" ;;
 esac
 
 echo "Something has gone wrong."
