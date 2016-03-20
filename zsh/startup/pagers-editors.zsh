@@ -13,6 +13,7 @@ export PAGER="less"
 export ACK_PAGER="less -R -+F"
 export GIT_EDITOR="vim +1"
 export EDITOR="vim"
+export FPP_EDITOR="$EDITOR"
 export MANPAGER="${HOME}/.bin/manpager"
 export VISUAL="${HOME}/.bin/visual-editor"
 
