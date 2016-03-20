@@ -1132,14 +1132,18 @@ if has('autocmd')
     endif
   endfunction
 
+  let g:real_manpager=$MANPAGER
+  let g:ft_man_folding_enable = 1
+  runtime ftplugin/man.vim
+
   augroup ManAndHelpPages
+    autocmd!
     autocmd FileType help nested call ILikeHelpToTheRight()
     autocmd FileType man,help nested nnoremap <buffer> q :q!<cr>
-    autocmd FileType man,help nested nnoremap <buffer> <space> <c-d>
-    autocmd FileType man,help nested nnoremap <buffer> b <c-u>
     autocmd FileType man nested let &listchars=""
-    " Prevent recursive vim calls when using :Man
-    autocmd FileType man let $MANPAGER="cat"
+    " Work around for stupid attempt to prevent recursive vim
+    " calls.
+    autocmd FileType man nested let $MANPAGER=g:real_manpager
   augroup END
 endif
 

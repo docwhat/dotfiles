@@ -1,8 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
-set -eu
+set -euo pipefail
 
-exec \
-  col -bx |\
-  iconv -c |\
-  vim -R -c 'set ft=man nonu nolist nomod' -
+function pager {
+  if [ -t 1 ]; then
+    # If we have a terminal, use vim
+    vim \
+      -R \
+      -c 'set ft=man ts=8 nonumber nolist nomodified nomodifiable' \
+      -
+  else
+    # If we're piped, then use cat
+    cat
+  fi
+}
+
+exec col -bx | iconv -c | pager
