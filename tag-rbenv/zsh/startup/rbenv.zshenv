@@ -6,9 +6,11 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
   fi
 
   if (( $+commands[rbenv] )) && [ -d "${RBENV_ROOT}" ]; then
-    eval "$(rbenv init - --no-rehash)"
+    p="$PATH"
+    eval "$(rbenv init - --no-rehash zsh)"
     # rbenv init - is being too clever by half... Fix the
     # path ourselves.
-    export PATH="${HOME}/bin:${RBENV_ROOT}/shims:${PATH}"
+    export PATH="${HOME}/bin:${RBENV_ROOT}/shims:${p}"
+    unset p
   fi
 fi

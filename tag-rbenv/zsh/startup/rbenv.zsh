@@ -9,7 +9,7 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
     if [[ -n "${RBENV_ROOT}" ]]; then
       mkdir -p "${RBENV_ROOT}/cache"
       if [[ -z "$functions[rbenv]" ]]; then
-        echo "${fg[red]}Huh... rbenv wasn't loaded in .zshenv?\!${reset_color}" 1>&2
+        echo "${fg[red]}Huh... rbenv wasn't loaded in .zshenv?!${reset_color}" 1>&2
         eval "$(rbenv init - --no-rehash)"
       fi
 
