@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+
+hh_git 'Tmux Package Manager' https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
