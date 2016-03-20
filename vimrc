@@ -326,10 +326,11 @@ function! LoadPlugins()
     let g:NERDCommentWholeLinesInVMode=2
   endif
 
-  " Navigate seemlessly between tmux panes and vim windows.
-  " Note: See https://github.com/christoomey/vim-tmux-navigator for
-  " how to setup your ~/.tmux.conf file.
-  Plug 'christoomey/vim-tmux-navigator'
+  " tmux syntax highlighting and tools.
+  Plug 'tmux-plugins/vim-tmux'
+
+  " Fixes FocusGained/FocusLost events in the terminal.
+  Plug 'tmux-plugins/vim-tmux-focus-events'
 
   " NGinx configuration files.
   Plug 'evanmiller/nginx-vim-syntax'
