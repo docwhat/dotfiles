@@ -84,6 +84,9 @@
 [help]
 	autocorrect = 1
 
+[url "git@github.com:docwhat/"]
+	insteadOf = https://github.com/docwhat/
+
 [include]
 	path = .gitconfig.local
 
