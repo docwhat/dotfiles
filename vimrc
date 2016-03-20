@@ -379,6 +379,8 @@ function! LoadPlugins()
     let g:syntastic_xslt_checkers         = ['xmllint']
     " npm install js-yaml
     let g:syntastic_yaml_checkers         = ['jsyaml']
+    " let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+    " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': [] }
     Plug 'dbakker/vim-lint'
   endif
 
@@ -454,8 +456,6 @@ function! LoadPlugins()
   let g:go_highlight_build_constraints = 1
   let g:go_fmt_command = "goimports"
   let g:go_fmt_autosave = 1
-  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-  let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   Plug 'fatih/vim-go', { 'for': 'go' }
   Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go-explorer/src/getool' }
 
