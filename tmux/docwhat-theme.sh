@@ -1,8 +1,6 @@
 #!/bin/bash
 
 set -euo pipefail
-exec 2>/tmp/out
-set -x
 
 is_osx() {
   local platform=$(uname)
@@ -14,7 +12,8 @@ if is_osx; then
   short_host=$(scutil --get ComputerName)
   short_host="${short_host%% \(*\)}"
 else
-  short_host=${HOST/.*/}
+  short_host=$(hostname)
+  short_host=${short_host/.*/}
 fi
 
 short_host_size=${#short_host}
