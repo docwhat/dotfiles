@@ -34,16 +34,6 @@ if (( $+commands[brew] )); then
       rehash
     fi
   }
-
-  function enccache()
-  {
-    if [[ -d "$(brew --prefix ccache)" ]]; then
-      export PATH="$(brew --prefix ccache)/libexec:${PATH}"
-      typeset -U path
-    else
-      echo "ccache is not installed"
-    fi
-  }
 fi
 
 # EOF

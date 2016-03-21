@@ -3,7 +3,7 @@
 # The path has to be set *first*
 path=(
   "$HOME/bin"
-  "$HOME/.cabal/bin"
+  "$HOME/.bin"
   /usr/local/sbin
   /usr/local/bin
   /usr/local/share/npm/bin
@@ -12,7 +12,7 @@ path=(
   /usr/sbin
   /sbin
   /opt/X11/bin
-  $path
+  "${path[@]}"
 )
 
 manpath=(
