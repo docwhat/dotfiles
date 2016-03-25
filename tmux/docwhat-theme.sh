@@ -17,6 +17,8 @@ else
 fi
 
 short_host_size=${#short_host}
+session_name=$(tmux display-message -p '#S' || echo 6)
+session_name_length=${#session_name}
 
 tmux set-option -g status-attr dim
 tmux set-option -g status-justify centre # center spelled funny
@@ -29,9 +31,9 @@ tmux set-option -g status-left-length $(( short_host_size + 4 ))
 tmux set-option -g status-left-style "none"
 tmux set-option -g status-left "#{prefix_highlight}#[fg=colour232,bg=colour154] $short_host #[fg=colour154,bg=colour235,nobold,nounderscore,noitalics]#[default]"
 
-tmux set-option -g status-right-length 34
+tmux set-option -g status-right-length $(( session_name_length + 37 ))
 tmux set-option -g status-left-style "none"
-tmux set-option -g status-right "#[fg=colour238,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour154,bg=colour238] %Y-%m-%d %l:%M%P #[fg=colour154,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour232,bg=colour154] #S "
+tmux set-option -g status-right "#[fg=colour238,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour154,bg=colour238] %Y-%m-%d  %l:%M%P #[fg=colour154,bg=colour238,nobold,nounderscore,noitalics]#[fg=colour232,bg=colour154] #S "
 
 # Message popup.
 tmux set-option -g message-command-style "fg=colour222,bg=colour238"
