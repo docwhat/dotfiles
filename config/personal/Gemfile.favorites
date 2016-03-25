@@ -14,7 +14,7 @@ gem 'ruby-lint'
 gem 'rubocop'
 gem 'ghi'
 
-gem 'powder' if 'darwin' == Gem::Platform.local.os
+gem 'powify' if 'darwin' == Gem::Platform.local.os
 
 gem 'brew-cask-upgrade' if File.executable? '/usr/local/bin/brew'
 

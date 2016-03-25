@@ -39,7 +39,6 @@ plugins=(
   rails
   rake
   gem
-  powder
   heroku
   thor
   cap
