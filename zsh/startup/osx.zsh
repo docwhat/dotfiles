@@ -39,10 +39,10 @@ if [[ "${OSTYPE}" == darwin* ]]; then
 
     local phrase="$(ruby -e "${prog}")"
     if [ 0 != "${ec}" ]; then
-      say -r 270 "Uh-oh! ${phrase} The exit code was $ec."
+      say  "Uh-oh! ${phrase} The exit code was $ec."
       echo " ** ${phrase} The exit code was $ec **" 1>&2
     else
-      say -r 300 "${phrase}."
+      say "${phrase}."
     fi
 
     return $ec
