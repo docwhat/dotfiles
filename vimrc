@@ -1205,6 +1205,12 @@ if has('autocmd')
   augroup END
 endif
 
+" SQL
+"-----------------------------------------------------------------------------
+if executable('pg_format')
+  command! PgFormat %!pg_format -f3 -u2 -
+endif
+
 " Fix constant spelling and typing mistakes
 "-----------------------------------------------------------------------------
 iab teh the
