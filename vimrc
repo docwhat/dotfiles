@@ -133,6 +133,7 @@ function! LoadPlugins()
     " Use NeoComplete
     " ---------------
     let g:neocomplete#enable_at_startup              = 1
+    let g:neocomplete#enable_smart_case              = 1
     let g:neocomplete#force_overwrite_completefunc   = 1
     let g:neocomplete#data_directory                 = g:my_vim_dir . '/neocomplcache'
 
@@ -145,10 +146,11 @@ function! LoadPlugins()
     let g:neocomplete#keyword_patterns._    = '\h\w*'
     let g:neocomplete#keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::\w*'
 
-    let g:neocomplete#sources#omni#input_patterns      = {}
-    let g:neocomplete#sources#omni#input_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplete#sources#omni#input_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplete#sources#omni#input_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+    let g:neocomplete#sources#syntax#min_keyword_length = 3
+    let g:neocomplete#sources#omni#input_patterns       = {}
+    let g:neocomplete#sources#omni#input_patterns.php   = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplete#sources#omni#input_patterns.c     = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#sources#omni#input_patterns.cpp   = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
     let g:neocomplete#force_omni_input_patterns      = {}
     let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::\w*'
