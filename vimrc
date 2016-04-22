@@ -1146,6 +1146,14 @@ if has('autocmd')
   augroup END
 endif
 
+" Groovy
+if has('autocmd')
+  augroup Groovy
+    autocmd!
+    autocmd BufNewFile,BufRead Jenkinsfile nested setlocal filetype=groovy
+  augroup END
+endif
+
 " java/c/cpp/objc syntax
 "-----------------------------------------------------------------------------
 if has('autocmd')
