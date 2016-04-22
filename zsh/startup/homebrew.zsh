@@ -24,6 +24,10 @@ if (( $+commands[brew] )); then
     HELPDIR=/usr/local/share/zsh/help
   fi
 
+  if [ -x /usr/local/opt/openssl/bin/openssl ]; then
+    alias openssl=/usr/local/opt/openssl/bin/openssl
+  fi
+
   function brew()
   {
     # We want to use the system ruby to compile vim.
