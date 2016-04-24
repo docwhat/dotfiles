@@ -79,5 +79,7 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     fi
   }
 
+  alias super-tools-update="tools-update && rbenv-update-plugins && update-gems && (rbenv use system && brew update &&  brew upgrade && brew cleanup) && brew-cask-upgrade && brew cask cleanup && vim -c ':PlugUpgrade' -c ':PlugUpdate' -c ':qa\!'"
+
   export BROWSER='open'
 fi
