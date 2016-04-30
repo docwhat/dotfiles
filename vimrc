@@ -1221,6 +1221,17 @@ if executable('pg_format')
   command! PgFormat %!pg_format -f3 -u2 -
 endif
 
+" Golang
+"-----------------------------------------------------------------------------
+if !exists('g:projectionist_heuristics')
+  let g:projectionist_heuristics = {}
+endif
+let g:projectionist_heuristics['*.go'] = {
+      \ '*.go': { 'alternate': '{}_test.go', 'type': 'source' },
+      \ '*_test.go': { 'alternate': '{}.go', 'type': 'test', 'template': ["package {}", "", "import \"testing\"", "", "func TestSomething(t *testing.T) {", "}" ] }
+      \ }
+
+
 " Fix constant spelling and typing mistakes
 "-----------------------------------------------------------------------------
 iab teh the
