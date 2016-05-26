@@ -62,3 +62,5 @@ unset config_file
 
 # Fix the paths up
 typeset -xU fpath path manpath
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
