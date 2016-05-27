@@ -1230,6 +1230,11 @@ let g:projectionist_heuristics['*.go'] = {
       \ '*.go': { 'alternate': '{}_test.go', 'type': 'source' },
       \ '*_test.go': { 'alternate': '{}.go', 'type': 'test', 'template': ["package {}", "", "import \"testing\"", "", "func TestSomething(t *testing.T) {", "}" ] }
       \ }
+if has('autocmd')
+  augroup GoLang
+    autocmd FileType go nested setlocal wrap
+  augroup END
+endif
 
 
 " Fix constant spelling and typing mistakes
