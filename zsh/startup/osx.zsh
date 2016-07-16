@@ -83,8 +83,7 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     tools-update &&\
       rbenv-update-plugins &&\
       update-gems &&\
-      (rbenv use system && brew update && brew upgrade && brew cleanup) &&\
-      brew-cask-upgrade &&\
+      (rbenv use system && brew update && brew upgrade) &&\
       vim -c ':PlugUpgrade' -c ':PlugUpdate' -c ':qa!'
     return $?
   }
