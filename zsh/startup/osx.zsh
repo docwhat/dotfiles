@@ -23,29 +23,24 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     fi
   }
 
-  function set_iterm_profile()
-  {
-    echo -e "\033]50;SetProfile=$1\a"
-  }
-
   function saydone()
   {
     local ec=$?
 
     local prog='
     phrases=%w(done over finished ended concluded terminated dead gone) + ["over and done with", "at an end", "no more", "in the past"]
-    puts "The process is #{phrases.sample}."
-    '
+puts "The process is #{phrases.sample}."
+'
 
-    local phrase="$(ruby -e "${prog}")"
-    if [ 0 != "${ec}" ]; then
-      say  "Uh-oh! ${phrase} The exit code was $ec."
-      echo " ** ${phrase} The exit code was $ec **" 1>&2
-    else
-      say "${phrase}."
-    fi
+local phrase="$(ruby -e "${prog}")"
+if [ 0 != "${ec}" ]; then
+  say  "Uh-oh! ${phrase} The exit code was $ec."
+  echo " ** ${phrase} The exit code was $ec **" 1>&2
+else
+  say "${phrase}."
+fi
 
-    return $ec
+return $ec
   }
 
   function exclude-from-backup
