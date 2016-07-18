@@ -40,6 +40,10 @@ else
   say "${phrase}."
 fi
 
+if (( $+functions[iterm-get-attention] )); then
+  iterm-get-attention
+fi
+
 return $ec
   }
 
