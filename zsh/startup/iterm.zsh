@@ -9,19 +9,15 @@ if [ -n "$ITERM_SHELL_INTEGRATION_INSTALLED" ]; then
     printf "$template" "$@"
   }
 
-  set-iterm-profile() {
+  iterm-profile() {
     iterm-emit '1337;SetProfile=%s' "$1"
   }
 
-  get-iterm-attention() {
-    iterm-emit '1337;RequestAttention=true'
-  }
-
-  set-iterm-user-var() {
+  iterm-user-var() {
     iterm-emit '1337;SetUserVar=%s=%s' "$1" "$(echo -n "$2" | base64)"
   }
 
-  set-iterm-badge-format() {
+  iterm-badge-format() {
     iterm-emit '1337;SetBadgeFormat=%s' "$(echo -n "$1" | base64)"
   }
 
@@ -39,6 +35,10 @@ if [ -n "$ITERM_SHELL_INTEGRATION_INSTALLED" ]; then
 
   iterm-clear-scrollback() {
     iterm-emit '1337;ClearScrollback'
+  }
+
+  iterm-get-attention() {
+    iterm-emit '1337;RequestAttention=true'
   }
 
   iterm-steal-focus() {
