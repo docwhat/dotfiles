@@ -1232,7 +1232,7 @@ let g:projectionist_heuristics['*.go'] = {
       \ }
 if has('autocmd')
   augroup GoLang
-    autocmd FileType go nested setlocal wrap
+    autocmd FileType go nested setlocal wrap noexpandtab listchars+=tab:\ \  nolist
   augroup END
 endif
 
