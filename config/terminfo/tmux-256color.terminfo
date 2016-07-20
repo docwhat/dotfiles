@@ -1,6 +1,6 @@
 #	Reconstructed via infocmp from file: /usr/share/terminfo/s/screen-256color-bce-s
 #	Modified by John O. for use with tmux
-tmux18-256color|TMux with 256 colors and status line (based on screen-256color-bce-s),
+tmux-256color|TMux with 256 colors and status line (based on screen-256color-bce-s),
 #fileversion=2015-03-13,
 	am,
     bce@,

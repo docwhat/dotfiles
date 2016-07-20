@@ -1,14 +1,5 @@
 if [ -n "$TMUX" ]; then
 
-  # Install tmux terminal if missing.
-  if [[ "$TERM" = tmux-256color ]] && \
-    (( $+commands[tic] )) && \
-    (( $+commands[tput] )) && \
-    ! env "TERM=$term" tput cols >/dev/null 2>&1
-  then
-    tic ~/.config/terminfo/tmux-256color.terminfo
-  fi
-
   # Alias so ssh will change the window name.
   ssh() {
     local old_allow_rename="$(tmux showw -g automatic-rename | cut -d ' ' -f 2)"
