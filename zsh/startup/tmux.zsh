@@ -1,12 +1,12 @@
 if [ -n "$TMUX" ]; then
 
   # Install tmux terminal if missing.
-  if [[ "$TERM" = tmux* ]] && \
+  if [[ "$TERM" = tmux-256color ]] && \
     (( $+commands[tic] )) && \
     (( $+commands[tput] )) && \
     ! env "TERM=$term" tput cols >/dev/null 2>&1
   then
-    tic ~/.config/terminfo/tmux18-256color.terminfo
+    tic ~/.config/terminfo/tmux-256color.terminfo
   fi
 
   # Alias so ssh will change the window name.

@@ -8,7 +8,7 @@ typeset -a term=(
   screen
   screen-256color
   screen.xterm-new
-  tmux18-256color
+  tmux-256color
 )
 
 for term in "${term[@]}"; do
