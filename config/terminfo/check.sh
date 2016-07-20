@@ -12,7 +12,7 @@ typeset -a term=(
 )
 
 for term in "${term[@]}"; do
-  env "TERM=$term" tput cols >/dev/null 2>/dev/null && echo "TERM=$term"
+  env "TERM=$term" tput cols >/dev/null 2>&1 && echo "TERM=$term"
 done
 
 # EOF
