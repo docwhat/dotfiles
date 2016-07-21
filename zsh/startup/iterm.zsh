@@ -1,4 +1,4 @@
-if [ -n "$ITERM_SHELL_INTEGRATION_INSTALLED" ]; then
+if [ "$TERM_PROGRAM" = 'iTerm.app' ]; then
   iterm-emit() {
     local template="\e]${1}\007"
     shift
