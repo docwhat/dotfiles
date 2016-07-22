@@ -10,6 +10,9 @@ if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
       screen*)
         new_term=screen
         ;;
+      tmux*)
+        new_term=screen
+        ;;
       xterm*)
         new_term=xterm
         ;;
