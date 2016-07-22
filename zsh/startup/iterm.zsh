@@ -3,7 +3,7 @@ if [ "$TERM_PROGRAM" = 'iTerm.app' ]; then
     local template="\e]${1}\007"
     shift
 
-    if [[ -n "$TMUX" -o "$TERM" = tmux* ]]; then
+    if [[ -n "$TMUX" || "$TERM" = tmux* ]]; then
       template="\ePtmux;\e${template}\e\\"
     fi
     printf "$template" "$@"
