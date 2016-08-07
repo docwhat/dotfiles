@@ -1,4 +1,5 @@
 if (( $+commands[grep] )); then
+  unset GREP_OPTIONS
   alias grep='grep --color=auto'
 
   if [[ $(echotc Co) -ge 256 ]]; then
