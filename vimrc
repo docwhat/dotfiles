@@ -532,8 +532,7 @@ function! LoadPlugins()
   if has('python') && v:version >= 704
     let g:pandoc#modules#disabled = [ 'folding' ]
     let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
-    let g:pandoc#formatting#mode = 'hA'
-    " let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown-simple_tables-fenced_code_attributes --wrap=none --standalone"
+    let g:pandoc#formatting#mode = "hA"
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-pandoc/vim-pandoc-after'
