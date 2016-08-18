@@ -529,24 +529,14 @@ function! LoadPlugins()
   " Markdown
   Plug 'vim-scripts/VOoM'
   Plug 'tpope/vim-markdown'
-  if has('python') && executable('pandoc')
-    if v:version >= 704
-      " old style
-      let g:pantondoc_disabled_modules = [ 'folding' ]
-      let g:pantondoc_use_pandoc_equalprg = 0
-      let g:pandoc_use_embeds_in_codeblocks_for_langs = ['sh', 'ruby', 'html', 'xml', 'js=javascript', 'json', 'coffee', 'groovy']
-      " new style
-      let g:pandoc#modules#disabled = [ 'folding' ]
-      let g:pandoc#formatting#pandoc_equalprog = 0
-      let g:pandoc#formatting#mode = 'ha'
-      Plug 'vim-pandoc/vim-pantondoc'
-      Plug 'vim-pandoc/vim-pandoc-syntax'
-      Plug 'vim-pandoc/vim-pandoc-after'
-    else
-      " Folding slows things down and annoys me.
-      let g:pandoc_no_folding = 1
-      Plug 'vim-pandoc/vim-pandoc'
-    endif
+  if has('python') && v:version >= 704
+    let g:pandoc#modules#disabled = [ 'folding' ]
+    let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
+    let g:pandoc#formatting#mode = 'hA'
+    " let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown-simple_tables-fenced_code_attributes --wrap=none --standalone"
+    Plug 'vim-pandoc/vim-pandoc'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'vim-pandoc/vim-pandoc-after'
   endif
 
   " Groovy -- Make sure you set the GROOVY_HOME environment variable
@@ -1184,18 +1174,19 @@ if has('autocmd')
     if exists('g:loaded_pandoc')
       autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
     else
-      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown textwidth=79
+      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
     endif
     autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
     if executable('pandoc')
-      let g:pandoc_markdown_equalprg="pandoc --from=markdown --to=markdown-simple_tables-fenced_code_attributes --standalone"
-      command! -buffer MarkdownTidyWrap execute "%!" . g:pandoc_markdown_equalprg
       function! SetPandocEqualPrg()
-        let &l:equalprg=g:pandoc_markdown_equalprg
+        let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown-simple_tables-fenced_code_attributes --wrap=none --standalone"
+        let g:pandoc#formatting#mode = substitute(g:pandoc#formatting#mode, "[sh]", "", "g")
         if &textwidth > 0
+          let g:pandoc#formatting#mode .= "h"
           let &l:equalprg.=" --columns " . &textwidth
         else
-          let &l:equalprg.=" --wrap=preserve"
+          let g:pandoc#formatting#mode .= "s"
+          let &l:equalprg.=" --wrap=none"
         endif
         setlocal concealcursor= conceallevel=1
       endfunction
