@@ -536,6 +536,7 @@ function! LoadPlugins()
     let g:pandoc#modules#disabled = [ 'folding' ]
     let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
     let g:pandoc#formatting#mode = "hA"
+    let g:pandoc#formatting#extra_equalprg = ""
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-pandoc/vim-pandoc-after'
