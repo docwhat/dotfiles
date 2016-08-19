@@ -328,6 +328,9 @@ function! LoadPlugins()
     let g:NERDCommentWholeLinesInVMode=2
   endif
 
+  " EditorConfig -- http://editorconfig.org/
+  Plug 'editorconfig/editorconfig-vim'
+
   " tmux syntax highlighting and tools.
   Plug 'tmux-plugins/vim-tmux'
 
