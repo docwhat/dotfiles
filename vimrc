@@ -1175,7 +1175,7 @@ endif
 if has('autocmd')
   augroup MarkdownPandoc
     autocmd!
-    if exists('g:loaded_pandoc') && executable('pandoc')
+    if has_key(g:plugs, 'vim-pandoc')
       function! SetPandocEqualPrg()
         let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown_github --standalone"
         let g:pandoc#formatting#mode = substitute(g:pandoc#formatting#mode, "[sh]", "", "g")
@@ -1186,6 +1186,7 @@ if has('autocmd')
           let g:pandoc#formatting#mode .= "s"
           let g:pandoc#formatting#equalprg .= " --wrap=none"
         endif
+        let &l:equalprg = g:pandoc#formatting#equalprg
         setlocal concealcursor= conceallevel=1
       endfunction
       autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
@@ -1241,9 +1242,7 @@ function! EditorConfigFiletypeHook(config)
   return 0   " Return 0 to show no error happened
 endfunction
 
-if exists('g:loaded_EditorConfig')
-  call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
-endif
+call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
 
 " Fix constant spelling and typing mistakes
 "-----------------------------------------------------------------------------
