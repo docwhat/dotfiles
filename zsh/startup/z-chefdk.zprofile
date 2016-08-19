@@ -1,5 +1,3 @@
-# vim: ft=zsh :
-
 # Add the ChefDK at the beginning of the path if installed.
 if [ -d /opt/chefdk/bin ]; then
   if [ "$ZSH_ENABLECHEFDK" = true ]; then

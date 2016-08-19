@@ -1,5 +1,3 @@
-# vim: ft=zsh :
-
 # Settings related to homebrew
 if (( $+commands[brew] )); then
   # Docbook support

@@ -1,5 +1,3 @@
-# vim: ft=zsh :
-
 if (( $+commands[brew] )); then
   # Extra ZSH completions from Homebrew packages
   if [[ -d /usr/local/share/zsh/site-completions ]]; then

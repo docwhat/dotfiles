@@ -1,5 +1,3 @@
-# vim: ft=zsh :
-
 path=(~/bin ~/.bin "$path[@]")
 
 # Fix the paths up

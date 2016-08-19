@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 # Install terminfo stuff if missing.
 if (( $+commands[tic] )) && (( $+commands[tput] )); then
   install_term=f
