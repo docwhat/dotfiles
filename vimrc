@@ -1175,27 +1175,26 @@ endif
 if has('autocmd')
   augroup MarkdownPandoc
     autocmd!
-    if exists('g:loaded_pandoc')
-      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
-    else
-      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
-    endif
-    autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
-    if executable('pandoc')
+    if exists('g:loaded_pandoc') && executable('pandoc')
       function! SetPandocEqualPrg()
-        let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown-simple_tables-fenced_code_attributes --wrap=none --standalone"
+        let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown_github --standalone"
         let g:pandoc#formatting#mode = substitute(g:pandoc#formatting#mode, "[sh]", "", "g")
-        if &textwidth > 0
+        if &l:textwidth > 0
           let g:pandoc#formatting#mode .= "h"
-          let &l:equalprg.=" --columns " . &textwidth
+          let g:pandoc#formatting#equalprg .= " --columns " . &l:textwidth
         else
           let g:pandoc#formatting#mode .= "s"
-          let &l:equalprg.=" --wrap=none"
+          let g:pandoc#formatting#equalprg .= " --wrap=none"
         endif
         setlocal concealcursor= conceallevel=1
       endfunction
+      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
       autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested call SetPandocEqualPrg()
       autocmd FileType pandoc nested call SetPandocEqualPrg()
+      autocmd FileType pandoc nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
+    else
+      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
+      autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
     endif
   augroup END
 endif
@@ -1231,6 +1230,20 @@ if has('autocmd')
   augroup END
 endif
 
+
+" EditorConfig
+"-----------------------------------------------------------------------------
+function! EditorConfigFiletypeHook(config)
+  if has_key(a:config, 'vim_filetype')
+    let &filetype = a:config['vim_filetype']
+  endif
+
+  return 0   " Return 0 to show no error happened
+endfunction
+
+if exists('g:loaded_EditorConfig')
+  call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
+endif
 
 " Fix constant spelling and typing mistakes
 "-----------------------------------------------------------------------------
