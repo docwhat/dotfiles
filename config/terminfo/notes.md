@@ -6,6 +6,7 @@ TermInfo:
 
 -   http://linsam.homelinux.com/tmux/terminfo.html
 
-Installing terminals:
+Misc:
 
-`tic -xa <terminfo>`
+* `tic -xa <terminfo>`
+* `infocmp -xL1 <TERM>`
