@@ -530,13 +530,14 @@ function! LoadPlugins()
   Plug 'lukerandall/haskellmode-vim'
 
   " Markdown
-  Plug 'vim-scripts/VOoM'
   Plug 'tpope/vim-markdown'
+  let g:vim_markdown_folding_disabled=1
   if has('python') && v:version >= 704
-    let g:pandoc#modules#disabled = [ 'folding' ]
+    let g:pandoc#modules#disabled = ["folding", "chdir"]
     let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
-    let g:pandoc#formatting#mode = "hA"
-    let g:pandoc#formatting#extra_equalprg = ""
+    let g:pandoc#formatting#mode = "sa"
+    let g:pandoc#formatting#equalprg = ""
+    let g:pandoc#formatting#extra_equalprg = "--standalone"
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-pandoc/vim-pandoc-after'
@@ -1027,18 +1028,6 @@ if has('autocmd')
   augroup END
 endif
 
-" Voom settings
-if has('autocmd')
-  augroup VoomKeys
-    autocmd!
-    autocmd FileType rst      nested nnoremap <buffer> <silent> <leader>o :VoomToggle rest<cr>
-    autocmd FileType pandoc   nested nnoremap <buffer> <silent> <leader>o :VoomToggle pandoc<cr>
-    autocmd FileType markdown nested nnoremap <buffer> <silent> <leader>o :VoomToggle markdown<cr>
-    autocmd FileType html     nested nnoremap <buffer> <silent> <leader>o :VoomToggle html<cr>
-    autocmd FileType python   nested nnoremap <buffer> <silent> <leader>o :VoomToggle python<cr>
-  augroup END
-endif
-
 " Change Working Directory to that of the current file
 cnoremap cwd lcd %%
 cnoremap cd. lcd %%
@@ -1179,24 +1168,33 @@ endif
 if has('autocmd')
   augroup MarkdownPandoc
     autocmd!
+    autocmd FileType markdown nested setlocal shiftwidth=4 softtabstop=4
+    autocmd FileType markdown nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
+
+    " autocmd FileType pandoc nested setlocal shiftwidth=4 softtabstop=4
+    " autocmd FileType pandoc nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
     if has_key(g:plugs, 'vim-pandoc')
-      function! SetPandocEqualPrg()
-        let g:pandoc#formatting#equalprg = "pandoc --from=markdown --to=markdown_github --standalone"
-        let g:pandoc#formatting#mode = substitute(g:pandoc#formatting#mode, "[sh]", "", "g")
-        if &l:textwidth > 0
-          let g:pandoc#formatting#mode .= "h"
-          let g:pandoc#formatting#equalprg .= " --columns " . &l:textwidth
-        else
-          let g:pandoc#formatting#mode .= "s"
-          let g:pandoc#formatting#equalprg .= " --wrap=none"
+      function! CaptureTextWidth()
+        if &filetype == "pandoc" && v:option_type == 'local'
+          call SetPandocEqualPrg()
         endif
-        let &l:equalprg = g:pandoc#formatting#equalprg
+      endfunction
+      autocmd OptionSet textwidth nested call CaptureTextWidth()
+
+      function! SetPandocEqualPrg()
+        let g:pandoc#formatting#equalprg = "pandoc"
+        let g:pandoc#formatting#textwidth = &textwidth
+        if &textwidth > 0
+          let g:pandoc#formatting#equalprg .= " --to=markdown_github-hard_line_breaks --columns=" . &l:textwidth
+        else
+          let g:pandoc#formatting#equalprg .= " --to=markdown_github --wrap=none"
+        endif
+        let &l:equalprg=g:pandoc#formatting#equalprg." ".g:pandoc#formatting#extra_equalprg
         setlocal concealcursor= conceallevel=1
       endfunction
-      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
-      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested call SetPandocEqualPrg()
+
+      autocmd BufNewFile,BufReadPost *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
       autocmd FileType pandoc nested call SetPandocEqualPrg()
-      autocmd FileType pandoc nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
     else
       autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
       autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
