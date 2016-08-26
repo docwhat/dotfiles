@@ -986,6 +986,10 @@ inoremap <CR> <C-G>u<CR>
 " Make Y behave like other capitals.
 nnoremap Y y$
 
+" I really need control-a and control-e (emacs) in command mode.
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
 " Don't use Ex mode, use Q for formatting
 nnoremap Q gq
 
