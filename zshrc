@@ -24,7 +24,6 @@ plugins=(
   redis-cli
   cp
   rsync
-  urltools
 
   # Languages
   node
