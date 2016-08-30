@@ -18,19 +18,20 @@ plugins=(
   svn
 
   osx
-  zsh-syntax-highlighting
+  zsh-navigation-tools
   brew
   vagrant
   redis-cli
   cp
   rsync
+  marked
 
   # Languages
   node
   npm
   python
   pip
-  go
+  golang
 
   # Ruby
   ruby
@@ -38,7 +39,6 @@ plugins=(
   rails
   rake
   gem
-  heroku
   thor
   cap
   knife
