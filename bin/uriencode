@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 
-require 'uri'
+require 'cgi'
 
 if ARGV.empty?
   if STDIN.tty?
     puts 'URI encodes text via stdin or on the command line.'
     exit 0
   else
-    puts URI.encode_www_form_component(STDIN.read.chomp)
+    puts CGI.escape(STDIN.read.chomp)
   end
 else
   ARGV.each do |arg|
-    puts URI.encode_www_form_component(arg)
+    puts CGI.escape(arg)
   end
 end
 
