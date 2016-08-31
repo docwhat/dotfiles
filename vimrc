@@ -382,6 +382,7 @@ function! LoadPlugins()
     let g:syntastic_chef_checkers             = [''] " I'm sick of foodcritic
     let g:syntastic_xml_checkers              = ['xmllint']
     let g:syntastic_xslt_checkers             = ['xmllint']
+    let g:syntastic_html_tidy_ignore_errors = [ '<link> proprietary attribute "integrity"', '<link> proprietary attribute "crossorigin"' ]
     " npm install js-yaml
     let g:syntastic_yaml_checkers             = ['jsyaml']
     let g:syntastic_go_checkers               = ['golint', 'govet', 'errcheck']
