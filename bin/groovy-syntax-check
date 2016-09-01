@@ -1,0 +1,22 @@
+#!/usr/bin/env groovy
+
+import org.codehaus.groovy.control.CompilationUnit;
+import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.Phases;
+import org.codehaus.groovy.control.CompilationFailedException;
+import groovy.lang.GroovyCodeSource;
+
+class Main {
+  public static void compile(File file) throws CompilationFailedException
+  {
+    CompilationUnit unit = new CompilationUnit( CompilerConfiguration.DEFAULT );
+    unit.addSource(file);
+    unit.compile(Phases.CONVERSION);
+  }
+}
+
+for (filename in this.args) {
+  println "Checking ${filename}...";
+  File file = new File(filename);
+  Main.compile(file);
+}
