@@ -10,7 +10,6 @@ function zsh-startup-zgen()
     DISABLE_LS_COLORS=true
     DISABLE_AUTO_TITLE=true
     ENABLE_CORRECTION=true
-    ZSH_DISABLE_COMPFIX=true
     COMPLETION_WAITING_DOTS=true
     HIST_STAMPS=yyyy-mm-dd
 
