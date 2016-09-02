@@ -1,20 +1,24 @@
+# Turn off ZGen Compinit -- Let oh-my-zsh handle it *sigh*
+ZGEN_AUTOLOAD_COMPINIT=0
+
+
+# Oh my zsh config
+# See https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template
+DISABLE_AUTO_UPDATE=true
+DISABLE_LS_COLORS=true
+DISABLE_AUTO_TITLE=true
+ENABLE_CORRECTION=true
+COMPLETION_WAITING_DOTS=true
+HIST_STAMPS=yyyy-mm-dd
+
+# zsh-completion-generator
+GENCOMPL_FPATH="$HOME/.zsh/cache/complete"
+
 source "${HOME}/.zgen/zgen.zsh"
 
 function zsh-startup-zgen()
 {
   if ! zgen saved; then
-
-    # Oh my zsh config
-    # See https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template
-    DISABLE_AUTO_UPDATE=true
-    DISABLE_LS_COLORS=true
-    DISABLE_AUTO_TITLE=true
-    ENABLE_CORRECTION=true
-    COMPLETION_WAITING_DOTS=true
-    HIST_STAMPS=yyyy-mm-dd
-
-    # zsh-completion-generator
-    GENCOMPL_FPATH="$HOME/.zsh/cache/complete"
 
     zgen oh-my-zsh
 
@@ -77,9 +81,6 @@ function zsh-startup-zgen()
     zgen save
   fi
 }
-
-# ZGEN compinit setting
-ZGEN_CUSTOM_COMPDUMP=$ZSH_COMPDUMP
 
 zsh-startup-zgen
 
