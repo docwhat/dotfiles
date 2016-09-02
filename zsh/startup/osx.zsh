@@ -1,8 +1,7 @@
 if [[ "${OSTYPE}" == darwin* ]]; then
   alias ldd="otool -L"
-
-  if (( $+commands[archey] )); then
-    alias archey="archey --color"
+  if (( $+commands[gfind] )); then
+    alias find=gfind
   fi
 
   if [[ "${DISPLAY}" == *macosforge.xquartz* ]]; then
@@ -45,6 +44,15 @@ if (( $+functions[iterm-get-attention] )); then
 fi
 
 return $ec
+  }
+
+  function set-hostname() {
+    local new_hostname="$1"
+
+    sudo scutil --set ComputerName "$new_hostname" && \
+      sudo scutil --set HostName "$new_hostname" && \
+      sudo scutil --set LocalHostName "$new_hostname" && \
+      sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$new_hostname"
   }
 
   function exclude-from-backup
