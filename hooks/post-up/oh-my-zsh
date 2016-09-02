@@ -1,8 +1,0 @@
-#!/usr/bin/env zsh
-
-set -eu
-
-DOTFILES_DIR=~/.dotfiles
-source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
-
-hh_git 'Oh My Zsh' https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh

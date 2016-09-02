@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+
+hh_git 'ZGen' https://github.com/tarjoilija/zgen.git ~/.zgen
+
+mkdir -p ~/.zsh/cache
+if [ ! -r ~/.zsh/cache/plugins.md5sums ] || ! md5sum -c ~/.zsh/cache/plugins.md5sums > /dev/null; then
+  set +eu
+  source ~/.zgen/zgen.zsh
+  set -eu
+  zgen reset
+  md5sum ~/.dotfiles/zsh/startup/00plugins.zsh > ~/.zsh/cache/plugins.md5sums
+fi

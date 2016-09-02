@@ -1,4 +1,4 @@
-if (( ${plugins[(i)vi-mode]} <= ${#plugins} )); then
+if false; then
   # VI specific settings
 
   bindkey jk vi-cmd-mode

@@ -21,16 +21,7 @@ function compute_host_completion
 }
 compute_host_completion
 
-function reload
-{
-  for rcfile in zshenv zprofile zshrc zlogin; do
-    if [[ -r ~/.${rcfile} ]]; then
-      echo "reloading ${rcfile}..." 1>&2
-      source ~/.${rcfile}
-    fi
-  done
-  compute_host_completion
-}
+alias reload='exec zsh -l'
 
 # Overwrite Oh-My-Zsh's settings
 zstyle ':completion:*'           use-cache on

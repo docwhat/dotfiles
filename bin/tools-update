@@ -18,6 +18,6 @@ fi
 rcup
 
 echo
-print -P "%F{green}You may wish to consider running 'rbenv-update-plugins' or 'update-gems'%F{reset}"
+print -P "%F{green}You may wish to consider running 'rbenv-update-plugins', 'zgen update' or 'update-gems'%F{reset}"
 
 # EOF
