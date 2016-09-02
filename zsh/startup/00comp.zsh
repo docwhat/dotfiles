@@ -5,7 +5,3 @@ fi
 
 # Save the location of the current completion dump file.
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zsh/cache/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
-
-# Disable ubuntu and debian init stuff
-skip_global_compinit=1
-DEBIAN_PREVENT_KEYBOARD_CHANGES=1
