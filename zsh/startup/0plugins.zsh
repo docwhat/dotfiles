@@ -1,7 +1,6 @@
 # Turn off ZGen Compinit -- Let oh-my-zsh handle it *sigh*
 ZGEN_AUTOLOAD_COMPINIT=0
 
-
 # Oh my zsh config
 # See https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template
 DISABLE_AUTO_UPDATE=true
