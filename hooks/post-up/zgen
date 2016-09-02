@@ -13,5 +13,5 @@ if [ ! -r ~/.zsh/cache/plugins.md5sums ] || ! md5sum -c ~/.zsh/cache/plugins.md5
   source ~/.zgen/zgen.zsh
   set -eu
   zgen reset
-  md5sum ~/.dotfiles/zsh/startup/00plugins.zsh > ~/.zsh/cache/plugins.md5sums
+  md5sum ~/.dotfiles/zsh/startup/0plugins.zsh > ~/.zsh/cache/plugins.md5sums
 fi
