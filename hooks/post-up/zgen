@@ -8,7 +8,7 @@ source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
 hh_git 'ZGen' https://github.com/tarjoilija/zgen.git ~/.zgen
 
 mkdir -p ~/.zsh/cache
-if [ ! -r ~/.zsh/cache/plugins.md5sums ] || ! md5sum -c ~/.zsh/cache/plugins.md5sums > /dev/null; then
+if [ ! -r ~/.zsh/cache/plugins.md5sums ] || ! md5sum -c ~/.zsh/cache/plugins.md5sums > /dev/null 2>/dev/null; then
   set +eu
   source ~/.zgen/zgen.zsh
   set -eu
