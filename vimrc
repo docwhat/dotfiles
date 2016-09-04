@@ -102,7 +102,8 @@ set splitright
 
 if executable('ag')
   " Use Ag over Grep
-  set grepprg="ag --vimgrep"
+  set grepprg=ag\ --vimgrep\ $*
+  set grepformat=%f:%l:%c:%m
 endif
 
 if filereadable(g:my_vimrc . '.local-pre')
