@@ -48,8 +48,8 @@
 	ff = only
 
 [core]
-	excludesfile = ~/.config/personal/gitignore_global
-	attributesfile = ~/.config/personal/gitattributes
+	excludesfile = ~/.config/git/ignore
+	attributesfile = ~/.config/git/attributes
 	autocrlf = input
 
 [fetch]
