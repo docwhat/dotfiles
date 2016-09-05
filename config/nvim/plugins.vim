@@ -1,6 +1,10 @@
 let g:plug_shallow=0
 call plug#begin()
 
+augroup VimrcPlugins
+  autocmd!
+augroup END
+
 " Support '.' correctly for plugins that support this module.
 Plug 'tpope/vim-repeat'
 
@@ -75,6 +79,24 @@ let g:go_fmt_command = "goimports"
 let g:go_fmt_autosave = 1
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go-explorer/src/getool' }
+
+" Unite for NeoVim
+function s:init_denite()
+  if executable('ag')
+    call denite#custom#source(
+          \ 'file_rec', 'vars', {
+          \   'command': [
+          \      'ag', '--follow', '--nocolor', '--nogroup',
+          \      '--hidden', '-g', ''
+          \   ] })
+  endif
+endfunction
+augroup VimrcPlugins
+  autocmd VimEnter call s:init_denite()
+augroup END
+nnoremap <silent> <leader>t :Denite file_rec<cr>
+" nnoremap <C-p> :Denite file_rec<cr>
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Cursorline theme
 let g:airline_powerline_fonts            = 1
