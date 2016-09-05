@@ -31,8 +31,8 @@ set cursorline                   " highlights the current line
 set splitbelow
 set splitright
 
+" Themes/Colors
 set termguicolors
-
 colorscheme jellybeans
 
 " Smash escape!

@@ -78,19 +78,16 @@ Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go
 
 " Cursorline theme
 let g:airline_powerline_fonts            = 1
-let g:airline_theme                      = 'badwolf'
 let g:airline#extensions#tabline#enabled = 1
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Jellybeans
-let g:jellybeans_background_color="000000"
-let g:jellybeans_background_color_256=232
-let g:jellybeans_overrides={}
-let g:jellybeans_overrides.LineNr  = {
-                  \ '256ctermfg': 59,
-                  \ '256ctermbg': 233
-                  \}
+" Jellybeans theme
+let g:jellybeans_overrides = {
+      \    'LineNr': { 'guifg': '707090' },
+      \    'CursorLineNr': { 'guifg': 'a0a0f0' },
+      \    'background': { 'guibg': 'none',  },
+      \}
 Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
