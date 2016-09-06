@@ -34,6 +34,9 @@ set splitright
 " Themes/Colors
 set termguicolors
 colorscheme jellybeans
+if exists('g:loaded_airline')
+  AirlineTheme badwolf
+endif
 
 " Smash escape!
 augroup Vimrc
