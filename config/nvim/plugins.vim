@@ -54,7 +54,7 @@ let g:NERDSpaceDelims=1
 let g:NERDCommentWholeLinesInVMode=2
 
 " Completion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim' " :UpdateRemotePlugins
 let g:deoplete#enable_at_startup = 1
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 Plug 'Shougo/neco-syntax'
@@ -96,7 +96,7 @@ augroup VimrcPlugins
 augroup END
 nnoremap <silent> <leader>t :Denite file_rec<cr>
 " nnoremap <C-p> :Denite file_rec<cr>
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/denite.nvim' " :UpdateRemotePlugins
 
 " Cursorline theme
 let g:airline_powerline_fonts            = 1

@@ -1,5 +1,5 @@
 " NVim configuration
-" 
+"
 " pip3 install --upgrade pip setuptools
 " pip3 install --upgrade neovim
 " pip2 install --upgrade pip setuptools
@@ -38,13 +38,23 @@ if has('ruby')
   ruby load "#{VIM.evaluate('g:my_nvim_dir')}/bootcheck.rb"
 endif
 
-if s:bootstrap   
-  :PlugUpdate
-  quit " Close the plugin install window.
+if s:bootstrap
+  echomsg "Updating plugins. Please wait. "
   redraw
+  :PlugUpdate
 endif
 
 execute 'source ' . g:my_nvim_dir . '/functions.vim'
 execute 'source ' . g:my_nvim_dir . '/settings.vim'
+
+if s:bootstrap
+  echomsg "Quitting to have new plugins take effect."
+  for name in keys(g:plugs)
+    echomsg "Plugin " . name . " loaded."
+    silent noautocmd call plug#load(name)
+  endfor
+  call remote#host#UpdateRemotePlugins()
+  :qall
+endif
 
 " EOF
