@@ -35,6 +35,8 @@ set splitright
 set termguicolors
 set background=dark
 colorscheme gruvbox
+" Work around for https://github.com/morhetz/gruvbox/issues/135
+highlight Normal guibg=0 ctermbg=0
 
 " Smash escape!
 augroup Vimrc
