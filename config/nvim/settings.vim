@@ -47,6 +47,9 @@ augroup END
 xnoremap < <gv
 xnoremap > >gv
 
+" %% in command mode will expand to the directory name.
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
 " Indent whole file
 nmap <silent> <Leader>g :call Preserve("normal gg=G")<CR>
 nmap <silent> <Leader><space> :call Preserve("%s/\\s\\+$//e")<CR>
