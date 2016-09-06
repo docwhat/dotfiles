@@ -106,9 +106,9 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Jellybeans theme
 let g:jellybeans_overrides = {
-      \    'LineNr': { 'guifg': '707090' },
-      \    'CursorLineNr': { 'guifg': 'a0a0f0' },
-      \    'background': { 'guibg': 'none',  },
+      \    'LineNr': { 'guifg': '707090', 'ctermfg': '707090' },
+      \    'CursorLineNr': { 'guifg': 'a0a0f0', 'ctermfg': 'a0a0f0' },
+      \    'background': { 'guibg': 'none', 'ctermbg': 'none', '256ctermbg': 'none' },
       \}
 Plug 'nanotech/jellybeans.vim'
 
