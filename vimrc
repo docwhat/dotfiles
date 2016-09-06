@@ -488,7 +488,7 @@ function! LoadPlugins()
   let g:jellybeans_overrides = {
         \    'LineNr': { 'guifg': '707090', 'ctermfg': '707090' },
         \    'CursorLineNr': { 'guifg': 'a0a0f0', 'ctermfg': 'a0a0f0' },
-        \    'background': { 'guibg': 'none', 'ctermbg': 'none', '256ctermbg': 'none' },
+        \    'background': { 'guibg': '000000' },
         \}
   Plug 'nanotech/jellybeans.vim'
 
