@@ -480,12 +480,16 @@ function! LoadPlugins()
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     let g:airline_powerline_fonts = 1
-    let g:airline_theme='badwolf'
     let g:airline#extensions#tabline#enabled = 1
     set noshowmode
   endif
 
   " Colors!
+  let g:jellybeans_overrides = {
+        \    'LineNr': { 'guifg': '707090', 'ctermfg': '707090' },
+        \    'CursorLineNr': { 'guifg': 'a0a0f0', 'ctermfg': 'a0a0f0' },
+        \    'background': { 'guibg': 'none', 'ctermbg': 'none', '256ctermbg': 'none' },
+        \}
   Plug 'nanotech/jellybeans.vim'
 
   " HTML5 + SVG support
