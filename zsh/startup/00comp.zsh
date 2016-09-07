@@ -4,4 +4,8 @@ if [ ! -d "${ZDOTDIR:-${HOME}}/.zsh/cache" ]; then
 fi
 
 # Save the location of the current completion dump file.
+# Forces oh-my-zsh to use this location.
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zsh/cache/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+
+# Force starting compinit as early as possible
+autoload -Uz compinit && compinit -d "${ZSH_COMPDUMP}"
