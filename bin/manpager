@@ -5,7 +5,7 @@ set -euo pipefail
 function pager {
   if [ -t 1 ]; then
     # If we have a terminal, use vim
-    vim \
+    "${EDITOR:-vim}" \
       -R \
       -c 'set ft=man ts=8 nonumber nolist nomodified nomodifiable' \
       -
