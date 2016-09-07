@@ -34,9 +34,8 @@ set splitright
 " Themes/Colors
 set termguicolors
 set background=dark
-colorscheme gruvbox
-" Work around for https://github.com/morhetz/gruvbox/issues/135
-highlight Normal guibg=0 ctermbg=0
+colorscheme jellybeans
+call airline#switch_theme('badwolf')
 
 " Smash escape!
 augroup Vimrc

@@ -112,10 +112,6 @@ let g:jellybeans_overrides = {
       \}
 Plug 'nanotech/jellybeans.vim'
 
-" Gruvbox theme
-let g:gruvbox_contrast_dark = "hard"
-Plug 'morhetz/gruvbox'
-
 call plug#end()
 
 " EOF
