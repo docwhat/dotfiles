@@ -88,7 +88,7 @@
 	insteadOf = https://github.com/
 
 [include]
-	path = .gitconfig.local
+	path = ~/.config/git/local
 
 ; Added by the GitHub.app
 [filter "hawser"]
