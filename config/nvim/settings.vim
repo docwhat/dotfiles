@@ -27,6 +27,9 @@ set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pair
 
 set cursorline                   " highlights the current line
 
+" Folds
+set foldminlines=20
+
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
@@ -75,3 +78,24 @@ nnoremap <Left>  :echoerr "I don't like that direction... try 'h' instead."<cr>
 nnoremap <Right> :echoerr "Republican, eh? I prefer 'l'."<cr>
 nnoremap <Up>    :echoerr "This is why we can't have nice things. You should have used 'k'."<cr>
 nnoremap <Down>  :echoerr "That's what she said... and then used 'j'."<cr>
+
+" Manpages and :help
+function! ILikeHelpToTheRight()
+  if !exists('w:help_is_moved') || w:help_is_moved != "right"
+    wincmd L
+    let w:help_is_moved = "right"
+  endif
+endfunction
+
+let g:real_manpager=$MANPAGER
+let g:ft_man_folding_enable = 1
+
+augroup ManAndHelpPages
+  autocmd!
+  autocmd FileType help nested call ILikeHelpToTheRight()
+  autocmd FileType man,help nested nnoremap <buffer> q :q!<cr>
+  autocmd FileType man nested let &listchars=""
+  " Work around for stupid attempt to prevent recursive vim
+  " calls.
+  autocmd FileType man nested let $MANPAGER=g:real_manpager
+augroup END

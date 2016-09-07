@@ -96,6 +96,9 @@ set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pair
 set cursorline                   " highlights the current line
 set history=10000                " Save more history.
 
+" Folds
+set foldminlines=30
+
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
