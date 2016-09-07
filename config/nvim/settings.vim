@@ -42,6 +42,16 @@ augroup Vimrc
   autocmd VimEnter * Arpeggio inoremap jk  <Esc>
 augroup END
 
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+" Also don't do it when the mark is in the first line, that is the default
+" position when opening a file.
+autocmd BufReadPost * nested
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
+
 " Prevent highlight being lost on (de)indent.
 xnoremap < <gv
 xnoremap > >gv
