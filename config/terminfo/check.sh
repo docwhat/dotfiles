@@ -20,9 +20,13 @@ typeset -a term=(
 for term in "${term[@]}"; do
   v=notchecked
   if env "TERM=$term" tput cols >/dev/null 2>&1; then
-    v=ok
+    if env "TERM=$term" infocmp -1IL | grep -q _italics_mode; then
+      v="✔"
+    else
+      v="✔ (no italics)"
+    fi
   else
-    v=missing
+    v="𐄂"
   fi
   printf "TERM=%-20s %s\n" "$term" "$v"
 done
