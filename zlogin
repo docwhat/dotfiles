@@ -6,6 +6,10 @@ elif (( $+commands[archey] )); then
   archey
 fi
 
+unfunction compinit
+autoload -Uz compinit
+compinit -i -d "${ZSH_COMPDUMP}"
+
 # Execute code that does not affect the current session in the background.
 {
   # Compile the completion dump to increase startup speed.

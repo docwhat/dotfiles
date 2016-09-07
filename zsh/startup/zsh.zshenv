@@ -8,5 +8,4 @@ TIMEFMT="${fg[green]}%J${reset_color}  %P cpu  %M KiB  ${fg[cyan]}%*E${reset_col
 REPORTTIME=2
 
 # Disable ubuntu and debian init stuff
-skip_global_compinit=1
 DEBIAN_PREVENT_KEYBOARD_CHANGES=1

@@ -6,6 +6,12 @@ fi
 # Save the location of the current completion dump file.
 # Forces oh-my-zsh to use this location.
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zsh/cache/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+ZGEN_CUSTOM_COMPDUMP=$ZSH_COMPDUMP
+
+# Disable compinit generation by Ubuntu and Debian.
+skip_global_compinit=1
 
 # Force starting compinit as early as possible
-autoload -Uz compinit && compinit -d "${ZSH_COMPDUMP}"
+autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
+
+function compinit { }
