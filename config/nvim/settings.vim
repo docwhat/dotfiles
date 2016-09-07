@@ -31,6 +31,9 @@ set cursorline                   " highlights the current line
 set splitbelow
 set splitright
 
+set scrolloff=5       " don't scroll any closer to top/bottom
+set sidescrolloff=5   " don't scroll any closer to left/right
+
 " Themes/Colors
 set termguicolors
 set background=dark
