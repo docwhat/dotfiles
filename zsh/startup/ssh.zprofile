@@ -1,11 +1,7 @@
 if [ "${SSH_AUTH_SOCK:-}" != "$HOME/.ssh/ssh_auth_sock" ]; then
   if (( $+commands[ssh-add] )); then
     if (( $+commands[keychain] )); then
-      eval "$(keychain --quiet --quick --noask --agents ssh --inherit any-once --eval)"
-      if [[ "${OSTYPE}" != darwin* ]] && ! ssh-add -l >/dev/null; then
-        [ -r ~/.ssh/id_rsa ] && ssh-add ~/.ssh/id_rsa
-        [ -r ~/.ssh/id_dsa ] && ssh-add ~/.ssh/id_dsa
-      fi
+      eval "$(keychain --eval --quick --noask --nogui --inherit 'any' --agents 'ssh' --ignore-missing id_rsa id_dsa)"
     fi
 
     # Used for TMUX
@@ -19,4 +15,4 @@ fi
 # http://unix.stackexchange.com/questions/90853/
 # On OS X, see the ssh-add(1) manpage for the -A and -K flags
 
-# EOF
+# vim: ft=zsh :
