@@ -13,6 +13,15 @@ export PAGER="less"
 export ACK_PAGER="less -R -+F"
 export GIT_EDITOR="vim +1"
 export EDITOR="vim"
+
+# Use NeoVim if it exists
+if (( $+commands[nvim] )); then
+  export GIT_EDITOR="nvim +1"
+  export EDITOR="nvim"
+  alias vim=nvim
+  alias vi=nvim
+fi
+
 export FPP_EDITOR="$EDITOR"
 export MANPAGER="${HOME}/.bin/manpager"
 export VISUAL="${HOME}/.bin/visual-editor"

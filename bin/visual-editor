@@ -5,7 +5,7 @@ if (( $+commands[mvim] )); then
 elif (( $+commands[gvim] )); then
   gvim "$@"
 else
-  vim "$@"
+  "$EDITOR" "$@"
 fi
 
 # EOF
