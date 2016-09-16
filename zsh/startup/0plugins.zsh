@@ -18,16 +18,6 @@ function zsh-startup-zgen()
 
     zgen oh-my-zsh
 
-    # # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
-    # # they break, so get the order right.
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-history-substring-search
-
-    # Set keystrokes for substring searching
-    zmodload zsh/terminfo
-    bindkey "$terminfo[kcuu1]" history-substring-search-up
-    bindkey "$terminfo[kcud1]" history-substring-search-down
-
     # Python
     zgen oh-my-zsh plugins/python
     zgen oh-my-zsh plugins/pip
@@ -62,7 +52,6 @@ function zsh-startup-zgen()
 
     zgen load chrissicool/zsh-256color
 
-    zgen oh-my-zsh plugins/zsh-navigation-tools
     zgen oh-my-zsh plugins/redis-cli
     zgen oh-my-zsh plugins/rsync
     zgen oh-my-zsh plugins/marked2
@@ -72,6 +61,11 @@ function zsh-startup-zgen()
 
     # Add Fish-like autosuggestions to your ZSH
     zgen load zsh-users/zsh-autosuggestions
+    # Fixes paste being slow.
+    zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+    ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=( end-of-line vi-end-of-line vi-add-eol )
+    ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=( forward-char vi-forward-char )
 
     # Save it all to init script
     zgen save
