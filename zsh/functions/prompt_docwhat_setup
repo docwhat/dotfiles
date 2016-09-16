@@ -40,8 +40,8 @@ ${path_char} \
   printf "%%{╙%%G%%} "
 
   # Exit Code
-  ec_text="$1"; shift
-  ec_sum="${ec_text}"
+  local ec_text="$1"; shift
+  local ec_sum="${ec_text}"
   if [[ "${ec_text}" -gt 0 ]]; then
     ec_text="%%F{red}${ec_text}"
   else
