@@ -1,3 +1,10 @@
+# These break zsh-autosuggestions
+# function zle-isearch-update { zle -M "Line $HISTNO" }
+# zle -N zle-isearch-update
+
+# function zle-isearch-exit { zle -M "" }
+# zle -N zle-isearch-exit
+
 bindkey '^P'  up-history
 bindkey '^N'  down-history
 bindkey '^W'  backward-kill-word
