@@ -30,9 +30,20 @@ if (( $+commands[brew] )); then
 
   function brew()
   {
+    local myterm=$TERM
+    case "$TERM" in
+      tmux-256color)
+        myterm=screen-256color
+        ;;
+      tmux)
+        myterm=screen
+        ;;
+    esac
+
     # We want to use the system ruby to compile vim.
     env \
       RBENV_VERSION=system \
+      TERM="$myterm" \
       =brew "$@"
     if [[ "$1" == *install* ]]; then
       rehash
@@ -40,4 +51,4 @@ if (( $+commands[brew] )); then
   }
 fi
 
-# EOF
+# vim: set ft=zsh :

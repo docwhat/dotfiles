@@ -16,3 +16,5 @@ if (( $+commands[brew] )); then
     manpath=(/usr/local/opt/coreutils/libexec/gnuman "${manpath[@]}")
   fi
 fi
+
+# vim: set ft=zsh :
