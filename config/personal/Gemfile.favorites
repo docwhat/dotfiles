@@ -1,6 +1,13 @@
 # vi: ft=ruby :
 source 'https://rubygems.org/'
 
+def bin_in_path(name)
+  ENV['PATH']
+  .split(':')
+  .map { |p| File.executable?(File.join(p, name)) }
+  .reduce(false) { |memo, obj| memo || obj }
+end
+
 gem 'yard'
 gem 'gem-ctags'
 gem 'gem-browse'
@@ -20,5 +27,7 @@ gem 'ghi'
 gem 'powify' if 'darwin' == Gem::Platform.local.os
 
 gem 'brew-cask-upgrade' if File.executable? '/usr/local/bin/brew'
+
+gem 'neovim' if bin_in_path('nvim')
 
 # EOF
