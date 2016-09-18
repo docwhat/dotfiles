@@ -28,7 +28,7 @@ set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pair
 set cursorline                   " highlights the current line
 
 " Folds
-set foldminlines=20
+set foldminlines=4
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -106,9 +106,8 @@ augroup ManAndHelpPages
   autocmd FileType help     nested call ILikeHelpToTheRight()
   autocmd FileType man,help nested nnoremap <buffer> q :q!<cr>
   autocmd FileType man      nested let &listchars=""
-  " Work around for stupid attempt to prevent recursive vim
-  " calls.
-  autocmd FileType man nested let $MANPAGER=g:real_manpager
+  autocmd FileType man      nested let $MANPAGER=g:real_manpager " Prevent recursive calls.
+  autocmd FileType man      nested set foldminlines=20
 augroup END
 
 " Create Parent Directories
