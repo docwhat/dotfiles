@@ -1,5 +1,5 @@
 if [[ "${OSTYPE}" == darwin* ]]; then
-  alias ldd="otool -L"
+  alias ldd="/usr/bin/otool -L"
   if (( $+commands[gfind] )); then
     alias find=gfind
   fi
@@ -49,10 +49,10 @@ return $ec
   function set-hostname() {
     local new_hostname="$1"
 
-    sudo scutil --set ComputerName "$new_hostname" && \
-      sudo scutil --set HostName "$new_hostname" && \
-      sudo scutil --set LocalHostName "$new_hostname" && \
-      sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$new_hostname"
+    sudo /usr/sbin/scutil --set ComputerName "$new_hostname" && \
+      sudo /usr/sbin/scutil --set HostName "$new_hostname" && \
+      sudo /usr/sbin/scutil --set LocalHostName "$new_hostname" && \
+      sudo /usr/bin/defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$new_hostname"
   }
 
   function exclude-from-backup
@@ -66,7 +66,7 @@ return $ec
       echo "Hidden files cannot be controlled by xattr: $fname" 1>&2
       return 3
     else
-      xattr \
+      /usr/bin/xattr \
         -w 'com.apple.metadata:com_apple_backup_excludeItem' 'com.apple.backupd' \
         "$fname"
     fi
@@ -80,7 +80,7 @@ return $ec
       echo "No such file or directory: $fname" 1>&2
       return 2
     else
-      xattr \
+      /usr/bin/xattr \
         -d 'com.apple.metadata:com_apple_backup_excludeItem' \
         "$fname"
     fi
