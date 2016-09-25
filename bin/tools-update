@@ -17,7 +17,24 @@ fi
 
 rcup
 
+if [ -d ~/.zgen ]; then
+  echo
+  print -P "%F{cyan}z %F{blue}updating plugins %F{reset}"
+  set +eu
+  source ~/.zgen/zgen.zsh
+  set -eu
+  zgen update |& offset "yellow"
+fi
+
+if [ -d ~/.tmux/plugins ]; then
+  pushd ~/.tmux/plugins > /dev/null
+  for tmux_plugin in *(N/); do
+    hh_git "tmux plugin ${tmux_plugin}" 'none' ~/.tmux/plugins/"$tmux_plugin"
+  done
+  popd > /dev/null
+fi
+
 echo
-print -P "%F{green}You may wish to consider running 'rbenv-update-plugins', 'zgen update' or 'update-gems'%F{reset}"
+print -P "%F{green}You may wish to consider running 'rbenv-update-plugins' or 'update-gems'%F{reset}"
 
 # EOF
