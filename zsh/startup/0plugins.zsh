@@ -33,7 +33,6 @@ function zsh-startup-zgen()
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/rsync
     zgen oh-my-zsh plugins/vagrant
-    zgen load srijanshetty/docker-zsh
 
     zgen load zsh-users/zsh-completions src
 

@@ -27,6 +27,20 @@ function offset
   done
 }
 
+function hh_curl
+{
+  local name=$1
+  local file=$2
+  local url=$3
+
+  print -P "%F{cyan}⇣ %F{blue}${name} %F{reset}"
+  if [[ ! -f "$file" ]]; then
+    curl -qsSfL -o "$file" "$url"
+  else
+    curl -qsSfL -z "$file" -o "$file" "$url"
+  fi
+}
+
 function hh_git
 {
   local name=$1

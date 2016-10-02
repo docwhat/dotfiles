@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+
+hh_curl \
+  "Docker ZSH completion" \
+  ~/.zsh/functions/_docker \
+  https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker
+
+hh_curl \
+  "Docker-Compose ZSH completion" \
+  ~/.zsh/functions/_docker-compose \
+  https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+
+hh_curl \
+  "Docker-Machine ZSH completion" \
+  ~/.zsh/functions/_docker-machine \
+  https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine
+
+# EOF
