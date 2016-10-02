@@ -28,6 +28,33 @@ Plug 'kana/vim-arpeggio'
 " lets you align comments, equal signs, etc.
 Plug 'godlygeek/tabular'
 
+" ---- Git & VCS support {{{
+" Git helpers
+Plug 'tpope/vim-fugitive'
+" Better Git commit message editing
+Plug 'rhysd/committia.vim'
+" Deal with github in a sane way
+" See https://github.com/tpope/vim-rhubarb
+Plug 'tpope/vim-rhubarb'
+
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+  " Additional settings
+  setlocal spell
+
+  " If no commit message, start with insert mode
+  if a:info.vcs ==# 'git' && getline(1) ==# ''
+    startinsert
+  end
+
+  " Scroll the diff window from insert mode
+  " Map <C-n> and <C-p>
+  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+
+endfunction
+" }}}
+
 " ---- Comments {{{
 " Command and uncomment code easily
 " <leader>cc -- comment ragged style
