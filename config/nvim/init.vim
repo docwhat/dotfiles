@@ -47,10 +47,15 @@ endif
 execute 'source ' . g:my_nvim_dir . '/functions.vim'
 execute 'source ' . g:my_nvim_dir . '/settings.vim'
 
+" Local settings
+if filereadable(g:my_nvim_dir . '/local.vim')
+  execute 'source ' . g:my_nvim_dir . '/local.vim'
+endif
+
 if s:bootstrap
   echomsg "Quitting to have new plugins take effect."
   for name in keys(g:plugs)
-    echomsg "Plugin " . name . " loaded."
+    echomsg "Plugin " . name . " installed."
     silent noautocmd call plug#load(name)
   endfor
   call remote#host#UpdateRemotePlugins()
