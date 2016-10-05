@@ -31,6 +31,12 @@ Plug 'godlygeek/tabular'
 " Shows regions that were just yanked.
 Plug 'machakann/vim-highlightedyank'
 
+" Tags support; I recommend Universal Ctags
+"   https://ctags.io/
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+nnoremap <silent> <Leader>tb :TagbarToggle<CR>
+
 " ---- Git & VCS support {{{
 " Git helpers
 Plug 'tpope/vim-fugitive'
@@ -57,7 +63,6 @@ function! g:committia_hooks.edit_open(info)
 
 endfunction
 " }}}
-
 " ---- Comments {{{
 " Command and uncomment code easily
 " <leader>cc -- comment ragged style
