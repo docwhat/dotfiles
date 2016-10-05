@@ -28,6 +28,9 @@ Plug 'kana/vim-arpeggio'
 " lets you align comments, equal signs, etc.
 Plug 'godlygeek/tabular'
 
+" Shows regions that were just yanked.
+Plug 'machakann/vim-highlightedyank'
+
 " ---- Git & VCS support {{{
 " Git helpers
 Plug 'tpope/vim-fugitive'
