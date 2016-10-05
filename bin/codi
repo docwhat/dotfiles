@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+syntax="${1:-ruby}"
+if (( $#* >= 1 )); then
+  shift
+fi
+
+vimexe=vim
+if (( $+commands[nvim] )); then
+  vimexe=nvim
+fi
+
+"${vimexe}" -c \
+  "let g:startify_disable_at_vimenter = 1 |\
+  set bt=nofile ls=0 noru nonu nornu |\
+  startinsert |\
+  hi ColorColumn ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE |\
+  hi VertSplit ctermfg=NONE ctermbg=NONE guifg=#000044 guibg=#000044 |\
+  hi NonText ctermfg=0 guifg=#000000 |\
+  Codi ${syntax}" \
+  "$@"

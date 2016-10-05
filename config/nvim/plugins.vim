@@ -37,6 +37,17 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
+" Scratch pad for various languages.
+Plug 'metakirby5/codi.vim'
+let g:codi#interpreters = {
+      \ 'python': {
+      \ 'bin': ['env', 'PYTHONSTARTUP=', 'python'],
+      \ },
+      \ 'ruby': {
+      \ 'bin': ['irb', '-f'],
+      \ },
+      \ }
+
 " ---- Git & VCS support {{{
 " Git helpers
 Plug 'tpope/vim-fugitive'
