@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+host="$1"
+ping -o "$host"
+
+while ! ssh "$1" true; do
+    sleep 1
+done
+
+say "The system $host is up!"
+
+exec ssh "$@"
