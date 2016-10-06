@@ -40,6 +40,10 @@ nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 " Scratch pad for various languages.
 Plug 'metakirby5/codi.vim'
 
+" Dirvish, a path navigator
+Plug 'justinmk/vim-dirvish'
+autocmd FileType dirvish call fugitive#detect(@%)
+
 " ---- Git & VCS support {{{
 " Git helpers
 Plug 'tpope/vim-fugitive'
