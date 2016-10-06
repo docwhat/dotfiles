@@ -39,6 +39,17 @@ nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
 " Scratch pad for various languages.
 Plug 'metakirby5/codi.vim'
+let g:codi#interpreters = {
+      \   'bash': {
+      \     'bin': [ 'env',
+      \              'PS1=\!> ', 'PS2=-> ', 'PS3=', 'PS4=+> ',
+      \              'HISTFILE=', 'SHELL=bash',
+      \              'bash', '-s' ],
+      \     'prompt': '^[^>]*> ',
+      \     'rightalign': 0,
+      \   }
+      \ }
+" let g:codi#log = "/tmp/codi.log"
 
 " Dirvish, a path navigator
 Plug 'justinmk/vim-dirvish'
