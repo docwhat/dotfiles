@@ -233,11 +233,14 @@ Plug 'vim-airline/vim-airline-themes'
 
 " }}}
 " ---- Jellybeans ColorScheme {{{
-let g:jellybeans_overrides = {
-      \    'LineNr': { 'guifg': '707090', 'ctermfg': '707090' },
-      \    'CursorLineNr': { 'guifg': 'a0a0f0', 'ctermfg': 'a0a0f0' },
-      \    'background': { 'guibg': 'none', 'ctermbg': 'none', '256ctermbg': 'none' },
-      \}
+
+let g:jellybeans_overrides = {}
+let g:jellybeans_overrides["background"]   = { "guibg": "none" }
+let g:jellybeans_overrides["LineNr"]       = { "attr": "none", "guifg": "707090", "guibg": "none"   }
+let g:jellybeans_overrides["CursorLineNr"] = { "attr": "none", "guifg": "a0a0f0", "guibg": "none"   }
+let g:jellybeans_overrides["IncSearch"]    = { "attr": "none", "guifg": "405060", "guibg": "ff8b0f" }
+let g:jellybeans_overrides["Search"]       = { "attr": "none", "guifg": "203040", "guibg": "f7ff0d" }
+
 Plug 'nanotech/jellybeans.vim'
 
 " }}}

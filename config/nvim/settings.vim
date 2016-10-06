@@ -40,9 +40,9 @@ set sidescrolloff=5   " don't scroll any closer to left/right
 " Themes/Colors
 "-----------------------------------------------------------------------------
 set termguicolors
-set background=dark
 colorscheme jellybeans
 call airline#switch_theme('badwolf')
+set background=dark
 
 " Smash escape!
 "-----------------------------------------------------------------------------
