@@ -2,6 +2,8 @@
 
 require 'socket'
 
+EXAMPLE_HOSTNAME = ARGV.first || 'foobar'
+
 def default_ip
   # turn off reverse DNS resolution temporarily
   orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
@@ -25,7 +27,7 @@ def print_ip(ip, default = false)
   puts format(
     '%3s %-38s %s',
     (default ? '=>' : ' '),
-    "http://foobar.#{ip}.xip.io",
+    "http://#{EXAMPLE_HOSTNAME}.#{ip}.xip.io",
     ip
   )
 end
