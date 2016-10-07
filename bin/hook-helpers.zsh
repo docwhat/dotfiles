@@ -13,7 +13,7 @@ function hh_colorize
     cat
   else
     while IFS='' read line; do
-      print -P "%F{$color}$line%F{reset}"
+      print -P "%F{$color}${line}%F{reset}"
     done
   fi
 }
@@ -23,7 +23,7 @@ function hh_offset
   local color="${1:-}"
 
   while IFS='' read line; do
-    echo "  $line" | hh_colorize "$color"
+    echo "  ${line}" | hh_colorize "$color"
   done
 }
 
