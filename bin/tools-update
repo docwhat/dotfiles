@@ -23,7 +23,7 @@ if [ -d ~/.zgen ]; then
   set +eu
   source ~/.zgen/zgen.zsh
   set -eu
-  zgen update |& offset "yellow"
+  zgen update |& hh_offset "yellow"
 fi
 
 if [ -d ~/.tmux/plugins ]; then

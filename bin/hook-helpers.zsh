@@ -5,7 +5,7 @@ if [ -z "${DOTFILES_DIR:-}" ]; then
   exit 1
 fi
 
-function colorize
+function hh_colorize
 {
   local color="${1:-}"
 
@@ -18,12 +18,12 @@ function colorize
   fi
 }
 
-function offset
+function hh_offset
 {
   local color="${1:-}"
 
   while IFS='' read line; do
-    echo "  $line" | colorize "$color"
+    echo "  $line" | hh_colorize "$color"
   done
 }
 
@@ -57,22 +57,22 @@ function hh_git
   print -P "%F{cyan}∓ %F{blue}${name} %F{reset}"
   if [ ! -d "${dir}" ]; then
     if [ "${url}" = none ]; then
-      print -P "skipping...clone manually into ${dir} if you want." | offset magenta
+      print -P "skipping...clone manually into ${dir} if you want." | hh_offset magenta
     else
       if [ -n "${parent}" ]; then
-        mkdir -pv "${parent}" | offset yellow
+        mkdir -pv "${parent}" | hh_offset yellow
       fi
-      git clone "${url}" "${dir}" | offset yellow
+      git clone "${url}" "${dir}" | hh_offset yellow
       echo 'cloned.'
     fi
   else
     pushd "${dir}" > /dev/null
     if git diff-index --quiet HEAD; then
-      git pull --rebase 2>/dev/null | offset yellow
-      git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | offset
+      git pull --rebase 2>/dev/null | hh_offset yellow
+      git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | hh_offset
     else
-      echo "Can't update ${dir} repository due to changes." | offset red
-      git -c color.status=always status --short | offset | offset
+      echo "Can't update ${dir} repository due to changes." | hh_offset red
+      git -c color.status=always status --short | hh_offset | hh_offset
     fi
     popd > /dev/null
   fi
