@@ -37,7 +37,7 @@ set splitright
 set scrolloff=5       " don't scroll any closer to top/bottom
 set sidescrolloff=5   " don't scroll any closer to left/right
 
-set path+=**10
+set path+=**
 
 " Themes/Colors
 "-----------------------------------------------------------------------------
