@@ -1,0 +1,13 @@
+local color="${1:-}"
+local pad="  "
+
+while IFS='' read line; do
+  if [ -z "${color}" ]; then
+    echo "${pad}${line}"
+  else
+    colorize "$color" "${pad}${line}"
+  fi
+done
+
+return 0
+# vim:ft=zsh

@@ -5,26 +5,17 @@ if [ -z "${DOTFILES_DIR:-}" ]; then
   exit 1
 fi
 
+fpath=("${DOTFILES_DIR}/zsh/functions" "${fpath[@]}")
+autoload -Uz "${DOTFILES_DIR}/zsh/functions"/*(N:t)
+
 function hh_colorize
 {
-  local color="${1:-}"
-
-  if [ -z "${color}" ]; then
-    cat
-  else
-    while IFS='' read line; do
-      print -P '%F{$color}${line}%F{reset}'
-    done
-  fi
+  colorize "$@"
 }
 
 function hh_offset
 {
-  local color="${1:-}"
-
-  while IFS='' read line; do
-    echo "  ${line}" | hh_colorize "$color"
-  done
+  offset "$@"
 }
 
 function hh_curl

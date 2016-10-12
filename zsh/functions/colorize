@@ -1,0 +1,14 @@
+local color="${1:-white}"; (( $#* > 0 )) && shift
+local cc="$(print -P "%F{$color}")"
+local cr="$(print -P "%F{reset}")"
+
+if (( $#* > 0 )); then
+  echo "${cc}$*${cr}"
+else
+  while IFS='' read line; do
+    echo "${cc}${line}${cr}"
+  done
+fi
+
+return 0
+# vim:ft=zsh
