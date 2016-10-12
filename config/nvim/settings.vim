@@ -7,6 +7,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set hidden
+set modeline
 
 set shiftround
 
