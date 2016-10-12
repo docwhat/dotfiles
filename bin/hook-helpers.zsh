@@ -8,16 +8,6 @@ fi
 fpath=("${DOTFILES_DIR}/zsh/functions" "${fpath[@]}")
 autoload -Uz "${DOTFILES_DIR}/zsh/functions"/*(N:t)
 
-function hh_colorize
-{
-  colorize "$@"
-}
-
-function hh_offset
-{
-  offset "$@"
-}
-
 function hh_curl
 {
   local name=$1
@@ -48,22 +38,22 @@ function hh_git
   print -P "%F{cyan}∓ %F{blue}${name} %F{reset}"
   if [ ! -d "${dir}" ]; then
     if [ "${url}" = none ]; then
-      print -P "skipping...clone manually into ${dir} if you want." | hh_offset magenta
+      print -P "skipping...clone manually into ${dir} if you want." | offset | colorize magenta
     else
       if [ -n "${parent}" ]; then
-        mkdir -pv "${parent}" | hh_offset yellow
+        mkdir -pv "${parent}" | offset yellow
       fi
-      git clone "${url}" "${dir}" | hh_offset yellow
+      git clone "${url}" "${dir}" | offset yellow
       echo 'cloned.'
     fi
   else
     pushd "${dir}" > /dev/null
     if git diff-index --quiet HEAD; then
-      git pull --rebase 2>/dev/null | hh_offset yellow
-      git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | hh_offset
+      git pull --rebase 2>/dev/null | offset | colorize yellow
+      git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | offset
     else
-      echo "Can't update ${dir} repository due to changes." | hh_offset red
-      git -c color.status=always status --short | hh_offset | hh_offset
+      echo "Can't update ${dir} repository due to changes." | offset | colorize red
+      git -c color.status=always status --short | offset | offset
     fi
     popd > /dev/null
   fi
