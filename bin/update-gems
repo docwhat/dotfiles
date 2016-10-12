@@ -25,18 +25,18 @@ function verify_rubygems_or_exit
       return 0
       ;;
     1)
-      echo 'Minor update is available if you want:' | hh_offset yellow
-      echo '  gem update --system' | hh_offset
+      echo 'Minor update is available if you want:' | offset | colorize yellow
+      echo '  gem update --system' | offset
       return 0
       ;;
     2)
-      echo 'Consider upgrading rubygems:' | hh_offset red
-      echo '  gem update --system' | hh_offset
+      echo 'Consider upgrading rubygems:' | offset | colorize red
+      echo '  gem update --system' | offset
       return 0
       ;;
     *)
-      echo 'You should upgrade rubygems!' | hh_offset red
-      echo '  gem update --system && gem pristine --all' | hh_offset yellow
+      echo 'You should upgrade rubygems!' | offset | colorize red
+      echo '  gem update --system && gem pristine --all' | offset | colorize yellow
       return $needs_update
       ;;
   esac
@@ -66,13 +66,13 @@ function do_update
 update_tmp="$(mktemp -d "${TMPDIR:-/tmp}/update-gems.XXXXXXXXXX")"
 cd "${update_tmp}"
 
-echo 'Checking rubygems:' | hh_colorize blue
+echo 'Checking rubygems:' | colorize blue
 verify_rubygems_or_exit
 
-echo "Verifying bundler is installed:" | hh_colorize blue
-gem install --conservative bundler | hh_offset green
+echo "Verifying bundler is installed:" | colorize blue
+gem install --conservative bundler | offset | colorize green
 
-echo "Installing gems:" | hh_colorize blue
+echo "Installing gems:" | colorize blue
 do_update
 
 # EOF
