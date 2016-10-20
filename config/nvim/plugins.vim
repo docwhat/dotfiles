@@ -228,8 +228,9 @@ Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go
 " ---- Indentation Columns {{{
 " Display an indent line
 Plug 'Yggdroot/indentLine'
-let g:indentLine_char = "⋮"
-let g:indentLine_noConcealCursor = 1
+" let g:indentLine_char = "│"
+let g:indentLine_char = "¦"
+let g:indentLine_setConceal = 0
 
 " }}}
 " ---- Cursorline Colors {{{

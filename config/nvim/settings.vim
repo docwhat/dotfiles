@@ -27,6 +27,8 @@ set showmatch                    " Show the matching bracket
 set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pairs
 
 set cursorline                   " highlights the current line
+set conceallevel=2
+set concealcursor=
 
 " Folds
 set foldminlines=4
