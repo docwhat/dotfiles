@@ -33,7 +33,6 @@ function zsh-startup-zgen()
     #
     if [ $(uname -a | grep -ci Darwin) = 1 ]; then
       # Load OSX-specific plugins
-      zgen oh-my-zsh plugins/brew
       zgen oh-my-zsh plugins/osx
     fi
 
