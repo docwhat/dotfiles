@@ -59,3 +59,17 @@ augroup StripTrailingWhite
   autocmd!
   autocmd BufWritePre *.{md,txt,rb,c,h,php,java,js,json,xml,xsl,vim} nested call s:StripTrailingWhiteOnSave()
 augroup END
+
+
+function! RubocopAutocorrect()
+  split
+  terminal rubocop --auto-correct '%'
+  edit
+  SyntasticCheck
+endfunction
+command! RubyDelint call RubocopAutocorrect()
+
+augroup RubocopAutocorrect
+  autocmd!
+  autocmd BufEnter nested term://rubocop* startinsert
+augroup END
