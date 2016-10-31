@@ -195,6 +195,20 @@ Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json']}
 " }}}
 " ---- Ruby {{{
 
+" Rails, bundler, etc.
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-projectionist'
+
+" Get me some RVM/Rbenv support
+if exists("$RVM_PATH")
+  Plug 'tpope/vim-rvm'
+else
+  Plug 'tpope/vim-rbenv'
+endif
+
 Plug 'osyo-manga/vim-monster', { 'for': 'ruby' }
 
 " }}}
