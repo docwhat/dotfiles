@@ -138,6 +138,38 @@ Plug 'fishbullet/deoplete-ruby', {'for': 'ruby'}
 
 " }}}
 
+" -- Syntax/Lint {{{
+
+Plug 'scrooloose/syntastic'
+let g:syntastic_error_symbol              = '✗✗'
+let g:syntastic_warning_symbol            = '⚠⚠'
+let g:syntastic_style_error_symbol        = '✗'
+let g:syntastic_style_warning_symbol      = '⚠'
+let g:syntastic_auto_loc_list             = 1 " Close the location-list when errors are gone
+let g:syntastic_loc_list_height           = 5
+let g:syntastic_sh_checkers               = ['shellcheck', 'checkbashisms', 'sh']
+let g:syntastic_sh_checkbashisms_args     = '-x'
+let g:syntastic_ruby_checkers             = ['mri', 'jruby', 'rubocop']
+if executable('rubocop-workaround.sh')
+  let g:syntastic_ruby_rubocop_exec       = 'rubocop-workaround.sh'
+endif
+let g:syntastic_ruby_rubocop_args         = '--display-cop-names'
+let g:syntastic_eruby_ruby_quiet_messages = {'regex': 'possibly useless use of a variable in void context'}
+let g:syntastic_scss_checkers             = ['sass']
+let g:syntastic_sass_checkers             = ['sass']
+let g:syntastic_python_checkers           = ['python', 'flake8', 'pep8', 'pylint']
+let g:syntastic_chef_checkers             = [''] " I'm sick of foodcritic
+let g:syntastic_xml_checkers              = ['xmllint']
+let g:syntastic_xslt_checkers             = ['xmllint']
+let g:syntastic_html_tidy_ignore_errors = [ '<link> proprietary attribute "integrity"', '<link> proprietary attribute "crossorigin"' ]
+" npm install js-yaml
+let g:syntastic_yaml_checkers             = ['jsyaml']
+let g:syntastic_go_checkers               = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map                  = { 'mode': 'active', 'passive_filetypes': ['go'] }
+Plug 'dbakker/vim-lint'
+
+" }}}
+
 " -- File Types {{{
 
 " ---- Markdown {{{
