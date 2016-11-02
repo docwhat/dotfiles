@@ -1,30 +1,44 @@
 #!/bin/bash
 
-typeset -a term=(
-  dumb
-  linux
+set -euo pipefail
 
-  xterm
-  xtermc
-  xterm-color
-  xterm-256color
+typeset -ar terms=(
+dumb
+linux
 
-  screen
-  screen-256color
-  screen.xterm-new
+xterm
+xtermc
+xterm-color
+xterm-256color
 
-  tmux
-  tmux-256color
+screen
+screen-256color
+screen.xterm-new
+
+tmux
+tmux-256color
 )
 
-for term in "${term[@]}"; do
+has_italics() {
+  local term="$1"
+  infocmp -1IL "$term" | grep -q _italics_mode
+}
+
+backspace_char() {
+  local term="$1"
+  infocmp -1IL "$term" | perl -n -e 'print "$1\n" if m/^\s*key_backspace=([^,]+)/;'
+}
+
+for term in "${terms[@]}"; do
   v=notchecked
   if env "TERM=$term" tput cols >/dev/null 2>&1; then
-    if env "TERM=$term" infocmp -1IL | grep -q _italics_mode; then
-      v="✔"
+    v="✔"
+    if has_italics "$term"; then
+      v="${v} i"
     else
-      v="✔ (no italics)"
+      v="${v}  "
     fi
+    v="${v} $(backspace_char "$term")"
   else
     v="𐄂"
   fi

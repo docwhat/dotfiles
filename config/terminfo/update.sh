@@ -4,10 +4,64 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-curl -z terminfo.src.gz -o terminfo.src.gz http://invisible-island.net/datafiles/current/terminfo.src.gz
-gzcat terminfo.src.gz > terminfo.src
+typeset -ar terms=(
+xterm
+xtermc
+xterm-color
+xterm-256color
 
-rm -rf ~/.terminfo
-tic -xa terminfo.src
+screen
+screen-256color
+screen.xterm-new
+
+tmux
+tmux-256color
+)
+
+fetch_term_source() {
+  if [ ! -r terminfo.src.gz ]; then
+    curl -LsSf -o terminfo.src.gz http://invisible-island.net/datafiles/current/terminfo.src.gz
+  else
+    curl -LsSf -z terminfo.src.gz -o terminfo.src.gz http://invisible-island.net/datafiles/current/terminfo.src.gz
+  fi
+}
+
+unpack_terms() {
+  gzcat terminfo.src.gz > terminfo.src
+  env TERMINFO=terminfo.tmp tic -xa terminfo.src
+}
+
+correct_backspace() {
+  # Fix backspace character
+  for term in "${terms[@]}"; do
+    tmpfile="terms.tmp/${term}.terminfo"
+    env TERMINFO=terminfo.tmp infocmp -1IL "$term"| sed 's/key_backspace=^[hH]/key_backspace=\\177/' > "$tmpfile"
+    env TERMINFO=terminfo.tmp tic -xa "$tmpfile"
+    unset tmpfile
+  done
+
+  # Cleanup
+  # rm -rf terms.tmp
+}
+
+## Main
+
+rm -rf ./*.tmp
+mkdir terms.tmp
+
+fetch_term_source
+
+unpack_terms
+correct_backspace
+
+## Import terminals for use.
+for term in "${terms[@]}"; do
+  tmpfile="terms.tmp/${term}.terminfo"
+  env TERMINFO=terminfo.tmp infocmp -1IL "$term" > "$tmpfile"
+  tic -xa "$tmpfile"
+  unset tmpfile
+done
+
+rm -rf ./terminfo.src ./*.tmp
 
 # EOF
