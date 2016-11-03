@@ -62,8 +62,7 @@ augroup END
 
 
 function! RubocopAutocorrect()
-  split
-  terminal rubocop --auto-correct '%'
+  silent !rubocop --auto-correct '%'
   edit
   SyntasticCheck
 endfunction
