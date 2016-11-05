@@ -43,27 +43,28 @@ if ! zgen saved; then
   # Completion generator
   zgen load RobSis/zsh-completion-generator
 
-  # Add Fish shell like syntax highlighting for ZSH
-  if false; then
-    # With zsh-syntax-highlighting and zsh-autosuggestions both loaded
-    # then history-incremental-pattern-search-backward doesn't work:
-    # it only works for the first (random) few history items, then stops as if
-    # my history is gone.
-    zgen load zsh-users/zsh-syntax-highlighting
-  fi
-
-  # Add Fish-like autosuggestions to your ZSH
   if is-at-least 5.0; then
-    zgen load zsh-users/zsh-autosuggestions
-    # Fixes paste being slow.
-    zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+    # Add Fish shell like syntax highlighting for ZSH
+    zgen load zsh-users/zsh-syntax-highlighting
 
-    ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=( end-of-line vi-end-of-line vi-add-eol )
-    ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=( forward-char vi-forward-char )
+    # Add Fish-like autosuggestions to your ZSH
+    zgen load zsh-users/zsh-autosuggestions
   fi
 
   # Save it all to init script
   zgen save
 fi
+
+# Fixes paste being slow.
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=( end-of-line vi-end-of-line vi-add-eol )
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=( forward-char vi-forward-char )
+# Workaround until it's fixed in zsh-autosuggest:
+# https://github.com/zsh-users/zsh-autosuggestions/pull/206
+typeset -ar ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
+"${ZSH_AUTOSUGGEST_IGNORE_WIDGETS[@]}"
+zle-isearch-update
+)
 
 # EOF
