@@ -241,7 +241,13 @@ else
   Plug 'tpope/vim-rbenv'
 endif
 
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'osyo-manga/vim-monster', { 'for': 'ruby' }
+" With deoplete.nvim
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+      \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+      \}
 
 " }}}
 " ---- GoLang {{{
