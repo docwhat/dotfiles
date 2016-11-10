@@ -1,0 +1,92 @@
+# docwhat's theme -- http://docwhat.org/
+
+prompt_docwhat2_help () {
+  echo "docwhat's theme -- https://docwhat.org/"
+  echo
+  echo "Works best with a 256+ color terminal and fonts that support Unicode."
+}
+
+prompt_docwhat2_setup () {
+  [ "$prompt_docwhat2_is_debugging" = true ] && setopt xtrace
+  # ╓╼ docwhat@lithium ruby-2.3.1 ~ ━╾
+  # ╙ ∵
+  # echo 'hi'
+
+  local colorlevel=none
+  if [ -z "${terminfo[colors]}" ]; then
+    colorlevel=none
+  elif [ "${terminfo[colors]}" -ge 256 ]; then
+    colorlevel=hi
+  elif [ "${terminfo[colors]}" -ge 8 ]; then 
+    colorlevel=lo
+  fi
+
+  local text_default deco_default
+  if [ "$colorlevel" = hi ]; then
+    text_default=27
+    deco_default=34
+  elif [ "$colorlevel" = lo ]; then
+    text_default=blue
+    deco_default=green
+  fi
+
+  local text=${1:-$text_default}
+  local deco=${2:-$deco_default}
+
+  local TEXT="%F{$text}%k"
+  local DECO="%F{$deco}%k"
+  local RESET="%b%f%k"
+  local NL=$'\n'
+
+
+  local AHEAD_SIGIL='↑'
+  local BEHIND_SIGIL='↓'
+  local STAGED_SIGIL='●'
+  local CONFLICTS_SIGIL='✖'
+  local UNSTAGED_SIGIL='✚'
+  local UNTRACKED_SIGIL='…'
+  local STASHED_SIGIL='⚑'
+  local CLEAN_SIGIL='✔'
+
+  # Special characters
+  local -A schars wschars && autoload -Uz prompt_docwhat2_schars && prompt_docwhat2_schars
+  autoload -Uz vcs_info
+
+  # [ "$prompt_docwhat2_is_debugging" = true ] && zstyle ':vcs_info:*+*:prompt_docwhat2:*' debug true
+
+  zstyle ':vcs_info:*:prompt_docwhat2:*' enable bzr git hg svn
+  # local i
+  # for i in git hg svn bzr; do
+  #   zstyle ":vcs_info:${i}:prompt_docwhat2:*" formats "${wschars[$i]}"
+  # done
+  # zstyle ":vcs_info:*:prompt_docwhat2:*" formats "${wschars[\>]}"
+
+  zstyle ':vcs_info:git:prompt_docwhat2:*' command =git
+  zstyle ':vcs_info:*:prompt_docwhat2:*' max-exports 5
+  zstyle ':vcs_info:*:prompt_docwhat2:*' check-for-changes true
+  # zstyle ':vcs_info:hg:prompt_docwhat2:*' get-revision true
+  # zstyle ':vcs_info:(git|hg|bzr):prompt_docwhat2:*' use-simple true
+
+  zstyle ':vcs_info:*:prompt_docwhat2:*' stagedstr   "%{%F{40}${STAGED_SIGIL}%G%}"
+  zstyle ':vcs_info:*:prompt_docwhat2:*' unstagedstr "%{%F{190}${UNSTAGED_SIGIL}%G%}"
+
+  zstyle ':vcs_info:*:prompt_docwhat2:(sv[nk]|bzr):*' branchformat '%b%F{red}:%F{11}%r'
+  zstyle ':vcs_info:*:prompt_docwhat2:*' formats " [%s:${DECO}%b%c%u${TEXT}]"
+  zstyle ':vcs_info:*:prompt_docwhat2:*' actionformats " [${DECO}%b%c%u|%F{yellow}%a${TEXT}]"
+
+  PS1="${DECO}${schars[/]}${schars[-=]}${TEXT} \${vcs_info_msg_1_} \${vcs_info_msg_0_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]} ${RESET}%# "
+  PS2="> "
+
+  add-zsh-hook precmd prompt_docwhat2_precmd
+
+  prompt_opts=(cr subst percent)
+}
+
+prompt_docwhat2_preview () {
+  prompt_preview_theme docwhat2 "$@"
+}
+
+prompt_docwhat2_is_debugging=true
+prompt_docwhat2_setup "$@"
+
+# vim: set ft=zsh ts=2 sw=2 et:
