@@ -109,7 +109,7 @@ function +vi-git-untracked {
 
 function prompt_docwhat_hook_precmd {
   [[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
-  vcs_info 2>/dev/null
+  vcs_info prompt_docwhat 2>/dev/null
 }
 
 function prompt_docwhat_setup {
@@ -122,22 +122,22 @@ function prompt_docwhat_setup {
     # 256 color
     _prompt_docwhat_color=27
     _prompt_docwhat_alt_color=34
-    zstyle ':vcs_info:*' stagedstr   "%{%F{40}●%G%}"
-    zstyle ':vcs_info:*' unstagedstr "%{%F{190}●%G%}"
+    zstyle ':vcs_info:*:prompt_docwhat:*' stagedstr   "%{%F{40}●%G%}"
+    zstyle ':vcs_info:*:prompt_docwhat:*' unstagedstr "%{%F{190}●%G%}"
 
   elif [[ "$num_of_colors" -ge 8 ]]; then
     # 8 Color
     _prompt_docwhat_color=blue
     _prompt_docwhat_alt_color=green
-    zstyle ':vcs_info:*' stagedstr   "%{%F{green}●%G%}"
-    zstyle ':vcs_info:*' unstagedstr "%{%F{yellow}●%G%}"
+    zstyle ':vcs_info:*:prompt_docwhat:*' stagedstr   "%{%F{green}●%G%}"
+    zstyle ':vcs_info:*:prompt_docwhat:*' unstagedstr "%{%F{yellow}●%G%}"
 
   else
     # monochrome
     _prompt_docwhat_color='white'
     _prompt_docwhat_alt_color='white'
-    zstyle ':vcs_info:*' stagedstr   "%{●%G%}"
-    zstyle ':vcs_info:*' unstagedstr "%{●%G%}"
+    zstyle ':vcs_info:*:prompt_docwhat:*' stagedstr   "%{●%G%}"
+    zstyle ':vcs_info:*:prompt_docwhat:*' unstagedstr "%{●%G%}"
   fi
 
   # Host name & coloring
@@ -154,13 +154,13 @@ function prompt_docwhat_setup {
   prompt_docwhat_user="%(!.%F{red}%n%F{$_prompt_docwhat_color}.%n)"
 
 
-  zstyle ':vcs_info:*' max-exports 2
-  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*:prompt_docwhat:*' max-exports 2
+  zstyle ':vcs_info:*:prompt_docwhat:*' check-for-changes true
   zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{red}:%F{11}%r'
-  #zstyle ':vcs_info:*' enable git svn bzr hg
-  zstyle ':vcs_info:*' formats       " [%s:%F{green}%b%c%u%F{$_prompt_docwhat_color}]" '%s'
-  zstyle ':vcs_info:*' actionformats " [%F{green}%b%c%u|%F{yellow}%a%F{$_prompt_docwhat_color}]"  '%s'
-  zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+  #zstyle ':vcs_info:*:prompt_docwhat:*' enable git svn bzr hg
+  zstyle ':vcs_info:*:prompt_docwhat:*' formats       " [%s:%F{green}%b%c%u%F{$_prompt_docwhat_color}]" '%s'
+  zstyle ':vcs_info:*:prompt_docwhat:*' actionformats " [%F{green}%b%c%u|%F{yellow}%a%F{$_prompt_docwhat_color}]"  '%s'
+  zstyle ':vcs_info:git*+set-message:*:prompt_docwhat:*' hooks git-untracked
 
   PROMPT='$(prompt_docwhat "$pipestatus[@]")'
 
