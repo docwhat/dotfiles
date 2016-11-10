@@ -16,6 +16,9 @@ let &showbreak = '↳ '
 
 set ignorecase
 set smartcase
+if exists('&inccommand')
+  set inccommand=split
+endif
 
 set number
 " set wildmode=list:longest,full   " Completion for wildchar (see help)
