@@ -35,6 +35,9 @@ if [ -d ~/.tmux/plugins ]; then
 fi
 
 echo
-print -P "%F{green}You may wish to consider running 'rbenv-update-plugins' or 'update-gems'%F{reset}"
+print -P "%F{green}You may wish to consider running:%F{reset}"
+echo "  * rbenv-update-plugins"
+echo "  * update-gems"
+echo "  * install-fonts"
 
 # EOF

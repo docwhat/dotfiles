@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+typeset -a urls
+
+# https://github.com/ryanoasis/nerd-fonts
+add_nerd_fira() {
+  local version kind
+  version='v0.8.0'
+  for kind in Bold Light Medium Regular Retina; do
+    urls+=( "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/${version}/patched-fonts/FiraCode/${kind}/complete/Fura%20Code%20${kind}%20Nerd%20Font%20Complete.otf" )
+  done
+}
+
+fetch_font() {
+  local url fname fontpath
+  url=$1
+  fname=$(uridecode "$(basename "$url")")
+  fontpath=~/Library/Fonts/"$fname"
+  echo "Fetching '${fname}'..."
+  if [ ! -r "$fontpath" ]; then
+    curl -sSf -o "$fontpath" "$url"; else
+    curl -sSf -z "$fontpath" -o "$fontpath" "$url"
+  fi
+}
+
+## Main
+if [[ "${OSTYPE}" != darwin* ]]; then
+  echo "${OSTYPE} is not supported\!" 1>&2
+  exit 10
+fi
+
+add_nerd_fira
+for url in "${urls[@]}"; do
+  fetch_font "$url"
+done
+
+# EOF
