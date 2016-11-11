@@ -4,13 +4,14 @@
 PRY_GOODIES = []
 PRY_BUMMERS = []
 
-ruby_version = if defined? RUBY_VERSION && defined? RUBY_PATCHLEVEL
-                 "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
-               elsif defined? RUBY_DESCRIPTION
-                 RUBY_DESCRIPTION.split(' ')[1].sub('p', '-p')
-               else
-                 (`ruby -v` || '').split(' ')[1].sub('p', '-p')
-               end
+ruby_version =
+  if defined? RUBY_VERSION && defined? RUBY_PATCHLEVEL
+    "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
+  elsif defined? RUBY_DESCRIPTION
+    RUBY_DESCRIPTION.split(' ')[1].sub('p', '-p')
+  else
+    (`ruby -v` || '').split(' ')[1].sub('p', '-p')
+  end
 
 %w(
   hirb-unicode
@@ -67,9 +68,14 @@ File.expand_path('~/.pry/history').tap do |history_file|
 end
 
 # Welcome message.
-print "Pry running on #{ruby_version} "
-print "with RubyGems #{Gem::VERSION} " if defined? Gem::VERSION
-puts "and #{PRY_GOODIES.join ', '}."
-puts "Unable to load gems: #{PRY_BUMMERS.join ', '}" unless PRY_BUMMERS.empty?
+Pry.hooks.add_hook(:before_session, "pryrc_start_hook") do |output, binding, pry|
+  output.print "Pry running on #{ruby_version} "
+  output.print "with RubyGems #{Gem::VERSION} " if defined? Gem::VERSION
+  output.puts "and #{PRY_GOODIES.join ', '}."
+  output.puts "Unable to load gems: #{PRY_BUMMERS.join ', '}" unless PRY_BUMMERS.empty?
+end
+Pry.hooks.add_hook(:after_session, "pryrc_start_hook") do |output, binding, pry|
+  output.puts "Buh-bye!"
+end
 
 # EOF
