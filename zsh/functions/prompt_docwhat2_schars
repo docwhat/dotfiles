@@ -7,11 +7,13 @@ if [[ ${LC_ALL:-${LC_CTYPE:-$LANG}} = *(UTF-8|utf8)* ]]; then
   schars[=]=$'\xe2\x94\x81'
   schars[=-]=$'\xe2\x95\xbe'
   schars[\\]=$'\xe2\x95\x99'
-  schars[git]=$'\xc2\xb1'
+  schars[git]=$'\xef\x87\x93'
   schars[bzr]=$'\xe2\x9a\x98'
-  schars[svn]=$'\xe2\x9a\xa1'
+  schars[svn]=$'\xef\x83\xa7'
   schars[hg]=$'\xe2\x98\xbf'
-  schars[\>]=$'\xe2\x88\xb5'
+  # schars[\>]=$'\xe2\x88\xb5'
+  schars[root]=$'\xef\x87\x91'
+  schars[user]=$'\xef\x87\x90'
 
   for char in "${(@k)schars}"; do
     wschars[$char]="%{${schars[$char]}%G%}"
