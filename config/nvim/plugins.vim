@@ -131,6 +131,8 @@ Plug 'netrw.vim'
 " -- Completion {{{
 Plug 'Shougo/deoplete.nvim' " :UpdateRemotePlugins
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_refresh_always = 1
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 Plug 'Shougo/neco-syntax'
 Plug 'zchee/deoplete-go', {'for': 'go'}
