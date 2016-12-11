@@ -274,6 +274,12 @@ Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go-explorer/src/getool' }
 
 " }}}
+" ---- Rust {{{
+
+let g:rustfmt_autosave = 1
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+
+" }}}
 
 " }}}
 
