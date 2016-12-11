@@ -6,3 +6,5 @@ fi
 
 [ -d "$GOPATH" ] || mkdir -p "$GOPATH"
 path=($path "${GOPATH}/bin")
+
+# vim: set ft=zsh :
