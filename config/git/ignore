@@ -17,6 +17,8 @@ Icon
 tags
 *.orig
 *.rej
+*.bk
+*.bak
 
 # Files that might appear on external disk
 .Spotlight-V100
@@ -29,4 +31,4 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# vim: set ft=config
+# vim : set ft=config :
