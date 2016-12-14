@@ -1,5 +1,10 @@
 autoload -U is-at-least
+ZGEN_RESET_ON_CHANGE=(
+  "${HOME}/.zsh/startup/0plugins.zsh"
+  "${HOME}/.zsh/startup/0plugins.zshenv"
+)
 source "${HOME}/.zgen/zgen.zsh"
+
 
 if ! zgen saved; then
   zgen oh-my-zsh
