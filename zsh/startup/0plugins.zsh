@@ -49,11 +49,11 @@ if ! zgen saved; then
   zgen load RobSis/zsh-completion-generator
 
   if is-at-least 5.0; then
-    # Add Fish shell like syntax highlighting for ZSH
-    zgen load zsh-users/zsh-syntax-highlighting
-
     # Add Fish-like autosuggestions to your ZSH
     zgen load zsh-users/zsh-autosuggestions
+
+    # Add Fish shell like syntax highlighting for ZSH
+    zgen load zsh-users/zsh-syntax-highlighting '' '0.5.x'
   fi
 
   # Save it all to init script
@@ -69,7 +69,7 @@ ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=( forward-char vi-forward-char )
 # https://github.com/zsh-users/zsh-autosuggestions/pull/206
 typeset -ar ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
 "${ZSH_AUTOSUGGEST_IGNORE_WIDGETS[@]}"
-zle-isearch-update
+'zle-*'
 )
 
 # EOF
