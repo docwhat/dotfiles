@@ -10,6 +10,20 @@
 "  * https://github.com/EPadronU/conf-files/blob/master/neovim/.nvimrc
 "  * https://www.reddit.com/r/neovim/comments/46z55o/help_can_you_give_me_your_opinion_about_my_initvim/
 
+if has('win16') || has('win32') || has('win64')
+  language messages en_US.UTF-8
+  if has('multi_byte')
+    set termencoding=cp850
+    set encoding=utf-8
+    setglobal fileencoding=utf-8
+    set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
+  endif
+else
+  language en_US.UTF-8
+  set encoding=utf-8
+  set termencoding=utf-8
+endif
+
 let s:bootstrap=0
 " Figure out the home directory.
 let g:my_nvim_dir = fnamemodify(expand('<sfile>'), ':p:h')
