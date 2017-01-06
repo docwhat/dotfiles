@@ -39,6 +39,10 @@ set cursorline                   " highlights the current line
 set conceallevel=2
 set concealcursor=
 
+if has("patch-7.4.1570")
+  set shortmess+=F
+endif
+
 " Folds
 set foldminlines=4
 
@@ -51,9 +55,18 @@ set sidescrolloff=5   " don't scroll any closer to left/right
 
 set path+=**
 
+augroup nvimrc_aucmd
+  autocmd!
+  autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+augroup END
+
 " Themes/Colors
 "-----------------------------------------------------------------------------
-set termguicolors
+if exists('+termguicolors')
+  set termguicolors
+elseif exists('+guicolors')
+  set guicolors
+endif
 colorscheme jellybeans
 call airline#switch_theme('badwolf')
 set background=dark
@@ -62,6 +75,16 @@ set background=dark
 "-----------------------------------------------------------------------------
 augroup Vimrc
   autocmd VimEnter * Arpeggio inoremap jk  <Esc>
+augroup END
+
+" Terminal
+" -----------------------------------------------------------------------------
+augroup Terminal
+  au!
+  au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
+  au WinEnter term://* startinsert | IndentLinesDisable
+  "au TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
+  au TermClose * exe expand('<abuf>').'bd!'
 augroup END
 
 " Save Cursor Positions
