@@ -1,0 +1,5 @@
+*.vim      text eol=lf
+*.zsh      text eol=lf
+*.zshrc    text eol=lf
+*.zshenv   text eol=lf
+*.zprofile text eol=lf
