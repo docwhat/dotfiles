@@ -1,6 +1,12 @@
+scriptencoding utf-8
+
 augroup Vimrc
   autocmd!
 augroup END
+
+if has('filterpipe')
+  set noshelltemp
+endif
 
 set tabstop=2
 set shiftwidth=2
