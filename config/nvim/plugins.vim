@@ -37,6 +37,11 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
+" Convert single line things to multi-line and back
+"   gS - single -> multi
+"   gJ - multi -> single
+Plug 'AndrewRadev/splitjoin.vim'
+
 " Scratch pad for various languages.
 Plug 'metakirby5/codi.vim'
 let g:codi#interpreters = {
