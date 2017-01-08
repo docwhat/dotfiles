@@ -42,6 +42,13 @@ nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 "   gJ - multi -> single
 Plug 'AndrewRadev/splitjoin.vim'
 
+" Whitespace trimming and highlighting
+Plug 'ntpeters/vim-better-whitespace'
+nmap <silent> <Leader><space> :StripWhitespace
+autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl let g:strip_whitespace_on_save = 0 | ToggleStripWhitespaceOnSave
+" After https://github.com/ntpeters/vim-better-whitespace/pull/55 is accepted:
+" autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
+
 " Scratch pad for various languages.
 Plug 'metakirby5/codi.vim'
 let g:codi#interpreters = {

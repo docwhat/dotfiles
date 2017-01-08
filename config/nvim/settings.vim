@@ -122,7 +122,6 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " Indent whole file
 "-----------------------------------------------------------------------------
 nmap <silent> <Leader>g :call Preserve("normal gg=G")<CR>
-nmap <silent> <Leader><space> :call Preserve("%s/\\s\\+$//e")<CR>
 
 " Turn off highlights
 "-----------------------------------------------------------------------------

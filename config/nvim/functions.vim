@@ -22,45 +22,7 @@ function! Preserve(command)
   call setpos('.', save_cursor)
 endfunction
 
-" Whitespace Triming methods
-"-----------------------------------------------------------------------------
-" Use :StripTrailingWhiteOnSaveToggle to disable whitespace stripping.
-" Use :StripTrailingWhite to call whitespace stripping manually.
-
-function! s:StripTrailingWhite()
-  let l:winview = winsaveview()
-  silent! %s/\s\+$//
-  call winrestview(l:winview)
-endfunction
-command! StripTrailingWhite call <SID>StripTrailingWhite()
-
-" Strips whitespace on file save
-function! s:StripTrailingWhiteOnSave()
-  if g:strip_trainging_white_on_save == 1
-    call s:StripTrailingWhite()
-  endif
-endfunction
-
-function! s:StripTrailingWhiteOnSaveToggle()
-  if g:strip_trainging_white_on_save == 0
-    let g:strip_trainging_white_on_save = 1
-    echo "Strip Trailing Whitespace On Save: Enabled"
-  else
-    let g:strip_trainging_white_on_save = 0
-    echo "Strip Trailing Whitespace On Save: Disabled"
-  endif
-endfunction
-command! StripTrailingWhiteOnSaveToggle call <SID>StripTrailingWhiteOnSaveToggle()
-
-" Set this to true by default
-let g:strip_trainging_white_on_save = 1
-
-augroup StripTrailingWhite
-  autocmd!
-  autocmd BufWritePre *.{md,txt,rb,c,h,php,java,js,json,xml,xsl,vim} nested call s:StripTrailingWhiteOnSave()
-augroup END
-
-
+" Rubocop auto correction of lint
 function! RubocopAutocorrect()
   silent !rubocop --auto-correct '%'
   edit
