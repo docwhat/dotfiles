@@ -55,6 +55,7 @@ endif
 if s:bootstrap
   echomsg "Updating plugins. Please wait. "
   redraw
+  :PlugUpgrade
   :PlugUpdate
 endif
 
