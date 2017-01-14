@@ -31,6 +31,9 @@ Plug 'godlygeek/tabular'
 " Shows regions that were just yanked.
 Plug 'machakann/vim-highlightedyank'
 
+" Visualize the undo tree
+Plug 'mbbill/undotree'
+
 " Tags support; I recommend Universal Ctags
 "   https://ctags.io/
 Plug 'ludovicchabant/vim-gutentags'
