@@ -165,7 +165,8 @@ let g:syntastic_style_warning_symbol      = '⚠'
 let g:syntastic_auto_loc_list             = 1 " Close the location-list when errors are gone
 let g:syntastic_loc_list_height           = 5
 let g:syntastic_sh_checkers               = ['shellcheck', 'checkbashisms', 'sh']
-let g:syntastic_sh_checkbashisms_args     = '-x'
+let g:syntastic_sh_checkbashisms_args     = '--extra' " Turn off the --force flag
+let g:syntastic_sh_shellcheck_args        = '--external-sources' " Follow sources/dependencies explicitly added
 let g:syntastic_ruby_checkers             = ['mri', 'jruby', 'rubocop']
 if executable('rubocop-workaround.sh')
   let g:syntastic_ruby_rubocop_exec       = 'rubocop-workaround.sh'
