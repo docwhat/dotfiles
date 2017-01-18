@@ -7,14 +7,6 @@ if (( $+commands[brew] )); then
   if [[ -d /usr/local/opt/groovy/libexec ]]; then
     export GROOVY_HOME=/usr/local/opt/groovy/libexec
   fi
-
-  # I also prefer the non-gprefix gnubins
-  if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
-    path=(/usr/local/opt/coreutils/libexec/gnubin "${path[@]}")
-  fi
-  if [ -d /usr/local/opt/coreutils/libexec/gnuman ]; then
-    manpath=(/usr/local/opt/coreutils/libexec/gnuman "${manpath[@]}")
-  fi
 fi
 
 # vim: set ft=zsh :
