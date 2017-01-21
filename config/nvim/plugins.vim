@@ -158,12 +158,19 @@ Plug 'fishbullet/deoplete-ruby', {'for': 'ruby'}
 " -- Syntax/Lint {{{
 
 Plug 'scrooloose/syntastic'
-let g:syntastic_error_symbol              = '✗✗'
-let g:syntastic_warning_symbol            = '⚠⚠'
-let g:syntastic_style_error_symbol        = '✗'
-let g:syntastic_style_warning_symbol      = '⚠'
+Plug 'dbakker/vim-lint'
+
+let g:syntastic_warning_symbol            = ''
+let g:syntastic_error_symbol              = ''
+let g:syntastic_style_warning_symbol      = ''
+let g:syntastic_style_error_symbol        = ''
+
+let g:syntastic_always_populate_loc_list  = 1
 let g:syntastic_auto_loc_list             = 1 " Close the location-list when errors are gone
 let g:syntastic_loc_list_height           = 5
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 let g:syntastic_sh_checkers               = ['shellcheck', 'checkbashisms', 'sh']
 let g:syntastic_sh_checkbashisms_args     = '--extra' " Turn off the --force flag
 let g:syntastic_sh_shellcheck_args        = '--external-sources' " Follow sources/dependencies explicitly added
@@ -184,7 +191,6 @@ let g:syntastic_html_tidy_ignore_errors = [ '<link> proprietary attribute "integ
 let g:syntastic_yaml_checkers             = ['jsyaml']
 let g:syntastic_go_checkers               = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map                  = { 'mode': 'active', 'passive_filetypes': ['go'] }
-Plug 'dbakker/vim-lint'
 
 " }}}
 
@@ -319,11 +325,14 @@ Plug 'vim-airline/vim-airline-themes'
 " ---- Jellybeans ColorScheme {{{
 
 let g:jellybeans_overrides = {}
-let g:jellybeans_overrides["background"]   = { "guibg": "none" }
-let g:jellybeans_overrides["LineNr"]       = { "attr": "none", "guifg": "707090", "guibg": "none"   }
-let g:jellybeans_overrides["CursorLineNr"] = { "attr": "none", "guifg": "a0a0f0", "guibg": "none"   }
-let g:jellybeans_overrides["IncSearch"]    = { "attr": "none", "guifg": "405060", "guibg": "ff8b0f" }
-let g:jellybeans_overrides["Search"]       = { "attr": "none", "guifg": "203040", "guibg": "f7ff0d" }
+let g:jellybeans_overrides["background"]           = { "guibg": "none" }
+let g:jellybeans_overrides["LineNr"]               = { "attr": "none", "guifg": "707090", "guibg": "none"   }
+let g:jellybeans_overrides["CursorLineNr"]         = { "attr": "none", "guifg": "a0a0f0", "guibg": "none"   }
+let g:jellybeans_overrides["IncSearch"]            = { "attr": "none", "guifg": "405060", "guibg": "ff8b0f" }
+let g:jellybeans_overrides["Search"]               = { "attr": "none", "guifg": "203040", "guibg": "f7ff0d" }
+
+let g:jellybeans_overrides["SyntasticWarningSign"] = { "attr": "none", "guifg": "ffdc00", "guibg": "333333" }
+let g:jellybeans_overrides["SyntasticErrorSign"]   = { "attr": "none", "guifg": "ff4136", "guibg": "333333" }
 
 Plug 'nanotech/jellybeans.vim'
 
