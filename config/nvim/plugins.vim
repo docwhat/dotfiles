@@ -318,6 +318,8 @@ let g:indentLine_setConceal = 0
 " ---- Cursorline Colors {{{
 let g:airline_powerline_fonts            = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
