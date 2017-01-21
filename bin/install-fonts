@@ -4,29 +4,23 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-typeset -r v='1.0.0'
-typeset -a urls
-typeset update
-update=f
+typeset -r release='v1.0.0'
+typeset -a fonts
 
-urls+=(
-"https://github.com/ryanoasis/nerd-fonts/raw/${v}/patched-fonts/FiraCode/Retina/complete/Fura%20Code%20Retina%20Nerd%20Font%20Complete.otf"
-
-"https://github.com/ryanoasis/nerd-fonts/raw/${v}/patched-fonts/Hack/Regular/complete/Knack%20Regular%20Nerd%20Font%20Complete.ttf"
-
-"https://github.com/ryanoasis/nerd-fonts/raw/${v}/patched-fonts/FantasqueSansMono/Regular/complete/Fantasque%20Sans%20Mono%20Regular%20Nerd%20Font%20Complete.ttf"
+fonts=(
+FiraCode
+Hack
+SourceCodePro
 )
 
-fetch_font() {
-  local url fname fontpath
+fetch_or_update() {
+  local url destination
   url=$1
-  fname=$(uridecode "$(basename "$url")")
-  fontpath=~/Library/Fonts/"$fname"
-  echo "Fetching '${fname}'..."
-  if [ ! -r "$fontpath" ]; then
-    curl -sSfL -o "$fontpath" "$url"
-  elif [ "$update" = t ]; then
-    curl -sSfL -z "$fontpath" -o "$fontpath" "$url"
+  destination=$2
+  if [ ! -r "$destination" ]; then
+    curl -sSfL -o "$destination" "$url"
+  else
+    curl -sSfL -z "$destination" -o "$destination" "$url"
   fi
 }
 
@@ -36,8 +30,15 @@ if [[ "${OSTYPE}" != darwin* ]]; then
   exit 10
 fi
 
-for url in "${urls[@]}"; do
-  fetch_font "$url"
+mkdir -p ~/tmp/.fonts/
+rm ~/Library/Fonts/*Nerd*(.)
+
+for font in "${fonts[@]}"; do
+  zipfile=~/tmp/.fonts/"${font}.zip"
+  fetch_or_update \
+    "https://github.com/ryanoasis/nerd-fonts/releases/download/${release}/${font}.zip" \
+    "${zipfile}"
+  unzip -uo "${zipfile}" -d ~/Library/Fonts/ -x '*Windows*' '*Mono.*'
 done
 
 # EOF
