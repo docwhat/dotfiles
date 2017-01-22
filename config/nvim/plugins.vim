@@ -1,11 +1,18 @@
 let g:plug_shallow=0
 call plug#begin()
 
+" Usage: Plug 'blah', { 'do': function('DoRemotePluginsUpdate') }
+function! DoRemotePluginsUpdate(arg)
+  UpdateRemotePlugins
+endfunction
+
 augroup VimrcPlugins
   autocmd!
 augroup END
 
 " -- Utilities {{{
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+
 " Support '.' correctly for plugins that support this module.
 Plug 'tpope/vim-repeat'
 
@@ -125,7 +132,7 @@ augroup VimrcPlugins
 augroup END
 nnoremap <silent> <leader>t :Denite file_rec<cr>
 " nnoremap <C-p> :Denite file_rec<cr>
-Plug 'Shougo/denite.nvim' " :UpdateRemotePlugins
+Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " }}}
 " ---- Remote File Editing {{{
 " Allows editing remote files.
@@ -144,14 +151,26 @@ Plug 'netrw.vim'
 " }}}
 
 " -- Completion {{{
-Plug 'Shougo/deoplete.nvim' " :UpdateRemotePlugins
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_refresh_always = 1
+
+" VimL/Vimscript
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 Plug 'Shougo/neco-syntax'
+
+" Go
 Plug 'zchee/deoplete-go', {'for': 'go'}
+
+" Ruby
 Plug 'fishbullet/deoplete-ruby', {'for': 'ruby'}
+Plug 'osyo-manga/vim-monster', { 'for': 'ruby' }
+" With deoplete.nvim
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+      \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+      \}
 
 " }}}
 
@@ -264,14 +283,6 @@ if exists("$RVM_PATH")
 else
   Plug 'tpope/vim-rbenv'
 endif
-
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'osyo-manga/vim-monster', { 'for': 'ruby' }
-" With deoplete.nvim
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-      \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-      \}
 
 " }}}
 " ---- GoLang {{{
