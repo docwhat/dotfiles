@@ -54,7 +54,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 " Whitespace trimming and highlighting
 Plug 'ntpeters/vim-better-whitespace'
-nmap <silent> <Leader><space> :StripWhitespace
+nmap <silent> <Leader><space> :StripWhitespace<CR>
 autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl let g:strip_whitespace_on_save = 0 | ToggleStripWhitespaceOnSave
 " After https://github.com/ntpeters/vim-better-whitespace/pull/55 is accepted:
 " autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
