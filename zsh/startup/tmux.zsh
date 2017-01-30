@@ -5,7 +5,7 @@ if [ -n "$TMUX" ]; then
   get_tmux_window_option() {
     local wid=$1
     local arg_name=$2
-    local value="$(tmux show-window-option ${(q)arg_name})"
+    local value="$(tmux show-window-option -t ${(q)wid} ${(q)arg_name})"
     if [ -z "$value" ]; then
       value="-u ${(q)arg_name}"
     fi
@@ -14,9 +14,18 @@ if [ -n "$TMUX" ]; then
 
   # Alias so ssh will change the window name.
   ssh() {
-    local wid="$(tmux display-message -p '#{window_id}')"
-    local old_name="$(tmux display-message -p '#{window_name}')"
-    local reset_eval="$(get_tmux_window_option ${wid} automatic-rename) ; $(get_tmux_window_option ${wid} allow-rename)"
+    local wid
+    local old_name
+    local reset_eval
+
+    if [ -n "$TMUX_PANE" ]; then
+      wid="$TMUX_PANE"
+    else
+      wid="$(tmux display-message -p '#{window_id}')"
+    fi
+    old_name="$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')"
+    reset_eval="$(get_tmux_window_option ${wid} automatic-rename) ; $(get_tmux_window_option ${wid} allow-rename)"
+
     tmux rename-window -t "${wid}" "ssh/$*"
     command ssh "$@"
     local ec=$?
