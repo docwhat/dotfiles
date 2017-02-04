@@ -25,9 +25,16 @@ else
 endif
 
 let s:bootstrap=0
-" Figure out the home directory.
-let g:my_nvim_dir = fnamemodify(expand('<sfile>'), ':p:h')
-let s:vim_plug_path = g:my_nvim_dir . "/autoload/plug.vim"
+
+" Figure out the XDG_CONFIG_HOME and XDG_DATA_HOME directories.
+" See https://github.com/neovim/neovim/issues/5297
+let g:xdg_config_home = fnamemodify(expand('<sfile>'), ':p:h')
+let g:xdg_data_home = fnamemodify(g:xdg_config_home, ':s?/.config/nvim?/.local/share/nvim?')
+if filewritable(g:xdg_data_home) != 2
+  let g:xdg_data_home = g:xdg_config_home
+endif
+
+let s:vim_plug_path = g:xdg_data_home . "/autoload/plug.vim"
 
 if !filereadable(s:vim_plug_path)
   let s:bootstrap=1
@@ -46,10 +53,10 @@ if s:bootstrap
   execute 'source ' . s:vim_plug_path
 endif
 
-execute 'source ' . g:my_nvim_dir . '/plugins.vim'
+execute 'source ' . g:xdg_config_home . '/plugins.vim'
 
 if has('ruby')
-  ruby load "#{VIM.evaluate('g:my_nvim_dir')}/bootcheck.rb"
+  ruby load "#{VIM.evaluate('g:xdg_config_home')}/bootcheck.rb"
 endif
 
 if s:bootstrap
@@ -60,12 +67,12 @@ if s:bootstrap
   quit
 endif
 
-execute 'source ' . g:my_nvim_dir . '/functions.vim'
-execute 'source ' . g:my_nvim_dir . '/settings.vim'
+execute 'source ' . g:xdg_config_home . '/functions.vim'
+execute 'source ' . g:xdg_config_home . '/settings.vim'
 
 " Local settings
-if filereadable(g:my_nvim_dir . '/local.vim')
-  execute 'source ' . g:my_nvim_dir . '/local.vim'
+if filereadable(g:xdg_config_home . '/local.vim')
+  execute 'source ' . g:xdg_config_home . '/local.vim'
 endif
 
 " EOF

@@ -1,4 +1,4 @@
-call plug#begin()
+call plug#begin(g:xdg_data_home . '/plugged')
 
 " Usage: Plug 'blah', { 'do': function('DoRemotePluginsUpdate') }
 function! DoRemotePluginsUpdate(arg)
