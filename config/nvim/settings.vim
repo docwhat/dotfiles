@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-augroup Vimrc
+augroup VimrcSettings
   autocmd!
 augroup END
 
@@ -57,8 +57,7 @@ set sidescrolloff=5   " don't scroll any closer to left/right
 
 set path+=**
 
-augroup nvimrc_aucmd
-  autocmd!
+augroup VimrcSettings
   autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
 augroup END
 
@@ -75,18 +74,17 @@ set background=dark
 
 " Smash escape!
 "-----------------------------------------------------------------------------
-augroup Vimrc
+augroup VimrcSettings
   autocmd VimEnter * Arpeggio inoremap jk  <Esc>
 augroup END
 
 " Terminal
 " -----------------------------------------------------------------------------
-augroup Terminal
-  au!
-  au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
-  au WinEnter term://* startinsert | IndentLinesDisable
-  "au TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
-  au TermClose * exe expand('<abuf>').'bd!'
+augroup VimrcSettings
+  autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
+  autocmd WinEnter term://* startinsert | IndentLinesDisable
+  "autocmd TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
+  autocmd TermClose * exe expand('<abuf>').'bd!'
 augroup END
 
 " Save Cursor Positions
@@ -150,8 +148,7 @@ endfunction
 let g:real_manpager=$MANPAGER
 let g:ft_man_folding_enable = 1
 
-augroup ManAndHelpPages
-  autocmd!
+augroup VimrcSettings
   autocmd FileType help     nested call ILikeHelpToTheRight()
   autocmd FileType man,help nested nnoremap <buffer> q :q!<cr>
   autocmd FileType man      nested let &listchars=""
@@ -173,7 +170,6 @@ function! s:MkNonExDir(file, buf)
   endif
 endfunction
 
-augroup BWCCreateDir
-  autocmd!
+augroup VimrcSettings
   autocmd BufWritePre * nested :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
