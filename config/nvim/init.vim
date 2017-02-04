@@ -53,10 +53,11 @@ if has('ruby')
 endif
 
 if s:bootstrap
-  echomsg "Updating plugins. Please wait. "
-  redraw
-  :PlugUpgrade
-  :PlugUpdate
+  echo "Installing/Updating plugins. Please wait...\n"
+  :silent PlugUpdate
+  :silent PlugUpgrade
+  :silent call remote#host#UpdateRemotePlugins()
+  quit
 endif
 
 execute 'source ' . g:my_nvim_dir . '/functions.vim'
@@ -65,16 +66,6 @@ execute 'source ' . g:my_nvim_dir . '/settings.vim'
 " Local settings
 if filereadable(g:my_nvim_dir . '/local.vim')
   execute 'source ' . g:my_nvim_dir . '/local.vim'
-endif
-
-if s:bootstrap
-  echomsg "Quitting to have new plugins take effect."
-  for name in keys(g:plugs)
-    echomsg "Plugin " . name . " installed."
-    silent noautocmd call plug#load(name)
-  endfor
-  call remote#host#UpdateRemotePlugins()
-  :qall
 endif
 
 " EOF
