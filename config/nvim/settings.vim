@@ -43,6 +43,8 @@ if has("patch-7.4.1570")
   set shortmess+=F
 endif
 
+set undofile " undo persist between sessions
+
 " Folds
 set foldminlines=4
 
