@@ -1,9 +1,5 @@
 scriptencoding utf-8
 
-augroup VimrcSettings
-  autocmd!
-augroup END
-
 if has('filterpipe')
   set noshelltemp
 endif
@@ -58,7 +54,8 @@ set backupdir+=.
 execute 'set backupdir^=' . g:xdg_data_home . '/backup'
 set backupdir^=./.vim-backup
 set backup
-augroup VimrcSettings
+augroup VimrcBackups
+  autocmd!
   autocmd BufWritePre * let &backupext = '-' . substitute(expand('%:p:h'), '/', '%', 'g') . '~'
 augroup END
 
@@ -74,7 +71,8 @@ set sidescrolloff=5   " don't scroll any closer to left/right
 
 set path+=**
 
-augroup VimrcSettings
+augroup VimrcShada
+  autocmd!
   autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
 augroup END
 
@@ -91,13 +89,15 @@ set background=dark
 
 " Smash escape!
 "-----------------------------------------------------------------------------
-augroup VimrcSettings
+augroup VimrcSmashEscape
+  autocmd!
   autocmd VimEnter * Arpeggio inoremap jk  <Esc>
 augroup END
 
 " Terminal
 " -----------------------------------------------------------------------------
-augroup VimrcSettings
+augroup VimrcTerminal
+  autocmd!
   autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
   autocmd WinEnter term://* startinsert | IndentLinesDisable
   "autocmd TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
@@ -165,7 +165,8 @@ endfunction
 let g:real_manpager=$MANPAGER
 let g:ft_man_folding_enable = 1
 
-augroup VimrcSettings
+augroup VimrcManpagesAndHelp
+  autocmd!
   autocmd FileType help     nested call ILikeHelpToTheRight()
   autocmd FileType man,help nested nnoremap <buffer> q :q!<cr>
   autocmd FileType man      nested let &listchars=""
@@ -187,6 +188,7 @@ function! s:MkNonExDir(file, buf)
   endif
 endfunction
 
-augroup VimrcSettings
+augroup VimrcMakeParentDirs
+  autocmd!
   autocmd BufWritePre * nested :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
