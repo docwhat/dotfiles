@@ -455,7 +455,8 @@ function! LoadPlugins()
   Plug 'bogado/file-line'
 
   " Rust Language
-  Plug 'wting/rust.vim'
+  let g:rustfmt_autosave = 1
+  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
   " GoLang
   let g:go_highlight_functions = 1
