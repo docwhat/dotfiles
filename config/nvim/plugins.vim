@@ -137,13 +137,12 @@ Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " Allows editing remote files.
 "-----------------------------------------------------------------------------
 " :e dav://machine[:port]/path                  uses cadaver
-" :e fetch://[user@]machine/path                uses fetch
-" :e ftp://[user@]machine[[:#]port]/path        uses ftp   autodetects <.netrc>
 " :e http://[user@]machine/path                 uses http  uses wget
-" :e rcp://[user@]machine/path                  uses rcp
+" :e sftp://[user@]machine/path                 uses sftp
 " :e rsync://[user@]machine[:port]/path         uses rsync
 " :e scp://[user@]machine[[:#]port]/path        uses scp
-" :e sftp://[user@]machine/path                 uses sftp
+let g:netrw_home = g:xdg_data_home
+let g:netrw_silent = 1
 Plug 'netrw.vim'
 
 " }}}

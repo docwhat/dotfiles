@@ -34,7 +34,7 @@ if filewritable(g:xdg_data_home) != 2
   let g:xdg_data_home = g:xdg_config_home
 endif
 
-let s:vim_plug_path = g:xdg_data_home . "/autoload/plug.vim"
+let s:vim_plug_path = g:xdg_config_home . "/autoload/plug.vim"
 
 if !filereadable(s:vim_plug_path)
   let s:bootstrap=1
