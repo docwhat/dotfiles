@@ -43,7 +43,24 @@ if has("patch-7.4.1570")
   set shortmess+=F
 endif
 
-set undofile " undo persist between sessions
+" undo persist between sessions
+set undofile
+
+" Backups
+" Save your backups to a less annoying place than the current directory.
+" If you have .vim-backup in the current directory, it'll use that.
+" Otherwise it saves it to ~/.vim/backup or . if all else fails.
+if isdirectory(g:xdg_data_home . '/backup') == 0
+  execute 'silent !mkdir -p ' . g:xdg_data_home . '/backup >/dev/null 2>&1'
+endif
+set backupdir-=.
+set backupdir+=.
+execute 'set backupdir^=' . g:xdg_data_home . '/backup'
+set backupdir^=./.vim-backup
+set backup
+augroup VimrcSettings
+  autocmd BufWritePre * let &backupext = '-' . substitute(expand('%:p:h'), '/', '%', 'g') . '~'
+augroup END
 
 " Folds
 set foldminlines=4
