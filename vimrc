@@ -120,17 +120,15 @@ function! LoadPlugins()
   Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
   " Allows editing remote files.
-  " :e dav://machine[:port]/path                  uses cadaver
-  " :e fetch://[user@]machine/path                uses fetch
-  " :e ftp://[user@]machine[[:#]port]/path        uses ftp   autodetects <.netrc>
-  " :e http://[user@]machine/path                 uses http  uses wget
-  " :e rcp://[user@]machine/path                  uses rcp
-  " :e rsync://[user@]machine[:port]/path         uses rsync
-  " :e scp://[user@]machine[[:#]port]/path        uses scp
-  " :e sftp://[user@]machine/path                 uses sftp
+" :e dav://machine[:port]/path                  uses cadaver
+" :e http://[user@]machine/path                 uses http  uses wget
+" :e sftp://[user@]machine/path                 uses sftp
+" :e rsync://[user@]machine[:port]/path         uses rsync
+" :e scp://[user@]machine[[:#]port]/path        uses scp
   if v:version > 702
-    Plug 'netrw.vim'
+    let g:netrw_silent = 1
     let g:netrw_home=g:my_vim_dir
+    Plug 'netrw.vim'
   endif
 
   if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
