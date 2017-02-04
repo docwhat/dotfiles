@@ -644,7 +644,6 @@ if executable('git') && executable('curl') && has('autocmd')
   endif
   unlet s:vim_plug_path
 
-  let g:plug_shallow=0
   call plug#begin()
   call LoadPlugins()
   call plug#end()

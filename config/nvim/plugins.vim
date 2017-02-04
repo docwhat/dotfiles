@@ -1,4 +1,3 @@
-let g:plug_shallow=0
 call plug#begin()
 
 " Usage: Plug 'blah', { 'do': function('DoRemotePluginsUpdate') }
