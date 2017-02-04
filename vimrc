@@ -553,8 +553,8 @@ function! LoadPlugins()
     Plug 'vim-pandoc/vim-pandoc-after'
   endif
 
-  " Groovy -- Make sure you set the GROOVY_HOME environment variable
-  Plug 'vim-scripts/groovy.vim--Ruley'
+  " Groovy -- Adds indentation.
+  Plug 'vim-scripts/groovyindent-unix'
 
   " Super Shell Indent -- Better (but slower) indenting for shell scripts.
   Plug 'vim-scripts/Super-Shell-Indent'

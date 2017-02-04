@@ -285,6 +285,11 @@ else
 endif
 
 " }}}
+" ---- Groovy {{{
+
+Plug 'vim-scripts/groovyindent-unix'
+
+" }}}
 " ---- GoLang {{{
 
 let g:go_highlight_functions = 1
