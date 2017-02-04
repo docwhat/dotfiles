@@ -53,7 +53,12 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-autosuggestions
 
     # Add Fish shell like syntax highlighting for ZSH
-    zgen load zsh-users/zsh-syntax-highlighting '' '0.5.x'
+    if is-at-least 5.3.2; then
+      zgen load zsh-users/zsh-syntax-highlighting
+    else
+      # Work-around for bug https://github.com/zsh-users/zsh-syntax-highlighting/issues/407
+      zgen load zsh-users/zsh-syntax-highlighting '' '0.5.0'
+    fi
   fi
 
   # Save it all to init script
