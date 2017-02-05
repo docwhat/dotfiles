@@ -149,26 +149,27 @@ Plug 'netrw.vim'
 " }}}
 
 " -- Completion {{{
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_refresh_always = 1
+let g:deoplete#file#enable_buffer_path=1
 
+let g:deoplete#sources={}
+let g:deoplete#sources._    = []
+let g:deoplete#sources.ruby = ['rct', 'ruby', 'buffer']
+let g:deoplete#sources.go = ['go', 'around']
+let g:deoplete#sources.vim = ['vim', 'buffer', 'file']
+
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " VimL/Vimscript
-Plug 'Shougo/neco-vim', {'for': 'vim'}
+Plug 'Shougo/neco-vim'
 Plug 'Shougo/neco-syntax'
-
 " Go
 Plug 'zchee/deoplete-go', {'for': 'go'}
-
 " Ruby
-Plug 'fishbullet/deoplete-ruby', {'for': 'ruby'}
-Plug 'osyo-manga/vim-monster', { 'for': 'ruby' }
-" With deoplete.nvim
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-      \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-      \}
+" See https://github.com/Shougo/deoplete-rct/pull/1
+Plug 'Shougo/deoplete-rct'
+Plug 'fishbullet/deoplete-ruby'
 
 " }}}
 
