@@ -104,6 +104,18 @@ augroup VimrcTerminal
   autocmd TermClose * exe expand('<abuf>').'bd!'
 augroup END
 
+" GitCommits
+"
+augroup VimrcGit
+  autocmd!
+  autocmd FileType gitcommit setlocal spell
+  if has_key(g:plugs, 'vim-pandoc')
+    autocmd VimEnter .git/PULLREQ_EDITMSG setlocal filetype=pandoc spell
+  else
+    autocmd VimEnter .git/PULLREQ_EDITMSG setlocal filetype=markdown spell
+  endif
+augroup END
+
 " Save Cursor Positions
 "-----------------------------------------------------------------------------
 " When editing a file, always jump to the last known cursor position.
