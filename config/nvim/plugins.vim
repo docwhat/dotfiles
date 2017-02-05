@@ -13,6 +13,7 @@ Plug 'tpope/vim-repeat'
 
 " ds/cs/ys for deleting, changing, your surrounding chars (like ', ", etc.)
 Plug 'tpope/vim-surround'
+let g:surround_no_insert_mappings=1
 
 " Allow C-A/C-X to work correctly with dates/times.
 Plug 'tpope/vim-speeddating'
@@ -144,7 +145,7 @@ Plug 'netrw.vim'
 " }}}
 " }}}
 
-" -- Completion {{{
+" -- Completion & Snippets {{{
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_refresh_always = 1
@@ -152,9 +153,9 @@ let g:deoplete#file#enable_buffer_path=1
 
 let g:deoplete#sources={}
 let g:deoplete#sources._    = []
-let g:deoplete#sources.ruby = ['rct', 'ruby', 'buffer']
-let g:deoplete#sources.go = ['go', 'around']
-let g:deoplete#sources.vim = ['vim', 'buffer', 'file']
+let g:deoplete#sources.ruby = ['rct', 'ruby', 'buffer', 'ultisnips']
+let g:deoplete#sources.go = ['go', 'around', 'ultisnips']
+let g:deoplete#sources.vim = ['vim', 'buffer', 'file', 'ultisnips']
 
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " VimL/Vimscript
@@ -166,6 +167,21 @@ Plug 'zchee/deoplete-go', {'for': 'go'}
 " See https://github.com/Shougo/deoplete-rct/pull/1
 Plug 'Shougo/deoplete-rct'
 Plug 'fishbullet/deoplete-ruby'
+
+" Snippets (C-j)
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+let g:UltiSnipsSnippetsDir = xdg_config_home . '/snips'
+let g:UltiSnipsNoPythonWarning = 1
+let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsListSnippets='<c-s>'
+if filereadable(g:xdg_config_home . '/personalization.vim')
+  execute 'source ' . g:xdg_config_home . '/personalization.vim'
+endif
+" You'll want to set these in ~/.config/nvim/personalization.vim
+" let g:snips_email="you@example.com"
+" let g.snips_author="Your Name Here"
+" let g.snips_github="https://github.com/your id here"
 
 " }}}
 
