@@ -314,7 +314,7 @@ Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go
 " ---- Rust {{{
 
 let g:rustfmt_autosave = 1
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'rust-lang/rust.vim'
 
 " }}}
 
