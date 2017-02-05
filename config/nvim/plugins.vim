@@ -5,10 +5,6 @@ function! DoRemotePluginsUpdate(arg)
   UpdateRemotePlugins
 endfunction
 
-augroup VimrcPlugins
-  autocmd!
-augroup END
-
 " -- Utilities {{{
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
@@ -125,7 +121,8 @@ function s:init_denite()
           \   ] })
   endif
 endfunction
-augroup VimrcPlugins
+augroup VimrcDenite
+  autocmd!
   autocmd VimEnter call s:init_denite()
 augroup END
 nnoremap <silent> <leader>t :Denite file_rec<cr>
