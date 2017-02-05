@@ -21,9 +21,8 @@ Plug 'tpope/vim-surround'
 " Allow C-A/C-X to work correctly with dates/times.
 Plug 'tpope/vim-speeddating'
 
-" Adds matching 'end*' type syntax for ruby, vimscript, and lua
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-abolish'
+" Auto-pairing, including adding `end` to if statements.
+Plug 'cohama/lexima.vim'
 
 " Detect indentation
 Plug 'tpope/vim-sleuth'
