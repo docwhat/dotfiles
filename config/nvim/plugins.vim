@@ -72,6 +72,20 @@ let g:codi#interpreters = {
 Plug 'justinmk/vim-dirvish'
 autocmd FileType dirvish call fugitive#detect(@%)
 
+" EditorConfig -- http://editorconfig.org/
+Plug 'editorconfig/editorconfig-vim'
+function! EditorConfigFiletypeHook(config)
+  if has_key(a:config, 'vim_filetype')
+    let &filetype = a:config['vim_filetype']
+  endif
+
+  return 0   " Return 0 to show no error happened
+endfunction
+augroup VimrcEditorConfig
+  autocmd!
+  autocmd VimEnter call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
+augroup END
+
 " ---- Git & VCS support {{{
 " Git helpers
 Plug 'tpope/vim-fugitive'
