@@ -4,7 +4,7 @@
 set -eu
 
 DOTFILES_DIR=~/.dotfiles
-source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 function trap_exit
 {

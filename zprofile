@@ -3,7 +3,7 @@
 # The path has to be set *first*
 path=(
   "$HOME/bin"
-  "$HOME/.bin"
+  "$HOME/.local/bin"
   /usr/local/sbin
   /usr/local/bin
   /usr/local/share/npm/bin

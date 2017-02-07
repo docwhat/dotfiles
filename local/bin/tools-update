@@ -1,10 +1,9 @@
 #!/usr/bin/env zsh
-# vi: ft=zsh :
 
 set -eu
 
 DOTFILES_DIR=~/.dotfiles
-source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 print -P '%F{blue} 🔨 Updating dotfiles and tools🔧  %F{reset}'
 echo

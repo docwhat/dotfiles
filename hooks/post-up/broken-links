@@ -5,6 +5,7 @@ set -eu
 for broken_link in \
   ~/.zsh/**/*(N-@) \
   ~/.bin/**/*(N-@) \
+  ~/.local/bin/**/*(N-@) \
   ~/.config/**/*(N-@)
 do
   rm -vf "${broken_link}"

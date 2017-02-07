@@ -3,6 +3,6 @@
 set -eu
 
 DOTFILES_DIR=~/.dotfiles
-source "${DOTFILES_DIR}/bin/hook-helpers.zsh"
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 hh_git 'Tmux Package Manager' https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
