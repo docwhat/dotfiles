@@ -4,6 +4,8 @@ if has('filterpipe')
   set noshelltemp
 endif
 
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
