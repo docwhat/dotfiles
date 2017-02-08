@@ -1,9 +1,68 @@
-# docwhat's theme -- http://docwhat.org/
+# docwhat2 prompt theme -- http://docwhat.org/
+
+autoload -Uz \
+  prompt_docwhat2_schars \
+  prompt_docwhat2_precmd
 
 prompt_docwhat2_help () {
-  echo "docwhat's theme -- https://docwhat.org/"
+  echo "docwhat2 theme -- https://docwhat.org/"
   echo
   echo "Works best with a 256+ color terminal and fonts that support Unicode."
+}
+
+## Colors and Symbols
+local colorlevel=none
+if [ "${terminfo[colors]}" -ge 256 ]; then
+  colorlevel=hi
+elif [ "${terminfo[colors]}" -ge 8 ]; then
+  colorlevel=lo
+fi
+
+local text_default=white
+local deco_default=white
+local empire_color=white
+local rebel_color=white
+if [ "$colorlevel" = hi ]; then
+  deco_default=155
+  text_default=45
+  empire_color=196
+  rebel_color=195
+elif [ "$colorlevel" = lo ]; then
+  deco_default=green
+  text_default=blue
+  empire_color=red
+  rebel_color=white
+fi
+
+local deco=${1:-$deco_default}
+local text=${2:-$text_default}
+
+local TEXT="%F{$text}%k"
+local DECO="%F{$deco}%k"
+local NL=$'\n'
+
+# TODO convert to schars
+local AHEAD_SIGIL='↑'
+local BEHIND_SIGIL='↓'
+local STAGED_SIGIL='●'
+local CONFLICTS_SIGIL='✖'
+local UNSTAGED_SIGIL='✚'
+local UNTRACKED_SIGIL='…'
+local STASHED_SIGIL='⚑'
+local CLEAN_SIGIL='✔'
+local UNTRACKED_SIGIL='…'
+
+# Special characters
+local -A schars wschars && prompt_docwhat2_schars
+autoload -Uz vcs_info
+
+# Hook for git to track untracked files.
++vi-git-untracked () {
+if [[ $vcs == git ]] && \
+  git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+  then
+    hook_com[staged]+=$UNTRACKED_SIGIL
+  fi
 }
 
 prompt_docwhat2_setup () {
@@ -12,77 +71,45 @@ prompt_docwhat2_setup () {
   # ╙ ∵
   # echo 'hi'
 
-  local colorlevel=none
-  if [ -z "${terminfo[colors]}" ]; then
-    colorlevel=none
-  elif [ "${terminfo[colors]}" -ge 256 ]; then
-    colorlevel=hi
-  elif [ "${terminfo[colors]}" -ge 8 ]; then 
-    colorlevel=lo
-  fi
-
-  local text_default deco_default
-  if [ "$colorlevel" = hi ]; then
-    text_default=27
-    deco_default=34
-  elif [ "$colorlevel" = lo ]; then
-    text_default=blue
-    deco_default=green
-  fi
-
-  local text=${1:-$text_default}
-  local deco=${2:-$deco_default}
-
-  local TEXT="%F{$text}%k"
-  local DECO="%F{$deco}%k"
-  local NL=$'\n'
-
-
-  local AHEAD_SIGIL='↑'
-  local BEHIND_SIGIL='↓'
-  local STAGED_SIGIL='●'
-  local CONFLICTS_SIGIL='✖'
-  local UNSTAGED_SIGIL='✚'
-  local UNTRACKED_SIGIL='…'
-  local STASHED_SIGIL='⚑'
-  local CLEAN_SIGIL='✔'
-
-  # Special characters
-  local -A schars wschars && autoload -Uz prompt_docwhat2_schars && prompt_docwhat2_schars
-  autoload -Uz vcs_info
-
   # [ "$prompt_docwhat2_is_debugging" = true ] && zstyle ':vcs_info:*+*:prompt_docwhat2:*' debug true
 
-  zstyle ':vcs_info:*:prompt_docwhat2:*' enable bzr git hg svn
   local i
   local main_format main_actionformats ut_char
-  main_format=" [%s:${DECO}%b%c%u${TEXT}]"
-  main_actionformats=" [${DECO}%b%c%u|%F{yellow}%a${TEXT}]"
-  if [ "${EUID:-${UID}}" = 501 ]; then
-    ut_char="%B%F{white}${wschars[root]} "
+  if [ "${EUID:-${UID}}" = 0 ]; then
+    # The Empire
+    ut_char="%F{${empire_color}}${wschars[user]} "
   else
-    ut_char="%F{red}${wschars[user]} "
+    # Rebel Alliance
+    ut_char="%B%F{${rebel_color}}${wschars[root]} "
   fi
 
-  for i in git hg svn bzr; do
-    zstyle ":vcs_info:${i}:prompt_docwhat2:*" formats "${main_format}" "${wschars[$i]}"
-    zstyle ':vcs_info:${i}:prompt_docwhat2:*' actionformats "${main_actionformats}" "${wschars[$i]}"
+  # VCS settings
+  main_format=" [${DECO}%b%c%u${TEXT}]"
+  main_actionformats=" [${DECO}%b%c%u|%F{yellow}%a${TEXT}]"
+  zstyle ':vcs_info:*:prompt_docwhat2:*' enable bzr git hg svn
+  for i in bzr git hg svn; do
+    zstyle ":vcs_info:${i}:prompt_docwhat2:*" formats "${main_format}" "${DECO}${wschars[$i]}${TEXT} %r:%S"
+    zstyle ":vcs_info:${i}:prompt_docwhat2:*" actionformats "${main_actionformats}" "${DECO}${wschars[$i]}${TEXT} %r:%S"
   done
-  zstyle ':vcs_info:*:prompt_docwhat2:*' formats "${main_format}" ''
-  zstyle ':vcs_info:*:prompt_docwhat2:*' actionformats "${main_actionformats}" ''
-
-  zstyle ':vcs_info:git:prompt_docwhat2:*' command =git
-  zstyle ':vcs_info:*:prompt_docwhat2:*' max-exports 5
-  zstyle ':vcs_info:*:prompt_docwhat2:*' check-for-changes true
-  # zstyle ':vcs_info:hg:prompt_docwhat2:*' get-revision true
-  # zstyle ':vcs_info:(git|hg|bzr):prompt_docwhat2:*' use-simple true
-
   zstyle ':vcs_info:*:prompt_docwhat2:*' stagedstr   "%{%F{40}${STAGED_SIGIL}%G%}"
   zstyle ':vcs_info:*:prompt_docwhat2:*' unstagedstr "%{%F{190}${UNSTAGED_SIGIL}%G%}"
 
-  zstyle ':vcs_info:*:prompt_docwhat2:(sv[nk]|bzr):*' branchformat '%b%F{red}:%F{11}%r'
+  # Git untracked files have to be dealt with differently.
+  # This calls +vi-git-untracked()
+  zstyle ':vcs_info:git*+set-message:prompt_docwhat2:*' hooks git-untracked
 
-  PS1="${DECO}${schars[/]}${schars[-=]}${TEXT} \${vcs_info_msg_0_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]} \${vcs_info_msg_1_} ${ut_char}${reset}  "
+  zstyle ':vcs_info:*:prompt_docwhat2:(svn|bzr):*' branchformat '%b%F{red}:%F{11}%r'
+  # TODO
+  zstyle ':vcs_info:*:prompt_docwhat2:*' nvcsformats 'nvcsformats' '' ''
+
+
+  # zstyle ':vcs_info:git:prompt_docwhat2:*' command =git
+  zstyle ':vcs_info:*:prompt_docwhat2:*' max-exports 5
+  zstyle ':vcs_info:*:prompt_docwhat2:*' check-for-changes true
+  zstyle ':vcs_info:hg:prompt_docwhat2:*' get-revision true
+  zstyle ':vcs_info:(git|hg|bzr):prompt_docwhat2:*' use-simple false
+
+  PS1="${DECO}${schars[/]}${schars[-=]} ${SHORT_HOST}${TEXT}\${vcs_info_msg_0_} \${vcs_info_msg_1_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]} ${ut_char}${reset} "
   PS2="> "
 
   add-zsh-hook precmd prompt_docwhat2_precmd
