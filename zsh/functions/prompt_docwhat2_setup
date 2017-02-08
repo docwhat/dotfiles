@@ -99,8 +99,7 @@ prompt_docwhat2_setup () {
   zstyle ':vcs_info:git*+set-message:prompt_docwhat2:*' hooks git-untracked
 
   zstyle ':vcs_info:*:prompt_docwhat2:(svn|bzr):*' branchformat '%b%F{red}:%F{11}%r'
-  # TODO
-  zstyle ':vcs_info:*:prompt_docwhat2:*' nvcsformats 'nvcsformats' '' ''
+  zstyle ':vcs_info:*:prompt_docwhat2:*' nvcsformats '' '%7~'
 
 
   # zstyle ':vcs_info:git:prompt_docwhat2:*' command =git
@@ -109,7 +108,7 @@ prompt_docwhat2_setup () {
   zstyle ':vcs_info:hg:prompt_docwhat2:*' get-revision true
   zstyle ':vcs_info:(git|hg|bzr):prompt_docwhat2:*' use-simple false
 
-  PS1="${DECO}${schars[/]}${schars[-=]} ${SHORT_HOST}${TEXT}\${vcs_info_msg_0_} \${vcs_info_msg_1_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]} ${ut_char}${reset} "
+  PS1="${DECO}${schars[/]}${schars[-=]} ${SHORT_HOST}${TEXT}\$(prompt_docwhat2_ruby)\${vcs_info_msg_0_} \${vcs_info_msg_1_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]} ${ut_char}${reset} "
   PS2="> "
 
   add-zsh-hook precmd prompt_docwhat2_precmd

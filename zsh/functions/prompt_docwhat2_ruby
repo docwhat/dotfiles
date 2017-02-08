@@ -1,0 +1,23 @@
+[[ "${prompt_docwhat_is_debugging}" = true ]] && setopt xtrace
+
+if [[ -n "$commands[rbenv]" ]]; then
+  local ver=$(rbenv version-name 2>/dev/null)
+  if [[ -n "${ver}" && "${ver}" != system ]]; then
+    if [[ "${ver}" = [0-9]* ]]; then
+      print " %F{red}ruby-${ver}%F{$_prompt_docwhat_color}"
+    else
+      print " %F{red}${ver}%F{$_prompt_docwhat_color}"
+    fi
+  fi
+elif [[ -n "$commands[(I)rvm-prompt]" ]]; then
+  local p=$(rvm-prompt s)
+  if [[ -n "${p}" ]]; then
+    local color=red
+    if [[ $(echotc Co) -ge 256 ]]; then
+      color=58
+    fi
+    print " %F{${color}}${p}%F{$_prompt_docwhat_color}"
+  fi
+fi
+
+# vim: set ft=zsh ts=2 sw=2 et:
