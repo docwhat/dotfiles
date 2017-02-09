@@ -57,11 +57,34 @@ local -A schars wschars && prompt_docwhat2_schars
 autoload -Uz vcs_info
 
 # Hook for git to track untracked files.
-+vi-git-untracked () {
+function +vi-git-untracked {
 if [[ $vcs == git ]] && \
   git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
   then
     hook_com[staged]+=$UNTRACKED_SIGIL
+  fi
+}
+
+function _docwhat2_exit_code {
+  # Exit Code
+  local ec_text="$1"; shift
+  local ec_sum="${ec_text}"
+  if [[ "${ec_text}" -gt 0 ]]; then
+    ec_text="%%F{red}${ec_text}"
+  else
+    ec_text="%%F{green}${ec_text}"
+  fi
+  for ec in "$@"; do
+    if [[ "${ec}" -gt 0 ]]; then
+      ec_text="${ec_text}%%f|%%F{red}${ec}"
+    else
+      ec_text="${ec_text}%%f|%%F{green}${ec}"
+    fi
+    ec_sum=$(( $ec_sum + $ec ))
+  done
+
+  if [[ "${ec_sum}" -gt 0 ]]; then
+    printf " ${ec_text}"
   fi
 }
 
@@ -108,7 +131,7 @@ prompt_docwhat2_setup () {
   zstyle ':vcs_info:hg:prompt_docwhat2:*' get-revision true
   zstyle ':vcs_info:(git|hg|bzr):prompt_docwhat2:*' use-simple false
 
-  PS1="${DECO}${schars[/]}${schars[-=]} ${SHORT_HOST}${TEXT}\$(prompt_docwhat2_ruby)\${vcs_info_msg_0_} \${vcs_info_msg_1_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]} ${ut_char}${reset} "
+  PS1="${DECO}${schars[/]}${schars[-=]} ${SHORT_HOST}${TEXT}\$(prompt_docwhat2_ruby)\${vcs_info_msg_0_} \${vcs_info_msg_1_} ${DECO}${schars[=]}${schars[=-]}${NL}${schars[\\]}\$(_docwhat2_exit_code \"\$pipestatus[@]\") ${ut_char}${reset}${reset_color} "
   PS2="> "
 
   add-zsh-hook precmd prompt_docwhat2_precmd
