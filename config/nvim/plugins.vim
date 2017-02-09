@@ -66,6 +66,11 @@ let g:codi#interpreters = {
       \     'rightalign': 0,
       \   }
       \ }
+if executable('stack')
+  let g:codi#interpreters['haskell'] = {
+        \ 'bin': [ 'stack', 'ghci' ]
+        \ }
+endif
 " let g:codi#log = "/tmp/codi.log"
 
 " Dirvish, a path navigator
