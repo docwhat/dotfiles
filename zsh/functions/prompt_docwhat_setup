@@ -101,10 +101,15 @@ function prompt_docwhat_ruby {
   fi
 }
 
+# Hook for git to track untracked files.
 function +vi-git-untracked {
-  if [[ "$(command git status --porcelain -z 2> /dev/null)" = *\?\?*  ]]; then
+  set -x
+  if [[ $vcs == git ]] && \
+    git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+  then
     hook_com[unstaged]+='%{%F{red}●%G%}'
   fi
+  set +x
 }
 
 function prompt_docwhat_hook_precmd {
@@ -160,7 +165,7 @@ function prompt_docwhat_setup {
   #zstyle ':vcs_info:*:prompt_docwhat:*' enable git svn bzr hg
   zstyle ':vcs_info:*:prompt_docwhat:*' formats       " [%s:%F{green}%b%c%u%F{$_prompt_docwhat_color}]" '%s'
   zstyle ':vcs_info:*:prompt_docwhat:*' actionformats " [%F{green}%b%c%u|%F{yellow}%a%F{$_prompt_docwhat_color}]"  '%s'
-  zstyle ':vcs_info:git*+set-message:*:prompt_docwhat:*' hooks git-untracked
+  zstyle ':vcs_info:git*+set-message:prompt_docwhat:*' hooks git-untracked
 
   PROMPT='$(prompt_docwhat "$pipestatus[@]")'
 
