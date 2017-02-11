@@ -41,4 +41,7 @@ for font in "${fonts[@]}"; do
   unzip -uo "${zipfile}" -d ~/Library/Fonts/ -x '*Windows*' '*Mono.*'
 done
 
+# Check for updates (human)
+open https://github.com/ryanoasis/nerd-fonts/releases
+
 # EOF
