@@ -1,18 +1,20 @@
 if (( $+commands[ssh-add] )); then
-  if (( $+commands[keychain] )); then
-    eval "$(keychain --eval --quick --noask --nogui --quiet --inherit 'any' --agents 'ssh' --ignore-missing id_rsa id_dsa)"
-  fi
-
-  # Used for TMUX
-  if [ "${SSH_AUTH_SOCK:-}" != "$HOME/.ssh/ssh_auth_sock" ]; then
-    if [[ -S "$SSH_AUTH_SOCK" && ! -L "$SSH_AUTH_SOCK" ]]; then
-      ln -nsf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  {
+    if (( $+commands[keychain] )); then
+      eval "$(keychain --eval --quick --noask --nogui --quiet --inherit 'any' --agents 'ssh' --ignore-missing id_rsa id_dsa)"
     fi
-  fi
 
-  if [[ "${OSTYPE}" == darwin* ]]; then
-    /usr/bin/ssh-add -A >/dev/null 2>&1
-  fi
+    # Used for TMUX
+    if [ "${SSH_AUTH_SOCK:-}" != "$HOME/.ssh/ssh_auth_sock" ]; then
+      if [[ -S "$SSH_AUTH_SOCK" && ! -L "$SSH_AUTH_SOCK" ]]; then
+        ln -nsf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+      fi
+    fi
+
+    if [[ "${OSTYPE}" == darwin* ]]; then
+      /usr/bin/ssh-add -A >/dev/null 2>&1
+    fi
+  } &!
 fi
 
 # References:
