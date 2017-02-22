@@ -1,4 +1,4 @@
-if [ "${TERM}" != "dumb" -a "${EMACS}" != 't' ]; then
+if [[ "${TERM}" != dumb && "${EMACS}" != t ]]; then
    autoload -Uz promptinit && promptinit
    prompt docwhat
 fi
