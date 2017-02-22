@@ -14,7 +14,9 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
     # Only run rbenv rehash if it was run over 5 minutes ago.
     for i in "${RBENV_ROOT}/shims"(/Nmm+5); do
       touch "${RBENV_ROOT}/shims"
-      (rbenv rehash &)
+      {
+        rbenv rehash
+      } &!
     done
 
     function rbenv-update-plugins
