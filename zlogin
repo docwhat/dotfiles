@@ -6,7 +6,9 @@ elif (( $+commands[archey] )); then
   archey
 fi
 
-unfunction compinit
+if (( $+functions[compinit] )); then
+  unfunction compinit
+fi
 autoload -Uz compinit
 compinit -i -d "${ZSH_COMPDUMP}"
 
