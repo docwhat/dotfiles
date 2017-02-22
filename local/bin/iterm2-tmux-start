@@ -1,0 +1,3 @@
+#!/bin/zsh -l
+
+exec /usr/local/bin/tmux new-session -AD -s main
