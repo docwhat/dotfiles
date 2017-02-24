@@ -31,7 +31,9 @@ if [[ "${OSTYPE}" != darwin* ]]; then
 fi
 
 mkdir -p ~/tmp/.fonts/
-rm ~/Library/Fonts/*Nerd*(.)
+for file in ~/Library/Fonts/*Nerd*(.N); do
+  rm "${file}"
+done
 
 for font in "${fonts[@]}"; do
   zipfile=~/tmp/.fonts/"${font}.zip"
