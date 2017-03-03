@@ -24,6 +24,8 @@ if exists('&inccommand')
   set inccommand=split
 endif
 
+set completeopt=menu,menuone,noselect
+
 set number
 " set wildmode=list:longest,full   " Completion for wildchar (see help)
 set wildignore+=*.o,*.obj,*.pyc,*.pyo,*.pyd,*.class,*.lock
