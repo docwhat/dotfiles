@@ -287,6 +287,21 @@ Plug 'elzr/vim-json', {'for': ['javascript', 'json']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json']}
 
 " }}}
+" ---- HTML & CSS {{{
+
+" HTML5 + SVG support
+Plug 'othree/html5.vim'
+" Plug 'sheerun/vim-polyglot' " TODO: Use this instead? It's a curated list of
+" languages, syntaxes, and indentations.
+
+" See :h ragtag
+Plug 'tpope/vim-ragtag'
+
+" Show a facsimile of CSS colors as a highlight.
+Plug 'chrisbra/color_highlight'
+let g:colorizer_auto_filetype='css,scss,sass,html'
+
+" }}}
 " ---- Ruby {{{
 
 " Rails, bundler, etc.
