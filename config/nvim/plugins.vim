@@ -304,6 +304,10 @@ let g:colorizer_auto_filetype='css,scss,sass,html'
 " }}}
 " ---- Ruby {{{
 
+Plug 'vim-ruby/vim-ruby'
+let g:ruby_indent_block_style = 'do'
+let g:ruby_indent_assignment_style = 'variable'
+
 " Rails, bundler, etc.
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-bundler'
