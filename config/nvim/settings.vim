@@ -24,7 +24,7 @@ if exists('&inccommand')
   set inccommand=split
 endif
 
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,noselect,preview
 
 set number
 " set wildmode=list:longest,full   " Completion for wildchar (see help)

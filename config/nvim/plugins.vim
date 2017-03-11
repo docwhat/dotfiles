@@ -154,16 +154,16 @@ Plug 'netrw.vim'
 " }}}
 
 " -- Completion & Snippets {{{
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#file#enable_buffer_path=1
+let g:deoplete#enable_at_startup       = 1
+let g:deoplete#enable_smart_case       = 1
+let g:deoplete#enable_camel_case       = 1
+let g:deoplete#file#enable_buffer_path = 1
 
-let g:deoplete#sources={}
-let g:deoplete#sources._    = []
-let g:deoplete#sources.ruby = ['rct', 'ruby', 'buffer', 'ultisnips']
-let g:deoplete#sources.go = ['go', 'around', 'ultisnips']
-let g:deoplete#sources.vim = ['vim', 'buffer', 'file', 'ultisnips']
+let g:deoplete#sources                 = {}
+let g:deoplete#sources._               = []
+let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'buffer']
+let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
+let g:deoplete#sources.vim             = ['vim', 'buffer', 'file', 'ultisnips']
 
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " VimL/Vimscript
@@ -179,10 +179,16 @@ Plug 'fishbullet/deoplete-ruby'
 " Snippets (C-j)
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-let g:UltiSnipsSnippetsDir = xdg_config_home . '/snips'
-let g:UltiSnipsNoPythonWarning = 1
-let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsListSnippets='<c-s>'
+let g:UltiSnipsSnippetsDir         = xdg_config_home . '/snips'
+let g:UltiSnipsNoPythonWarning     = 1
+let g:UltiSnipsUsePythonVersion    = 3 " We always have python3 for deoplete.
+let g:UltiSnipsEditSplit           = "vertical"
+
+let g:UltiSnipsListSnippets        = "<C-s>"
+let g:UltiSnipsExpandTrigger       = "<Tab>"
+let g:UltiSnipsJumpForwardTrigger  = "<Tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+
 if filereadable(g:xdg_config_home . '/personalization.vim')
   execute 'source ' . g:xdg_config_home . '/personalization.vim'
 endif
@@ -409,5 +415,15 @@ if has_key(g:plugs, 'editorconfig-vim')
   endfunction
   call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
 endif
+
+" Deoplete -- Additional configuration
+call deoplete#custom#set('_', 'converters', [
+      \ 'converter_remove_paren',
+      \ 'converter_remove_overlap',
+      \ 'converter_truncate_abbr',
+      \ 'converter_truncate_menu',
+      \ 'converter_auto_delimiter',
+      \ ])
+
 
 " vim: set foldminlines=0 foldmethod=marker :
