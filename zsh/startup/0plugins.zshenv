@@ -6,8 +6,10 @@ DISABLE_AUTO_UPDATE=true
 DISABLE_LS_COLORS=true
 DISABLE_AUTO_TITLE=true
 ENABLE_CORRECTION=true
-COMPLETION_WAITING_DOTS=true
 HIST_STAMPS=yyyy-mm-dd
+
+# Keep this off or it breaks the multiline prompts.
+COMPLETION_WAITING_DOTS=false
 
 # zsh-completion-generator
 GENCOMPL_FPATH="$HOME/.zsh/cache/complete"
