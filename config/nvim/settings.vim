@@ -39,7 +39,7 @@ set cursorline                   " highlights the current line
 set conceallevel=2
 set concealcursor=
 
-if has("patch-7.4.1570")
+if has('patch-7.4.1570')
   set shortmess+=F
 endif
 
@@ -127,10 +127,13 @@ augroup END
 " (happens when dropping a file on gvim).
 " Also don't do it when the mark is in the first line, that is the default
 " position when opening a file.
-autocmd BufReadPost * nested
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
+augroup VimrcSaveCursorPosition
+  autocmd!
+  autocmd BufReadPost * nested
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+augroup END
 
 " Prevent highlight being lost on (de)indent.
 "-----------------------------------------------------------------------------
@@ -169,12 +172,20 @@ nnoremap <Right> :echoerr "Republican, eh? I prefer 'l'."<cr>
 nnoremap <Up>    :echoerr "This is why we can't have nice things. You should have used 'k'."<cr>
 nnoremap <Down>  :echoerr "That's what she said... and then used 'j'."<cr>
 
+" Comment Strings -- Override some lame defaults
+"-----------------------------------------------------------------------------
+augroup VimrcCommentStrings
+  autocmd!
+  autocmd FileType vim set commentstring=\ \"\ %s
+augroup END
+
+
 " Manpages and :help
 "-----------------------------------------------------------------------------
 function! ILikeHelpToTheRight()
-  if !exists('w:help_is_moved') || w:help_is_moved != "right"
+  if !exists('w:help_is_moved') || w:help_is_moved !=# 'right'
     wincmd L
-    let w:help_is_moved = "right"
+    let w:help_is_moved = 'right'
   endif
 endfunction
 
@@ -197,9 +208,9 @@ augroup END
 " from: http://stackoverflow.com/a/4294176/108857
 function! s:MkNonExDir(file, buf)
   if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-    let dir=fnamemodify(a:file, ':h')
-    if !isdirectory(dir)
-      call mkdir(dir, 'p')
+    let l:dir=fnamemodify(a:file, ':h')
+    if !isdirectory(l:dir)
+      call mkdir(l:dir, 'p')
     endif
   endif
 endfunction

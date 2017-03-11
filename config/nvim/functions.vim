@@ -2,24 +2,24 @@
 " and last search after running a command.
 function! Preserve(command)
   " Save the last search
-  let last_search=@/
+  let l:last_search=@/
   " Save the current cursor position
-  let save_cursor = getpos('.')
+  let l:save_cursor = getpos('.')
   " Save the window position
   normal H
-  let save_window = getpos('.')
-  call setpos('.', save_cursor)
+  let l:save_window = getpos('.')
+  call setpos('.', l:save_cursor)
 
   " Do the business:
   execute a:command
 
   " Restore the last_search
-  let @/=last_search
+  let @/=l:last_search
   " Restore the window position
-  call setpos('.', save_window)
+  call setpos('.', l:save_window)
   normal zt
   " Restore the cursor position
-  call setpos('.', save_cursor)
+  call setpos('.', l:save_cursor)
 endfunction
 
 " Rubocop auto correction of lint
