@@ -26,7 +26,12 @@ endfunction
 function! RubocopAutocorrect()
   silent !rubocop --auto-correct '%'
   edit
-  SyntasticCheck
+  if has_key(g:plugs, 'syntastic')
+    SyntasticCheck
+  endif
+  if has_key(g:plugs, 'neomake')
+    Neomake
+  endif
 endfunction
 command! RubyDelint call RubocopAutocorrect()
 
