@@ -6,7 +6,7 @@ function! Preserve(command)
   " Save the current cursor position
   let l:save_cursor = getpos('.')
   " Save the window position
-  normal H
+  normal! H
   let l:save_window = getpos('.')
   call setpos('.', l:save_cursor)
 
@@ -17,7 +17,7 @@ function! Preserve(command)
   let @/=l:last_search
   " Restore the window position
   call setpos('.', l:save_window)
-  normal zt
+  normal! zt
   " Restore the cursor position
   call setpos('.', l:save_cursor)
 endfunction
