@@ -415,7 +415,7 @@ endif " }}}
 if has_key(g:plugs, 'neomake') " {{{
   " Tools to install:
   "   - ruby:         rubocop reek
-  "   - css:          scsslint csslint
+  "   - css:          stylelint csslint
   "   - vim:          vim-vint
   "   - python:       flake8
   "   - html:         tidy-html5 htmlhint
@@ -427,8 +427,8 @@ if has_key(g:plugs, 'neomake') " {{{
   "   - markdown:     proselint markdownlint(mdl)
   "   - yaml:         yamllint
   "
-  " gem install rubocop scsslint reek mdl
-  " npm install --global eslint csslint htmlhint coffeelint
+  " gem install rubocop reek mdl
+  " npm install --global eslint csslint htmlhint coffeelint stylelint
   " brew install tidy-html5 shellcheck
   " pip3 install --upgrade vim-vint flake8 proselint yamllint
   " cpanm Perl::Critic
