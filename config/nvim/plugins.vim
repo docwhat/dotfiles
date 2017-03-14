@@ -69,6 +69,7 @@ Plug 'netrw.vim'
 
 " Completion & Snippets
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
+Plug 'docwhat/deoplete-better-length-matcher.nvim'
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neco-syntax'
 Plug 'zchee/deoplete-go', {'for': 'go'}
@@ -388,6 +389,12 @@ if has_key(g:plugs, 'deoplete.nvim') " {{{
   let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'buffer']
   let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
   let g:deoplete#sources.vim             = ['vim', 'buffer', 'file', 'ultisnips']
+
+endif " }}}
+
+" Deoplete Better Length Matcher
+if has_key(g:plugs, 'deoplete-better-length-matcher.nvim') " {{{
+  call deoplete#custom#set('_', 'matchers', ['matcher_better_length', 'matcher_fuzzy'])
 endif " }}}
 
 " UltiSnips -- Snippets
