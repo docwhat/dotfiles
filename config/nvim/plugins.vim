@@ -256,39 +256,38 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
   let g:pandoc#formatting#equalprg = ''
   let g:pandoc#formatting#extra_equalprg = '--standalone'
 
-  augroup MarkdownPandoc
-    autocmd!
-    autocmd FileType markdown nested setlocal shiftwidth=4 softtabstop=4
-    autocmd FileType markdown nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
 
-    " autocmd FileType pandoc nested setlocal shiftwidth=4 softtabstop=4
-    " autocmd FileType pandoc nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
-    if has_key(g:plugs, 'vim-pandoc')
-      function! CaptureTextWidth()
-        if &filetype ==# 'pandoc' && v:option_type ==# 'local'
-          call SetPandocEqualPrg()
-        endif
-      endfunction
-      autocmd OptionSet textwidth nested call CaptureTextWidth()
-
-      function! SetPandocEqualPrg()
-        let g:pandoc#formatting#equalprg = 'pandoc'
-        let g:pandoc#formatting#textwidth = &textwidth
-        if &textwidth > 0
-          let g:pandoc#formatting#equalprg .= ' --to=markdown_github-hard_line_breaks --columns=' . &l:textwidth
-        else
-          let g:pandoc#formatting#equalprg .= ' --to=markdown_github --wrap=none'
-        endif
-        let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
-        setlocal concealcursor= conceallevel=1
-      endfunction
-
-      autocmd BufNewFile,BufReadPost *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
-      autocmd FileType pandoc nested call SetPandocEqualPrg()
-    else
-      autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
-      autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1
+  " autocmd FileType pandoc nested setlocal shiftwidth=4 softtabstop=4
+  " autocmd FileType pandoc nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
+  function! CaptureTextWidth()
+    if &filetype ==# 'pandoc' && v:option_type ==# 'local'
+      call SetPandocEqualPrg()
     endif
+  endfunction
+  autocmd OptionSet textwidth nested call CaptureTextWidth()
+
+  function! SetPandocEqualPrg()
+    let g:pandoc#formatting#equalprg = 'pandoc'
+    let g:pandoc#formatting#textwidth = &textwidth
+    if &textwidth > 0
+      let g:pandoc#formatting#equalprg .= ' --to=markdown_github-hard_line_breaks --columns=' . &l:textwidth
+    else
+      let g:pandoc#formatting#equalprg .= ' --to=markdown_github --wrap=none'
+    endif
+    let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
+    setlocal concealcursor= conceallevel=1
+  endfunction
+
+  augroup VimrcMarkdown
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
+    autocmd FileType pandoc nested call SetPandocEqualPrg()
+  augroup END
+else
+  augroup VimrcMarkdown
+    autocmd!
+    autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
+    autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1 wrap linebreak nolist
   augroup END
 endif " }}}
 
