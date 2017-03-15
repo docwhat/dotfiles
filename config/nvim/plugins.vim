@@ -72,11 +72,17 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 Plug 'docwhat/deoplete-better-length-matcher.nvim'
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neco-syntax'
-Plug 'zchee/deoplete-go', {'for': 'go'}
+Plug 'zchee/deoplete-go'
 Plug 'Shougo/deoplete-rct'
 Plug 'fishbullet/deoplete-ruby'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'eagletmt/neco-ghc'
+Plug 'zchee/deoplete-jedi'
+Plug 'tweekmonster/deoplete-clang2'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'carlitux/deoplete-ternjs'
+Plug 'zchee/deoplete-zsh'
 
 " Style/Lint
 Plug 'dbakker/vim-lint'
@@ -389,9 +395,9 @@ if has_key(g:plugs, 'deoplete.nvim') " {{{
 
   let g:deoplete#sources                 = {}
   let g:deoplete#sources._               = []
-  let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'buffer']
+  let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'around']
   let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
-  let g:deoplete#sources.vim             = ['vim', 'buffer', 'file', 'ultisnips']
+  let g:deoplete#sources.vim             = ['vim', 'around', 'file', 'ultisnips']
 endif " }}}
 
 " UltiSnips -- Snippets
@@ -434,7 +440,7 @@ if has_key(g:plugs, 'neomake') " {{{
   " gem install rubocop reek mdl
   " npm install --global eslint csslint htmlhint coffeelint stylelint
   " brew install tidy-html5 shellcheck
-  " pip3 install --upgrade vim-vint flake8 proselint yamllint
+  " pip3 install --upgrade vim-vint flake8 proselint yamllint jedi
   " cpanm Perl::Critic
   " luarocks install luacheck
 
