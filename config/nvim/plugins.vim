@@ -378,6 +378,9 @@ if has_key(g:plugs, 'deoplete.nvim') " {{{
         \ 'converter_truncate_menu',
         \ 'converter_auto_delimiter',
         \ ])
+  call deoplete#custom#set('_', 'matchers', ['matcher_length', 'matcher_fuzzy'])
+  call deoplete#custom#set('ultisnips', 'matchers', ['matcher_full_fuzzy'])
+
 
   let g:deoplete#enable_at_startup       = 1
   let g:deoplete#enable_smart_case       = 1
@@ -389,12 +392,6 @@ if has_key(g:plugs, 'deoplete.nvim') " {{{
   let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'buffer']
   let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
   let g:deoplete#sources.vim             = ['vim', 'buffer', 'file', 'ultisnips']
-
-endif " }}}
-
-" Deoplete Better Length Matcher
-if has_key(g:plugs, 'deoplete-better-length-matcher.nvim') " {{{
-  call deoplete#custom#set('_', 'matchers', ['matcher_better_length', 'matcher_fuzzy'])
 endif " }}}
 
 " UltiSnips -- Snippets
