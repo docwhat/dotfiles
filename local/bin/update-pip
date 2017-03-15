@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+# vi: ft=zsh :
+
+set -euo pipefail
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+for pip in pip3 pip2 pip; do
+  echo "${commands[${pip}]:a}" | colorize green
+  "${pip}" install --upgrade \
+    pip wheel \
+    neovim \
+    vim-vint \
+    flake8 \
+    jedi \
+    proselint \
+    yamllint \
+    | offset
+done
+
+# EOF

@@ -37,6 +37,7 @@ echo
 print -P "%F{green}You may wish to consider running:%F{reset}"
 echo "  * rbenv-update-plugins"
 echo "  * update-gems"
+echo "  * update-pip"
 echo "  * install-fonts"
 
 # EOF
