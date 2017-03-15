@@ -60,7 +60,7 @@ if has('ruby')
 endif
 
 if s:bootstrap
-  echo "Installing/Updating plugins. Please wait...\n"
+  echo "Installing missing plugins. Please wait...\n"
   :silent PlugInstall
   :silent PlugUpgrade
   :silent call remote#host#UpdateRemotePlugins()
