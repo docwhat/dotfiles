@@ -95,7 +95,6 @@ Plug 'tpope/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-Plug 'davidbeckingsale/writegood.vim'
 
 " Javascript & JSON
 Plug 'elzr/vim-json', {'for': ['javascript', 'json']}
@@ -438,6 +437,7 @@ if has_key(g:plugs, 'neomake') " {{{
   "
   " gem install rubocop reek mdl
   " npm install --global eslint csslint htmlhint coffeelint stylelint
+  " write-good
   " brew install tidy-html5 shellcheck
   " pip3 install --upgrade vim-vint flake8 proselint yamllint jedi
   " cpanm Perl::Critic
