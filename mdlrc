@@ -1,0 +1,16 @@
+# MDL configuration file
+
+all
+
+# Disabled rules
+rules '~MD030', '~MD033', '~MD013', '~MD003', '~MD029'
+
+rule 'MD004', :style => :dash
+
+rule 'MD007', :indent => 4
+
+rule 'MD035', :style => "---"
+
+# Inline HTML - this isn't forbidden by the style guide, and raw HTML use is
+# explicitly mentioned in the 'email automatic links' section.
+exclude_rule 'MD033'
