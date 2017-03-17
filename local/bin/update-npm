@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+# vi: ft=zsh :
+
+set -euo pipefail
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+npm install --global \
+  eslint \
+  csslint \
+  htmlhint \
+  coffeelint \
+  stylelint \
+  write-good
+
+npm upgrade --global
+
+# EOF
