@@ -359,6 +359,16 @@ if has_key(g:plugs, 'jellybeans.vim') "{{{
 
   let g:jellybeans_overrides['SyntasticWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
   let g:jellybeans_overrides['SyntasticErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
+
+  let g:jellybeans_overrides['NeomakeInfoSign']    = { 'attr': 'none', 'guifg': '00dcff', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeMessageSign']    = { 'attr': 'none', 'guifg': 'eeeeee', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
+
+  let g:jellybeans_overrides['NeomakeInfo']    = { 'attr': 'none', 'guifg': '0000ff', 'guibg': '333388' }
+  let g:jellybeans_overrides['NeomakeMessage']    = { 'attr': 'none', 'guifg': 'ffffff', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeWarning'] = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '888833' }
+  let g:jellybeans_overrides['NeomakeError']   = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '883333' }
 endif "}}}
 
 " EditorConfig -- Additional configuration
