@@ -468,6 +468,7 @@ if has_key(g:plugs, 'neomake') " {{{
 
   augroup VimrcNeomake
     autocmd!
+    autocmd BufEnter * Neomake
     autocmd BufWritePost * Neomake
     autocmd BufEnter Gemfile*,Guardfile let b:neomake_ruby_enabled_makers = ['mri', 'rubocop']
   augroup END
