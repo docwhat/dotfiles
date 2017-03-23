@@ -48,6 +48,11 @@ if ! zgen saved; then
   # Completion generator
   zgen load RobSis/zsh-completion-generator
 
+  # FZF completion fun
+  if (( $+commands[fzf] )); then
+    zgen load "rupa/z" z.sh
+  fi
+
   if is-at-least 5.0; then
     # Add Fish-like autosuggestions to your ZSH
     zgen load zsh-users/zsh-autosuggestions
