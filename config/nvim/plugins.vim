@@ -466,10 +466,18 @@ if has_key(g:plugs, 'neomake') " {{{
   let g:neomake_ruby_rubocop_maker = neomake#makers#ft#ruby#rubocop()
   let g:neomake_ruby_rubocop_maker.args += ['--display-cop-names']
 
+  function! s:myNeomake()
+    if &readonly           | return | endif
+    if ! &modifiable       | return | endif
+    if !exists(':Neomake') | return | endif
+
+    Neomake
+  endfunction
+
   augroup VimrcNeomake
     autocmd!
-    autocmd BufEnter * Neomake
-    autocmd BufWritePost * Neomake
+    autocmd BufEnter *     call s:myNeomake()
+    autocmd BufWritePost * call s:myNeomake()
     autocmd BufEnter Gemfile*,Guardfile let b:neomake_ruby_enabled_makers = ['mri', 'rubocop']
   augroup END
 endif " }}}
