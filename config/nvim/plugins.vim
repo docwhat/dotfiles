@@ -65,7 +65,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
 
 " FZF
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 
 " Remote File Editing
 Plug 'netrw.vim'
@@ -143,10 +143,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
-
-" if exists('$fzf_base_dir')
-"   set runtimepath+=$fzf_base_dir
-" endif
 
 " Surround
 if has_key(g:plugs, 'vim-surround') " {{{

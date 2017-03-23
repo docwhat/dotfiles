@@ -6,9 +6,4 @@ else
 fi
 export PROMPT_EOL_MARK
 
-# Local man files
-if [ -d ~/.local/share/man ]; then
-  manpath=( "${manpath[@]}" ~/.local/share/man )
-fi
-
 # EOF
