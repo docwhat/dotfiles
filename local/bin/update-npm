@@ -7,7 +7,7 @@ DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 npm install --global \
-  gulp \
+  'gulpjs/gulp#4.0' \
   eslint \
   csslint \
   htmlhint \
