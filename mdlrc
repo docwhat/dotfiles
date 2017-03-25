@@ -11,6 +11,8 @@ rule 'MD007', :indent => 4
 
 rule 'MD035', :style => "---"
 
+ignore-front-matter true
+
 # Inline HTML - this isn't forbidden by the style guide, and raw HTML use is
 # explicitly mentioned in the 'email automatic links' section.
 exclude_rule 'MD033'
