@@ -73,7 +73,8 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
       done
     }
 
-    alias rehash="rbenv rehash && rehash"
+    function rbenv_rehash { rbenv rehash }
+    custom_rehash_hooks=( rbenv_rehash "${custom_rehash_hooks[@]}" )
     alias bi="bundle install --binstubs .bundle/bin"
   fi
 else
