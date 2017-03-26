@@ -1,7 +1,7 @@
 autoload -U is-at-least
 ZGEN_RESET_ON_CHANGE=(
-  "${HOME}/.zsh/startup/0plugins.zsh"
-  "${HOME}/.zsh/startup/0plugins.zshenv"
+"${HOME}/.zsh/startup/0plugins.zsh"
+"${HOME}/.zsh/startup/0plugins.zshenv"
 )
 source "${HOME}/.zgen/zgen.zsh"
 
@@ -44,6 +44,10 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/redis-cli
   zgen oh-my-zsh plugins/rsync
   zgen oh-my-zsh plugins/marked2
+
+  # Node.js / NVM
+  zgen load lukechilds/zsh-nvm
+  zgen load lukechilds/zsh-better-npm-completion
 
   # Completion generator
   zgen load RobSis/zsh-completion-generator

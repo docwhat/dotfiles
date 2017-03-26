@@ -14,4 +14,7 @@ COMPLETION_WAITING_DOTS=false
 # zsh-completion-generator
 GENCOMPL_FPATH="$HOME/.zsh/cache/complete"
 
+# NVM
+export NVM_LAZY_LOAD=true
+
 # EOF
