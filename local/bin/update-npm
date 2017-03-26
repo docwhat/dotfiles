@@ -6,14 +6,30 @@ set -euo pipefail
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-npm install --global \
-  'gulpjs/gulp#4.0' \
-  eslint \
-  csslint \
-  htmlhint \
-  coffeelint \
-  stylelint \
-  write-good
+packages=(
+
+  # Builder
+  'gulpjs/gulp#4.0'
+
+
+  # JavaScript
+  'jscs@^3.0.7'
+  'jshint@^2.9.4'
+  'eslint@^3.18.0'
+  'coffeelint@^1.16.0'
+
+  # CSS
+  'csslint@^1.0.5'
+  'stylelint@^7.9.0'
+
+  # HTML
+  'htmlhint@^0.9.13'
+
+  # Prose
+  'write-good@^0.10.2'
+)
+
+npm install --global "${packages[@]}"
 
 npm upgrade --global
 
