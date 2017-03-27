@@ -99,6 +99,9 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 
+" Jekyll/Liquid
+Plug 'tpope/vim-liquid'
+
 " Javascript & JSON
 Plug 'elzr/vim-json', {'for': ['javascript', 'json']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json']}
