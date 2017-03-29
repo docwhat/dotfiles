@@ -23,15 +23,23 @@ function! Preserve(command)
 endfunction
 
 " Rubocop auto correction of lint
+" We can't use '--stdin -' because it still emits crap.
 function! RubocopAutocorrect()
-  silent !rubocop --auto-correct '%'
-  edit
-  if has_key(g:plugs, 'syntastic')
-    SyntasticCheck
-  endif
-  if has_key(g:plugs, 'neomake')
-    Neomake
-  endif
+  let l:curw = winsaveview()
+
+  let l:buf = getline(1, '$')
+
+  let l:tempfile = tempname()
+  call writefile(l:buf, l:tempfile)
+
+  let l:cmd = 'rubocop --auto-correct ' . l:tempfile
+  call system(l:cmd)
+
+  let l:output = readfile(l:tempfile)
+  % delete _
+  call setline(1, l:output)
+
+  call winrestview(l:curw)
 endfunction
 command! RubyDelint call RubocopAutocorrect()
 
