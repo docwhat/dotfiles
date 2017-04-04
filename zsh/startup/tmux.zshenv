@@ -13,7 +13,7 @@ if [ -n "$TMUX" ]; then
   }
 
   # Alias so ssh will change the window name.
-  ssh() {
+  tmux_ssh() {
     local wid
     local old_name
     local reset_eval
@@ -33,4 +33,5 @@ if [ -n "$TMUX" ]; then
     eval "${reset_eval}"
     return $ec
   }
+  alias ssh=tmux_ssh
 fi

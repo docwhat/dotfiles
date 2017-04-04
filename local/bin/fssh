@@ -1,0 +1,73 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+typeset -Ua khosts
+
+if [[ -n "${1:-}" && "${1:-}" == *@ ]]; then
+  typeset -r user="$1"
+  shift
+else
+  typeset -r user=""
+fi
+
+typeset -ra args=("$@")
+
+setopt extendedglob
+
+function addhosts {
+  local host
+  for host; do
+    if [[ $host == *[*?]* ]]; then
+      continue
+    elif [[ $host =~ "\[(.*)\]:\d*" ]]; then
+      khosts+=$match
+    else
+      khosts+=$host
+    fi
+  done
+}
+
+for khostfile in /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts; do
+
+  if [[ -r "$khostfile" ]]; then
+    potential_khosts=(${(s/,/j/,/u)${(f)"$(<$khostfile)"}%%[ |#]*})
+    addhosts "$potential_khosts[@]"
+  fi
+done
+
+for config in ~/.ssh/config; do
+  if [[ -r "$config" ]]; then
+    local key hosts
+    while IFS=$'=\t ' read -r key hosts
+    do
+      if [[ "$key" != (#i)host ]]; then
+        continue
+      fi
+
+      addhosts ${(z)hosts}
+    done < "$config"
+  fi
+done
+
+# Remove IP Addresses
+khosts=(${${khosts:#(#s)[0-9]##.[0-9]##.[0-9]##.[0-9]##(#e)}:#(#s)[0-9a-f:]##(#e)})
+
+print -N $khosts |\
+  fzf \
+  --exit-0 \
+  --read0 \
+  --preview 'ping -c1 {}' \
+  --preview-window down:3:hidden:wrap \
+  --bind '?:toggle-preview' |\
+  IFS=$'\n ' read -r host
+
+if (( ${+functions[tmux_ssh]} )); then
+  echo "\$ tmux_ssh ${user}${host} $args[@]" 1>&2
+  exec tmux_ssh "${user}${host}" "$args[@]"
+else
+  echo "\$ ssh ${user}${host} $args[@]" 1>&2
+  exec command ssh "${user}${host}" "$args[@]"
+fi
+
+# EOF
