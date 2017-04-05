@@ -87,6 +87,10 @@ Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'carlitux/deoplete-ternjs'
 Plug 'zchee/deoplete-zsh'
 
+" Neovim Development
+Plug 'tweekmonster/nvimdev.nvim'
+Plug 'tweekmonster/helpful.vim'
+
 " Style/Lint
 Plug 'dbakker/vim-lint'
 Plug 'neomake/neomake'
