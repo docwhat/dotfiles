@@ -259,26 +259,22 @@ endif " }}}
 " Pandoc -- Markdown, Text, and HTML formatter/converter
 if has_key(g:plugs, 'vim-pandoc') " {{{
   let g:pandoc#modules#disabled = ['chdir']
-  let g:pandoc#folding#mode = 'stacked'
+  let g:pandoc#folding#fold_yaml = 1
   let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
   let g:pandoc#formatting#mode = 'sa'
   let g:pandoc#formatting#equalprg = ''
   let g:pandoc#formatting#extra_equalprg = '--standalone'
 
-
-  " autocmd FileType pandoc nested setlocal shiftwidth=4 softtabstop=4
-  " autocmd FileType pandoc nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
   function! CaptureTextWidth()
     if &filetype ==# 'pandoc' && v:option_type ==# 'local'
       call SetPandocEqualPrg()
     endif
   endfunction
-  autocmd OptionSet textwidth nested call CaptureTextWidth()
 
   function! SetPandocEqualPrg()
     let g:pandoc#formatting#equalprg = 'pandoc'
-    let g:pandoc#formatting#textwidth = &textwidth
-    if &textwidth > 0
+    let g:pandoc#formatting#textwidth = &l:textwidth
+    if &l:textwidth > 0
       let g:pandoc#formatting#equalprg .= ' --to=markdown_github+yaml_metadata_block-hard_line_breaks --columns=' . &l:textwidth
     else
       let g:pandoc#formatting#equalprg .= ' --to=markdown_github+yaml_metadata_block --wrap=none'
@@ -289,8 +285,11 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
 
   augroup VimrcMarkdown
     autocmd!
-    autocmd BufNewFile,BufReadPost *.{mdwn,mkd,md,markdown} nested setlocal filetype=pandoc
-    autocmd FileType pandoc nested call SetPandocEqualPrg()
+    autocmd OptionSet textwidth nested call CaptureTextWidth()
+    autocmd FileType pandoc nested setlocal textwidth=76 | normal zR
+    if has_key(g:plugs, 'editorconfig-vim')
+      autocmd FileType pandoc nested :EditorConfigReload
+    endif
   augroup END
 else
   augroup VimrcMarkdown
