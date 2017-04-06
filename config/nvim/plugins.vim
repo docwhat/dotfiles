@@ -468,7 +468,7 @@ if has_key(g:plugs, 'neomake') " {{{
   let g:neomake_message_sign = { 'text': '☛', 'texthl': 'NeomakeMessageSign' }
   let g:neomake_info_sign    = { 'text': 'ℹ︎', 'texthl': 'NeomakeInfoSign' }
 
-  let g:neomake_sh_enabled_maker = neomake#makers#ft#sh#EnabledMakers() + [ 'checkbashisms' ]
+  let g:neomake_sh_enabled_makers = neomake#makers#ft#sh#EnabledMakers() + [ 'checkbashisms' ]
   let g:neomake_sh_shellcheck_maker = neomake#makers#ft#sh#shellcheck()
   let g:neomake_sh_shellcheck_maker.args += ['-x']
 
