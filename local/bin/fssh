@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-if [[ "${1:-}" != -* ]]; then
+if [[ -n "${1:-}" && "$1" != -* ]]; then
   default="$1"
   arg_parts=("${(@s/@/)default}")
   if (( $#arg_parts > 1 )); then
@@ -10,13 +10,10 @@ if [[ "${1:-}" != -* ]]; then
     default="${arg_parts[2]}"
   fi
   shift
-else
-  default=""
-  user=""
 fi
 
-typeset -r user
-typeset -r default
+typeset -r user="${user:-}"
+typeset -r default="${default:-}"
 typeset -ra args=("$@")
 typeset -Ua khosts
 
