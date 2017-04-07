@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # vi: ft=zsh :
 
-set -eu
+set -euo pipefail
 
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"

@@ -70,7 +70,7 @@ done
 khosts=(${${khosts:#(#s)[0-9]##.[0-9]##.[0-9]##.[0-9]##(#e)}:#(#s)[0-9a-f:]##(#e)})
 
 # Exact Match
-if [[ "${khosts[(ie)$default]}" -lt ${#khosts} ]]; then
+if [[ "${khosts[(ie)$default]}" -le ${#khosts} ]]; then
   do_ssh "$default"
 fi
 
