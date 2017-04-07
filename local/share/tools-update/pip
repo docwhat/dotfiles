@@ -12,7 +12,7 @@ if (( $+commands[pip3] )) && (( $+commands[pip2] )); then
 fi
 
 for pip in "${pips[@]}"; do
-  if (( $+commands[${pip}] )); then
+  if [[ -w "${commands[${pip}]}"  ]]; then
     echo "${commands[${pip}]:A}" | colorize green
     "${pip}" install --upgrade \
       pip wheel \
