@@ -4,41 +4,133 @@ set -eu
 
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+setopt extendedglob
+unset REPORTTIME
 
-print -P '%F{blue} 🔨 Updating dotfiles and tools🔧  %F{reset}'
-echo
+typeset -r prog=$(echo "$0"(:t))
+typeset -r updater_dir="$HOME/.local/share/tools-update"
+typeset -a updaters
 
-hh_git 'Dotfiles' https://github.com/docwhat/dotfiles.git ~/.dotfiles
+function err {
+  echo "Error: $*" 1>&2
+}
 
-if [ -d ~/.dotfiles-personal ]; then
-  hh_git 'Personal Dotfiles' 'none' ~/.dotfiles-personal
-fi
+function die {
+  err "$1"
+  exit 1
+}
 
-rcup
+function banner {
+  print -P "%F{blue}===================================================%F{reset}"
+  print -P "$*" | offset | offset | colorize yellow
+  print -P "%F{blue}===================================================%F{reset}"
+  print
+}
 
-if [ -d ~/.zgen ]; then
+function get_updaters {
+  updaters=( "${updater_dir}"/*(-x.:t) )
+}
+
+function default {
+  hh_git 'Dotfiles' https://github.com/docwhat/dotfiles.git ~/.dotfiles
+
+  if [ -d ~/.dotfiles-personal ]; then
+    hh_git 'Personal Dotfiles' 'none' ~/.dotfiles-personal
+  fi
+
+  rcup
+
+  get_updaters
+}
+
+function print_help_for {
+  local updater=$1
+
+  c1="%F{yellow}"
+  c2="%F{reset}"
+
+  printf "  %s%-12s%s" "${(%)c1}" "$updater" "${(%)c2}"
+
+  if [[ "$updater" == 'all' ]]; then
+    echo "alias for all the commands"
+  elif [[ "$updater" == 'default' ]]; then
+    echo "updates the dotfiles and runs 'rcup'"
+  else
+    (perl -n -e 'print "$1\n" if m/#DESC#\s*(.*)\s*#DESC#/;' < "${updater_dir}/${updater}"; echo) | head -1
+  fi
+}
+
+function show_help {
+  print -P "%F{cyan}Usage:%F{cyan}${prog} [updater...]%F{reset}"
   echo
-  print -P "%F{cyan}z %F{blue}updating plugins %F{reset}"
-  set +eu
-  source ~/.zgen/zgen.zsh
-  set -eu
-  zgen update |& offset | colorize yellow
-fi
-
-if [ -d ~/.tmux/plugins ]; then
-  pushd ~/.tmux/plugins > /dev/null
-  for tmux_plugin in *(N/); do
-    hh_git "tmux plugin ${tmux_plugin}" 'none' ~/.tmux/plugins/"$tmux_plugin"
+  print_help_for 'default'
+  print_help_for 'all'
+  for updater in "${updaters[@]}"; do
+    print_help_for "$updater"
   done
-  popd > /dev/null
+}
+
+## Main
+get_updaters
+# default
+
+typeset run_default=0
+typeset run_all=0
+typeset show_legacy_message=0
+typeset -Ua run_list
+
+# Mimic a limited amount of what it did before...
+if (( $# == 0 )); then show_legacy_message=1; run_default=1; fi
+
+# Arg parsing.
+while (( $# > 0 )); do
+  case "$1" in
+    -h|-help|--help|help)
+      show_help
+      exit 0
+      ;;
+    all)
+      run_all=1
+      run_default=1
+      ;;
+    default)
+      run_default=1
+      ;;
+    *)
+      if [[ "${updaters[(i)$1]}" -le ${#updaters} ]]; then
+        run_list+=$1
+      else
+        err "no such updater: $1"
+        show_help
+        exit 1
+      fi
+      ;;
+  esac
+  shift
+done
+
+# Default always goes first
+if (( run_default )); then
+  banner 'Updating dotfiles'
+  default
+  echo
 fi
 
-echo
-print -P "%F{green}You may wish to consider running:%F{reset}"
-echo "  * rbenv-update-plugins"
-echo "  * update-gems"
-echo "  * update-pip"
-echo "  * update-npm"
-echo "  * install-fonts"
+# Rebuild "all" now since it could have changed from default.
+if (( run_all )); then
+  run_list=( "${updaters[@]}" )
+fi
+
+# Run the updaters
+for updater in "${run_list[@]}"; do
+  banner "${(C)updater}"
+  "${updater_dir}/${updater}"
+  echo
+done
+
+if (( show_legacy_message )); then
+  banner "%F{yellow}${prog}%F{green} has many new cool options!%F{reset}"
+  show_help
+fi
 
 # EOF

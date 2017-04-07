@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# vi: ft=zsh :
+#DESC# Ruby gems #DESC#
 
 set -euo pipefail
 

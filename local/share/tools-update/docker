@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+#DESC# docker completion files #DESC#
 
 set -euo pipefail
 

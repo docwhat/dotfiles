@@ -1,33 +1,45 @@
 #!/usr/bin/env zsh
-# vi: ft=zsh :
+#DESC# Node.js packages #DESC#
 
-set -euo pipefail
+set -eu
 
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
+if [[ -r ~/.zgen/zgen.zsh ]]; then
+  export NVM_NO_USE=false
+  set +eu
+  source ~/.zgen/zgen.zsh
+  set -eu
+fi
+
 packages=(
 
-  # Builder
-  'gulpjs/gulp#4.0'
+# Builder
+'gulpjs/gulp#4.0'
 
 
-  # JavaScript
-  'jscs@^3.0.7'
-  'jshint@^2.9.4'
-  'eslint@^3.18.0'
-  'coffeelint@^1.16.0'
+# JavaScript
+'jscs@^3.0.7'
+'jshint@^2.9.4'
+'eslint@^3.18.0'
+'coffeelint@^1.16.0'
 
-  # CSS
-  'csslint@^1.0.5'
-  'stylelint@^7.9.0'
+# CSS
+'csslint@^1.0.5'
+'stylelint@^7.9.0'
 
-  # HTML
-  'htmlhint@^0.9.13'
+# HTML
+'htmlhint@^0.9.13'
 
-  # Prose
-  'write-good@^0.10.2'
+# Prose
+'write-good@^0.10.2'
 )
+
+if ! (( ${+commands[npm]} + ${+functions[npm]} )); then
+  echo "Skipping, couldn't find 'npm'" 1>&2
+  exit 0
+fi
 
 npm install --global "${packages[@]}"
 

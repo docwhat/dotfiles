@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+#DESC# tmux plugin manager and plugins #DESC#
+
+set -euo pipefail
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+hh_git 'Tmux Package Manager' https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
+
+if [ -d ~/.tmux/plugins ]; then
+  pushd ~/.tmux/plugins > /dev/null
+  for tmux_plugin in *(N/); do
+    hh_git "tmux plugin ${tmux_plugin}" 'none' ~/.tmux/plugins/"$tmux_plugin"
+  done
+  popd > /dev/null
+fi
+
+# EOF

@@ -1,22 +1,29 @@
 #!/usr/bin/env zsh
-# vi: ft=zsh :
+#DESC# python packages (2 & 3)#DESC#
 
 set -euo pipefail
 
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-for pip in pip3 pip2 pip; do
-  echo "${commands[${pip}]:a}" | colorize green
-  "${pip}" install --upgrade \
-    pip wheel \
-    neovim \
-    vim-vint \
-    flake8 \
-    jedi \
-    proselint \
-    yamllint \
-    | offset
+pips=( pip3 pip2 pip )
+if (( $+commands[pip3] )) && (( $+commands[pip2] )); then
+  pips=( pip3 pip2 )
+fi
+
+for pip in "${pips[@]}"; do
+  if (( $+commands[${pip}] )); then
+    echo "${commands[${pip}]:A}" | colorize green
+    "${pip}" install --upgrade \
+      pip wheel \
+      neovim \
+      vim-vint \
+      flake8 \
+      jedi \
+      proselint \
+      yamllint \
+      | offset
+  fi
 done
 
 # EOF
