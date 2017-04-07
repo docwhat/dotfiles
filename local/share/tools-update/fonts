@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+#DESC# fonts for macOS #DESC#
+
 set -euo pipefail
 
 cd "$(dirname "$0")"
@@ -25,9 +27,10 @@ fetch_or_update() {
 }
 
 ## Main
+
 if [[ "${OSTYPE}" != darwin* ]]; then
   echo "${OSTYPE} is not supported\!" 1>&2
-  exit 10
+  exit 0
 fi
 
 mkdir -p ~/tmp/.fonts/
