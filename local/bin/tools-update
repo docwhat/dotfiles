@@ -28,7 +28,7 @@ function banner {
 }
 
 function get_updaters {
-  updaters=( "${updater_dir}"/*(-x.:t) )
+  updaters=( "${updater_dir}"/*(-x.N:t) )
 }
 
 function default {
