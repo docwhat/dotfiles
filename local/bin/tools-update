@@ -8,7 +8,7 @@ setopt extendedglob
 unset REPORTTIME
 
 typeset -r prog=$(echo "$0"(:t))
-typeset -r updater_dir="$HOME/.local/share/tools-update"
+typeset -r updater_dir="$HOME/.local/libexec/tools-update"
 typeset -a updaters
 
 function err {
