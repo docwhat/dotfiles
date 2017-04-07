@@ -8,5 +8,7 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
     # Save it for future use.
     echo "$RBENV_ROOT" > ~/.config/personal/rbenv-root
   fi
+
   export RBENV_ROOT
+  path+="${RBENV_ROOT}/bin"
 fi
