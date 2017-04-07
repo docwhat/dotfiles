@@ -75,7 +75,4 @@ gem install --conservative bundler | offset | colorize green
 echo "Installing gems:" | colorize blue
 do_update
 
-echo "Indexing documentation:" | colorize blue
-yard gems --quiet
-
 # EOF

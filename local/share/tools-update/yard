@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+#DESC# yard documentation for Ruby gems #DESC#
+
+set -euo pipefail
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+yard gems --quiet || :
+
+# EOF
