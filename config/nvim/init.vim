@@ -63,7 +63,6 @@ if s:bootstrap
   echo "Installing missing plugins. Please wait...\n"
   :silent PlugInstall
   :silent PlugUpgrade
-  :silent call remote#host#UpdateRemotePlugins()
   quit
 endif
 
