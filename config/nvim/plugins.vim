@@ -469,11 +469,16 @@ if has_key(g:plugs, 'neomake') " {{{
   let g:neomake_info_sign    = { 'text': 'ℹ︎', 'texthl': 'NeomakeInfoSign' }
 
   let g:neomake_sh_enabled_makers = neomake#makers#ft#sh#EnabledMakers() + [ 'checkbashisms' ]
+
   let g:neomake_sh_shellcheck_maker = neomake#makers#ft#sh#shellcheck()
   let g:neomake_sh_shellcheck_maker.args += ['-x']
 
+  let g:neomake_sh_checkbashisms_maker = neomake#makers#ft#sh#checkbashisms()
+  let g:neomake_sh_checkbashisms_maker.args = ['-x']
+
   let g:neomake_ruby_enabled_makers = neomake#makers#ft#ruby#EnabledMakers()
   call filter(g:neomake_ruby_enabled_makers, "v:val !=# 'rubylint'")
+
   let g:neomake_ruby_rubocop_maker = neomake#makers#ft#ruby#rubocop()
   let g:neomake_ruby_rubocop_maker.args += ['--display-cop-names']
 
