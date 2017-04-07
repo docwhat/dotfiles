@@ -52,22 +52,24 @@ function print_help_for {
   printf "  %s%-12s%s" "${(%)c1}" "$updater" "${(%)c2}"
 
   if [[ "$updater" == 'all' ]]; then
-    echo "alias for all the commands"
+    print "alias for all the commands"
   elif [[ "$updater" == 'default' ]]; then
-    echo "updates the dotfiles and runs 'rcup'"
+    print "updates the dotfiles and runs 'rcup'"
   else
     (perl -n -e 'print "$1\n" if m/#DESC#\s*(.*)\s*#DESC#/;' < "${updater_dir}/${updater}"; echo) | head -1
   fi
 }
 
 function show_help {
+  banner "Help"
   print -P "%F{cyan}Usage:%F{cyan}${prog} [updater...]%F{reset}"
-  echo
+  print
   print_help_for 'default'
   print_help_for 'all'
   for updater in "${updaters[@]}"; do
     print_help_for "$updater"
   done
+  print
 }
 
 ## Main
@@ -85,7 +87,7 @@ if (( $# == 0 )); then show_legacy_message=1; run_default=1; fi
 # Arg parsing.
 while (( $# > 0 )); do
   case "$1" in
-    -h|-help|--help|help)
+    -h|-help|--help|h|help)
       show_help
       exit 0
       ;;
