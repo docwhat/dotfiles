@@ -17,6 +17,12 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
 
+[{*.yml,config/yamllint/config}]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+vim_filetype = yaml
+
 [*.{zsh,zshenv,zprofile}]
 indent_style = space
 indent_size = 2
