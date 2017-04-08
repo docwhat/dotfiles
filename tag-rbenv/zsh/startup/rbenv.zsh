@@ -19,60 +19,6 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
       } &!
     done
 
-    function rbenv-update-plugins
-    {
-      local -a plugins
-      plugins=( $(cat "${HOME}/.config/personal/rbenv-plugins") )
-      local -a plugin_names
-
-      if ! command -v ruby-build >/dev/null; then
-        plugins=( "${plugins[@]}" sstephenson/ruby-build )
-      fi
-
-      if [ -d "${RBENV_ROOT}/.git" ]; then
-        pushd "${RBENV_ROOT}" > /dev/null
-        echo "${fg[blue]}Updating .rbenv${reset_color}"
-        if git diff-index --quiet HEAD; then
-          git pull --rebase
-        else
-          echo "   ${fg[red]}skipping -- checkout is dirty${reset_color}"
-          git s
-        fi
-        popd > /dev/null
-      fi
-
-      rm -vf "${RBENV_ROOT}/default-gems"
-
-      mkdir -p "${RBENV_ROOT}/plugins"
-
-      for plugin in "${plugins[@]}"; do
-        local name=$(basename "${plugin}")
-        plugin_names=( "${plugin_names[@]}" "${name}" )
-        if [[ -d "${RBENV_ROOT}/plugins/${name}" ]]; then
-          pushd "${RBENV_ROOT}/plugins/${name}" > /dev/null
-          echo "${fg[blue]}Updating ${plugin}${reset_color}"
-          if git diff-index --quiet HEAD; then
-            git pull --rebase
-          else
-            echo "   ${fg[red]}skipping -- checkout is dirty${reset_color}"
-            git s
-          fi
-          popd > /dev/null
-        else
-          echo "${fg[blue]}Installing ${plugin}${reset_color}"
-          hub clone "${plugin}" "${RBENV_ROOT}/plugins/${name}"
-        fi
-      done
-
-      for other_dir in "${RBENV_ROOT}/plugins/"*(/N); do
-        local name=$(basename "${other_dir}")
-        if ! containsElement "${name}" "${plugin_names[@]}"; then
-          echo "${fg[blue]}Removing ${name}${reset_color}"
-          rm -rvf "${RBENV_ROOT}/plugins/${name}"
-        fi
-      done
-    }
-
     function rbenv_rehash { rbenv rehash }
     custom_rehash_hooks=( rbenv_rehash "${custom_rehash_hooks[@]}" )
     alias bi="bundle install --binstubs .bundle/bin"
