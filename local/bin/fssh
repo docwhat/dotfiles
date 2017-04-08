@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+# TODO Maybe keep a history of hosts used?
+
 if [[ -n "${1:-}" && "$1" != -* ]]; then
   default="$1"
   arg_parts=("${(@s/@/)default}")
@@ -45,6 +47,24 @@ function addhosts {
   done
 }
 
+function scan_ssh_configs {
+  local config
+  local key
+  local hosts
+  for config in /etc/ssh/ssh_config ~/.ssh/config; do
+    if [[ -r "$config" ]]; then
+      while IFS=$'=\t ' read -r key hosts; do
+        if [[ "$key" != (#i)host ]]; then
+          continue
+        fi
+
+        addhosts ${(z)hosts}
+      done < "$config"
+    fi
+  done
+}
+
+# Gather info from the known_hosts files
 for khostfile in /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts; do
   if [[ -r "$khostfile" ]]; then
     potential_khosts=(${(s/,/j/,/u)${(f)"$(<$khostfile)"}%%[ |#]*})
@@ -52,22 +72,18 @@ for khostfile in /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts; do
   fi
 done
 
-for config in ~/.ssh/config; do
-  if [[ -r "$config" ]]; then
-    local key hosts
-    while IFS=$'=\t ' read -r key hosts
-    do
-      if [[ "$key" != (#i)host ]]; then
-        continue
-      fi
-
-      addhosts ${(z)hosts}
-    done < "$config"
-  fi
-done
-
 # Remove IP Addresses
 khosts=(${${khosts:#(#s)[0-9]##.[0-9]##.[0-9]##.[0-9]##(#e)}:#(#s)[0-9a-f:]##(#e)})
+
+
+# Gather info from the ssh_config files.
+if (( ${+commands[ssh-host-lister]} )); then
+  khosts=( $khost $(ssh-host-lister) )
+else
+  scan_ssh_configs
+  # Remove IP Addresses
+  khosts=(${${khosts:#(#s)[0-9]##.[0-9]##.[0-9]##.[0-9]##(#e)}:#(#s)[0-9a-f:]##(#e)})
+fi
 
 # Exact Match
 if [[ "${khosts[(ie)$default]}" -le ${#khosts} ]]; then
