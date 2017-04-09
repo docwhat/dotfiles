@@ -1,8 +1,7 @@
 #!/bin/bash
+#DESC# updates TERM entries for terminfo #DESC#
 
 set -euo pipefail
-
-cd "$(dirname "$0")"
 
 typeset -ar terms=(
 xterm
@@ -45,6 +44,8 @@ correct_backspace() {
 }
 
 ## Main
+mkdir -p "$HOME/.cache/tools-update"
+cd "$HOME/.cache/tools-update"
 
 rm -rf ./*.tmp
 mkdir terms.tmp

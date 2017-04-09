@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -euo pipefail
+
+typeset -ar terms=(
+dumb
+linux
+
+xterm
+xtermc
+xterm-color
+xterm-256color
+
+screen
+screen-256color
+screen.xterm-new
+
+tmux
+tmux-256color
+
+mouse
+)
+
+backspace_char() {
+  local term="$1"
+  infocmp -1IL "$term" | perl -n -e 'print "$1\n" if m/^\s*key_backspace=([^,]+)/;'
+}
+
+missing=0
+template="%-20s %-10s %-13s\n"
+
+printf "$template" "TERM" "Installed?" "Backspace Key"
+printf "$template" "--------------------" "----------" "-------------"
+for term in "${terms[@]}"; do
+  installed="missing"
+  bs=""
+  if env "TERM=$term" tput cols >/dev/null 2>&1; then
+    installed="yes"
+    bs=$(backspace_char "$term")
+  else
+    missing=$(( missing + 1 ))
+  fi
+  printf "$template" "$term" "$installed" "$bs"
+done
+
+if (( missing )); then
+  echo
+  echo "You are missing ${missing} TERM(s)."
+  echo "Run 'tools-update terms' to fix!"
+fi
+
+# EOF
