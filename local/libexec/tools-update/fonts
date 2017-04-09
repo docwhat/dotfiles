@@ -47,6 +47,6 @@ for font in "${fonts[@]}"; do
 done
 
 # Check for updates (human)
-open https://github.com/ryanoasis/nerd-fonts/releases
+# open https://github.com/ryanoasis/nerd-fonts/releases
 
 # EOF
