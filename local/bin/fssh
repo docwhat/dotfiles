@@ -17,7 +17,7 @@ fi
 typeset -r user="${user:-}"
 typeset -r default="${default:-}"
 typeset -ra args=("$@")
-typeset -Ua khosts
+typeset -Ua khosts=( localhost )
 
 setopt extendedglob
 
@@ -78,7 +78,7 @@ khosts=(${${khosts:#(#s)[0-9]##.[0-9]##.[0-9]##.[0-9]##(#e)}:#(#s)[0-9a-f:]##(#e
 
 # Gather info from the ssh_config files.
 if (( ${+commands[ssh-host-lister]} )); then
-  khosts=( $khost $(ssh-host-lister) )
+  khosts=( "${khosts[@]}" $(ssh-host-lister) )
 else
   scan_ssh_configs
   # Remove IP Addresses
