@@ -5,6 +5,7 @@
 typeset -a plugins
 plugins=( $(cat "${HOME}/.config/personal/rbenv-plugins") )
 typeset -a plugin_names
+setopt extendedglob
 
 if ! command -v ruby-build >/dev/null; then
   plugins=( "${plugins[@]}" sstephenson/ruby-build )
@@ -47,7 +48,7 @@ done
 
 for other_dir in "${RBENV_ROOT}/plugins/"*(/N); do
   typeset name=$(basename "${other_dir}")
-  if ! containsElement "${name}" "${plugin_names[@]}"; then
+  if [ ${plugin_names[(i)$name]} -gt ${#plugin_names} ]; then
     echo "${fg[blue]}Removing ${name}${reset_color}"
     rm -rvf "${RBENV_ROOT}/plugins/${name}"
   fi
