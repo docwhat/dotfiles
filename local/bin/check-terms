@@ -17,8 +17,6 @@ screen.xterm-new
 
 tmux
 tmux-256color
-
-mouse
 )
 
 backspace_char() {
