@@ -26,7 +26,7 @@ fetch_term_source() {
 }
 
 unpack_terms() {
-  gzcat terminfo.src.gz > terminfo.src
+  gzip -dc terminfo.src.gz > terminfo.src
   env TERMINFO=terminfo.tmp tic -xa terminfo.src
 }
 
