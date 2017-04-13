@@ -1,0 +1,10 @@
+#compdef tools-update
+
+local curcontext="$curcontext" state line
+typeset -A opt_args
+
+eval "$(tools-update --zsh-completion-helper)"
+
+return 0
+
+# EOF

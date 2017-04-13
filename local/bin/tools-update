@@ -49,15 +49,36 @@ function print_help_for {
   c1="%F{yellow}"
   c2="%F{reset}"
 
-  printf "  %s%-12s%s" "${(%)c1}" "$updater" "${(%)c2}"
+  printf "  %s%-12s%s %s\n" \
+    "${(%)c1}" \
+    "$updater" \
+    "${(%)c2}" \
+    "$(description_for "$updater")"
+}
+
+function description_for {
+  local updater=$1
 
   if [[ "$updater" == 'all' ]]; then
     print "alias for all the commands"
   elif [[ "$updater" == 'default' ]]; then
     print "updates the dotfiles and runs 'rcup'"
   else
-    (perl -n -e 'print "$1\n" if m/#DESC#\s*(.*)\s*#DESC#/;' < "${updater_dir}/${updater}"; echo) | head -1
+    (perl -n -e 'print "$1\n" if m/#DESC#\s*(.*\S)\s*#DESC#/;' < "${updater_dir}/${updater}"; echo) | head -1
   fi
+}
+
+function zsh_completion_helper {
+  local updater
+
+  print "local flags=( -h:Help --help:Help )"
+  print "local updaters=("
+  for updater in all default "${updaters[@]}"; do
+    print -- "${(qq)updater}:${(qqq)$(description_for "$updater")}"
+  done
+  print ")"
+  print "_describe 'UPDATERS' updaters"
+  print "_describe -o 'OPTIONS' flags"
 }
 
 function show_help {
@@ -89,6 +110,10 @@ while (( $# > 0 )); do
   case "$1" in
     -h|-help|--help|h|help)
       show_help
+      exit 0
+      ;;
+    --zsh-completion-helper)
+      zsh_completion_helper
       exit 0
       ;;
     all)
