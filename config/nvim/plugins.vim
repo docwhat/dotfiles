@@ -98,12 +98,14 @@ Plug 'dbakker/vim-lint'
 Plug 'neomake/neomake'
 " Plug 'scrooloose/syntastic'
 
-
 " Markdown
 Plug 'tpope/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
+
+" NGinX
+Plug 'fatih/vim-nginx'
 
 " Jekyll/Liquid
 Plug 'tpope/vim-liquid'
