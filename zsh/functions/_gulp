@@ -1,0 +1,9 @@
+#compdef gulp
+
+local compls
+
+compls=$(gulp --tasks-simple)
+completions=(${=compls})
+compadd -- $completions
+
+# EOF
