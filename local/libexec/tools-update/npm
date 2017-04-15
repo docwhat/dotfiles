@@ -15,25 +15,27 @@ fi
 
 packages=(
 
+'npm-check'
+
 # Builder
 'gulpjs/gulp#4.0'
 
 
 # JavaScript
-'jscs@^3.0.7'
-'jshint@^2.9.4'
-'eslint@^3.18.0'
-'coffeelint@^1.16.0'
+'jscs'
+'jshint'
+'eslint'
+'coffeelint'
 
 # CSS
-'csslint@^1.0.5'
-'stylelint@^7.9.0'
+'csslint'
+'stylelint'
 
 # HTML
-'htmlhint@^0.9.13'
+'htmlhint'
 
 # Prose
-'write-good@^0.10.2'
+'write-good'
 )
 
 if ! (( ${+commands[npm]} + ${+functions[npm]} )); then
