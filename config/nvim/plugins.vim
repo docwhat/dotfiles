@@ -244,7 +244,7 @@ if has_key(g:plugs, 'denite.nvim') " {{{
           \      '--hidden', '-g', ''
           \   ] })
   endif
-  nnoremap <silent> <leader>t :Denite file_rec<cr>
+  nnoremap <silent> <leader>p :Denite file_rec<cr>
   " nnoremap <C-p> :Denite file_rec<cr>
 endif " }}}
 
