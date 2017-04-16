@@ -13,6 +13,12 @@ if [[ -r ~/.zgen/zgen.zsh ]]; then
   set -eu
 fi
 
+if ! command -v npm > /dev/null; then
+  # exit if npm isn't a function or command.
+  echo "Skipping: npm isn't available"
+  exit 0
+fi
+
 packages=(
 
 'npm-check'
