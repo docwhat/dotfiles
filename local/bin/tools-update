@@ -22,7 +22,7 @@ function die {
 
 function banner {
   print -P "%F{blue}===================================================%F{reset}"
-  print -P "$*" | offset | offset | colorize yellow
+  print -P "$*" | colorize cyan
   print -P "%F{blue}===================================================%F{reset}"
   print
 }

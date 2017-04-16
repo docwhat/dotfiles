@@ -13,9 +13,9 @@ if [[ -r ~/.zgen/zgen.zsh ]]; then
   set -eu
 fi
 
+# We check for a function, alias or command
 if ! command -v npm > /dev/null; then
-  # exit if npm isn't a function or command.
-  echo "Skipping: npm isn't available"
+  print -P "  %F{yellow}Skipping%F{reset}: %F{green}npm%F{reset} isn't available"
   exit 0
 fi
 

@@ -6,6 +6,12 @@ set -euo pipefail
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
+# We check for a function, alias or command
+if ! command -v yard > /dev/null; then
+  print -P "  %F{yellow}Skipping%F{reset}: %F{green}yard%F{reset} isn't available"
+  exit 0
+fi
+
 yard gems --quiet || :
 
 # EOF

@@ -29,7 +29,7 @@ fetch_or_update() {
 ## Main
 
 if [[ "${OSTYPE}" != darwin* ]]; then
-  echo "${OSTYPE} is not supported\!" 1>&2
+  print -P "  %F{yellow}Skipping%F{reset}: Only %F{green}macOS%F{reset} supported (not %F{green}${OSTYPE}%F{reset})"
   exit 0
 fi
 
