@@ -24,6 +24,11 @@ else
   set termencoding=utf-8
 endif
 
+function! HasNode()
+  call system('npm --version')
+  return ! v:shell_error
+endfunction
+
 let s:bootstrap=0
 
 " Figure out the XDG_CONFIG_HOME and XDG_DATA_HOME directories.
