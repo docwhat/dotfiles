@@ -35,7 +35,7 @@ class Plugins
     false
   end
 
-  def write!
+  def write
     File.write(filename, to_json)
   end
 end
@@ -43,6 +43,6 @@ end
 Plugins.new.tap do |plugins|
   if plugins.changed?
     VIM.command 'let s:bootstrap=1'
-    plugins.write!
+    plugins.write
   end
 end
