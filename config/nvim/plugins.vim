@@ -105,7 +105,8 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 
 " NGinX
-Plug 'fatih/vim-nginx'
+" Plug 'fatih/vim-nginx'
+Plug 'chr4/nginx.vim'
 
 " Jekyll/Liquid
 Plug 'tpope/vim-liquid'
