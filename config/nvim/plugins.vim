@@ -83,10 +83,8 @@ Plug 'honza/vim-snippets'
 Plug 'eagletmt/neco-ghc'
 Plug 'zchee/deoplete-jedi'
 Plug 'tweekmonster/deoplete-clang2'
-if HasNode()
-  Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
-  Plug 'carlitux/deoplete-ternjs'
-endif
+Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
+Plug 'carlitux/deoplete-ternjs'
 Plug 'zchee/deoplete-zsh'
 
 " Neovim Development
