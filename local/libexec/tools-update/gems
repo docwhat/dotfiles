@@ -63,10 +63,11 @@ function do_update
 ## Main ##
 
 # We check for a function, alias or command
-if ! command -v bundle > /dev/null; then
+if ! (( ${+commands[bundle]} + ${+functions[bundle]} )); then
   print -P "  %F{yellow}Skipping%F{reset}: %F{green}bundle%F{reset} isn't available"
   exit 0
 fi
+
 # Set up the temp directory.
 update_tmp="$(mktemp -d "${TMPDIR:-/tmp}/update-gems.XXXXXXXXXX")"
 cd "${update_tmp}"
