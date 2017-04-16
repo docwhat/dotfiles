@@ -23,7 +23,7 @@ indent_size = 2
 trim_trailing_whitespace = true
 vim_filetype = yaml
 
-[{*.zsh,*.zshenv,*.zprofile,zsh/functions/_*}]
+[{zsh/startup/*.zsh,zsh/startup/*.zshenv,zsh/startup/*.zprofile,zsh/functions/_*}]
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
