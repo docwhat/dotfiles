@@ -486,9 +486,14 @@ if has_key(g:plugs, 'neomake') " {{{
   let g:neomake_ruby_rubocop_maker.args += ['--display-cop-names']
 
   function! s:myNeomake()
+    " Buffer must be writable.
     if &readonly           | return | endif
+    " Buffer must be modifiable.
     if ! &modifiable       | return | endif
+    " Neomake must be installed.
     if !exists(':Neomake') | return | endif
+    " The buffer must point at a file that exists.
+    if !filereadable(expand('%')) | return | endif
 
     Neomake
   endfunction
