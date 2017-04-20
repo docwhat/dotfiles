@@ -267,32 +267,31 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
   let g:pandoc#formatting#mode = 'sa'
   let g:pandoc#formatting#equalprg = ''
   let g:pandoc#formatting#extra_equalprg = '--standalone'
+  let g:pandoc#formatting#textwidth = 76
 
-  function! CaptureTextWidth()
-    if &filetype ==# 'pandoc' && v:option_type ==# 'local'
-      call SetPandocEqualPrg()
+  function! MyCaptureTextWidth()
+    if &filetype ==# 'pandoc'
+      let l:pandoc_to='markdown_github+yaml_metadata_block'
+      let g:pandoc#formatting#equalprg = 'pandoc'
+      let g:pandoc#formatting#textwidth = &textwidth
+      if &textwidth > 0
+        let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.'-hard_line_breaks --columns=' . &textwidth
+      else
+        let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.' --wrap=none'
+      endif
+      let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
+      setlocal concealcursor= conceallevel=1
     endif
-  endfunction
-
-  function! SetPandocEqualPrg()
-    let g:pandoc#formatting#equalprg = 'pandoc'
-    let g:pandoc#formatting#textwidth = &l:textwidth
-    if &l:textwidth > 0
-      let g:pandoc#formatting#equalprg .= ' --to=markdown_github+yaml_metadata_block-hard_line_breaks --columns=' . &l:textwidth
-    else
-      let g:pandoc#formatting#equalprg .= ' --to=markdown_github+yaml_metadata_block --wrap=none'
-    endif
-    let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
-    setlocal concealcursor= conceallevel=1
   endfunction
 
   augroup VimrcMarkdown
     autocmd!
-    autocmd OptionSet textwidth nested call CaptureTextWidth()
-    autocmd FileType pandoc nested setlocal textwidth=76 | normal zR
+    autocmd OptionSet textwidth nested :call MyCaptureTextWidth()
+    autocmd BufEnter * nested :call MyCaptureTextWidth()
     if has_key(g:plugs, 'editorconfig-vim')
-      autocmd FileType pandoc nested :EditorConfigReload
+      autocmd FileType pandoc :EditorConfigReload
     endif
+    autocmd FileType pandoc normal zR
   augroup END
 else
   augroup VimrcMarkdown
