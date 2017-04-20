@@ -1,4 +1,4 @@
 # vim: ft=zsh :
 
-## added by travis gem
-[ -f /Users/docwhat/.travis/travis.sh ] && source /Users/docwhat/.travis/travis.sh
+## Use travis if we're setup for it.
+[ -f "${home}/.travis/travis.sh" ] && source "${HOME}/.travis/travis.sh"
