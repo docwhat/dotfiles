@@ -274,11 +274,17 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
       let l:pandoc_to='markdown_github+yaml_metadata_block'
       let g:pandoc#formatting#equalprg = 'pandoc'
       let g:pandoc#formatting#textwidth = &textwidth
+
       if &textwidth > 0
         let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.'-hard_line_breaks --columns=' . &textwidth
       else
         let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.' --wrap=none'
       endif
+
+      if expand('%:t:r') ==# 'CHANGELOG'
+        let g:pandoc#formatting#equalprg .= ' --reference-links'
+      endif
+
       let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
       setlocal concealcursor= conceallevel=1
     endif
