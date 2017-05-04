@@ -1,0 +1,23 @@
+# Has to be run first.
+zgen oh-my-zsh
+
+zgen oh-my-zsh plugins/python
+zgen oh-my-zsh plugins/pip
+
+zgen oh-my-zsh plugins/golang
+
+zgen oh-my-zsh plugins/sudo
+zgen oh-my-zsh plugins/rsync
+zgen oh-my-zsh plugins/vagrant
+
+zgen oh-my-zsh plugins/git
+zgen oh-my-zsh plugins/github
+
+if [ $(uname -a | grep -ci Darwin) = 1 ]; then
+  # Load OSX-specific plugins
+  zgen oh-my-zsh plugins/osx
+fi
+
+zgen oh-my-zsh plugins/redis-cli
+zgen oh-my-zsh plugins/rsync
+zgen oh-my-zsh plugins/marked2

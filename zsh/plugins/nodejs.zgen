@@ -1,0 +1,3 @@
+# Node.js / NVM
+zgen load lukechilds/zsh-nvm
+zgen load lukechilds/zsh-better-npm-completion

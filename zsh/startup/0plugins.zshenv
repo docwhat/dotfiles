@@ -1,20 +1,8 @@
 # Plugin Configuration Variables
 
-# Oh my zsh config
-# See https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template
-DISABLE_AUTO_UPDATE=true
-DISABLE_LS_COLORS=true
-DISABLE_AUTO_TITLE=true
-ENABLE_CORRECTION=true
-HIST_STAMPS=yyyy-mm-dd
-
-# Keep this off or it breaks the multiline prompts.
-COMPLETION_WAITING_DOTS=false
-
-# zsh-completion-generator
-GENCOMPL_FPATH="$HOME/.zsh/cache/complete"
-
-# NVM
-export NVM_LAZY_LOAD=true
+for _plugin_file in ~/.zsh/plugins/*.pre(UN); do
+  source "$_plugin_file"
+done
+unset _plugin_file
 
 # EOF

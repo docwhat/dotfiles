@@ -1,0 +1,2 @@
+# zsh-completion-generator
+GENCOMPL_FPATH="$HOME/.zsh/cache/complete"
