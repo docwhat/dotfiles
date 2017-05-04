@@ -50,9 +50,6 @@ status
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 command_execution_time
-time
-newline
-history
 )
 
 # command_execution_time
