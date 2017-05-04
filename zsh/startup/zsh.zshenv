@@ -5,7 +5,7 @@ autoload -Uz ~/.zsh/functions/*(N:t)
 TIMEFMT="${fg[green]}%J${reset_color}  %P cpu  %M KiB  ${fg[cyan]}%*E${reset_color} total"
 
 # Report the time for anything that takes longer than 2 seconds.
-REPORTTIME=2
+# REPORTTIME=2
 
 # Disable compinit generation by Ubuntu and Debian.
 skip_global_compinit=1
