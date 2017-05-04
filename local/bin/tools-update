@@ -34,6 +34,10 @@ function get_updaters {
 function default {
   hh_git 'Dotfiles' https://github.com/docwhat/dotfiles.git ~/.dotfiles
 
+  if [ -d ~/.dotfiles-custom ]; then
+    hh_git 'Custom Dotfiles' 'none' ~/.dotfiles-custom
+  fi
+
   if [ -d ~/.dotfiles-personal ]; then
     hh_git 'Personal Dotfiles' 'none' ~/.dotfiles-personal
   fi
