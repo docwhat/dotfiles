@@ -28,5 +28,6 @@ gem 'powify'            if 'darwin' == Gem::Platform.local.os
 gem 'brew-cask-upgrade' if File.executable? '/usr/local/bin/brew'
 gem 'neovim'
 gem 'ssh-host-lister'
+gem 'github-linguist'
 
 # EOF
