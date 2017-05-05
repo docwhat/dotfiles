@@ -33,7 +33,7 @@
 "     brew install vim
 "
 
-if v:progname == 'nvim'
+if v:progname ==# 'nvim'
   let g:my_vim_dir = expand('~/.config/nvim')
   let g:my_vimrc = g:my_vim_dir . '/init.vim'
 else
