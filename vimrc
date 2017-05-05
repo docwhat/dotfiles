@@ -54,7 +54,6 @@ endif
 " Options
 "-----------------------------------------------------------------------------
 " See `:h options` for more help.
-set nocompatible                 " The most important VIM option
 scriptencoding utf-8
 set modelines=5                  " The Vim that comes with OS X changed the default value for some reason. Setting it back.
 
@@ -120,11 +119,11 @@ function! LoadPlugins()
   Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
   " Allows editing remote files.
-" :e dav://machine[:port]/path                  uses cadaver
-" :e http://[user@]machine/path                 uses http  uses wget
-" :e sftp://[user@]machine/path                 uses sftp
-" :e rsync://[user@]machine[:port]/path         uses rsync
-" :e scp://[user@]machine[[:#]port]/path        uses scp
+  " :e dav://machine[:port]/path                  uses cadaver
+  " :e http://[user@]machine/path                 uses http  uses wget
+  " :e sftp://[user@]machine/path                 uses sftp
+  " :e rsync://[user@]machine[:port]/path         uses rsync
+  " :e scp://[user@]machine[[:#]port]/path        uses scp
   let g:netrw_silent = 1
   let g:netrw_home=g:my_vim_dir
 
@@ -296,20 +295,20 @@ function! LoadPlugins()
     if exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
       NERDTreeClose
     else
-      if bufname('%') == ''
+      if bufname('%') ==# ''
         NERDTree
       else
         NERDTreeFind
       endif
     endif
   endfunction
-  let NERDTreeBookmarksFile = g:my_vim_dir . '/NERDTreeBookmarks'
-  let NERDTreeShowBookmarks=1
-  let NERDTreeQuitOnOpen=1
-  let NERDTreeMouseMode=2
-  let NERDTreeShowHidden=1
+  let g:NERDTreeBookmarksFile = g:my_vim_dir . '/NERDTreeBookmarks'
+  let g:NERDTreeShowBookmarks=1
+  let g:NERDTreeQuitOnOpen=1
+  let g:NERDTreeMouseMode=2
+  let g:NERDTreeShowHidden=1
   let g:nerdtree_tabs_open_on_gui_startup=0
-  let NERDTreeIgnore=['\.o$', '\.so$', '\.bmp$', '\.class$', '^core.*',
+  let g:NERDTreeIgnore=['\.o$', '\.so$', '\.bmp$', '\.class$', '^core.*',
         \ '\.vim$', '\~$', '\.pyc$', '\.pyo$', '\.jpg$', '\.gif$',
         \ '\.png$', '\.ico$', '\.exe$', '\.cod$', '\.obj$', '\.mac$',
         \ '\.1st', '\.dll$', '\.pyd$', '\.zip$', '\.modules$',
@@ -391,7 +390,7 @@ function! LoadPlugins()
 
   " Display an indent line
   Plug 'Yggdroot/indentLine'
-  let g:indentLine_char = "⋮"
+  let g:indentLine_char = '⋮'
   let g:indentLine_noConcealCursor = 1
 
   " Latest vim-ruby
@@ -405,7 +404,7 @@ function! LoadPlugins()
   Plug 'tpope/vim-projectionist'
 
   " Get me some RVM/Rbenv support
-  if exists("$rvm_path")
+  if exists('$rvm_path')
     Plug 'tpope/vim-rvm'
   else
     Plug 'tpope/vim-rbenv'
@@ -460,7 +459,7 @@ function! LoadPlugins()
   let g:go_highlight_interfaces = 1
   let g:go_highlight_operators = 1
   let g:go_highlight_build_constraints = 1
-  let g:go_fmt_command = "goimports"
+  let g:go_fmt_command = 'goimports'
   let g:go_fmt_autosave = 1
   Plug 'fatih/vim-go', { 'for': 'go' }
   Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go-explorer/src/getool' }
@@ -538,11 +537,11 @@ function! LoadPlugins()
   Plug 'tpope/vim-markdown'
   let g:vim_markdown_folding_disabled=1
   if has('python') && v:version >= 704
-    let g:pandoc#modules#disabled = ["folding", "chdir"]
+    let g:pandoc#modules#disabled = ['folding', 'chdir']
     let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
-    let g:pandoc#formatting#mode = "sa"
-    let g:pandoc#formatting#equalprg = ""
-    let g:pandoc#formatting#extra_equalprg = "--standalone"
+    let g:pandoc#formatting#mode = 'sa'
+    let g:pandoc#formatting#equalprg = ''
+    let g:pandoc#formatting#extra_equalprg = '--standalone'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-pandoc/vim-pandoc-after'
@@ -628,7 +627,7 @@ endfunction
 if executable('git') && executable('curl') && has('autocmd')
   let g:my_bootstrap=$VIMRC_FORCE_BOOTSTRAP
 
-  let s:vim_plug_path = g:my_vim_dir . "/autoload/plug.vim"
+  let s:vim_plug_path = g:my_vim_dir . '/autoload/plug.vim'
   if !filereadable(s:vim_plug_path)
     let g:my_bootstrap=1
   endif
@@ -662,9 +661,9 @@ endif
 " from: http://stackoverflow.com/a/4294176/108857
 function! s:MkNonExDir(file, buf)
   if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-    let dir=fnamemodify(a:file, ':h')
-    if !isdirectory(dir)
-      call mkdir(dir, 'p')
+    let l:dir=fnamemodify(a:file, ':h')
+    if !isdirectory(l:dir)
+      call mkdir(l:dir, 'p')
     endif
   endif
 endfunction
@@ -734,13 +733,16 @@ function! PostPluginSetup()
   nnoremap <silent> <C-\> :wincmd p<CR>
 
   " Ensure we have matchit support
-  if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
     runtime! macros/matchit.vim
   endif
 endfunction
 
 if has('autocmd')
-  autocmd VimEnter * nested call PostPluginSetup()
+  augroup MyPluginGroup
+    autocmd!
+    autocmd VimEnter * nested call PostPluginSetup()
+  augroup END
 endif
 
 " Helper functions
@@ -750,24 +752,24 @@ endif
 " and last search after running a command.
 function! Preserve(command)
   " Save the last search
-  let last_search=@/
+  let l:last_search=@/
   " Save the current cursor position
-  let save_cursor = getpos('.')
+  let l:save_cursor = getpos('.')
   " Save the window position
-  normal H
-  let save_window = getpos('.')
-  call setpos('.', save_cursor)
+  normal! H
+  let l:save_window = getpos('.')
+  call setpos('.', l:save_cursor)
 
   " Do the business:
   execute a:command
 
   " Restore the last_search
-  let @/=last_search
+  let @/=l:last_search
   " Restore the window position
-  call setpos('.', save_window)
-  normal zt
+  call setpos('.', l:save_window)
+  normal! zt
   " Restore the cursor position
-  call setpos('.', save_cursor)
+  call setpos('.', l:save_cursor)
 endfunction
 
 " Terminal and display settings
@@ -783,7 +785,7 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 " In many terminal emulators the mouse works just fine, thus enable it.
 if v:version >= 702 && has('mouse')
   set mouse=a
-  if &term =~ 'xterm' || &term =~ 'screen'
+  if &term =~? 'xterm' || &term =~? 'screen'
     set ttymouse=xterm2
   endif
 endif
@@ -819,7 +821,10 @@ set backup
 " since I'm using the 'backupext' variable to append the path.
 " So the file '/home/docwhat/.vimrc' becomes '.vimrc%home%docwhat~'
 if has('autocmd')
-  autocmd BufWritePre * nested let &backupext = substitute(expand('%:p:h'), '/', '%', 'g') . '~'
+  augroup MyBackupGroup
+    autocmd!
+    autocmd BufWritePre * nested let &backupext = substitute(expand('%:p:h'), '/', '%', 'g') . '~'
+  augroup END
 endif
 
 
@@ -863,10 +868,13 @@ endif
 " Also don't do it when the mark is in the first line, that is the default
 " position when opening a file.
 if has('autocmd')
-  autocmd BufReadPost * nested
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
+  augroup MyLastCursor
+    autocmd!
+    autocmd BufReadPost * nested
+          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \   exe "normal! g`\"" |
+          \ endif
+  augroup END
 endif
 
 
@@ -882,9 +890,9 @@ endif
 
 " Needed for some snippets
 function! Filename(...)
-  let filename = expand('%:t:r')
-  if filename == '' | return a:0 == 2 ? a:2 : '' | endif
-  return !a:0 || a:1 == '' ? filename : substitute(a:1, '$1', filename, 'g')
+  let l:filename = expand('%:t:r')
+  if l:filename ==# '' | return a:0 == 2 ? a:2 : '' | endif
+  return !a:0 || a:1 ==# '' ? l:filename : substitute(a:1, '$1', l:filename, 'g')
 endfunction
 
 " Whitespace Triming methods
@@ -909,10 +917,10 @@ endfunction
 function! s:StripTrailingWhiteOnSaveToggle()
   if g:strip_trainging_white_on_save == 0
     let g:strip_trainging_white_on_save = 1
-    echo "Strip Trailing Whitespace On Save: Enabled"
+    echo 'Strip Trailing Whitespace On Save: Enabled'
   else
     let g:strip_trainging_white_on_save = 0
-    echo "Strip Trailing Whitespace On Save: Disabled"
+    echo 'Strip Trailing Whitespace On Save: Disabled'
   endif
 endfunction
 command! StripTrailingWhiteOnSaveToggle call <SID>StripTrailingWhiteOnSaveToggle()
@@ -1116,9 +1124,9 @@ endif
 " Example https://github.com/docwhat/dotfiles/blob/master/bin/manpager
 if has('autocmd')
   function! ILikeHelpToTheRight()
-    if !exists('w:help_is_moved') || w:help_is_moved != "right"
+    if !exists('w:help_is_moved') || w:help_is_moved !=# 'right'
       wincmd L
-      let w:help_is_moved = "right"
+      let w:help_is_moved = 'right'
     endif
   endfunction
 
@@ -1179,21 +1187,21 @@ if has('autocmd')
     " autocmd FileType pandoc nested setlocal wrap linebreak nolist wrapmargin=0 textwidth=0 spell
     if has_key(g:plugs, 'vim-pandoc')
       function! CaptureTextWidth()
-        if &filetype == "pandoc" && v:option_type == 'local'
+        if &filetype ==# 'pandoc' && v:option_type ==# 'local'
           call SetPandocEqualPrg()
         endif
       endfunction
       autocmd OptionSet textwidth nested call CaptureTextWidth()
 
       function! SetPandocEqualPrg()
-        let g:pandoc#formatting#equalprg = "pandoc"
+        let g:pandoc#formatting#equalprg = 'pandoc'
         let g:pandoc#formatting#textwidth = &textwidth
         if &textwidth > 0
-          let g:pandoc#formatting#equalprg .= " --to=markdown_github-hard_line_breaks --columns=" . &l:textwidth
+          let g:pandoc#formatting#equalprg .= ' --to=markdown_github-hard_line_breaks --columns=' . &l:textwidth
         else
-          let g:pandoc#formatting#equalprg .= " --to=markdown_github --wrap=none"
+          let g:pandoc#formatting#equalprg .= ' --to=markdown_github --wrap=none'
         endif
-        let &l:equalprg=g:pandoc#formatting#equalprg." ".g:pandoc#formatting#extra_equalprg
+        let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
         setlocal concealcursor= conceallevel=1
       endfunction
 
@@ -1229,7 +1237,7 @@ if !exists('g:projectionist_heuristics')
 endif
 let g:projectionist_heuristics['*.go'] = {
       \ '*.go': { 'alternate': '{}_test.go', 'type': 'source' },
-      \ '*_test.go': { 'alternate': '{}.go', 'type': 'test', 'template': ["package {}", "", "import \"testing\"", "", "func TestSomething(t *testing.T) {", "}" ] }
+      \ '*_test.go': { 'alternate': '{}.go', 'type': 'test', 'template': ['package {}', '', 'import "testing"', '', 'func TestSomething(t *testing.T) {', '}' ] }
       \ }
 if has('autocmd')
   augroup GoLang
