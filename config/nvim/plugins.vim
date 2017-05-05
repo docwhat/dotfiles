@@ -67,9 +67,6 @@ Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 
-" Remote File Editing
-Plug 'netrw.vim'
-
 " Completion & Snippets
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
 Plug 'docwhat/deoplete-better-length-matcher.nvim'
@@ -246,17 +243,6 @@ if has_key(g:plugs, 'denite.nvim') " {{{
   endif
   nnoremap <silent> <leader>p :Denite file_rec<cr>
   " nnoremap <C-p> :Denite file_rec<cr>
-endif " }}}
-
-" Netrw -- Remote file editing
-if has_key(g:plugs, 'netrw.vim') " {{{
-  " :e dav://machine[:port]/path                  uses cadaver
-  " :e http://[user@]machine/path                 uses http  uses wget
-  " :e sftp://[user@]machine/path                 uses sftp
-  " :e rsync://[user@]machine[:port]/path         uses rsync
-  " :e scp://[user@]machine[[:#]port]/path        uses scp
-  let g:netrw_home = g:xdg_data_home
-  let g:netrw_silent = 1
 endif " }}}
 
 " Pandoc -- Markdown, Text, and HTML formatter/converter

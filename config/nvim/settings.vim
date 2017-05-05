@@ -80,6 +80,16 @@ augroup VimrcShada
   autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
 augroup END
 
+" Netrw -- Remote file editing
+"-----------------------------------------------------------------------------
+" :e dav://machine[:port]/path                  uses cadaver
+" :e http://[user@]machine/path                 uses http  uses wget
+" :e sftp://[user@]machine/path                 uses sftp
+" :e rsync://[user@]machine[:port]/path         uses rsync
+" :e scp://[user@]machine[[:#]port]/path        uses scp
+let g:netrw_home = g:xdg_data_home
+let g:netrw_silent = 1
+
 " Themes/Colors
 "-----------------------------------------------------------------------------
 if exists('+termguicolors')
