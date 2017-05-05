@@ -125,11 +125,8 @@ function! LoadPlugins()
 " :e sftp://[user@]machine/path                 uses sftp
 " :e rsync://[user@]machine[:port]/path         uses rsync
 " :e scp://[user@]machine[[:#]port]/path        uses scp
-  if v:version > 702
-    let g:netrw_silent = 1
-    let g:netrw_home=g:my_vim_dir
-    Plug 'netrw.vim'
-  endif
+  let g:netrw_silent = 1
+  let g:netrw_home=g:my_vim_dir
 
   if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
     " Use NeoComplete
