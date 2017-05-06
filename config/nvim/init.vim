@@ -59,7 +59,7 @@ if has('ruby')
   ruby load "#{VIM.evaluate('g:xdg_config_home')}/bootcheck.rb"
 endif
 
-if s:bootstrap
+if s:bootstrap && ! exists('$NVIM_SKIP_PLUGIN_CHECK')
   echo "Installing missing plugins. Please wait...\n"
   :silent PlugInstall
   :silent PlugUpgrade

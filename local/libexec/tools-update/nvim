@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+#DESC# nvim plugins and plugin manager #DESC#
+
+set -euo pipefail
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+if ! (( $+commands[nvim] )) > /dev/null; then
+  print -P "  %F{yellow}Skipping%F{reset}: %F{green}nvim%F{reset} isn't available"
+  exit 0
+fi
+
+if [[ -r ~/.zgen/zgen.zsh ]]; then
+  export NVM_NO_USE=false
+  set +eu
+  source ~/.zgen/zgen.zsh
+  set -eu
+fi
+
+# Ensure Node.js is loaded.
+node --version > /dev/null 2>&1 || :
+
+env \
+  NVIM_SKIP_PLUGIN_CHECK=true \
+  nvim \
+  -c ':PlugUpdate' \
+  -c ':if v:shell_error == 0 | :PlugUpgrade | endif' \
+  -c ':if v:shell_error == 0 | :qa! | endif'
+
+# EOF
