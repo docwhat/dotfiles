@@ -22,6 +22,15 @@ function! Preserve(command)
   call setpos('.', l:save_cursor)
 endfunction
 
+function! HasFiletype(ftype)
+  let l:regexp = '\(^\|\.\)' . a:ftype .'\(\.\|$\)'
+  if &filetype =~# l:regexp
+    return 1
+  else
+    return 0
+  endif
+endfunction
+
 " Rubocop auto correction of lint
 " We can't use '--stdin -' because it still emits crap.
 function! RubocopAutocorrect()
@@ -32,7 +41,12 @@ function! RubocopAutocorrect()
   let l:tempfile = tempname()
   call writefile(l:buf, l:tempfile)
 
-  let l:cmd = 'rubocop --auto-correct ' . l:tempfile
+  if HasFiletype('chef') && executable('cookstyle')
+    let l:cmd = 'cookstyle'
+  else
+    let l:cmd = 'rubocop'
+  endif
+  let l:cmd .= ' --auto-correct ' . l:tempfile
   call system(l:cmd)
 
   let l:output = readfile(l:tempfile)
