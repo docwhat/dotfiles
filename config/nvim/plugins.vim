@@ -127,6 +127,7 @@ Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-projectionist'
+Plug 'dougireton/vim-chef'
 if exists('$RVM_PATH')
   Plug 'tpope/vim-rvm'
 else
@@ -476,6 +477,11 @@ if has_key(g:plugs, 'neomake') " {{{
   let g:neomake_ruby_rubocop_maker = neomake#makers#ft#ruby#rubocop()
   let g:neomake_ruby_rubocop_maker.args += ['--display-cop-names']
 
+  let g:neomake_chef_rubocop_maker = g:neomake_ruby_rubocop_maker
+  if executable('cookstyle')
+    let g:neomake_chef_rubocop_maker.exe = 'cookstyle'
+  endif
+
   function! s:myNeomake()
     " Buffer must be writable.
     if &readonly           | return | endif
@@ -489,11 +495,20 @@ if has_key(g:plugs, 'neomake') " {{{
     Neomake
   endfunction
 
+  function! s:detectChefSubFileType()
+    let l:gitroot = systemlist('git rev-parse --show-toplevel')[0]
+    if l:gitroot ==# '' | return | endif
+    if filereadable(l:gitroot . '/metadata.rb')
+      let &filetype = &filetype . '.chef'
+    endif
+  endfunction
+
   augroup VimrcNeomake
     autocmd!
     autocmd BufEnter *     call s:myNeomake()
     autocmd BufWritePost * call s:myNeomake()
     autocmd BufEnter Gemfile*,Guardfile let b:neomake_ruby_enabled_makers = ['mri', 'rubocop']
+    autocmd FileType ruby,eruby call s:detectChefSubFileType()
   augroup END
 endif " }}}
 
