@@ -47,7 +47,8 @@ Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " Whitespace trimming and highlighting
-Plug 'ntpeters/vim-better-whitespace'
+" Only for lines that have been changed.
+Plug 'tweekmonster/wstrip.vim'
 
 Plug 'metakirby5/codi.vim'
 Plug 'justinmk/vim-dirvish'
@@ -162,14 +163,13 @@ if has_key(g:plugs, 'tagbar') " {{{
   nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 endif " }}}
 
-" Better Whitespace -- whitespace trimming and highlighting
-if has_key(g:plugs, 'vim-better-whitespace') " {{{
-  nmap <silent> <Leader><space> :StripWhitespace<CR>
-  augroup VimrcBetterWhitespace
+" TweekMonster's WStrip -- whitespace trimming and highlighting for
+" only changed lines.
+if has_key(g:plugs, 'wstrip.vim') " {{{
+  nmap <silent> <Leader><space> :WStrip<CR>
+  augroup VimrcWStrip
     autocmd!
-    " autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl let g:strip_whitespace_on_save = 0 | ToggleStripWhitespaceOnSave
-    " FIXME: This should work instead of the above.
-    autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl :EnableStripWhitespaceOnSave
+    autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl let b:wstrip_auto = 1
   augroup END
 endif " }}}
 
