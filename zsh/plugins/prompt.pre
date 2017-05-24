@@ -12,17 +12,19 @@ pretty_hostname() {
   echo "${(%)h}"
 }
 
-prompt_newline() {
-  local lws
-  [[ "$1" == "right" ]] && return
-  lws=$POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS
-  POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=
-  "$1_prompt_segment" \
-    "$0" \
-    "$2" \
-    "NONE" "NONE" $'\n'
-  POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=$lws
-}
+if ! (( $+functions[prompt_newline] )); then
+  prompt_newline() {
+    local lws
+    [[ "$1" == "right" ]] && return
+    lws=$POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS
+    POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=
+    "$1_prompt_segment" \
+      "$0" \
+      "$2" \
+      "NONE" "NONE" $'\n'
+    POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=$lws
+  }
+fi
 
 # general
 POWERLEVEL9K_MODE='nerdfont-complete'
@@ -37,7 +39,6 @@ context
 dir
 dir_writable
 rbenv
-# nvm # pending PR #516
 vcs
 docker_machine
 
@@ -51,6 +52,12 @@ status
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 command_execution_time
 )
+if [ -z "$TMUX" ]; then
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+  "${POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS[@]}"
+  time
+)
+fi
 
 # command_execution_time
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=6
@@ -79,6 +86,10 @@ POWERLEVEL9K_DIR_DEFAULT_FOREGROUND=16
 
 # status
 POWERLEVEL9K_STATUS_SHOW_PIPESTATUS=true # pending PR #515
+
+# time
+POWERLEVEL9K_TIME_BACKGROUND=75
+POWERLEVEL9K_TIME_FORMAT='%@ %D{%Y-%m-%d}'
 
 # vcs
 POWERLEVEL9K_CHANGESET_HASH_LENGTH=8
