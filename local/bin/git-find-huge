@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Stack Overflow help https://stackoverflow.com/a/42544963/108857
+
+function computer_readable {
+  git rev-list --objects --all \
+    | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
+    | awk '/^blob/ {print substr($0,6)}' \
+    | gsort --numeric-sort --key=2
+}
+
+function human_readable {
+  computer_readable \
+    | gcut --complement --characters=8-40 \
+    | gnumfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+}
+
+case "$1" in
+  h|help|-h|--help)
+    echo "Usage: $0 [machine]"
+    echo
+    echo "Shows the largest files in a git repository. Use 'machine' for"
+    echo "computer readable output."
+    exit 0
+    ;;
+  c|computer|m|machine )
+    computer_readable
+    ;;
+  * )
+    human_readable
+    ;;
+esac
+
+# EOF
