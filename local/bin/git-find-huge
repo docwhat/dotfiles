@@ -45,6 +45,8 @@ case "$1" in
     echo
     echo "Shows the largest files in a git repository. Use 'machine' for"
     echo "computer readable output."
+    echo
+    echo "Note: On macOS, you need to 'brew install coreutils' for this to work."
     exit 0
     ;;
   c|computer|m|machine )
