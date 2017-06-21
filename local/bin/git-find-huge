@@ -2,17 +2,41 @@
 
 # Stack Overflow help https://stackoverflow.com/a/42544963/108857
 
+function mysort {
+  if command -v gsort > /dev/null; then
+    gsort "$@"
+  else
+    sort "$@"
+  fi
+}
+
+function mycut {
+  if command -v gcut > /dev/null; then
+    gcut "$@"
+  else
+    cut "$@"
+  fi
+}
+
+function mynumfmt {
+  if command -v gnumfmt > /dev/null; then
+    gnumfmt "$@"
+  else
+    numfmt "$@"
+  fi
+}
+
 function computer_readable {
   git rev-list --objects --all \
     | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
     | awk '/^blob/ {print substr($0,6)}' \
-    | gsort --numeric-sort --key=2
+    | mysort --numeric-sort --key=2
 }
 
 function human_readable {
   computer_readable \
-    | gcut --complement --characters=8-40 \
-    | gnumfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+    | mycut --complement --characters=8-40 \
+    | mynumfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
 }
 
 case "$1" in
