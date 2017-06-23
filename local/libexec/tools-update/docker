@@ -14,7 +14,7 @@ fi
 hh_curl \
   "Docker ZSH completion" \
   ~/.zsh/functions/_docker \
-  https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker
+  https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
 
 hh_curl \
   "Docker-Compose ZSH completion" \
