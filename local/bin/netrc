@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import netrc
+import sys
+
+get = netrc.netrc()
+
+if (len(sys.argv) == 2):
+    (login, account, password) = get.authenticators(sys.argv[1])
+
+    print password
+    exit(0)
+
+if (len(sys.argv) == 3):
+    (login, account, password) = get.authenticators(sys.argv[1])
+
+    if (sys.argv[1] == 'login'):
+        print login
+        exit(0)
+    if (sys.argv[1] == 'password'):
+        print password
+        exit(0)
+
+print "Usage: %s <hostname> (login|password)" % sys.argv[0]
+print
+print "   Returns the username or password for <hostname> from your ~/.netrc"
+exit(1)
+
+# EOF
