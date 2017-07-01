@@ -1,0 +1,73 @@
+# How to use this file:
+#   file -m <path-to-this-file> <infocom-images>
+# Or
+#   mkdir -p ~/.magic && cp <path-to-this-file> ~/.magic/infocom
+
+# From https://www.darwinsys.com/file/ version 5.31 + a patch from
+# https://bugs.gw.com/view.php?id=622
+#
+# Infocom (see z-machine)
+#------------------------------------------------------------------------------
+# Z-machine:  file(1) magic for Z-machine binaries.
+# Sanity checks by David Griffith <dave@661.org>
+# Updated by Adam Buchbinder <adam.buchbinder@gmail.com>
+#
+#http://www.gnelson.demon.co.uk/zspec/sect11.html
+#http://www.jczorkmid.net/~jpenney/ZSpec11-latest.txt
+#http://en.wikipedia.org/wiki/Z-machine
+# The first byte is the Z-machine revision; it is always between 1 and 8. We
+# had false matches (for instance, inbig5.ocp from the Omega TeX extension as
+# well as an occasional MP3 file), so we sanity-check the version number.
+#
+# It might be possible to sanity-check the release number as well, as it seems
+# (at least in classic Infocom games) to always be a relatively small number,
+# always under 150 or so, but as this isn't rigorous, we'll wait on that until
+# it becomes clear that it's needed.
+#
+0	ubyte			>0
+>0	ubyte			<9
+>>16	belong&0xfe00f0f0	0x3030
+>>>0	ubyte			< 10
+>>>>18	regex			[0-9][0-9][0-9][0-9][0-9][0-9]
+>>>>>0	ubyte			< 10	Infocom (Z-machine %d,
+>>>>>>2	ubeshort	x 	Release %d /
+>>>>>>>18	string		>\0	Serial %.6s)
+!:strength + 40
+!:mime	application/x-zmachine
+
+# My original hacked magic file; kept for postarity.
+# # Infocom
+# # (Note: to avoid false matches Z-machine version 1 and 2 are not
+# # recognized since only the oldest Zork I and II used them.  Similarly
+# # there are 4 Infocom games that use verion 4 that are not recognized.)
+# # Z3
+# 0  byte  3  Infocom game data (Z-machine 3,
+# >2 beshort  <0x7fff  Release %3d,
+# #>26  beshort >0  Size %d*2
+# >18   string   >\0   Serial %.6s)
+# # Z4
+# 0  byte  4  Infocom game data (Z-machine 4,
+# >2 beshort  <0x7fff  Release %3d,
+# #>26  beshort >0  Size %d*2
+# >18   string   >\0   Serial %.6s)
+# # Z5
+# 0  byte  5  Infocom game data (Z-machine 5,
+# >2 beshort  <0x7fff  Release %3d,
+# #>26  beshort >0  Size %d*4
+# >18   string   >\0   Serial %.6s)
+# # Z6
+# 0  byte  6  Infocom game data (Z-machine 6,
+# >2 beshort  <0x7fff  Release %3d,
+# #>26  beshort >0  Size %d*8
+# >18   string   >\0   Serial %.6s)
+# # Z8
+# 0  byte  8  Infocom game data (Z-machine 8,
+# >2 beshort  <0x7fff  Release %3d,
+# #>26  beshort >0  Size %d*8
+# >18   string   >\0   Serial %.6s)
+
+# # TADS (Text Adventure Development System)
+# 0  string   TADS  TADS game data
+# >13   string   >\0   (ver. %.6s,
+# >22   string   >\0   date %s)
+# #EOF
