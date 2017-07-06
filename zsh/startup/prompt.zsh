@@ -1,7 +1,8 @@
-if [[ "${TERM}" == dumb || "${EMACS}" == t ]]; then
+if [[ "$TERM" == dumb ]] || [[ "$EMACS" == t ]] || [[ "$TERM_PROGRAM" == Prompt_2 ]]; then
    # Disable powerlevel9k
-   add-zsh-hook -D precmd powerlevel9k_\*
-   add-zsh-hook -D preexec powerlevel9k_\*
+   if [ $+functions[prompt_powerlevel9k_teardown] ]; then
+      prompt_powerlevel9k_teardown
+   fi
    PS1='zsh%# '
    PS2='%_>'
    PS3='?# '
