@@ -1,5 +1,4 @@
 if [ -n "$TMUX" ]; then
-
   # Returns the arguments to pass to tmux set-window-option to restore
   # a setting.
   get_tmux_window_option() {
@@ -12,8 +11,8 @@ if [ -n "$TMUX" ]; then
     echo "tmux set-window-option -t ${(q)wid} ${value}"
   }
 
-  # Alias so ssh will change the window name.
-  tmux_ssh() {
+  tmux_rename_window_for_command() {
+    local name="$1" ; shift
     local wid
     local old_name
     local reset_eval
@@ -26,12 +25,25 @@ if [ -n "$TMUX" ]; then
     old_name="$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')"
     reset_eval="$(get_tmux_window_option ${wid} automatic-rename) ; $(get_tmux_window_option ${wid} allow-rename)"
 
-    tmux rename-window -t "${wid}" "ssh/$*"
-    command ssh "$@"
-    local ec=$?
-    tmux rename-window -t "${wid}" "${old_name}"
-    eval "${reset_eval}"
-    return $ec
+    {
+      tmux rename-window -t "${wid}" "$name"
+      "$@"
+    } always
+    {
+      tmux rename-window -t "${wid}" "${old_name}"
+      eval "${reset_eval}"
+    }
+  }
+
+  tmux_ssh() {
+    local c=' '
+    tmux_rename_window_for_command "${c}$1" command ssh "$@"
   }
   alias ssh=tmux_ssh
+
+  tmux_mosh() {
+    local c=' '
+    tmux_rename_window_for_command "${c}$1" command mosh "$@"
+  }
+  alias mosh=tmux_mosh
 fi
