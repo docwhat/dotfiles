@@ -14,6 +14,7 @@ if [[ -n "${1:-}" && "$1" != -* ]]; then
   shift
 fi
 
+typeset -r progname="$0"
 typeset -r user="${user:-}"
 typeset -r default="${default:-}"
 typeset -ra args=("$@")
@@ -21,17 +22,35 @@ typeset -Ua khosts=( localhost )
 
 setopt extendedglob
 
+function do_connect {
+  case "$progname" in
+    *mosh* ) do_mosh "$@" ;;
+    *ssh* ) do_ssh "$@" ;;
+    * ) echo "${user}${host}" "$args[@]" ;;
+  esac
+  exit
+}
+
+function do_mosh {
+  local host=$1
+
+  echo "\$ mosh ${user}${host} $args[@]" 1>&2
+  if (( ${+functions[tmux_ssh]} )); then
+    exec tmux_mosh "${user}${host}" "$args[@]"
+  else
+    exec mosh "${user}${host}" "$args[@]"
+  fi
+}
+
 function do_ssh {
   local host=$1
 
+  echo "\$ ssh ${user}${host} $args[@]" 1>&2
   if (( ${+functions[tmux_ssh]} )); then
-    echo "\$ tmux_ssh ${user}${host} $args[@]" 1>&2
     exec tmux_ssh "${user}${host}" "$args[@]"
   else
-    echo "\$ ssh ${user}${host} $args[@]" 1>&2
     exec command ssh "${user}${host}" "$args[@]"
   fi
-  exit # Just in case
 }
 
 function addhosts {
@@ -87,7 +106,7 @@ fi
 
 # Exact Match
 if [[ "${khosts[(ie)$default]}" -le ${#khosts} ]]; then
-  do_ssh "$default"
+  do_connect "$default"
 fi
 
 print -N $khosts |\
@@ -100,6 +119,6 @@ print -N $khosts |\
   --bind='?:toggle-preview' |\
   IFS=$'\n ' read -r host
 
-do_ssh "$host"
+do_connect "$host"
 
 # EOF
