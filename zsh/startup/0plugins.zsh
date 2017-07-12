@@ -1,7 +1,6 @@
 autoload -U is-at-least
 ZGEN_RESET_ON_CHANGE=(
 "${HOME}/.zsh/startup/0plugins.zsh"
-"${HOME}/.zsh/startup/0plugins.zshenv"
 "${HOME}/.zsh/plugins/"*(UN)
 )
 source "${HOME}/.zgen/zgen.zsh"
