@@ -3,11 +3,12 @@ ZGEN_RESET_ON_CHANGE=(
 "${HOME}/.zsh/startup/0plugins.zsh"
 "${HOME}/.zsh/plugins/"*(UN)
 )
-source "${HOME}/.zgen/zgen.zsh"
 
 for _plugin_file in ~/.zsh/plugins/*.pre(UN); do
   source "$_plugin_file"
 done
+
+source "${HOME}/.zgen/zgen.zsh"
 
 if ! zgen saved; then
   for _plugin_file in ~/.zsh/plugins/*.zgen(UN); do
