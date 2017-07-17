@@ -14,7 +14,7 @@ fi
 env \
   VIMRC_FORCE_BOOTSTRAP=1 \
   vim \
-  -c ':if v:shell_error == 0 | :qa! | endif'
+  -c ':set shortmess=at | :set cmdheight=4 | :if v:shell_error == 0 | :qa! | endif'
 
 # EOF
 
