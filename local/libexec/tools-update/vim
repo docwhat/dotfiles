@@ -12,9 +12,10 @@ if ! (( $+commands[nvim] )) > /dev/null; then
 fi
 
 env \
-  VIMRC_FORCE_BOOTSTRAP=1 \
   vim \
-  -c ':set shortmess=at | :set cmdheight=4 | :if v:shell_error == 0 | :qa! | endif'
+  -c ':PlugUpdate' \
+  -c ':if v:shell_error == 0 | :PlugUpgrade | endif' \
+  -c ':if v:shell_error == 0 | :qa! | endif'
 
 # EOF
 
