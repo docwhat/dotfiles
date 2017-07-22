@@ -410,6 +410,25 @@ if has_key(g:plugs, 'deoplete.nvim') " {{{
   let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'around']
   let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
   let g:deoplete#sources.vim             = ['vim', 'around', 'file', 'ultisnips']
+
+  " <CR>: close popup and save indent.
+  if has_key(g:plugs, 'lexima.vim')
+    " Lexima conflicts with Deoplete and remapping <CR>
+    " https://github.com/cohama/lexima.vim/issues/65
+    let g:lexima_no_default_rules = 1
+    call lexima#set_default_rules()
+    call lexima#insmode#map_hook('before', '<CR>', '')
+
+    function! s:my_cr_function() abort
+      return pumvisible() ? deoplete#smart_close_popup() . "\<CR>" : lexima#expand('<CR>', 'i')
+    endfunction
+  else
+    function! s:my_cr_function() abort
+      return deoplete#smart_close_popup() . "\<CR>"
+    endfunction
+  endif
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+
 endif " }}}
 
 " UltiSnips -- Snippets

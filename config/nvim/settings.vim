@@ -150,12 +150,6 @@ augroup END
 xnoremap < <gv
 xnoremap > >gv
 
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-"-----------------------------------------------------------------------------
-inoremap <C-U> <C-G>u<C-U>
-inoremap <CR> <C-G>u<CR>
-
 " I really need control-a and control-e (emacs) in command mode.
 "-----------------------------------------------------------------------------
 cnoremap <C-a> <Home>
