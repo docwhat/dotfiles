@@ -98,7 +98,7 @@ Plug 'neomake/neomake'
 Plug 'tpope/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-pandoc-after'
+Plug 'vim-pandoc/vim-markdownfootnotes'
 
 " NGinX
 " Plug 'fatih/vim-nginx'
@@ -256,11 +256,15 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
   let g:pandoc#formatting#extra_equalprg = '--standalone'
   let g:pandoc#formatting#textwidth = 76
 
-  function! MyCaptureTextWidth()
-    if &filetype ==# 'pandoc'
+  function! MyCaptureMarkdownOptions()
+    if &filetype ==# 'pandoc' || &filetype ==# 'markdown'
       let l:pandoc_to='markdown_github+yaml_metadata_block'
       let g:pandoc#formatting#equalprg = 'pandoc'
       let g:pandoc#formatting#textwidth = &textwidth
+
+      if !b:my_pandoc_disable_footnotes
+        let l:pandoc_to.='+footnotes+inline_notes'
+      endif
 
       if &textwidth > 0
         let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.'-hard_line_breaks --columns=' . &textwidth
@@ -268,7 +272,7 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
         let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.' --wrap=none'
       endif
 
-      if expand('%:t:r') ==# 'CHANGELOG'
+      if b:my_pandoc_reference_links || expand('%:t:r') ==# 'CHANGELOG'
         let g:pandoc#formatting#equalprg .= ' --reference-links'
       endif
 
@@ -279,12 +283,12 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
 
   augroup VimrcMarkdown
     autocmd!
-    autocmd OptionSet textwidth nested :call MyCaptureTextWidth()
-    autocmd BufEnter * nested :call MyCaptureTextWidth()
+    autocmd OptionSet textwidth nested :call MyCaptureMarkdownOptions()
+    autocmd BufEnter * nested :call MyCaptureMarkdownOptions()
     if has_key(g:plugs, 'editorconfig-vim')
-      autocmd FileType pandoc :EditorConfigReload
+      autocmd FileType pandoc,markdown :EditorConfigReload
     endif
-    autocmd FileType pandoc normal zR
+    autocmd FileType pandoc,markdown normal zR
   augroup END
 else
   augroup VimrcMarkdown
@@ -380,6 +384,18 @@ if has_key(g:plugs, 'editorconfig-vim') " {{{
   function! EditorConfigFiletypeHook(config)
     if has_key(a:config, 'vim_filetype')
       let &filetype = a:config['vim_filetype']
+    endif
+
+    if has_key(g:plugs, 'vim-pandoc')
+      for l:opt in ['reference_links', 'disable_footnotes']
+        if has_key(a:config, 'pandoc_' . l:opt)
+          execute ':let b:my_pandoc_' . l:opt .' = a:config["pandoc_' . l:opt .'"] ==? "true"'
+        else
+          execute ':let b:my_pandoc_' . l:opt .' = 0'
+        endif
+      endfor
+
+      :call MyCaptureMarkdownOptions()
     endif
 
     return 0   " Return 0 to show no error happened
