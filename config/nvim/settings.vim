@@ -4,7 +4,10 @@ if has('filterpipe')
   set noshelltemp
 endif
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+if !has('nvim-0.2')
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+  " https://github.com/neovim/neovim/wiki/Following-HEAD#20170402
+endif
 
 set tabstop=2
 set shiftwidth=2
