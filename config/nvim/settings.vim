@@ -9,6 +9,8 @@ if !has('nvim-0.2')
   " https://github.com/neovim/neovim/wiki/Following-HEAD#20170402
 endif
 
+set mouse=a
+
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
