@@ -450,6 +450,15 @@ if has_key(g:plugs, 'ultisnips') " {{{
   " let g:snips_email="you@example.com"
   " let g.snips_author="Your Name Here"
   " let g.snips_github="https://github.com/your id here"
+  "
+  " Needed for some snippets
+  if !exists('*Filename')
+    function! Filename(...)
+      let l:filename = expand('%:t:r')
+      if l:filename ==# '' | return a:0 == 2 ? a:2 : '' | endif
+      return !a:0 || a:1 ==# '' ? l:filename : substitute(a:1, '$1', l:filename, 'g')
+    endfunction
+  endif
 endif " }}}
 
 " Neomake -- linting and building
