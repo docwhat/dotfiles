@@ -145,6 +145,9 @@ Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go
 " Rust
 Plug 'rust-lang/rust.vim'
 
+" Lua
+Plug 'tbastos/vim-lua'
+
 " Display
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
