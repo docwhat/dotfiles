@@ -154,6 +154,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nanotech/jellybeans.vim'
 
+" Terraform
+Plug 'hashivim/vim-terraform'
+
 call plug#end()
 
 " Surround
