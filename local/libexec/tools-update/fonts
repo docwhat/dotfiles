@@ -6,8 +6,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-typeset -r release='v1.0.0'
+typeset -r release='v1.1.0'
 typeset -a fonts
+typeset -r cachedir="$HOME/.cache/tools-update/fonts"
 
 fonts=(
 FiraCode
@@ -33,17 +34,18 @@ if [[ "${OSTYPE}" != darwin* ]]; then
   exit 0
 fi
 
-mkdir -p ~/tmp/.fonts/
-for file in ~/Library/Fonts/*Nerd*(.N); do
+mkdir -p "$cachedir" ~/Library/Fonts/NerdFonts
+
+for file in ~/Library/Fonts/NerdFonts/*(.N); do
   rm "${file}"
 done
 
 for font in "${fonts[@]}"; do
-  zipfile=~/tmp/.fonts/"${font}.zip"
+  zipfile="${cachedir}/${font}.zip"
   fetch_or_update \
     "https://github.com/ryanoasis/nerd-fonts/releases/download/${release}/${font}.zip" \
     "${zipfile}"
-  unzip -uo "${zipfile}" -d ~/Library/Fonts/ -x '*Windows*' '*Mono.*'
+  unzip -uo "${zipfile}" -d ~/Library/Fonts/NerdFonts -x '*Windows*' '*Mono.*'
 done
 
 # Check for updates (human)
