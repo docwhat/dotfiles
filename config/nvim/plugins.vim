@@ -157,6 +157,9 @@ Plug 'nanotech/jellybeans.vim'
 " Terraform
 Plug 'hashivim/vim-terraform'
 
+" Sieve (RFC 5228)
+Plug 'vim-scripts/sieve.vim'
+
 call plug#end()
 
 " Surround
@@ -596,6 +599,15 @@ if has_key(g:plugs, 'syntastic') " {{{
   let g:syntastic_yaml_checkers             = ['jsyaml']
   let g:syntastic_go_checkers               = ['golint', 'govet', 'errcheck']
   let g:syntastic_mode_map                  = { 'mode': 'active', 'passive_filetypes': ['go'] }
+endif " }}}
+
+
+" Sieve -- mail filtering (RFC 5228)
+if has_key(g:plugs, 'sieve.vim') " {{{
+  augroup VimrcSieve
+    autocmd!
+    autocmd BufNewFile,BufRead *.sieve nested setlocal filetype=sieve
+  augroup END
 endif " }}}
 
 " vim: set foldminlines=0 foldmethod=marker :
