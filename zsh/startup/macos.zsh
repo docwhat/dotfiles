@@ -86,14 +86,5 @@ return $ec
     fi
   }
 
-  function super-tools-update() {
-    tools-update &&\
-      rbenv-update-plugins &&\
-      update-gems &&\
-      (rbenv use system && brew update && brew upgrade) &&\
-      vim -c ':PlugUpgrade' -c ':PlugUpdate' -c ':qa!'
-    return $?
-  }
-
   export BROWSER='open'
 fi
