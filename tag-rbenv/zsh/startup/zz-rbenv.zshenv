@@ -9,6 +9,8 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
     echo "$RBENV_ROOT" > ~/.config/personal/rbenv-root
   fi
 
-  export RBENV_ROOT
-  path+="${RBENV_ROOT}/bin"
+  RBENV_SHELL=zsh
+  export RBENV_ROOT RBENV_SHELL
+
+  path=( "${RBENV_ROOT}/shims" "${RBENV_ROOT}/bin" "${path[@]}" )
 fi
