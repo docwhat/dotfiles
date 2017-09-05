@@ -378,14 +378,14 @@ if has_key(g:plugs, 'jellybeans.vim') "{{{
   let g:jellybeans_overrides['SyntasticErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
 
   let g:jellybeans_overrides['NeomakeInfoSign']    = { 'attr': 'none', 'guifg': '00dcff', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeMessageSign']    = { 'attr': 'none', 'guifg': 'eeeeee', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeMessageSign'] = { 'attr': 'none', 'guifg': 'eeeeee', 'guibg': '333333' }
   let g:jellybeans_overrides['NeomakeWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
   let g:jellybeans_overrides['NeomakeErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
 
-  let g:jellybeans_overrides['NeomakeInfo']    = { 'attr': 'none', 'guifg': '0000ff', 'guibg': '333388' }
-  let g:jellybeans_overrides['NeomakeMessage']    = { 'attr': 'none', 'guifg': 'ffffff', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeWarning'] = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '888833' }
-  let g:jellybeans_overrides['NeomakeError']   = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '883333' }
+  let g:jellybeans_overrides['NeomakeInfo']        = { 'attr': 'none', 'guifg': '0000ff', 'guibg': '333388' }
+  let g:jellybeans_overrides['NeomakeMessage']     = { 'attr': 'none', 'guifg': 'ffffff', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeWarning']     = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '888833' }
+  let g:jellybeans_overrides['NeomakeError']       = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '883333' }
 endif "}}}
 
 " EditorConfig -- Additional configuration
@@ -512,9 +512,9 @@ if has_key(g:plugs, 'neomake') " {{{
 
   let g:neomake_verbose=0
   let g:neomake_warning_sign = { 'text': '', 'texthl': 'NeomakeWarningSign' }
-  let g:neomake_error_sign   = { 'text': '', 'texthl': 'NeomakeErrorSign' }
-  let g:neomake_message_sign = { 'text': '☛', 'texthl': 'NeomakeMessageSign' }
-  let g:neomake_info_sign    = { 'text': 'ℹ︎', 'texthl': 'NeomakeInfoSign' }
+  let g:neomake_error_sign   = { 'text': '', 'texthl': 'NeomakeErrorSign' }
+  let g:neomake_message_sign = { 'text': '', 'texthl': 'NeomakeMessageSign' }
+  let g:neomake_info_sign    = { 'text': '', 'texthl': 'NeomakeInfoSign' }
 
   let g:neomake_sh_enabled_makers = neomake#makers#ft#sh#EnabledMakers() + [ 'checkbashisms' ]
   let g:neomake_zsh_enabled_makers = neomake#makers#ft#zsh#EnabledMakers()
