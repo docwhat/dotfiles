@@ -25,9 +25,8 @@ gem 'rcodetools'
 gem 'fastri'
 gem 'ghi'
 gem 'powify'            if 'darwin' == Gem::Platform.local.os
-gem 'brew-cask-upgrade' if File.executable? '/usr/local/bin/brew'
 gem 'neovim'
-gem 'ssh-host-lister'
+gem 'ssh-host-lister'   if Gem::Requirement.new('>= 2.3').satisfied_by? Gem.ruby_version
 gem 'github-linguist'
 
 # EOF
