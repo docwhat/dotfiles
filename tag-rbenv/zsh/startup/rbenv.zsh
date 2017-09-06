@@ -1,9 +1,6 @@
 if [ "${ZSH_ENABLERUBY}" != false ]; then
   if (( $+commands[rbenv] )) && [ -d "${RBENV_ROOT}" ]; then
     mkdir -p "${RBENV_ROOT}/cache"
-    if ! (( $+functions[rbenv] )); then
-      eval "$(rbenv init - --no-rehash)"
-    fi
 
     # TODO make this smarter
     # Only run rbenv rehash if it was run over 5 minutes ago.

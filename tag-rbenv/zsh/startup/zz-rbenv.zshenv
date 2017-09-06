@@ -1,6 +1,8 @@
 # vi: ft=zsh :
 
 if [ "${ZSH_ENABLERUBY}" != false ]; then
+
+  ## Set the RBENV root directory
   if [ -r ~/.config/personal/rbenv-root ]; then
     RBENV_ROOT=$(cat ~/.config/personal/rbenv-root)
   else
@@ -8,9 +10,13 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
     # Save it for future use.
     echo "$RBENV_ROOT" > ~/.config/personal/rbenv-root
   fi
+  export RBENV_ROOT
 
+  ## Set the shell for RBENV
   RBENV_SHELL=zsh
-  export RBENV_ROOT RBENV_SHELL
 
-  path=( "${RBENV_ROOT}/shims" "${RBENV_ROOT}/bin" "${path[@]}" )
+  ## Initialize the RBENV environment.
+  if ! (( $+functions[rbenv] )); then
+    eval "$(rbenv init - --no-rehash)"
+  fi
 fi
