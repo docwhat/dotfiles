@@ -71,6 +71,7 @@ fi
 # Ensure locally set rbenv versions follow
 if (( ${+commands[rbenv]} + ${+functions[rbenv]} )); then
   echo "Using Ruby version $(rbenv version)" | colorize yellow
+  typeset RBENV_VERSION # ensure this variable exists.
   rbenv shell "$(rbenv version-name)"
 fi
 
