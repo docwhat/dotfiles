@@ -68,6 +68,12 @@ if ! (( ${+commands[bundle]} + ${+functions[bundle]} )); then
   exit 0
 fi
 
+# Ensure locally set rbenv versions follow
+if (( ${+commands[rbenv]} + ${+functions[rbenv]} )); then
+  echo "Using Ruby version $(rbenv version)" | colorize yellow
+  rbenv shell "$(rbenv version-name)"
+fi
+
 # Set up the temp directory.
 update_tmp="$(mktemp -d "${TMPDIR:-/tmp}/update-gems.XXXXXXXXXX")"
 cd "${update_tmp}"
