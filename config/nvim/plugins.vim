@@ -135,6 +135,9 @@ else
   Plug 'tpope/vim-rbenv'
 endif
 
+" BATS - Bash Automated Testing System
+Plug 'vim-scripts/bats.vim'
+
 " Groovy
 Plug 'vim-scripts/groovyindent-unix'
 
