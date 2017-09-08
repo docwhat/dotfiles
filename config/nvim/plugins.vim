@@ -136,7 +136,7 @@ else
 endif
 
 " BATS - Bash Automated Testing System
-Plug 'vim-scripts/bats.vim'
+Plug 'docwhat/bats.vim'
 
 " Groovy
 Plug 'vim-scripts/groovyindent-unix'
@@ -521,6 +521,7 @@ if has_key(g:plugs, 'neomake') " {{{
 
   let g:neomake_sh_enabled_makers = neomake#makers#ft#sh#EnabledMakers() + [ 'checkbashisms' ]
   let g:neomake_zsh_enabled_makers = neomake#makers#ft#zsh#EnabledMakers()
+  let g:neomake_sh_bats_enabled_makers = []
 
   let g:neomake_sh_shellcheck_maker = neomake#makers#ft#sh#shellcheck()
   let g:neomake_sh_shellcheck_maker.args += ['-x']
