@@ -9,6 +9,13 @@ if [[ "$TERM" == dumb ]] || [[ "$EMACS" == t ]] || [[ "$TERM_PROGRAM" == Prompt_
    PS4='+%N:%i> '
    unset RPROMPT
    unset RPROMPT2
+elif [ "$SIMPLE_PROMPT" = t ]; then
+   if [ $+functions[prompt_powerlevel9k_teardown] ]; then
+      prompt_powerlevel9k_teardown
+   fi
+
+   autoload -Uz promptinit && promptinit
+   prompt adam1
 else
    # The secondary prompt, printed when the shell needs more information
    # to complete a command.  It is expanded in the same way as PS1.
