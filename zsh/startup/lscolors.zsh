@@ -1,9 +1,9 @@
 # Setup the LS stuff
 if [[ -r ~/.config/personal/dircolors ]]; then
   if (( $+commands[gdircolors] )); then
-    eval $(gdircolors ~/.config/personal/dircolors)
+    eval $(gdircolors --sh ~/.config/personal/dircolors)
   elif (( $+commands[dircolors] )); then
-    eval $(dircolors ~/.config/personal/dircolors)
+    eval $(dircolors  --sh ~/.config/personal/dircolors)
   fi
 fi
 
