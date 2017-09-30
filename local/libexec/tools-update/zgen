@@ -6,8 +6,6 @@ set -eu
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-hh_git 'ZGen' https://github.com/tarjoilija/zgen.git ~/.zgen
-
 set +eu
 source ~/.zgen/zgen.zsh
 set -eu
