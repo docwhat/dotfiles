@@ -159,6 +159,7 @@ Plug 'nanotech/jellybeans.vim'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
+Plug 'fatih/vim-hclfmt'
 
 " Sieve (RFC 5228)
 Plug 'vim-scripts/sieve.vim'
