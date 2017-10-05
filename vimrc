@@ -336,7 +336,7 @@ function! LoadPlugins()
   Plug 'tmux-plugins/vim-tmux-focus-events'
 
   " NGinx configuration files.
-  Plug 'evanmiller/nginx-vim-syntax'
+  Plug 'chr4/nginx.vim'
 
   " Adds matching 'end*' type syntax for ruby, vimscript, and lua
   Plug 'tpope/vim-endwise'
@@ -504,7 +504,7 @@ function! LoadPlugins()
   " Chef support
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
-  Plug 'vadv/vim-chef'
+  Plug 'dougireton/vim-chef'
 
   if executable('ag')
     " Ag, the silver searcher
