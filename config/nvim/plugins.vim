@@ -395,6 +395,10 @@ endif "}}}
 " EditorConfig -- Additional configuration
 if has_key(g:plugs, 'editorconfig-vim') " {{{
   function! EditorConfigFiletypeHook(config)
+    if exists('g:myvim_editor_config_filetype_hook') && g:myvim_editor_config_filetype_hook > 0
+      return 0
+    endif
+    let g:myvim_editor_config_filetype_hook = 1
     if has_key(a:config, 'vim_filetype')
       let &filetype = a:config['vim_filetype']
     endif
@@ -411,6 +415,7 @@ if has_key(g:plugs, 'editorconfig-vim') " {{{
       :call MyCaptureMarkdownOptions()
     endif
 
+    let g:myvim_editor_config_filetype_hook = 0
     return 0   " Return 0 to show no error happened
   endfunction
   call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
