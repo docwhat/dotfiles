@@ -271,7 +271,7 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
 
   function! MyCaptureMarkdownOptions()
     if &filetype ==# 'pandoc' || &filetype ==# 'markdown'
-      let l:pandoc_to='markdown_github+yaml_metadata_block'
+      let l:pandoc_to='markdown_github+yaml_metadata_block+smart'
       let g:pandoc#formatting#equalprg = 'pandoc'
       let g:pandoc#formatting#textwidth = &textwidth
 
