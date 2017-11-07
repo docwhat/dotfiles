@@ -275,6 +275,13 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
       let g:pandoc#formatting#equalprg = 'pandoc'
       let g:pandoc#formatting#textwidth = &textwidth
 
+      if !exists('b:my_pandoc_disable_footnotes')
+        let b:my_pandoc_disable_footnotes = 0
+      endif
+      if !exists('b:my_pandoc_reference_links')
+        let b:my_pandoc_reference_links = 0
+      endif
+
       if !b:my_pandoc_disable_footnotes
         let l:pandoc_to.='+footnotes+inline_notes'
       endif
