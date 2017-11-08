@@ -85,6 +85,14 @@ augroup VimrcShada
   autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
 augroup END
 
+" Spelling
+set spelllang=en_US
+set spellsuggest=file:~/.config/nvim/spell/suggestions,best,10
+set spellfile=~/.config/nvim/spell/personal.utf-8.add
+if ! filereadable(&spellfile . '.spl')
+  silent execute 'mkspell ' . &spellfile
+endif
+
 " Netrw -- Remote file editing
 "-----------------------------------------------------------------------------
 " :e dav://machine[:port]/path                  uses cadaver
