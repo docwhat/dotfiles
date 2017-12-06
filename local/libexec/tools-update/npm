@@ -16,10 +16,7 @@ fi
 packages=(
 
 'npm-check'
-
-# Builder
-'gulpjs/gulp#4.0'
-
+'neovim'
 
 # JavaScript
 'jscs'
