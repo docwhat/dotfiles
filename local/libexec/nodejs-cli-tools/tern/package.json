@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "tern": "^0.21.0"
+  }
+}

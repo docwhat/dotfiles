@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "coffeelint": "^2.0.7"
+  }
+}

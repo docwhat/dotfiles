@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+declare -r pkg=$1
+cd ~/.dotfiles/local/libexec/nodejs-cli-tools
+
+mkdir "$pkg"
+cd "$pkg"
+
+echo '{"license": "MIT"}' > package.json
+echo $'*\n!package.json\n!.gitignore' > .gitignore
+
+rcup -K
+
+cd ~/.local/libexec/nodejs-cli-tools/"$pkg"
+
+yarn add "$pkg"
+
+declare -r yarn_bin="$(yarn bin)"
+declare -aUr maybe_bin=(
+"$pkg"
+"$(basename "$pkg" -cli)"
+)
+
+declare foundit=0
+
+for bin in "${maybe_bin[@]}"; do
+  if [ -x "${yarn_bin}/${bin}" ]; then
+
+    ln -nsfv \
+      ../../../.local/libexec/nodejs-cli-tools/"$pkg"/node_modules/.bin/"$bin" \
+      ~/.dotfiles/local/bin/"$bin"
+
+    rcup -K
+
+    foundit=1
+
+    break
+  fi
+done
+
+if ! (( foundit )); then
+  echo "Unable to find executable for $pkg"
+fi
+
+# EOF

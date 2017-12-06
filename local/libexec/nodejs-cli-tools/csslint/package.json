@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "csslint": "^1.0.5"
+  }
+}

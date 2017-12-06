@@ -1,0 +1,38 @@
+#!/usr/bin/env zsh
+#DESC# Node.js packages #DESC#
+
+set -eu
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+if [[ -r ~/.zgen/zgen.zsh ]]; then
+  export NVM_NO_USE=false
+  set +eu
+  source ~/.zgen/zgen.zsh
+  set -eu
+fi
+
+
+if ! (( ${+commands[yarn]} + ${+functions[yarn]} )); then
+  print -P "  %F{yellow}Warning%F{reset}: %F{green}yarn%F{reset} isn't available"
+  print -P "            https://yarnpkg.com/en/docs/install"
+  exit 0
+fi
+
+# npm install -g neovim
+
+declare -r tools="${HOME}/.local/libexec/nodejs-cli-tools"
+
+for name in "$tools"/*(/:t); do
+  pkgpath="${tools}/${name}"
+  if ! [ -f "${pkgpath}/package.json" ]; then
+    print -P "  %F{yellow}Removing%F{reset} ${name}"
+    rm -rf "$pkgpath"
+  else
+    print -P "  %F{green}Installing%F{reset} ${name}"
+    (cd "$pkgpath" && yarn install --check-files | offset | offset)
+  fi
+done
+
+# EOF
