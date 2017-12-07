@@ -108,8 +108,10 @@ Plug 'chr4/nginx.vim'
 Plug 'tpope/vim-liquid'
 
 " Javascript & JSON
-Plug 'elzr/vim-json', {'for': ['javascript', 'json']}
-Plug 'pangloss/vim-javascript', {'for': ['javascript', 'json']}
+Plug 'elzr/vim-json'
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'neoclide/vim-jsx-improve'
 
 " XML, HTML & CSS
 Plug 'othree/html5.vim'
@@ -552,6 +554,9 @@ if has_key(g:plugs, 'neomake') " {{{
   if executable('cookstyle')
     let g:neomake_chef_rubocop_maker.exe = 'cookstyle'
   endif
+
+  " jshint never works quite right...
+  let g:neomake_javascript_enabled_makers = filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'")
 
   function! s:myNeomake()
     " Buffer must be writable.
