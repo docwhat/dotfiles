@@ -547,10 +547,7 @@ if has_key(g:plugs, 'neomake') " {{{
   let g:neomake_ruby_enabled_makers = neomake#makers#ft#ruby#EnabledMakers()
   call filter(g:neomake_ruby_enabled_makers, "v:val !=# 'rubylint'")
 
-  let g:neomake_ruby_rubocop_maker = neomake#makers#ft#ruby#rubocop()
-  let g:neomake_ruby_rubocop_maker.args += ['--display-cop-names']
-
-  let g:neomake_chef_rubocop_maker = g:neomake_ruby_rubocop_maker
+  let g:neomake_chef_rubocop_maker = neomake#makers#ft#ruby#rubocop()
   if executable('cookstyle')
     let g:neomake_chef_rubocop_maker.exe = 'cookstyle'
   endif
