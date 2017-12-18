@@ -551,6 +551,7 @@ if has_key(g:plugs, 'neomake') " {{{
   if executable('cookstyle')
     let g:neomake_chef_rubocop_maker.exe = 'cookstyle'
   endif
+  let g:neomake_ruby_chef_enabled_makers = filter(neomake#makers#ft#ruby#EnabledMakers(), "v:val !=# 'rubocop_rails'")
 
   " jshint never works quite right...
   let g:neomake_javascript_enabled_makers = filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'")
