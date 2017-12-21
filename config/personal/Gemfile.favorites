@@ -12,7 +12,6 @@ end
 
 group :lint do
   gem 'gem-ctags'
-  gem 'ruby-lint'
   gem 'rubocop'
   gem 'reek'
   gem 'mdl'
@@ -24,7 +23,6 @@ gem 'travis'
 gem 'rcodetools'
 gem 'fastri'
 gem 'ghi'
-gem 'powify'            if 'darwin' == Gem::Platform.local.os
 gem 'neovim'
 gem 'ssh-host-lister'   if Gem::Requirement.new('>= 2.3').satisfied_by? Gem.ruby_version
 gem 'github-linguist'
