@@ -7,3 +7,6 @@ fi
 autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
 
 function compinit { }
+
+# Complete aliases
+setopt complete_aliases
