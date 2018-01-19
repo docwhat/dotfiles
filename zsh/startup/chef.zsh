@@ -4,6 +4,13 @@ if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
   alias kv="kitchen verify"
   alias kd="kitchen destroy"
   alias kt="kitchen test"
+
+  # https://github.com/someara/kitchen-dokken
+  # https://kitchen.ci/docs/faq
+  KITCHEN_YAML=.kitchen.yml
+  KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
+  export KITCHEN_YAML KITCHEN_LOCAL_YAML
+
   function ks
   {
     case "$TERM" in
