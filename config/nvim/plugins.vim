@@ -163,6 +163,9 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-hclfmt'
 
+" Docker
+Plug 'ekalinin/Dockerfile.vim'
+
 " Sieve (RFC 5228)
 Plug 'vim-scripts/sieve.vim'
 
