@@ -6,24 +6,35 @@ set -euo pipefail
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
+eggs=(
+pip wheel
+neovim
+vim-vint
+flake8
+jedi
+proselint
+yamllint
+)
+
 pips=( pip3 pip2 pip )
+
+# Reduce the search list if both exist (pip will be a duplicate of one of them).
 if (( $+commands[pip3] )) && (( $+commands[pip2] )); then
   pips=( pip3 pip2 )
 fi
 
 for pip in "${pips[@]}"; do
-  if [[ -w "${commands[${pip}]}"  ]]; then
-    echo "${commands[${pip}]:A}" | colorize green
-    "${pip}" install --upgrade \
-      pip wheel \
-      neovim \
-      vim-vint \
-      flake8 \
-      jedi \
-      proselint \
-      yamllint \
-      | offset
+  (( $+commands[$pip] )) || continue
+
+  echo "${commands[${pip}]}" | colorize green
+
+  args=( "${commands[$pip]}" install --upgrade )
+
+  if [[ "${commands[$pip]}" = "$HOME"/* ]]; then
+    args+=( --user )
   fi
+
+  "${args[@]}" "${eggs[@]}" | offset
 done
 
 # EOF
