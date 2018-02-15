@@ -29,6 +29,10 @@ fi
 # general
 POWERLEVEL9K_MODE='nerdfont-complete'
 
+# Bug https://github.com/bhilburn/powerlevel9k/pull/752
+POWERLEVEL9K_VCS_GIT_ICON=$'\uF1D3 '          # 
+POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF113 '   # 
+
 # Use the pretty_hostname so that we don't show the
 # constantly changing hostname when using wifi.
 POWERLEVEL9K_CONTEXT_TEMPLATE="%n@$(pretty_hostname)"
