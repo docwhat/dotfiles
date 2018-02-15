@@ -1,2 +1,3 @@
 DOTFILES_DIRS="${HOME}/.dotfiles-personal ${HOME}/.dotfiles-custom ${HOME}/.dotfiles"
 EXCLUDES="README.md LICENSE Brewfile *.example tags"
+UNDOTTED="Library bin"
