@@ -3,5 +3,5 @@ if [[ "${OSTYPE}" == darwin* ]]; then
     export SHELL=/usr/local/bin/zsh
   fi
 
-  export TERMINAL_NOTIFIER_BIN=$HOME/.local/bin/terminal-notifier
+  export TERMINAL_NOTIFIER_BIN=$HOME/bin/terminal-notifier
 fi

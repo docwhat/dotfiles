@@ -23,7 +23,7 @@ if (( $+commands[nvim] )); then
 fi
 
 export FPP_EDITOR="$EDITOR"
-export MANPAGER="${HOME}/.local/bin/manpager"
-export VISUAL="${HOME}/.local/bin/visual-editor"
+export MANPAGER="${HOME}/bin/manpager"
+export VISUAL="${HOME}/bin/visual-editor"
 
 # EOF
