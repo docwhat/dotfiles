@@ -1,9 +1,16 @@
 if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
-  alias kl="kitchen list"
-  alias kc="kitchen converge"
-  alias kv="kitchen verify"
-  alias kd="kitchen destroy"
-  alias kt="kitchen test"
+  function require-kitchen-yml
+  {
+    if [ ! -d .kitchen.yml ]; then
+      echo 'No .kitchen.yml present!' 1>&2
+      return 1
+    fi
+  }
+  alias kl="require-kitchen-yml && chef exec kitchen list"
+  alias kc="require-kitchen-yml && chef exec kitchen converge"
+  alias kv="require-kitchen-yml && chef exec kitchen verify"
+  alias kd="require-kitchen-yml && chef exec kitchen destroy"
+  alias kt="require-kitchen-yml && chef exec kitchen test"
 
   # https://github.com/someara/kitchen-dokken
   # https://kitchen.ci/docs/faq
@@ -13,6 +20,8 @@ if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
 
   function ks
   {
+    require-kitchen-yml || return 1
+
     case "$TERM" in
       screen*)
         new_term=screen
