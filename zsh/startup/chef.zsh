@@ -1,7 +1,7 @@
 if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
   function require-kitchen-yml
   {
-    if [ ! -d .kitchen.yml ]; then
+    if [ ! -r .kitchen.yml ]; then
       echo 'No .kitchen.yml present!' 1>&2
       return 1
     fi
