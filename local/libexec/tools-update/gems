@@ -18,7 +18,7 @@ trap trap_exit EXIT
 function verify_rubygems_or_exit
 {
   local needs_update=0
-  "$HOME/.local/bin/rubygems_version_check" || needs_update=$?
+  "$HOME/bin/rubygems_version_check" || needs_update=$?
 
   case "$needs_update" in
     0)
