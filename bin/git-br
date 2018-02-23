@@ -1,0 +1,12 @@
+#!/bin/bash
+
+format=(
+'%(HEAD)'
+'%(color:green)%(align:width=40)%(refname:lstrip=2)%(end)'
+'%(color:bold black)%(align:width=13)%(authordate:relative)%(end)'
+'%(color:blue)(%(authorname))'
+'%0a   '
+'%(color:white)%(subject)'
+)
+
+exec git branch --format="${format[*]}" "$@"
