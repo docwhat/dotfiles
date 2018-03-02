@@ -1,9 +1,11 @@
 #!/usr/bin/env zsh
+#
+# Usage: add-nodejs-cli-tool <npm-pkg> [<command-name>]
 
 set -eu
 
-declare -r pkg=$1
-cd ~/.dotfiles/local/libexec/nodejs-cli-tools
+declare -r pkg=$1 ; shift
+cd ~/.dotfiles/tag-nodejs/local/libexec/nodejs-cli-tools
 
 mkdir "$pkg"
 cd "$pkg"
@@ -19,6 +21,7 @@ yarn add "$pkg"
 
 declare -r yarn_bin="$(yarn bin)"
 declare -aUr maybe_bin=(
+"$@"
 "$pkg"
 "$(basename "$pkg" -cli)"
 )
@@ -30,7 +33,7 @@ for bin in "${maybe_bin[@]}"; do
 
     ln -nsfv \
       ../../../.local/libexec/nodejs-cli-tools/"$pkg"/node_modules/.bin/"$bin" \
-      ~/.dotfiles/local/bin/"$bin"
+      ~/.dotfiles/tag-nodejs/bin/"$bin"
 
     rcup -K
 
