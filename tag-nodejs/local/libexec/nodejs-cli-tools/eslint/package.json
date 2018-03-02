@@ -1,6 +1,6 @@
 {
   "license": "MIT",
   "dependencies": {
-    "eslint": "^4.12.1"
+    "eslint": "^4.18.1"
   }
 }

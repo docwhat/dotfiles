@@ -1,8 +1,6 @@
 {
   "license": "MIT",
   "dependencies": {
-    "postcss": ">=5.0.0",
-    "postcss-sass": ">=0.2.0",
-    "stylelint": "^8.3.1"
+    "stylelint": "^9.1.1"
   }
 }

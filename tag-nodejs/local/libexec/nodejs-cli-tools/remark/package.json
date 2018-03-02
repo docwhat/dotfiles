@@ -1,6 +1,6 @@
 {
   "license": "MIT",
   "dependencies": {
-    "remark": "^8.0.0"
+    "remark": "^9.0.0"
   }
 }
