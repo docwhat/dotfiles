@@ -7,7 +7,7 @@ set -eu
 declare -r pkg=$1 ; shift
 cd ~/.dotfiles/tag-nodejs/local/libexec/nodejs-cli-tools
 
-mkdir "$pkg"
+mkdir -p "$pkg"
 cd "$pkg"
 
 echo '{"license": "MIT"}' > package.json
