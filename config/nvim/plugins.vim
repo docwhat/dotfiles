@@ -142,6 +142,7 @@ Plug 'docwhat/bats.vim'
 
 " Groovy
 Plug 'vim-scripts/groovyindent-unix'
+Plug 'martinda/Jenkinsfile-vim-syntax'
 
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
@@ -340,6 +341,15 @@ endif " }}}
 if has_key(g:plugs, 'vim-ruby') " {{{
   let g:ruby_indent_block_style = 'do'
   let g:ruby_indent_assignment_style = 'variable'
+endif " }}}
+
+" Go -- GoLang syntax, indentation, and tools
+if has_key(g:plugs, 'Jenkinsfile-vim-syntax') " {{{
+  augroup VimrcJenkinsfile
+    autocmd!
+    autocmd BufRead,BufNewFile Ghenkinsfile  nested setlocal filetype=Jenkinsfile
+    autocmd BufRead,BufNewFile Ghenkinsfile* nested setfiletype Jenkinsfile
+  augroup END
 endif " }}}
 
 " Go -- GoLang syntax, indentation, and tools
