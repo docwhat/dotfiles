@@ -89,7 +89,7 @@ augroup END
 " }}}
 
 " Spelling {{{
-set spelllang=en_US
+set spelllang=en_us " This is lowercase for some reason.
 set spellsuggest=file:~/.config/nvim/spell/suggestions,best,10
 set spellfile=~/.config/nvim/spell/personal.utf-8.add
 if ! filereadable(&spellfile . '.spl')
