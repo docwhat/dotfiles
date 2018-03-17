@@ -376,7 +376,7 @@ if has_key(g:plugs, 'vim-pandoc') " {{{
     endif
   endfunction
 
-  augroup VimrcMarkdown
+  augroup VimrcPandoc
     autocmd!
     autocmd OptionSet textwidth nested :call MyCaptureMarkdownOptions()
     autocmd BufEnter * nested :call MyCaptureMarkdownOptions()
@@ -393,9 +393,13 @@ else
   augroup END
 endif " }}}
 
+if has_key(g:plugs, 'vim-markdown') " {{{
+  let g:markdown_github_languages = ['ruby', 'erb=eruby', 'sh']
+endif " }}}
+
 " WriteGood
 if has_key(g:plugs, 'writegood.vim') " {{{
-  augroup MarkdownPandoc
+  augroup VimrcWritegood
     autocmd!
     autocmd FileType markdown,pandoc :WritegoodEnable
   augroup END
@@ -584,6 +588,29 @@ if has_key(g:plugs, 'ultisnips') " {{{
       return !a:0 || a:1 ==# '' ? l:filename : substitute(a:1, '$1', l:filename, 'g')
     endfunction
   endif
+endif " }}}
+
+" Neoformat -- forced formatting
+if has_key(g:plugs, 'neoformat') " {{{
+  " Enable alignment
+  let g:neoformat_basic_format_align = 1
+
+  " Enable tab to spaces conversion
+  let g:neoformat_basic_format_retab = 1
+
+  " Enable trimmming of trailing whitespace
+  let g:neoformat_basic_format_trim = 1
+
+  " Only complain if there is an error
+  let g:neoformat_only_msg_on_error = 1
+
+  let g:neoformat_markdown_prettier = neoformat#formatters#markdown#prettier()
+  let g:neoformat_markdown_prettier.args += ['--prose-wrap=preserve --loglevel=silent']
+
+  augroup VimrcNeoformat
+    autocmd!
+    autocmd BufWritePre *.css,*.csv,*.html,*.js,*.jsx,*.json,*.less,*.lua,*.py,*.scss*.sh,*.xml,*.yml,*.yaml undojoin | Neoformat
+  augroup END
 endif " }}}
 
 " Neomake -- linting and building

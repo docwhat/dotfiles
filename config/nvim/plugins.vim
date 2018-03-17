@@ -89,16 +89,15 @@ Plug 'zchee/deoplete-zsh'
 Plug 'tweekmonster/nvimdev.nvim'
 Plug 'tweekmonster/helpful.vim'
 
+" Neoformat
+Plug 'sbdchd/neoformat'
+
 " Style/Lint
 Plug 'dbakker/vim-lint'
 Plug 'neomake/neomake'
-" Plug 'scrooloose/syntastic'
 
 " Markdown
 Plug 'tpope/vim-markdown'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-markdownfootnotes'
 
 " NGinX
 " Plug 'fatih/vim-nginx'
