@@ -609,9 +609,30 @@ if has_key(g:plugs, 'neoformat') " {{{
 
   let g:neoformat_enabled_javascript = ['prettier', 'prettydiff', 'jsbeautify', 'standard', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d']
 
+  function! s:myNeoformat()
+    let l:whitelist = [
+          \ 'css', 'less', 'scss',
+          \ 'html',
+          \ 'javascript', 'json', 'yaml',
+          \ 'lua',
+          \ 'markdown', 'sh', 'xml'
+          \ ]
+    if &readonly                         | return | endif
+    if ! &modifiable                     | return | endif
+    if index(l:whitelist, &filetype) < 0 | return | endif
+
+    " Ignore error from undojoin: E790
+    try
+      undojoin
+    catch /^Vim\%((\a\+)\)\=:E790/ |
+    finally
+      Neoformat
+    endtry
+  endfunction
+
   augroup VimrcNeoformat
     autocmd!
-    autocmd BufWritePre *.css,*.csv,*.html,*.js,*.jsx,*.json,*.less,*.lua,*.md,*.py,*.scss*.sh,*.xml,*.yml,*.yaml undojoin | Neoformat
+    autocmd BufWritePre * call s:myNeoformat()
   augroup END
 endif " }}}
 
