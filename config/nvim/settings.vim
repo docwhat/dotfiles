@@ -602,14 +602,14 @@ if has_key(g:plugs, 'neoformat') " {{{
   let g:neoformat_basic_format_trim = 1
 
   " Only complain if there is an error
-  let g:neoformat_only_msg_on_error = 1
+  " let g:neoformat_only_msg_on_error = 1
 
   let g:neoformat_markdown_prettier = neoformat#formatters#markdown#prettier()
-  let g:neoformat_markdown_prettier.args += ['--prose-wrap=preserve --loglevel=silent']
+  let g:neoformat_markdown_prettier.args += ['--parser=markdown', '--prose-wrap=always']
 
   augroup VimrcNeoformat
     autocmd!
-    autocmd BufWritePre *.css,*.csv,*.html,*.js,*.jsx,*.json,*.less,*.lua,*.py,*.scss*.sh,*.xml,*.yml,*.yaml undojoin | Neoformat
+    autocmd BufWritePre *.css,*.csv,*.html,*.js,*.jsx,*.json,*.less,*.lua,*.md,*.py,*.scss*.sh,*.xml,*.yml,*.yaml undojoin | Neoformat
   augroup END
 endif " }}}
 
