@@ -607,6 +607,8 @@ if has_key(g:plugs, 'neoformat') " {{{
   let g:neoformat_markdown_prettier = neoformat#formatters#markdown#prettier()
   let g:neoformat_markdown_prettier.args += ['--parser=markdown', '--prose-wrap=always']
 
+  let g:neoformat_enabled_javascript = ['prettier', 'prettydiff', 'jsbeautify', 'standard', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d']
+
   augroup VimrcNeoformat
     autocmd!
     autocmd BufWritePre *.css,*.csv,*.html,*.js,*.jsx,*.json,*.less,*.lua,*.md,*.py,*.scss*.sh,*.xml,*.yml,*.yaml undojoin | Neoformat
