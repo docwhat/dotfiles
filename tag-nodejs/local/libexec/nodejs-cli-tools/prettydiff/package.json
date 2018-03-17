@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "prettydiff": "^99.0.1"
+  }
+}

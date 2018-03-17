@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "gatsby-dev-cli": "^1.2.12"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "js-beautify": "^1.7.5"
+  }
+}
