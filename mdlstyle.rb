@@ -5,7 +5,7 @@ all
 
 rule 'MD007', indent: 4
 rule 'MD029', style: 'ordered'
-rule 'MD004', style: :dash
+rule 'MD004', style: :consistent
 rule 'MD035', style: '---'
 
 exclude_rule 'fenced-code-language' # MD040
