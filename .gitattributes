@@ -3,3 +3,4 @@
 *.zshrc    text eol=lf
 *.zshenv   text eol=lf
 *.zprofile text eol=lf
+config/nvim/spell/*.add text eol=lf filter=wordlist

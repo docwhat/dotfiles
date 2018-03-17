@@ -92,9 +92,6 @@
 	pushInsteadOf = https://github.com/
 	pushInsteadOf = git://github.com/
 
-[include]
-	path = ~/.config/git/local
-
 ; Added by the GitHub.app
 [filter "hawser"]
 	clean = git hawser clean %f
@@ -107,3 +104,10 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
+
+[include]
+	path = ~/.config/git/local
+
+[filter "wordlist"]
+	smudge = cat
+	clean = sort -u
