@@ -610,6 +610,14 @@ if has_key(g:plugs, 'neoformat') " {{{
   let g:neoformat_enabled_javascript = ['prettier', 'prettydiff', 'jsbeautify', 'standard', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d']
 
   function! s:myNeoformat()
+    if !exists('b:my_neoformat_disable')
+      let b:my_neoformat_disable = 0
+    endif
+
+    if b:my_neoformat_disable
+      return
+    endif
+
     let l:whitelist = [
           \ 'css', 'less', 'scss',
           \ 'html',
@@ -629,6 +637,21 @@ if has_key(g:plugs, 'neoformat') " {{{
       Neoformat
     endtry
   endfunction
+
+  function! NeoformatToggle()
+    if !exists('b:my_neoformat_disable')
+      let b:my_neoformat_disable = 0
+    endif
+
+    if b:my_neoformat_disable
+      echomsg 'Neoformat: ENABLED'
+      let b:my_neoformat_disable = 0
+    else
+      echomsg 'Neoformat: DISABLED'
+      let b:my_neoformat_disable = 1
+    endif
+  endfunction
+  command NeoformatToggle call NeoformatToggle()
 
   augroup VimrcNeoformat
     autocmd!
