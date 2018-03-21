@@ -601,13 +601,10 @@ if has_key(g:plugs, 'neoformat') " {{{
   " Enable trimmming of trailing whitespace
   let g:neoformat_basic_format_trim = 1
 
-  " Only complain if there is an error
-  " let g:neoformat_only_msg_on_error = 1
-
   let g:neoformat_markdown_prettier = neoformat#formatters#markdown#prettier()
   let g:neoformat_markdown_prettier.args += ['--parser=markdown', '--prose-wrap=always']
 
-  let g:neoformat_enabled_javascript = ['prettier', 'prettydiff', 'jsbeautify', 'standard', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d']
+  let g:neoformat_enabled_javascript = ['prettier', 'prettiereslint']
 
   function! s:myNeoformat()
     if !exists('b:my_neoformat_disable')
