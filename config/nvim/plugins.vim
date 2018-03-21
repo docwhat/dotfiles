@@ -18,6 +18,9 @@ Plug 'tpope/vim-surround'
 
 Plug 'tpope/vim-speeddating'
 
+" Paired commands (using '[' and ']')
+Plug 'tpope/vim-unimpaired'
+
 " Auto-pairing, including adding `end` to if statements.
 Plug 'cohama/lexima.vim'
 
@@ -111,6 +114,9 @@ Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neoclide/vim-jsx-improve'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 
 " XML, HTML & CSS
 Plug 'othree/html5.vim'

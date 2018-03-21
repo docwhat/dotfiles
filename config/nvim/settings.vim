@@ -590,6 +590,61 @@ if has_key(g:plugs, 'ultisnips') " {{{
   endif
 endif " }}}
 
+" Prettier -- Specialized formatting tool
+if has_key(g:plugs, 'vim-prettier') " {{{
+  function! s:myPrettierSetup()
+    let l:whitelist = [ 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue' ]
+    if &readonly                         | return | endif
+    if ! &modifiable                     | return | endif
+    if index(l:whitelist, &filetype) < 0 | return | endif
+
+    function! s:PrettierEnable()
+      let b:my_prettier_disable = 0
+
+      augroup VimrcPrettier
+        autocmd! * <buffer>
+        autocmd BufWritePre,TextChanged,InsertLeave <buffer> PrettierAsync
+      augroup END
+    endfunction
+
+    function! s:PrettierDisable()
+      let b:my_prettier_disable = 1
+
+      augroup VimrcPrettier
+        autocmd! * <buffer>
+      augroup END
+      augroup! VimrcPrettier
+    endfunction
+
+    function! PrettierToggle()
+      if b:my_prettier_disable
+        echomsg 'Prettier on save: ENABLED'
+        call s:PrettierEnable()
+      else
+        echomsg 'Prettier on save: DISABLED'
+        call s:PrettierDisable()
+      endif
+    endfunction
+    command! PrettierToggle call PrettierToggle()
+
+    if !exists('b:my_neoformat_disable')
+      let b:my_prettier_disable = 0
+      call s:PrettierEnable()
+    endif
+
+    nmap <buffer> <Leader>g <Plug>(PrettierAsync)
+  endfunction
+
+  " https://github.com/prettier/vim-prettier/pull/122
+  let g:prettier#quickfix_enabled = 0
+  let g:prettier#autoformat = 0
+
+  augroup VimrcPrettierSetup
+    autocmd!
+    autocmd BufEnter * call s:myPrettierSetup()
+  augroup END
+endif " }}}
+
 " Neoformat -- forced formatting
 if has_key(g:plugs, 'neoformat') " {{{
   " Enable alignment
@@ -601,11 +656,6 @@ if has_key(g:plugs, 'neoformat') " {{{
   " Enable trimmming of trailing whitespace
   let g:neoformat_basic_format_trim = 1
 
-  let g:neoformat_markdown_prettier = neoformat#formatters#markdown#prettier()
-  let g:neoformat_markdown_prettier.args += ['--parser=markdown', '--prose-wrap=always']
-
-  let g:neoformat_enabled_javascript = ['prettier', 'prettiereslint']
-
   function! s:myNeoformat()
     if !exists('b:my_neoformat_disable')
       let b:my_neoformat_disable = 0
@@ -616,11 +666,11 @@ if has_key(g:plugs, 'neoformat') " {{{
     endif
 
     let l:whitelist = [
-          \ 'css', 'less', 'scss',
           \ 'html',
-          \ 'javascript', 'json', 'yaml',
+          \ 'yaml',
           \ 'lua',
-          \ 'markdown', 'sh', 'xml'
+          \ 'sh',
+          \ 'xml'
           \ ]
     if &readonly                         | return | endif
     if ! &modifiable                     | return | endif
@@ -643,7 +693,7 @@ if has_key(g:plugs, 'neoformat') " {{{
       let b:my_neoformat_disable = 1
     endif
   endfunction
-  command NeoformatToggle call NeoformatToggle()
+  command! NeoformatToggle call NeoformatToggle()
 
   augroup VimrcNeoformat
     autocmd!
