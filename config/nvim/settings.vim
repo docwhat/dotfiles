@@ -630,12 +630,7 @@ if has_key(g:plugs, 'neoformat') " {{{
     if index(l:whitelist, &filetype) < 0 | return | endif
 
     " Ignore error from undojoin: E790
-    try
-      undojoin
-    catch /^Vim\%((\a\+)\)\=:E790/ |
-    finally
-      Neoformat
-    endtry
+    Neoformat
   endfunction
 
   function! NeoformatToggle()
