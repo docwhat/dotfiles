@@ -603,7 +603,7 @@ if has_key(g:plugs, 'vim-prettier') " {{{
 
       augroup VimrcPrettier
         autocmd! * <buffer>
-        autocmd BufWritePre,TextChanged,InsertLeave <buffer> PrettierAsync
+        autocmd BufWritePre <buffer> PrettierAsync
       augroup END
     endfunction
 
@@ -635,8 +635,6 @@ if has_key(g:plugs, 'vim-prettier') " {{{
     nmap <buffer> <Leader>g <Plug>(PrettierAsync)
   endfunction
 
-  " https://github.com/prettier/vim-prettier/pull/122
-  let g:prettier#quickfix_enabled = 0
   let g:prettier#autoformat = 0
 
   augroup VimrcPrettierSetup
