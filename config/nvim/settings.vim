@@ -334,6 +334,26 @@ if has_key(g:plugs, 'denite.nvim') " {{{
   " nnoremap <C-p> :Denite file_rec<cr>
 endif " }}}
 
+" Markdown
+if has_key(g:plugs, 'vim-markdown') " {{{
+  " let g:vim_markdown_folding_disabled = 1
+  " let g:vim_markdown_folding_style_pythonic = 1
+  " let g:vim_markdown_override_foldtext = 0
+
+  let g:vim_markdown_conceal = 0
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_fenced_languages = [
+        \ 'bash=sh',
+        \ 'console=sh',
+        \ 'erb=eruby',
+        \ 'javascript',
+        \ 'python',
+        \ 'ruby',
+        \ 'sh',
+        \ 'viml=vim']
+
+endif " }}}
+
 " Pandoc -- Markdown, Text, and HTML formatter/converter
 if has_key(g:plugs, 'vim-pandoc') " {{{
   let g:pandoc#modules#disabled = ['chdir']
@@ -391,10 +411,6 @@ else
     autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
     autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1 wrap linebreak nolist
   augroup END
-endif " }}}
-
-if has_key(g:plugs, 'vim-markdown') " {{{
-  let g:markdown_github_languages = ['ruby', 'erb=eruby', 'sh']
 endif " }}}
 
 " WriteGood

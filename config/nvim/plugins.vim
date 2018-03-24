@@ -33,6 +33,9 @@ Plug 'kana/vim-arpeggio'
 " lets you align comments, equal signs, etc.
 Plug 'godlygeek/tabular'
 
+" Markdown syntax
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+
 " Shows regions that were just yanked.
 Plug 'machakann/vim-highlightedyank'
 
@@ -98,9 +101,6 @@ Plug 'sbdchd/neoformat'
 " Style/Lint
 Plug 'dbakker/vim-lint'
 Plug 'neomake/neomake'
-
-" Markdown
-Plug 'tpope/vim-markdown'
 
 " NGinX
 " Plug 'fatih/vim-nginx'
