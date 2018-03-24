@@ -246,6 +246,11 @@ if has_key(g:plugs, 'vim-surround') " {{{
   let g:surround_no_insert_mappings=1
 endif " }}}
 
+" Gutentags
+if has_key(g:plugs, 'vim-gutentags') " {{{
+  let g:gutentags_enabled=0
+endif " }}}
+
 " Tagbar
 if has_key(g:plugs, 'tagbar') " {{{
   nnoremap <silent> <Leader>tb :TagbarToggle<CR>
@@ -336,8 +341,8 @@ endif " }}}
 
 " Markdown
 if has_key(g:plugs, 'vim-markdown') " {{{
-  " let g:vim_markdown_folding_disabled = 1
-  " let g:vim_markdown_folding_style_pythonic = 1
+  let g:vim_markdown_folding_disabled = 1
+  let g:vim_markdown_folding_style_pythonic = 1
   " let g:vim_markdown_override_foldtext = 0
 
   let g:vim_markdown_conceal = 0
@@ -350,7 +355,8 @@ if has_key(g:plugs, 'vim-markdown') " {{{
         \ 'python',
         \ 'ruby',
         \ 'sh',
-        \ 'viml=vim']
+        \ 'viml=vim',
+        \ 'zsh=sh']
 
 endif " }}}
 
