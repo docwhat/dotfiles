@@ -262,7 +262,7 @@ if has_key(g:plugs, 'wstrip.vim') " {{{
   nmap <silent> <Leader><space> :WStrip<CR>
   augroup VimrcWStrip
     autocmd!
-    autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl let b:wstrip_auto = 1
+    autocmd FileType ruby,php,c,cpp,java,vim,html,xml,xsl let b:wstrip_auto = 1
   augroup END
 endif " }}}
 
@@ -625,7 +625,7 @@ if has_key(g:plugs, 'vim-prettier') " {{{
 
       augroup VimrcPrettier
         autocmd! * <buffer>
-        autocmd BufWritePre <buffer> PrettierAsync
+        autocmd BufWritePre <buffer> PrettierA
       augroup END
     endfunction
 
@@ -658,6 +658,12 @@ if has_key(g:plugs, 'vim-prettier') " {{{
   endfunction
 
   let g:prettier#autoformat = 0
+  let g:prettier#exec_cmd_async = 1
+  let g:prettier#nvim_unstable_async = 1
+
+   " if executable('prettier-eslint')
+   "   let g:prettier#exec_cmd_path = 'prettier-eslint'
+   " endif
 
   augroup VimrcPrettierSetup
     autocmd!

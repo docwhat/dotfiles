@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "prettier-eslint-cli": "^4.7.1"
+  }
+}

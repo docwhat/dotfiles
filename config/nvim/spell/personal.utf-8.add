@@ -1,4 +1,5 @@
 #atin
+#nternet
 AppleScript
 Auditable
 BluePages
@@ -10,7 +11,9 @@ CentOS
 Cimmeria
 CoreOS
 DLL
+DRM
 DRY
+DVD
 Emoji
 Fanta
 Firefox
@@ -27,6 +30,7 @@ Holtje
 Höltje
 JRuby
 JVM
+JavaScript
 Jenkinsfile
 Kubernetes
 LLVM
@@ -35,6 +39,10 @@ Lua
 MacBook
 McDonalds
 MySpace
+NiCad
+NiCd
+Okay
+Online
 OpenBlue
 PGH
 PrismJS
@@ -49,9 +57,13 @@ TurboLinux
 Ubuntu
 Uncaptured
 VSphere
+WTF
 Watson
+Wikipedia
 Wimpout
 YAML
+Yay
+Zim
 app
 architecting
 automagically
@@ -63,6 +75,7 @@ deployer
 docwhat
 hyboria
 iPhone
+iPod
 inline
 manga
 nVidia
@@ -79,10 +92,12 @@ repo
 repurpose
 rollout
 sandboxed
+screenshots
 servlet
 symlink
 tmpfs
 trick
+unobvious
 wildcard
 µservice
 µservices
