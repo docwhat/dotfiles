@@ -1,1 +1,7 @@
-../../../.local/libexec/nodejs-cli-tools/js-beautify/node_modules/.bin/js-beautify
+#!/usr/bin/env zsh
+set -eu
+if [ -f 'package.json' ] && [ -x 'node_modules/.bin/js-beautify' ]; then
+	exec 'node_modules/.bin/js-beautify' "$@"
+else
+	exec "${HOME}/.local/libexec/nodejs-cli-tools/js-beautify/node_modules/.bin/js-beautify" "$@"
+fi

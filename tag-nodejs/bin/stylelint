@@ -1,1 +1,7 @@
-../../../.local/libexec/nodejs-cli-tools/stylelint/node_modules/.bin/stylelint
+#!/usr/bin/env zsh
+set -eu
+if [ -f 'package.json' ] && [ -x 'node_modules/.bin/stylelint' ]; then
+	exec 'node_modules/.bin/stylelint' "$@"
+else
+	exec "${HOME}/.local/libexec/nodejs-cli-tools/stylelint/node_modules/.bin/stylelint" "$@"
+fi

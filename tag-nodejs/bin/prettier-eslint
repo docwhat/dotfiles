@@ -1,1 +1,7 @@
-../../../.local/libexec/nodejs-cli-tools/prettier-eslint-cli/node_modules/.bin/prettier-eslint
+#!/usr/bin/env zsh
+set -eu
+if [ -f 'package.json' ] && [ -x 'node_modules/.bin/prettier-eslint' ]; then
+	exec 'node_modules/.bin/prettier-eslint' "$@"
+else
+	exec "${HOME}/.local/libexec/nodejs-cli-tools/prettier-eslint-cli/node_modules/.bin/prettier-eslint" "$@"
+fi

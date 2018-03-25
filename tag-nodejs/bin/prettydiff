@@ -1,1 +1,7 @@
-../../../.local/libexec/nodejs-cli-tools/prettydiff/node_modules/.bin/prettydiff
+#!/usr/bin/env zsh
+set -eu
+if [ -f 'package.json' ] && [ -x 'node_modules/.bin/prettydiff' ]; then
+	exec 'node_modules/.bin/prettydiff' "$@"
+else
+	exec "${HOME}/.local/libexec/nodejs-cli-tools/prettydiff/node_modules/.bin/prettydiff" "$@"
+fi

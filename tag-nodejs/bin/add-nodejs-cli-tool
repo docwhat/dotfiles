@@ -28,12 +28,19 @@ declare -aUr maybe_bin=(
 
 declare foundit=0
 
+function makescript {
+  local pkg="$1"; shift
+  local bin="$1"; shift
+  local stub=~/.dotfiles/tag-nodejs/bin/"$bin"
+
+  echo -e "#!/usr/bin/env zsh\nset -eu\nif [ -f 'package.json' ] && [ -x 'node_modules/.bin/${bin}' ]; then\n\texec 'node_modules/.bin/${bin}' \"\$@\"\nelse\n\texec \"\${HOME}/.local/libexec/nodejs-cli-tools/${pkg}/node_modules/.bin/${bin}\" \"\$@\"\nfi" > "$stub"
+  chmod +x "$stub"
+}
+
 for bin in "${maybe_bin[@]}"; do
   if [ -x "${yarn_bin}/${bin}" ]; then
 
-    ln -nsfv \
-      ../../../.local/libexec/nodejs-cli-tools/"$pkg"/node_modules/.bin/"$bin" \
-      ~/.dotfiles/tag-nodejs/bin/"$bin"
+    makescript "$pkg" "$bin"
 
     rcup -K
 
