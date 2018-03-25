@@ -1,6 +1,6 @@
 {
   "license": "MIT",
   "dependencies": {
-    "jscs": "^3.0.7"
+    "flow-bin": "^0.68.0"
   }
 }
