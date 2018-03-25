@@ -630,7 +630,7 @@ if has_key(g:plugs, 'vim-prettier') " {{{
 
       augroup VimrcPrettier
         autocmd! * <buffer>
-        autocmd BufWritePre <buffer> PrettierA
+        autocmd BufWritePre <buffer> Prettier
       augroup END
     endfunction
 
@@ -663,12 +663,12 @@ if has_key(g:plugs, 'vim-prettier') " {{{
   endfunction
 
   let g:prettier#autoformat = 0
-  let g:prettier#exec_cmd_async = 1
-  let g:prettier#nvim_unstable_async = 1
+  " let g:prettier#exec_cmd_async = 1
+  " let g:prettier#nvim_unstable_async = 1
 
-   " if executable('prettier-eslint')
-   "   let g:prettier#exec_cmd_path = 'prettier-eslint'
-   " endif
+  " if executable('prettier-eslint')
+  "   let g:prettier#exec_cmd_path = 'prettier-eslint'
+  " endif
 
   augroup VimrcPrettierSetup
     autocmd!
@@ -784,8 +784,7 @@ if has_key(g:plugs, 'neomake') " {{{
   call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubylint'")
 
   " jshint never works quite right...
-  let g:neomake_javascript_enabled_makers = filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'")
-   " let g:neomake_javascript_enabled_makers += ['flow']
+  let g:neomake_javascript_enabled_makers = filter( filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'"), "v:val !=# 'jscs'")
 
   function! s:myNeomake()
     " Buffer must be writable.
