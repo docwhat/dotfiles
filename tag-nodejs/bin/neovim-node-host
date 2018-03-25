@@ -1,7 +1,19 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+
 set -eu
-if [ -f 'package.json' ] && [ -x 'node_modules/.bin/neovim-node-host' ]; then
-	exec 'node_modules/.bin/neovim-node-host' "$@"
+
+declare -r pkg_dir="${HOME}/.local/libexec/nodejs-cli-tools/neovim"
+
+if [ "${1:-}" == __PRINT_pkg ]; then
+  echo "$pkg_dir"
+  exit 0
+fi
+
+declare -r npm_bin="$(npm bin)"
+
+if [ -d "$npm_bin" ] && [ -x "${npm_bin}/neovim-node-host" ]
+then
+  exec "${npm_bin}/neovim-node-host" "$@"
 else
-	exec "${HOME}/.local/libexec/nodejs-cli-tools/neovim/node_modules/.bin/neovim-node-host" "$@"
+  exec "${pkg_dir}/node_modules/.bin/neovim-node-host" "$@"
 fi

@@ -1,7 +1,19 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+
 set -eu
-if [ -f 'package.json' ] && [ -x 'node_modules/.bin/jscs' ]; then
-	exec 'node_modules/.bin/jscs' "$@"
+
+declare -r pkg_dir="${HOME}/.local/libexec/nodejs-cli-tools/jscs"
+
+if [ "${1:-}" == __PRINT_pkg ]; then
+  echo "$pkg_dir"
+  exit 0
+fi
+
+declare -r npm_bin="$(npm bin)"
+
+if [ -d "$npm_bin" ] && [ -x "${npm_bin}/jscs" ]
+then
+  exec "${npm_bin}/jscs" "$@"
 else
-	exec "${HOME}/.local/libexec/nodejs-cli-tools/jscs/node_modules/.bin/jscs" "$@"
+  exec "${pkg_dir}/node_modules/.bin/jscs" "$@"
 fi

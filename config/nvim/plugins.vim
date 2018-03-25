@@ -88,6 +88,7 @@ Plug 'eagletmt/neco-ghc'
 Plug 'zchee/deoplete-jedi'
 Plug 'tweekmonster/deoplete-clang2'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
+Plug 'wokalski/autocomplete-flow'
 Plug 'carlitux/deoplete-ternjs'
 Plug 'zchee/deoplete-zsh'
 

@@ -1,7 +1,19 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+
 set -eu
-if [ -f 'package.json' ] && [ -x 'node_modules/.bin/gatsby-dev' ]; then
-	exec 'node_modules/.bin/gatsby-dev' "$@"
+
+declare -r pkg_dir="${HOME}/.local/libexec/nodejs-cli-tools/gatsby-dev-cli"
+
+if [ "${1:-}" == __PRINT_pkg ]; then
+  echo "$pkg_dir"
+  exit 0
+fi
+
+declare -r npm_bin="$(npm bin)"
+
+if [ -d "$npm_bin" ] && [ -x "${npm_bin}/gatsby-dev" ]
+then
+  exec "${npm_bin}/gatsby-dev" "$@"
 else
-	exec "${HOME}/.local/libexec/nodejs-cli-tools/gatsby-dev-cli/node_modules/.bin/gatsby-dev" "$@"
+  exec "${pkg_dir}/node_modules/.bin/gatsby-dev" "$@"
 fi

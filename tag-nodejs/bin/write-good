@@ -1,7 +1,19 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+
 set -eu
-if [ -f 'package.json' ] && [ -x 'node_modules/.bin/write-good' ]; then
-	exec 'node_modules/.bin/write-good' "$@"
+
+declare -r pkg_dir="${HOME}/.local/libexec/nodejs-cli-tools/write-good"
+
+if [ "${1:-}" == __PRINT_pkg ]; then
+  echo "$pkg_dir"
+  exit 0
+fi
+
+declare -r npm_bin="$(npm bin)"
+
+if [ -d "$npm_bin" ] && [ -x "${npm_bin}/write-good" ]
+then
+  exec "${npm_bin}/write-good" "$@"
 else
-	exec "${HOME}/.local/libexec/nodejs-cli-tools/write-good/node_modules/.bin/write-good" "$@"
+  exec "${pkg_dir}/node_modules/.bin/write-good" "$@"
 fi

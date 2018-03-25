@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -eu
+
+declare -r pkg_dir="${HOME}/.local/libexec/nodejs-cli-tools/remark-cli"
+
+if [ "${1:-}" == __PRINT_pkg ]; then
+  echo "$pkg_dir"
+  exit 0
+fi
+
+declare -r npm_bin="$(npm bin)"
+
+if [ -d "$npm_bin" ] && [ -x "${npm_bin}/remark" ]
+then
+  exec "${npm_bin}/remark" "$@"
+else
+  exec "${pkg_dir}/node_modules/.bin/remark" "$@"
+fi

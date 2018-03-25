@@ -780,6 +780,7 @@ if has_key(g:plugs, 'neomake') " {{{
 
   " jshint never works quite right...
   let g:neomake_javascript_enabled_makers = filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'")
+  let g:neomake_javascript_enabled_makers += ['flow']
 
   function! s:myNeomake()
     " Buffer must be writable.

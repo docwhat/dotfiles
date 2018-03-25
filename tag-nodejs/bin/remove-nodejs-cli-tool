@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+#
+# Usage: remove-nodejs-cli-tool <command-name>
+
+set -eu
+
+function remover {
+  local -r command=$1 ; shift
+  local bin="${HOME}/.dotfiles/tag-nodejs/bin/${command}"
+
+  local pkg_dir="$("$bin" __PRINT_pkg 2>&1)"
+
+  if [ -n "$pkg_dir" ] && [ -d "$pkg_dir" ]; then
+    rm -rf "$pkg_dir"
+    rm -f "$bin"
+  else
+    echo "I did not know how to delete $bin" 1>&2
+    exit 1
+  fi
+}
+
+for cmd in "$@"; do remover "$(basename "$cmd")"; done

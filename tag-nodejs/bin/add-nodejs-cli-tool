@@ -33,7 +33,10 @@ function makescript {
   local bin="$1"; shift
   local stub=~/.dotfiles/tag-nodejs/bin/"$bin"
 
-  echo -e "#!/usr/bin/env zsh\nset -eu\nif [ -f 'package.json' ] && [ -x 'node_modules/.bin/${bin}' ]; then\n\texec 'node_modules/.bin/${bin}' \"\$@\"\nelse\n\texec \"\${HOME}/.local/libexec/nodejs-cli-tools/${pkg}/node_modules/.bin/${bin}\" \"\$@\"\nfi" > "$stub"
+  node ~/.dotfiles/tag-nodejs/local/libexec/nodejs-cli-tools/command-template.js\
+    "$pkg"\
+    "$bin"\
+    > "$stub"
   chmod +x "$stub"
 }
 

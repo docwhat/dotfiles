@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-set -eu
-if [ -f 'package.json' ] && [ -x 'node_modules/.bin/flow' ]; then
-	exec 'node_modules/.bin/flow' "$@"
-else
-	exec "${HOME}/.local/libexec/nodejs-cli-tools/flow-bin/node_modules/.bin/flow" "$@"
-fi
