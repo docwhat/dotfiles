@@ -698,10 +698,11 @@ if has_key(g:plugs, 'neoformat') " {{{
 
     let l:whitelist = [
           \ 'html',
-          \ 'yaml',
           \ 'lua',
           \ 'sh',
-          \ 'xml'
+          \ 'terraform',
+          \ 'xml',
+          \ 'yaml'
           \ ]
     if &readonly                         | return | endif
     if ! &modifiable                     | return | endif
