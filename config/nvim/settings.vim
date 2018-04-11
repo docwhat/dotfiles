@@ -540,15 +540,15 @@ endif " }}}
 
 " Deoplete -- Additional configuration
 if has_key(g:plugs, 'deoplete.nvim') " {{{
-  call deoplete#custom#set('_', 'converters', [
+  call deoplete#custom#source('_', 'converters', [
         \ 'converter_remove_paren',
         \ 'converter_remove_overlap',
         \ 'converter_truncate_abbr',
         \ 'converter_truncate_menu',
         \ 'converter_auto_delimiter',
         \ ])
-  call deoplete#custom#set('_', 'matchers', ['matcher_length', 'matcher_fuzzy'])
-  call deoplete#custom#set('ultisnips', 'matchers', ['matcher_full_fuzzy'])
+  call deoplete#custom#source('_', 'matchers', ['matcher_length', 'matcher_fuzzy'])
+  call deoplete#custom#source('ultisnips', 'matchers', ['matcher_full_fuzzy'])
 
 
   let g:deoplete#enable_at_startup       = 1
