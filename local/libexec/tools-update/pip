@@ -15,6 +15,7 @@ jedi
 proselint
 yamllint
 pyaml
+ruamel.yaml.cmd
 )
 
 pips=( pip3 pip2 pip )

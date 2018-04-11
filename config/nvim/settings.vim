@@ -702,7 +702,6 @@ if has_key(g:plugs, 'neoformat') " {{{
           \ 'sh',
           \ 'terraform',
           \ 'xml',
-          \ 'yaml'
           \ ]
     if &readonly                         | return | endif
     if ! &modifiable                     | return | endif
