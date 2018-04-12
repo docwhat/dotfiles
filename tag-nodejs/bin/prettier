@@ -9,11 +9,20 @@ if [ "${1:-}" == __PRINT_pkg ]; then
   exit 0
 fi
 
-declare -r npm_bin="$(npm bin)"
+npm_bin="$(npm bin)"
+declare -r npm_bin
+
+declare -a args
+for arg in "$@"; do
+  # Work around stupidisms
+  if [ "$arg" = "--no-editorconfig" ]; then continue; fi
+  args+=( "$arg" )
+done
+declare -r args
 
 if [ -d "$npm_bin" ] && [ -x "${npm_bin}/prettier" ]
 then
-  exec "${npm_bin}/prettier" "$@"
+  exec "${npm_bin}/prettier" "${args[@]}"
 else
-  exec "${pkg_dir}/node_modules/.bin/prettier" "$@"
+  exec "${pkg_dir}/node_modules/.bin/prettier" "${args[@]}"
 fi

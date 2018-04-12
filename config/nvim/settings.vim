@@ -670,6 +670,8 @@ if has_key(g:plugs, 'vim-prettier') " {{{
   "   let g:prettier#exec_cmd_path = 'prettier-eslint'
   " endif
 
+  let g:prettier#config#config_precedence = 'file-override'
+
   augroup VimrcPrettierSetup
     autocmd!
     autocmd BufEnter * call s:myPrettierSetup()
