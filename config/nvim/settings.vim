@@ -664,14 +664,8 @@ if has_key(g:plugs, 'vim-prettier') " {{{
   endfunction
 
   let g:prettier#autoformat = 0
-  " let g:prettier#exec_cmd_async = 1
-  " let g:prettier#nvim_unstable_async = 1
-
-  " if executable('prettier-eslint')
-  "   let g:prettier#exec_cmd_path = 'prettier-eslint'
-  " endif
-
   let g:prettier#config#config_precedence = 'file-override'
+  let g:prettier#config#prose_wrap = 'always'
 
   augroup VimrcPrettierSetup
     autocmd!
