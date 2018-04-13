@@ -12,10 +12,11 @@ endif
 
 set mouse=a
 
+" Note, the sleuth plugin overrides these.
 set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set softtabstop=-1 " Use shiftwidth instead.
 set expandtab
+
 set hidden
 set modeline
 
@@ -415,7 +416,7 @@ else
   augroup VimrcMarkdown
     autocmd!
     autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
-    autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 softtabstop=4 spell concealcursor= conceallevel=1 wrap linebreak nolist
+    autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 spell concealcursor= conceallevel=1 wrap linebreak nolist
   augroup END
 endif " }}}
 
