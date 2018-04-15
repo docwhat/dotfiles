@@ -1,5 +1,4 @@
-My dotfiles
-===========
+# My dotfiles
 
 This is my personal dotfiles (e.g. `.bashrc`, `.zshrc`, etc.)
 
@@ -7,58 +6,64 @@ Feel free to use them as is and file pull requests or issues.
 
 And of course, borrow whatever you want!
 
-Installation
-------------
+## Installation
 
 1.  Install [rcm](https://github.com/thoughtbot/rcm)
 2.  Clone the dotfiles repository as `~/.dotfiles`:
 
-    ``` .sh
+    ```.sh
     git clone https://github.com/docwhat/dotfiles.git .dotfiles
     ```
 
-3.  `rcup && rcup` — This second run picks up changes to the `~/.rcrc` file from the first run.
+3.  `rcup && rcup` — This second run picks up changes to the `~/.rcrc` file from
+    the first run.
 
-### Customizing your dotfiles.
+### Customizing your dotfiles
 
-To make changes, customize, or override my files you can create `~/.dotfiles-custom`.
+To make changes, customize, or override my files you can create
+`~/.dotfiles-custom`.
 
 To get started:
 
-``` sh
-$ mkdir ~/.dotfiles-custom
-$ cd ~/.dotfiles-custom
-$ git init
+```bash
+mkdir ~/.dotfiles-custom
+cd ~/.dotfiles-custom
+git init
 ```
 
-*NOTE:* If you're upgrading from an older version of my dotfiles, you may need to update your `~/.rcrc` file. Ensure it has `${HOME}/.dotfiles-custom` in the `DOTFILES_DIRS`. See [`rcrc.example`](https://github.com/docwhat/dotfiles/blob/master/rcrc.example).
+_NOTE:_ If you're upgrading from an older version of my dotfiles, you may need
+to update your `~/.rcrc` file. Ensure it has `${HOME}/.dotfiles-custom` in the
+`DOTFILES_DIRS`. See
+[`rcrc.example`](https://github.com/docwhat/dotfiles/blob/master/rcrc.example).
 
 To replace my files, use the same path in the repository.
 
-A lot of config files support *local* versions.
+A lot of config files support _local_ versions.
 
 An incomplete list:
 
 1.  NeoVim
-    -   `config/nvim/local.vim`
+    * `config/nvim/local.vim`
 2.  Vim
-    -   `vimrc.local-pre` — sourced at the start of the `.vimrc`
-    -   `vimrc.local` — sourced at the end of the `.vimrc`
+    * `vimrc.local-pre` — sourced at the start of the `.vimrc`
+    * `vimrc.local` — sourced at the end of the `.vimrc`
 3.  Git
-    -   `config/git/local`
+    * `config/git/local`
 
 ### Storing secrets
 
-If you want to store secrets or personal info, you can use `~/.dotfiles-personal` the same way as with `~/.dotfiles-custom`
+If you want to store secrets or personal info, you can use
+`~/.dotfiles-personal` the same way as with `~/.dotfiles-custom`
 
-You may or may not want to use `git` to store this and you shouldn't upload it to a *public* GitHub repository.
+You may or may not want to use `git` to store this and you shouldn't upload it
+to a _public_ GitHub repository.
 
-Updating everything
--------------------
+## Updating everything
 
-Use the `tools-update` command. It offers suggestions of other commands you can run.
+Use the `tools-update` command. It offers suggestions of other commands you can
+run.
 
-``` .sh
+```bash
 $ tools-update --help
 ===================================================
 Help
