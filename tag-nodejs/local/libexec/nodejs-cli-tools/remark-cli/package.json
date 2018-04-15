@@ -1,6 +1,0 @@
-{
-  "license": "MIT",
-  "dependencies": {
-    "remark-cli": "^5.0.0"
-  }
-}

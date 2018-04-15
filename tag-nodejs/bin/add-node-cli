@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+#
+# Usage: add-nodejs-cli-tool <npm-package> [<command-name>]
+
+set -eu
+
+stub=~/.dotfiles/tag-nodejs/bin/"$(basename "$1")"
+
+function error {
+  print -P "%B%F{red}ERROR%f%b: $*"
+  exit 10
+}
+
+if [ -x "$stub" ]; then
+  eval "$(grep -E '^(package|command)=' "$stub")"
+  if [ -z "${package:-}" ] && [ -z "${command:-}" ]; then
+    error "$stub is not a node-cli stub".
+  fi
+  declare -r package command stub update=1
+  print -P "%F{green}Updating%f $command (from $package)"
+
+  npm upgrade --global "$package" >/dev/null 2>&1
+else
+  declare -r package="$1"
+  declare -r command="${2:-$1}"
+  declare -r stub=~/.dotfiles/tag-nodejs/bin/"$command"
+  declare -r update=0
+
+  print -P "%F{yellow}Creating%f $command (from $package)"
+
+  npm install --global "$package" >/dev/null 2>&1
+
+fi
+
+if [ ! -x "$(npm bin --global 2>/dev/null)/${command}" ]; then
+  error "cannot find $command in $package"
+fi
+
+node ~/.dotfiles/tag-nodejs/share/node-cli-template.js\
+  "$package"\
+  "$command"\
+  > "$stub"
+chmod +x "$stub"
+
+if ! (( update )); then
+  rcup -K
+fi
+
+print -P '%B%F{green}done%f%b'
+
+# EOF

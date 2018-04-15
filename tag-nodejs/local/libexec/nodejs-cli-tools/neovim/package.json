@@ -1,6 +1,0 @@
-{
-  "license": "MIT",
-  "dependencies": {
-    "neovim": "^3.5.2"
-  }
-}

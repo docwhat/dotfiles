@@ -1,19 +1,17 @@
 #!/bin/bash
 
-set -eu
+#!/bin/bash
+set -eEuo pipefail
 
-declare -r pkg_dir="${HOME}/.local/libexec/nodejs-cli-tools/alex"
+package='alex'
+command='alex'
 
-if [ "${1:-}" == __PRINT_pkg ]; then
-  echo "$pkg_dir"
-  exit 0
+exe="$(npm bin --global 2>/dev/null)/${command}"
+
+if [ ! -x "$exe" ]; then
+  npm install --global "$package" >/dev/null 2>&1
 fi
 
-declare -r npm_bin="$(npm bin)"
+exec "$(npm bin --global 2>/dev/null)/${command}" "$@"
 
-if [ -d "$npm_bin" ] && [ -x "${npm_bin}/alex" ]
-then
-  exec "${npm_bin}/alex" "$@"
-else
-  exec "${pkg_dir}/node_modules/.bin/alex" "$@"
-fi
+#EOF
