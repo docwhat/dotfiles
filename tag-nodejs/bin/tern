@@ -6,12 +6,18 @@ set -eEuo pipefail
 package='tern'
 command='tern'
 
-exe="$(npm bin --global 2>/dev/null)/${command}"
+local_bin="$(npm bin 2>/dev/null)"
+global_bin="$(npm bin --global 2>/dev/null)"
 
-if [ ! -x "$exe" ]; then
-  npm install --global "$package" >/dev/null 2>&1
+if [ -x "${local_bin}/${command}" ]; then
+  exec "${local_bin}/${command}" "$@"
 fi
 
-exec "$(npm bin --global 2>/dev/null)/${command}" "$@"
+if [ -x "${global_bin}/${command}" ]; then
+  exec "${global_bin}/${command}" "$@"
+fi
+
+npm install --global "$package" >/dev/null 2>&1
+exec "${global_bin}/${command}" "$@"
 
 #EOF
