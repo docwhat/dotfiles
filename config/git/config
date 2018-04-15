@@ -110,4 +110,4 @@
 
 [filter "wordlist"]
 	smudge = cat
-	clean = sort -u
+	clean = env LC_ALL=C sort -u
