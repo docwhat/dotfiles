@@ -6,7 +6,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-typeset -r release='v1.2.0'
+typeset -r release='v2.0.0'
 typeset -a fonts
 typeset -r cachedir="$HOME/.cache/tools-update/fonts"
 
