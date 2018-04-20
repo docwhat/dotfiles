@@ -11,6 +11,8 @@ set -eEuo pipefail
 package='${pkg}'
 command='${cmd}'
 
+export NODENV_VERSION=8
+
 local_bin="$(npm bin 2>/dev/null)"
 global_bin="$(npm bin --global 2>/dev/null)"
 

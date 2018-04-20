@@ -6,6 +6,8 @@ set -eEuo pipefail
 package='write-good'
 command='write-good'
 
+export NODENV_VERSION=8
+
 local_bin="$(npm bin 2>/dev/null)"
 global_bin="$(npm bin --global 2>/dev/null)"
 
