@@ -95,6 +95,8 @@ Plug 'zchee/deoplete-zsh'
 " Neovim Development
 Plug 'tweekmonster/nvimdev.nvim'
 Plug 'tweekmonster/helpful.vim'
+Plug 'syngan/vim-vimlint'
+Plug 'ynkdir/vim-vimlparser'
 
 " Neoformat
 Plug 'sbdchd/neoformat'

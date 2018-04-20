@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eEuo pipefail
+
+VIMLINT_DIR="${HOME}/.local/share/nvim/plugged/vim-vimlint"
+VIMLPARSER_DIR="${HOME}/.local/share/nvim/plugged/vim-vimlparser"
+
+exec "${VIMLINT_DIR}/bin/vimlint.sh" \
+    -p "${VIMLPARSER_DIR}" \
+    -l "${VIMLINT_DIR}" \
+    "$@"
