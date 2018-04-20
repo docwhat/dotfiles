@@ -780,8 +780,34 @@ if has_key(g:plugs, 'neomake') " {{{
   call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubocop_rails'")
   call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubylint'")
 
+  let g:neomake_javascript_eslint_maker = neomake#makers#ft#javascript#eslint()
+  let g:neomake_javascript_eslint_maker.args = [ 'eslint', '--format=compact' ]
+  let g:neomake_javascript_eslint_maker.exe = 'npx'
+  " Workaround until neomake/neomake#1939 is accepted.
+  function! g:neomake_javascript_eslint_maker.supports_stdin(jobinfo) abort
+    " vint: -ProhibitImplicitScopeVariable
+    let self.args += ['--stdin', '--stdin-filename', '%:p' ]
+    let self.tempfile_name = ''
+    " vint: +ProhibitImplicitScopeVariable
+    return 1
+  endfunction
+
+  let g:neomake_text_writegood_maker = neomake#makers#ft#text#writegood()
+  let g:neomake_text_writegood_maker.args = [ 'writegood', '--format=compact' ]
+  let g:neomake_text_writegood_maker.exe = 'npx'
+
   " jshint never works quite right...
   let g:neomake_javascript_enabled_makers = filter( filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'"), "v:val !=# 'jscs'")
+
+  call neomake#configure#automake({
+        \ 'TextChanged': {'delay': 1000},
+        \ 'InsertLeave': {'delay': 1000},
+        \ 'TextChangedI': {'delay': 2000},
+        \ 'BufWritePost': {'delay': 0},
+        \ 'BufWinEnter': {'delay': 200},
+        \ 'FileType': {'delay': 200},
+        \ 'FileChangedShellPost': {'delay': 500}
+        \ }, 1000)
 
   function! s:myNeomake()
     " Buffer must be writable.
