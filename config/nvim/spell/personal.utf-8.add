@@ -20,6 +20,7 @@ GPU
 GPUs
 GameStop
 Gerrit
+Ghenkin's
 Ghenkins
 GitHub
 Guardium
@@ -54,8 +55,10 @@ SecureTransport
 SimCity
 Tron
 TurboLinux
+UI
 Ubuntu
 Uncaptured
+VMWare
 VSphere
 WTF
 Watson
@@ -69,10 +72,12 @@ architecting
 automagically
 blog
 bootable
+changelog
 changelogs
 config
 deployer
 docwhat
+filesystem
 hyboria
 iPhone
 iPod
@@ -98,6 +103,7 @@ symlink
 tmpfs
 trick
 unobvious
+vCenter
 wildcard
 µservice
 µservices
