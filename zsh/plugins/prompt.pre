@@ -37,11 +37,30 @@ POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF113 '   # 
 # constantly changing hostname when using wifi.
 POWERLEVEL9K_CONTEXT_TEMPLATE="%n@$(pretty_hostname)"
 
+if (( $+functions[nodenv] )); then
+  docwhat_nodenv_pill() {
+    local ver="$(nodenv version-name)"
+
+    if [ -n "$NODENV_VERSION" ] || [ "$(nodenv global)" != "$ver" ]; then
+      echo -n $'\ue718' "$ver"
+    fi
+  }
+else
+  docwhat_nodenv_pill() {
+    return
+  }
+fi
+
+POWERLEVEL9K_CUSTOM_NODENV=docwhat_nodenv_pill
+POWERLEVEL9K_CUSTOM_NODENV_BACKGROUND=022
+POWERLEVEL9K_CUSTOM_NODENV_FOREGROUND=255
+
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 os_icon
 context
 dir
 dir_writable
+custom_nodenv
 rbenv
 vcs
 docker_machine
@@ -57,10 +76,10 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 command_execution_time
 )
 if [ -z "$TMUX" ]; then
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   "${POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS[@]}"
   time
-)
+  )
 fi
 
 # command_execution_time
