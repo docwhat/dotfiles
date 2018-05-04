@@ -40,6 +40,7 @@ McDonalds
 MySpace
 NiCad
 NiCd
+OAuth
 Okay
 Online
 OpenBlue
@@ -75,6 +76,7 @@ blog
 bootable
 changelog
 changelogs
+checkbox
 config
 deployer
 docwhat
@@ -104,6 +106,7 @@ symlink
 tmpfs
 trick
 unobvious
+username
 vCenter
 wildcard
 µservice
