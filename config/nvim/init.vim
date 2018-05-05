@@ -22,12 +22,16 @@ endif
 
 let s:bootstrap=0
 
-" Figure out the XDG_CONFIG_HOME and XDG_DATA_HOME directories.
-" See https://github.com/neovim/neovim/issues/5297
-let g:xdg_config_home = fnamemodify(expand('<sfile>'), ':p:h')
-let g:xdg_data_home = fnamemodify(g:xdg_config_home, ':s?/.config/nvim?/.local/share/nvim?')
-if filewritable(g:xdg_data_home) != 2
-  let g:xdg_data_home = g:xdg_config_home
+if exists('*stdpath')
+  let g:xdg_config_home = stdpath('config')
+  let g:xdg_data_home = stdpath('data')
+else
+  " Figure out the XDG_CONFIG_HOME and XDG_DATA_HOME directories by hand.
+  let g:xdg_config_home = fnamemodify(expand('<sfile>'), ':p:h')
+  let g:xdg_data_home = fnamemodify(g:xdg_config_home, ':s?/.config/nvim?/.local/share/nvim?')
+  if filewritable(g:xdg_data_home) != 2
+    let g:xdg_data_home = g:xdg_config_home
+  endif
 endif
 
 let s:vim_plug_path = g:xdg_config_home . '/autoload/plug.vim'
