@@ -117,7 +117,7 @@ Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neoclide/vim-jsx-improve'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'prettier/vim-prettier', { 'branch': 'release/1.x', 'do': 'yarn install' }
 
 " XML, HTML & CSS
 Plug 'othree/html5.vim'
