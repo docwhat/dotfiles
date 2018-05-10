@@ -3,9 +3,8 @@
     {
       "files": ".prettierrc",
       "options": { "parser": "json" }
-    }
-  ],
-  "overrides": [
+
+    },
     {
       "files": "prettierrc",
       "options": { "parser": "json" }
