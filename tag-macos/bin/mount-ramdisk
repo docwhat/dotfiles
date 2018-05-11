@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+# Initial version borrowed from
+# https://github.com/Roman2K/bin/blob/master/mount-tmp
+
+set -eEuo pipefail
+
+size=1024 # MB
+mount_point="$HOME/mnt"
+name=$(basename "$mount_point")
+declare -r name mount_point
+
+usage() {
+  echo "usage: $(basename "$0") [mount | umount | remount | check | orphan]"
+  echo
+  echo "args:"
+  echo
+  echo "   -s --size MB    Sets the image size to MB mebibytes (default: 1024)"
+}
+
+process_argv() {
+  declare -g size
+  declare command=usage
+  if (( $# < 1 )); then
+    usage
+    exit 1
+  fi
+  while (( $# > 0 )); do
+    case "$1" in
+      "mount")    command=cmd_mount;;
+      "umount")   command=cmd_umount;;
+      "remount")  command=cmd_remount;;
+      "check")    command=cmd_check;;
+      "orphan")   command=cmd_orphan;;
+      -s|-size|--size)  shift; size="$1" ;;
+      *)
+        usage
+        error "Unknown argument '$1'"
+        exit 1
+        ;;
+    esac
+    shift
+  done
+  declare -gr size
+  "$command"
+}
+
+error() {
+  echo "ERROR: $*" 1>&2
+  exit 10
+}
+
+cmd_check() {
+  is_mounted
+}
+
+cmd_mount() {
+  declare -r fs=hfs
+  if is_mounted; then
+    echo "Already mounted at $mount_point" >&2
+    return 1
+  fi
+
+  [ -d "$mount_point" ] || mkdir "$mount_point"
+
+  sectors=$(( "$size" * 1024 * 1024 / 512 ))
+  dev=$(hdiutil attach -nomount ram://$sectors)
+  dev="${dev%"${dev##*[![:space:]]}"}" # Remove trailing whitespace
+  basedev=$(basename "$dev")
+
+  if ! "newfs_${fs}" -v "disk $name" "$dev"; then
+    hdiutil detach "$basedev" || :
+    error "Unable to create filesystem"
+  fi
+  if ! mount -t "${fs}" -o nobrowse "$dev" "$mount_point"; then
+    hdiutil detach "$basedev" || :
+    error "Unable to mount fs"
+  fi
+  echo "mounted" > "${mount_point}/.mount-test"
+  echo "Mounted $name ($size MB) at $mount_point"
+}
+
+cmd_umount() {
+  dev=$(df "$mount_point" | tail -1 | awk '{ print $1 }')
+  [ "$dev" ] || return 1
+  umount "$mount_point" && hdiutil detach "$dev"
+}
+
+cmd_remount() {
+  if is_mounted; then cmd_umount else true; fi \
+    && cmd_mount
+}
+
+cmd_orphan() {
+  hdiutil info | grep -E 'image-path\s+: ram://' -A14 | grep -E '^/dev/disk\d+\s*$'
+  return 0
+}
+
+is_mounted() {
+  mount | grep -q " on $mount_point "
+}
+
+process_argv "$@"
