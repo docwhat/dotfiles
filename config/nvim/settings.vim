@@ -780,6 +780,9 @@ if has_key(g:plugs, 'neomake') " {{{
   call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubocop_rails'")
   call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubylint'")
 
+  let g:neomake_markdown_enabled_makers = neomake#makers#ft#markdown#EnabledMakers()
+  let g:neomake_markdown_enabled_makers += ['alex', 'proselint']
+
   let g:neomake_javascript_eslint_maker = neomake#makers#ft#javascript#eslint()
   let g:neomake_javascript_eslint_maker.args = [ 'eslint', '--format=compact' ]
   let g:neomake_javascript_eslint_maker.exe = 'npx'
