@@ -15,3 +15,5 @@ export SHORT_HOST
 # Forces oh-my-zsh to use this location.
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zsh/cache/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 ZGEN_CUSTOM_COMPDUMP=$ZSH_COMPDUMP
+# I swear OMZ just keeps adding crap to annoy me.
+ZSH_DISABLE_COMPFIX=true
