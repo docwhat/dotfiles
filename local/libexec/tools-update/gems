@@ -3,6 +3,10 @@
 
 set -euo pipefail
 
+if [ $UID = 0 ]; then
+  exit 0
+fi
+
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
@@ -69,7 +73,7 @@ if ! (( ${+commands[bundle]} + ${+functions[bundle]} )); then
 fi
 
 # Ensure locally set rbenv versions follow
-if (( ${+commands[rbenv]} + ${+functions[rbenv]} )); then
+if (( ${+commands[rbenv]} )) && (( ${+functions[rbenv]} )); then
   echo "Using Ruby version $(rbenv version)" | colorize yellow
   typeset RBENV_VERSION # ensure this variable exists.
   rbenv shell "$(rbenv version-name)"
