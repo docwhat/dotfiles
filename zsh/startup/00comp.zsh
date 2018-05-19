@@ -4,8 +4,13 @@ if [ ! -d "${ZDOTDIR:-${HOME}}/.zsh/cache" ]; then
 fi
 
 # Force starting compinit as early as possible
-autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
+declare -a compinit_args=( '-d' "$ZSH_COMPDUMP" )
+if [[ "$module_path" =~ /usr/local/Cellar/* ]] && (( UID == 0 )); then
+  compinit_args+=( '-u' )
+fi
+autoload -Uz compinit && compinit "${(@)compinit_args}"
 
+unset compinit_args
 function compinit { }
 
 # Complete aliases
