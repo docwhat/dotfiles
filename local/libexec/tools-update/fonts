@@ -49,7 +49,8 @@ for font in "${fonts[@]}"; do
   fetch_or_update \
     "https://github.com/ryanoasis/nerd-fonts/releases/download/${release}/${font}.zip" \
     "${zipfile}"
-  unzip -uo "${zipfile}" -d ~/Library/Fonts/NerdFonts -x '*Windows*' '*Mono.*'
+  unzip -uo "${zipfile}" '*.otf' -x '*Windows*' '*Mono.*' -d ~/Library/Fonts/NerdFonts \
+  || unzip -uo "${zipfile}" '*.ttf' -x '*Windows*' '*Mono.*' -d ~/Library/Fonts/NerdFonts
 done
 
 # EOF
