@@ -4,12 +4,17 @@
 
 set -eu
 
-stub=~/.dotfiles/tag-nodejs/bin/"$(basename "$1")"
-
 function error {
   print -P "%B%F{red}ERROR%f%b: $*"
   exit 10
 }
+
+if [ -z "${1:-}" ] || [[ "${1:-}" = -* ]]; then
+  echo "Usage: $0 <npm-package> [<command-name>]"
+  exit 0
+fi
+
+stub=~/.dotfiles/tag-nodejs/bin/"$(basename "$1")"
 
 if [ -x "$stub" ]; then
   eval "$(grep -E '^(package|command)=' "$stub")"
