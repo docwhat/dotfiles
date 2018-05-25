@@ -20,6 +20,8 @@ proselint
 yamllint
 pyaml
 ruamel.yaml.cmd
+psutil
+setproctitle
 )
 
 pips=( pip3 pip2 pip )
