@@ -729,6 +729,38 @@ if has_key(g:plugs, 'neoformat') " {{{
   augroup END
 endif " }}}
 
+if has_key(g:plugs, 'LanguageClient-neovim') " {{{
+  " ['javascript-typescript-stdio'],
+  let g:LanguageClient_serverCommands = {
+        \ 'javascript': ['flow-language-server', '--stdio'],
+        \ 'typescript': ['typescript-language-server', '--stdio'],
+        \ 'haskell': ['hie', '--lsp'],
+        \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
+        \ 'lua': ['lua-lsp'],
+        \ 'c': ['clangd'],
+        \ 'cpp': ['clangd'],
+        \ 'objc': ['clangd'],
+        \ 'objcpp': ['clangd'],
+        \ 'python': ['pyls'],
+        \ 'groovy': ['groovy-language-server'],
+        \ 'html': ['html-languageserver', '--stdio'],
+        \ 'sh': ['bash-language-server', 'start'],
+        \ 'bash': ['bash-language-server', 'start'],
+        \ 'Dockerfile': ['docker-langserver', '--stdio'],
+        \ 'go': ['go-langserver', '-mode', 'stdio'],
+        \ }
+
+   " let g:LanguageClient_loggingLevel = 'DEBUG'
+   " let g:LanguageClient_windowLogMessageLevel = 'Log'
+
+  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+  command! LCAction :call LanguageClient#textDocument_codeAction()
+  command! LCSyms :call LanguageClient#textDocument_documentSymbol()
+  command! LCRefs :call LanguageClient#textDocument_references()
+endif " }}}
+
 " Neomake -- linting and building
 if has_key(g:plugs, 'neomake') " {{{
   " Tools to install:

@@ -118,6 +118,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'prettier/vim-prettier', { 'branch': 'release/1.x', 'do': 'yarn install' }
+Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
 
 " XML, HTML & CSS
 Plug 'othree/html5.vim'
