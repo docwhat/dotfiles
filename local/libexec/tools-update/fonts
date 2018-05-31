@@ -6,7 +6,6 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-release=$(curl -sSfn "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | jq -r '.tag_name')
 cachedir="$HOME/.cache/tools-update/fonts"
 
 typeset -a fonts
@@ -16,7 +15,7 @@ Hack
 SourceCodePro
 )
 
-typeset -r release fonts cachedir
+declare -r fonts cachedir
 
 fetch_or_update() {
   local url destination
@@ -35,6 +34,14 @@ if [[ "${OSTYPE}" != darwin* ]]; then
   print -P "  %F{yellow}Skipping%F{reset}: Only %F{green}macOS%F{reset} supported (not %F{green}${OSTYPE}%F{reset})"
   exit 0
 fi
+
+if ! (( $+commands[jq] )); then
+  print -P "  %F{yellow}Skipping%F{reset}: Install %F{green}jq%F{reset} to install fonts."
+  exit 0
+fi
+
+release=$(curl -sSfn "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | jq -r '.tag_name')
+declare -r release
 
 print -P "Fetching Nerd Fonts %F{green}${release}%F{reset}"
 
