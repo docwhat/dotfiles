@@ -267,6 +267,15 @@ if has_key(g:plugs, 'wstrip.vim') " {{{
   augroup END
 endif " }}}
 
+" Better Whitespace -- whitespace trimming and highlighting
+if has_key(g:plugs, 'vim-better-whitespace') " {{{
+  nmap <silent> <Leader><space> :StripWhitespace<CR>
+  augroup VimrcBetterWhitespace
+    autocmd!
+    autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl :EnableStripWhitespaceOnSave
+  augroup END
+endif " }}}
+
 " Codi -- Scratch Pad testing of various languages
 if has_key(g:plugs, 'codi.vim') " {{{
   let g:codi#interpreters = {
@@ -284,7 +293,6 @@ if has_key(g:plugs, 'codi.vim') " {{{
           \ 'bin': [ 'stack', 'ghci' ]
           \ }
   endif
-  " let g:codi#log = "/tmp/codi.log"
 endif " }}}
 
 " Dirvish -- path navigator
@@ -344,7 +352,6 @@ endif " }}}
 if has_key(g:plugs, 'vim-markdown') " {{{
   let g:vim_markdown_folding_disabled = 1
   let g:vim_markdown_folding_style_pythonic = 1
-  " let g:vim_markdown_override_foldtext = 0
 
   let g:vim_markdown_conceal = 0
   let g:vim_markdown_frontmatter = 1
@@ -512,6 +519,15 @@ endif "}}}
 
 " EditorConfig -- Additional configuration
 if has_key(g:plugs, 'editorconfig-vim') " {{{
+  let g:EditorConfig_exclude_patterns = [
+        \ 'scp://.*',
+        \ 'rsync://.*',
+        \ '*.diff',
+        \ '*/.git/*',
+        \ ]
+  let g:EditorConfig_max_line_indicator = 'fill'
+  let g:EditorConfig_preserve_formatoptions = 1
+
   function! EditorConfigFiletypeHook(config)
     if exists('g:myvim_editor_config_filetype_hook') && g:myvim_editor_config_filetype_hook > 0
       return 0
@@ -537,6 +553,18 @@ if has_key(g:plugs, 'editorconfig-vim') " {{{
     return 0   " Return 0 to show no error happened
   endfunction
   call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
+endif " }}}
+
+" EditorConfig -- Additional configuration
+if has_key(g:plugs, 'vim-editorconfig') " {{{
+  let g:editorconfig_blacklist = {
+        \ 'filetype': ['git.*', 'fugitive', 'diff'],
+        \ 'pattern': ['\.un~$']}
+  let g:editorconfig_root_chdir = 1
+  let g:editorconfig_verbose = 1
+  let g:editorconfig_local_vimrc = 0 " Never!
+
+  command! EditorConfigReload call editorconfig#load()
 endif " }}}
 
 " Deoplete -- Additional configuration
@@ -681,8 +709,8 @@ if has_key(g:plugs, 'neoformat') " {{{
   " Enable tab to spaces conversion
   let g:neoformat_basic_format_retab = 1
 
-  " Enable trimmming of trailing whitespace
-  let g:neoformat_basic_format_trim = 1
+  " Disable trimmming of trailing whitespace, we have that elsewhere.
+  let g:neoformat_basic_format_trim = 0
 
   function! s:myNeoformat()
     if !exists('b:my_neoformat_disable')
@@ -749,9 +777,6 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
         \ 'Dockerfile': ['docker-langserver', '--stdio'],
         \ 'go': ['go-langserver', '-mode', 'stdio'],
         \ }
-
-   " let g:LanguageClient_loggingLevel = 'DEBUG'
-   " let g:LanguageClient_windowLogMessageLevel = 'Log'
 
   nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>

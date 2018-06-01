@@ -53,12 +53,11 @@ Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " Whitespace trimming and highlighting
-" Only for lines that have been changed.
-Plug 'tweekmonster/wstrip.vim'
+Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'metakirby5/codi.vim'
 Plug 'justinmk/vim-dirvish'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'sgur/vim-editorconfig'
 
 " Git & VCS support
 Plug 'tpope/vim-fugitive'
@@ -106,7 +105,6 @@ Plug 'dbakker/vim-lint'
 Plug 'neomake/neomake'
 
 " NGinX
-" Plug 'fatih/vim-nginx'
 Plug 'chr4/nginx.vim'
 
 " Jekyll/Liquid
