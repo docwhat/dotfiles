@@ -28,8 +28,7 @@ if (( $+commands[brew] )); then
     alias openssl=/usr/local/opt/openssl/bin/openssl
   fi
 
-  function brew()
-  {
+  function brew() {
     local myterm=$TERM
     case "$TERM" in
       tmux-256color)
@@ -48,6 +47,19 @@ if (( $+commands[brew] )); then
     if [[ "$1" == *install* ]]; then
       rehash
     fi
+  }
+
+  function brew-fast-update() {
+    if (( $+commands[parallel] )); then
+      /usr/bin/find /usr/local -name '.git' -type d -print0 \
+        | parallel --progress --eta -j+0 -0 '(set -e ; cd {} ; cd .. ; echo -en "\n====> " ; pwd ; git fetch --all --prune ; git prune ; git checkout master ; git reset --hard origin/master) 1>&2'
+    else
+      /usr/bin/find /usr/local -name '.git' -type d -print0 \
+        | /usr/bin/xargs -0 -Iqq bash -c '(set -e ; cd qq ; cd .. ; echo -n "====> " ; pwd ; git fetch --all --prune ; git prune ; git checkout master ; git reset --hard origin/master) 1>&2'
+    fi
+
+    echo -e "\n\n"
+    brew outdated
   }
 fi
 
