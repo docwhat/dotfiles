@@ -908,10 +908,11 @@ if has_key(g:plugs, 'ale') " {{{
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-  " Enable completion where available.
   let g:ale_completion_enabled = 1
-
   let g:ale_list_window_size = 5
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
   if $POWERLEVEL9K_MODE ==# 'nerdfont-complete'
     let g:ale_sign_error         = ''
