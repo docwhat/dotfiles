@@ -28,6 +28,7 @@ fi
 
 # general
 POWERLEVEL9K_MODE='nerdfont-complete'
+export POWERLEVEL9K_MODE # To use in VIM, etc.
 
 # Bug https://github.com/bhilburn/powerlevel9k/pull/752
 POWERLEVEL9K_VCS_GIT_ICON=$'\uF1D3 '          # 

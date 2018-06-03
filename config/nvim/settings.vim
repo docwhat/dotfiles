@@ -115,8 +115,6 @@ if exists('+termguicolors')
 elseif exists('+guicolors')
   set guicolors
 endif
-colorscheme jellybeans
-call airline#switch_theme('badwolf')
 set background=dark
 
 " Smash escape!
@@ -194,15 +192,7 @@ nnoremap <Right> :echoerr "Republican, eh? I prefer 'l'."<cr>
 nnoremap <Up>    :echoerr "This is why we can't have nice things. You should have used 'k'."<cr>
 nnoremap <Down>  :echoerr "That's what she said... and then used 'j'."<cr>
 
-" Comment Strings -- Override some lame defaults
-"-----------------------------------------------------------------------------
-augroup VimrcCommentStrings
-  autocmd!
-  autocmd FileType vim set commentstring=\ \"\ %s
-augroup END
-
-
-" Manpages and :help
+" Man-pages and :help
 "-----------------------------------------------------------------------------
 function! ILikeHelpToTheRight()
   if !exists('w:help_is_moved') || w:help_is_moved !=# 'right'
@@ -486,14 +476,6 @@ if has_key(g:plugs, 'indentLine') " {{{
   let g:indentLine_setConceal = 0
 endif " }}}
 
-" Airplane -- cursor line theme
-if has_key(g:plugs, 'jellybeans.vim') " {{{
-  let g:airline_powerline_fonts            = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline_left_sep=''
-  let g:airline_right_sep=''
-endif " }}}
-
 " Jellybeans -- syntax theme
 if has_key(g:plugs, 'jellybeans.vim') "{{{
   let g:jellybeans_overrides = {}
@@ -506,16 +488,38 @@ if has_key(g:plugs, 'jellybeans.vim') "{{{
   let g:jellybeans_overrides['SyntasticWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
   let g:jellybeans_overrides['SyntasticErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
 
-  let g:jellybeans_overrides['NeomakeInfoSign']    = { 'attr': 'none', 'guifg': '00dcff', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeMessageSign'] = { 'attr': 'none', 'guifg': 'eeeeee', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeInfoSign']      = { 'attr': 'none', 'guifg': '00dcff', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeMessageSign']   = { 'attr': 'none', 'guifg': 'eeeeee', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeWarningSign']   = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeErrorSign']     = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
 
-  let g:jellybeans_overrides['NeomakeInfo']        = { 'attr': 'none', 'guifg': '0000ff', 'guibg': '333388' }
-  let g:jellybeans_overrides['NeomakeMessage']     = { 'attr': 'none', 'guifg': 'ffffff', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeWarning']     = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '888833' }
-  let g:jellybeans_overrides['NeomakeError']       = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '883333' }
+  let g:jellybeans_overrides['NeomakeInfo']          = { 'attr': 'none', 'guifg': '0000ff', 'guibg': '333388' }
+  let g:jellybeans_overrides['NeomakeMessage']       = { 'attr': 'none', 'guifg': 'ffffff', 'guibg': '333333' }
+  let g:jellybeans_overrides['NeomakeWarning']       = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '888833' }
+  let g:jellybeans_overrides['NeomakeError']         = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '883333' }
+
+  let g:jellybeans_overrides['ALEErrorSign']         = { 'attr': 'none', 'guifg': '990000', 'guibg': '333333' }
+  let g:jellybeans_overrides['ALEWarningSign']       = { 'attr': 'none', 'guifg': 'df5f00', 'guibg': '333333' }
+  let g:jellybeans_overrides['ALEInfoSign']          = { 'attr': 'none', 'guifg': 'aeee00', 'guibg': '333333' }
+
+  let g:jellybeans_overrides['ALEStyleErrorSign']    = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '333333' }
+  let g:jellybeans_overrides['ALEStyleWarningSign']  = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '333333' }
+
+  colorscheme jellybeans
 endif "}}}
+
+" Airplane -- cursor line theme
+if has_key(g:plugs, 'vim-airline') " {{{
+  let g:airline_powerline_fonts            = 1
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_left_sep=''
+  let g:airline_right_sep=''
+
+  if has_key(g:plugs, 'vim-airline-themes')
+    call airline#switch_theme('badwolf')
+  endif
+endif " }}}
+
 
 " EditorConfig -- Additional configuration
 if has_key(g:plugs, 'editorconfig-vim') " {{{
@@ -897,6 +901,44 @@ if has_key(g:plugs, 'neomake') " {{{
     autocmd BufEnter Gemfile*,Guardfile let b:neomake_ruby_enabled_makers = ['mri', 'rubocop']
     autocmd FileType ruby,eruby call s:detectChefSubFileType()
   augroup END
+endif " }}}
+
+" ALE -- linting, completion, and formatting
+if has_key(g:plugs, 'ale') " {{{
+  nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
+  nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
+
+  " Enable completion where available.
+  let g:ale_completion_enabled = 1
+
+  let g:ale_list_window_size = 5
+
+  if $POWERLEVEL9K_MODE ==# 'nerdfont-complete'
+    let g:ale_sign_error         = ''
+    let g:ale_sign_warning       = ''
+    let g:ale_sign_info          = ''
+    let g:ale_sign_style_error   = ''
+    let g:ale_sign_style_warning = '𥉉'
+  else
+    let g:ale_sign_error         = '◉'
+    let g:ale_sign_warning       = '◉'
+    let g:ale_sign_info          = '◉'
+    let g:ale_sign_style_error   = '!'
+    let g:ale_sign_style_warning = '!'
+  endif
+
+  if has_key(g:plugs, 'vim-airline')
+    " Set this. Airline will handle the rest.
+    let g:airline#extensions#ale#enabled = 1
+
+    if $POWERLEVEL9K_MODE ==# 'nerdfont-complete'
+      let g:airline#extensions#ale#error_symbol = ' '
+      let g:airline#extensions#ale#warning_symbol = '𥉉'
+    else
+      let g:airline#extensions#ale#error_symbol = 'E:'
+      let g:airline#extensions#ale#warning_symbol = 'W:'
+    endif
+  endif
 endif " }}}
 
 " Syntastic -- linting

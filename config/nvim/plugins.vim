@@ -73,36 +73,15 @@ Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 
-" Completion & Snippets
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
-Plug 'docwhat/deoplete-better-length-matcher.nvim'
-Plug 'Shougo/neco-vim'
-Plug 'Shougo/neco-syntax'
-Plug 'zchee/deoplete-go'
-Plug 'Shougo/deoplete-rct'
-Plug 'fishbullet/deoplete-ruby'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'eagletmt/neco-ghc'
-Plug 'zchee/deoplete-jedi'
-Plug 'tweekmonster/deoplete-clang2'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
-Plug 'wokalski/autocomplete-flow'
-Plug 'carlitux/deoplete-ternjs'
-Plug 'zchee/deoplete-zsh'
-
 " Neovim Development
 Plug 'tweekmonster/nvimdev.nvim'
 Plug 'tweekmonster/helpful.vim'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
 
-" Neoformat
-Plug 'sbdchd/neoformat'
-
 " Style/Lint
 Plug 'dbakker/vim-lint'
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 
 " NGinX
 Plug 'chr4/nginx.vim'
@@ -115,7 +94,6 @@ Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neoclide/vim-jsx-improve'
-Plug 'prettier/vim-prettier', { 'branch': 'release/1.x', 'do': 'yarn install' }
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
 
 " XML, HTML & CSS
