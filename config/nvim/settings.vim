@@ -905,8 +905,8 @@ endif " }}}
 
 " ALE -- linting, completion, and formatting
 if has_key(g:plugs, 'ale') " {{{
-  nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
-  nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
+  nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+  nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
   " Enable completion where available.
   let g:ale_completion_enabled = 1
