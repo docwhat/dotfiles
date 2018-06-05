@@ -13,6 +13,7 @@ fonts=(
 FiraCode
 Hack
 SourceCodePro
+LiberationMono
 )
 
 declare -r fonts cachedir
@@ -59,5 +60,8 @@ for font in "${fonts[@]}"; do
   unzip -uo "${zipfile}" '*.otf' -x '*Windows*' '*Mono.*' -d ~/Library/Fonts/NerdFonts \
   || unzip -uo "${zipfile}" '*.ttf' -x '*Windows*' '*Mono.*' -d ~/Library/Fonts/NerdFonts
 done
+
+# Install SF-Mono fonts for general usage.
+rsync -av --delete /Applications/Utilities/Terminal.app/Contents/Resources/Fonts ~/Library/Fonts/TerminalAppFonts/
 
 # EOF
