@@ -909,6 +909,7 @@ if has_key(g:plugs, 'ale') " {{{
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
   let g:ale_completion_enabled = 1
+  let g:ale_use_global_executables = 1
   let g:ale_list_window_size = 5
   let g:ale_echo_msg_error_str = 'E'
   let g:ale_echo_msg_warning_str = 'W'
