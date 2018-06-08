@@ -455,7 +455,7 @@ if has_key(g:plugs, 'vim-ruby') " {{{
   let g:ruby_indent_assignment_style = 'variable'
 endif " }}}
 
-" Go -- GoLang syntax, indentation, and tools
+" Jenkinsfile Syntax
 if has_key(g:plugs, 'Jenkinsfile-vim-syntax') " {{{
   augroup VimrcJenkinsfile
     autocmd!
