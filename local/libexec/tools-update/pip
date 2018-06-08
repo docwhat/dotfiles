@@ -11,10 +11,12 @@ DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 eggs=(
+black
 flake8
+isort
 jedi
 neovim
-pip wheel
+pip
 proselint
 psutil
 pyaml
@@ -22,6 +24,7 @@ python-language-server
 ruamel.yaml.cmd
 setproctitle
 vim-vint
+wheel
 yamllint
 )
 
