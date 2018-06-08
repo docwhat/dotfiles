@@ -10,12 +10,22 @@ fi
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-eggs=(
-black
+declare -raU eggs=(
 flake8
 isort
-jedi
 neovim
+pip
+wheel
+)
+
+declare -raU eggs2=(
+"${(@)eggs}"
+)
+
+declare -raU eggs3=(
+"${(@)eggs}"
+black
+jedi
 pip
 proselint
 psutil
@@ -28,25 +38,41 @@ wheel
 yamllint
 )
 
-pips=( pip3 pip2 pip )
+function python_major_version() {
+  declare -r python="${commands[$1]}"
 
-# Reduce the search list if both exist (pip will be a duplicate of one of them).
-if (( $+commands[pip3] )) && (( $+commands[pip2] )); then
-  pips=( pip3 pip2 )
-fi
-
-for pip in "${pips[@]}"; do
-  (( $+commands[$pip] )) || continue
-
-  echo "${commands[${pip}]}" | colorize green
-
-  args=( "${commands[$pip]}" install --upgrade )
-
-  if [[ "${commands[$pip]}" = "$HOME"/* ]]; then
-    args+=( --user )
+  if [ -z "$python" ]; then
+    echo 0
+  else
+    "$python" -c 'import sys; print(sys.version_info[0])'
   fi
+}
 
-  "${args[@]}" "${eggs[@]}" | offset
+declare -A pythons
+# This order is important. We want python2/3 to clobber python.
+for python in python python2 python3; do
+  k="$(python_major_version "$python")"
+  pythons[$k]="${commands[$python]}"
+done
+declare -r pythons
+
+for k in "${(@k)pythons}"; do
+  declare eggvar="eggs${k}"
+  declare python="${pythons[$k]}"
+  declare -a args
+
+  echo "PYTHON ${k}" | colorize green
+
+  args=(
+  "$python"
+  -m pip
+  install
+  --user
+  --upgrade
+  "${(@P)eggvar}"
+  )
+
+  "${(@)args}" | offset
 done
 
 # EOF
