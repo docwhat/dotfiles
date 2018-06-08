@@ -943,6 +943,7 @@ if has_key(g:plugs, 'ale') " {{{
   endif
 
   augroup VimrcALE
+    autocmd!
     autocmd OptionSet tabstop,shiftwidth nested :call s:fixPrettierOptions()
     autocmd BufEnter *                   nested :call s:fixPrettierOptions()
   augroup END
