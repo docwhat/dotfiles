@@ -786,6 +786,7 @@ if has_key(g:plugs, 'neoformat') " {{{
   augroup END
 endif " }}}
 
+" LanguageClient - LSP client
 if has_key(g:plugs, 'LanguageClient-neovim') " {{{
   " ['javascript-typescript-stdio'],
   let g:LanguageClient_serverCommands = {
@@ -807,8 +808,13 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
         \ 'go': ['go-langserver', '-mode', 'stdio'],
         \ }
 
+  if has_key(g:plugs, 'ale')
+    let g:ale_completion_enabled = 0
+  endif
+
   nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
   nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
   command! LCAction :call LanguageClient#textDocument_codeAction()
   command! LCSyms :call LanguageClient#textDocument_documentSymbol()

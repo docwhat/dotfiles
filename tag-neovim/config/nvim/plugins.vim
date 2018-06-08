@@ -100,6 +100,11 @@ Plug 'wokalski/autocomplete-flow'
 Plug 'carlitux/deoplete-ternjs'
 Plug 'zchee/deoplete-zsh'
 
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
