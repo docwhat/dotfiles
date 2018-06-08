@@ -941,6 +941,31 @@ if has_key(g:plugs, 'ale') " {{{
       let g:airline#extensions#ale#warning_symbol = 'W:'
     endif
   endif
+
+  augroup VimrcALE
+    autocmd OptionSet tabstop,shiftwidth nested :call s:fixPrettierOptions()
+    autocmd BufEnter *                   nested :call s:fixPrettierOptions()
+  augroup END
+
+  function! s:fixPrettierOptions()
+    let l:tabwidth = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
+    let b:ale_javascript_prettier_options =
+          \ get(g:, 'ale_javascript_prettier_options', '')
+          \ . ' --tab-width=' . l:tabwidth
+
+    if &textwidth > 0
+      let b:ale_javascript_prettier_options = b:ale_javascript_prettier_options . ' --print-width=' . &textwidth . ' --prose-wrap=always'
+    else
+      let b:ale_javascript_prettier_options = b:ale_javascript_prettier_options . ' --prose-wrap=never'
+    endif
+  endfunction
+
+  " ALE isn't going to add the fixers to the normal enable/disable.
+  " reference: https://github.com/w0rp/ale/issues/1353
+  command! ALEFixersDisable       let b:ale_fix_on_save=0
+  command! ALEFixersEnable        let b:ale_fix_on_save=1
+  command! ALEFixersToggle        let b:ale_fix_on_save = get(b:, 'ale_fix_on_save', get(g:, 'ale_fix_on_save', 0)) ? 0 : 1
+
 endif " }}}
 
 " Syntastic -- linting
