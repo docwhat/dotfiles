@@ -177,7 +177,26 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Indent whole file
 "-----------------------------------------------------------------------------
-nmap <silent> <Leader>g :call Preserve("normal gg=G")<CR>
+function! MyIndentWholeBufferIfEnabled() abort
+  let l:buffer = bufnr('')
+
+  if has_key(g:plugs, 'ale')
+    if type(get(b:, 'ale_fixers')) is type([])
+      let l:fixers = b:ale_fixers
+    else
+      let l:fixers = get(ale#Var(l:buffer, 'fixers'), &filetype, [])
+    endif
+
+    if len(l:fixers) > 0
+      call ale#fix#Fix(l:buffer, '')
+      return
+    endif
+  endif
+
+  call Preserve('normal gg=G')
+endfunction
+
+nmap <silent> <Leader>g :verbose call MyIndentWholeBufferIfEnabled()<CR>
 
 " Turn off highlights
 "-----------------------------------------------------------------------------
