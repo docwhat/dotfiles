@@ -83,6 +83,27 @@ Plug 'ynkdir/vim-vimlparser'
 Plug 'dbakker/vim-lint'
 Plug 'w0rp/ale'
 
+
+" Completion
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
+Plug 'docwhat/deoplete-better-length-matcher.nvim'
+Plug 'Shougo/neco-vim'
+Plug 'Shougo/neco-syntax'
+Plug 'zchee/deoplete-go'
+Plug 'Shougo/deoplete-rct'
+Plug 'fishbullet/deoplete-ruby'
+Plug 'eagletmt/neco-ghc'
+Plug 'zchee/deoplete-jedi'
+Plug 'tweekmonster/deoplete-clang2'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
+Plug 'wokalski/autocomplete-flow'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'zchee/deoplete-zsh'
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 " NGinX
 Plug 'chr4/nginx.vim'
 
