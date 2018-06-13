@@ -10,5 +10,5 @@ if has_key(g:plugs, 'ale')
   else
     let b:ale_fixers += ['prettier', 'eslint']
   endif
-  let b:ale_fixers += ['remote_trailing_lines']
+  let b:ale_fixers += ['remove_trailing_lines']
 endif
