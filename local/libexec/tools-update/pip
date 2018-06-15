@@ -10,34 +10,6 @@ fi
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-declare -raU eggs=(
-flake8
-isort
-neovim
-pip
-wheel
-)
-
-declare -raU eggs2=(
-"${(@)eggs}"
-)
-
-declare -raU eggs3=(
-"${(@)eggs}"
-black
-jedi
-pip
-proselint
-psutil
-pyaml
-python-language-server
-ruamel.yaml.cmd
-setproctitle
-vim-vint
-wheel
-yamllint
-)
-
 function python_major_version() {
   declare -r python="${commands[$1]}"
 
@@ -57,22 +29,23 @@ done
 declare -r pythons
 
 for k in "${(@k)pythons}"; do
-  declare eggvar="eggs${k}"
   declare python="${pythons[$k]}"
   declare -a args
 
   echo "PYTHON ${k}" | colorize green
 
-  args=(
-  "$python"
-  -m pip
-  install
-  --user
-  --upgrade
-  "${(@P)eggvar}"
-  )
+  cd ~/.local/share/tools-update/pip
 
-  "${(@)args}" | offset
+  # These are important and should be done first.
+  "$python" -m pip install --user --upgrade pip wheel | offset
+
+  "$python" \
+    -m pip \
+    install \
+    --user \
+    --upgrade \
+    --requirement ./requirements.txt \
+    | offset
 done
 
 # EOF
