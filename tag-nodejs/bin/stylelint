@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #!/bin/bash
+##marker: NODEJS-CLI-TOOL##
 set -eEuo pipefail
 
 package='stylelint'
 command='stylelint'
 
-export NODENV_VERSION=8
+export NODENV_VERSION='8'
 
 local_bin="$(npm bin 2>/dev/null)"
 global_bin="$(npm bin --global 2>/dev/null)"

@@ -2,16 +2,18 @@
 
 const pkg = process.argv[2]
 const cmd = process.argv[3]
+const ver = process.argv[4]
 
 console.log(`#!/bin/bash
 
 #!/bin/bash
+##marker: NODEJS-CLI-TOOL##
 set -eEuo pipefail
 
 package='${pkg}'
 command='${cmd}'
 
-export NODENV_VERSION=8
+export NODENV_VERSION='${ver}'
 
 local_bin="$(npm bin 2>/dev/null)"
 global_bin="$(npm bin --global 2>/dev/null)"
