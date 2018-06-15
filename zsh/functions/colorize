@@ -1,12 +1,28 @@
-local color="${1:-white}"; (( $#* > 0 )) && shift
-local cc="$(print -P "%F{$color}")"
-local cr="$(print -P "%F{reset}")"
+declare color_code=""
+declare -r reset_code="%F{reset}"
+
+while (( $#* > 0 )); do
+  case "$1" in
+    bold)
+      color_code+="%B"
+      ;;
+    black|red|green|yellow|blue|magenta|cyan|white)
+      color_code+="%F{$1}"
+      ;;
+    --) shift; break ;;
+    *) break ;;
+  esac
+  shift
+done
+
+declare -r color_code
+
 
 if (( $#* > 0 )); then
-  echo "${cc}$*${cr}"
+  echo "${(%)color_code}$*${(%)reset_code}"
 else
   while IFS='' read line; do
-    echo "${cc}${line}${cr}"
+    echo "${(%)color_code}${line}${(%)reset_code}"
   done
 fi
 
