@@ -18,7 +18,6 @@
 	graph = log --graph --abbrev-commit --decorate --date=relative --all
 	lg = log --graph --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
 	ls = log --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
-	pr = !hub pull-request
 	up = !git fetch origin && git rebase origin/master
 	fap = fetch --all --prune --prune-tags
 

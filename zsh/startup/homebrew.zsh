@@ -6,15 +6,6 @@ if (( $+commands[brew] )); then
     source "$(brew --prefix)/etc/autojump"
   fi
 
-  # Enable github support
-  if [ -x /usr/local/bin/hub ]; then
-    alias git=/usr/local/bin/hub
-    type compdef >/dev/null && compdef hub=git
-  elif command -v hub >/dev/null; then
-    alias git=hub
-    type compdef >/dev/null && compdef hub=git
-  fi
-
   # Enable super help
   if [ -d /usr/local/share/zsh/help ]; then
     if (( $+aliases[run-help] )); then
