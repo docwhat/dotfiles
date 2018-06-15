@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -eEuo pipefail
+
+# Idea from https://gist.github.com/gnarf/5406589
+
+cleanup_all_prs()
+{
+  git for-each-ref 'refs/heads/pr/[0-9]*' --format='%(refname)' | while read -r ref
+  do
+    declare branch=${ref#refs/heads/}
+    git branch -D "$branch"
+  done
+}
+
+checkout_pr()
+{
+  declare remote=${2:-$(git remote |grep ^upstream || echo origin)}
+  declare pr_number=$1
+
+  git fetch \
+    --force \
+    --update-head-ok \
+    "$remote" \
+    "refs/pull/${pr_number}/head:pr/${pr_number}"
+
+  git checkout "pr/$pr_number"
+}
+
+help() {
+  echo "Usage: git pr [<number>|list|clean]" 1>&2
+}
+
+case "${1:-}" in
+  l | li | lis | list ) hub pr list ;;
+  c | cl | cle | clea | clean ) cleanup_all_prs ;;
+  -h | --h | --he | --hel | --help | h | he | hel | help ) help ;;
+  -* ) echo "Invalid flag: $1"; help ; exit 3 ;;
+
+  # These must be last
+  ''|*[!0-9]*) help ; exit 3 ;;
+  *) checkout_pr "$@" ;;
+esac
+
+# EOF
