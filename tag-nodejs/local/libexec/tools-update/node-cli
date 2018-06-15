@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+#DESC# Node CLI applications #DESC#
+
+set -euo pipefail
+
+if [ $UID = 0 ]; then
+  exit 0
+fi
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+cd "${DOTFILES_DIR}/tag-nodejs/bin"
+
+for clicmd in *(.*N); do
+  ./add-node-cli "$clicmd"
+done | offset
+
+# EOF
