@@ -35,8 +35,8 @@ for k in "${(@k)pythons}"; do
 
   echo "PYTHON ${k}" | colorize green
 
-  if ! "$python" -m pip --version |& colorize black bold; then
-    echo "  skipping" | colorize yellow | offset
+  if ! "$python" -m pip --version |& colorize black bold | offset; then
+    echo skipping | colorize yellow | offset
     continue
   fi
 
@@ -52,6 +52,8 @@ for k in "${(@k)pythons}"; do
     --upgrade \
     --requirement ./requirements.txt \
     | offset
+
+  echo
 done
 
 # EOF
