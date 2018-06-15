@@ -11,12 +11,11 @@ DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 function python_major_version() {
-  declare -r python="${commands[$1]}"
+  declare -r python=$1
+  declare -r pythonpath=${commands[$python]:-}
 
-  if [ -z "$python" ]; then
-    echo 0
-  else
-    "$python" -c 'import sys; print(sys.version_info[0])'
+  if [ -n "$pythonpath" ]; then
+    "$pythonpath" -c 'import sys; print(sys.version_info[0])'
   fi
 }
 
@@ -24,7 +23,9 @@ declare -A pythons
 # This order is important. We want python2/3 to clobber python.
 for python in python python2 python3; do
   k="$(python_major_version "$python")"
-  pythons[$k]="${commands[$python]}"
+  if [ -n "$k" ]; then
+    pythons[$k]=$commands[$python]
+  fi
 done
 declare -r pythons
 
@@ -33,6 +34,11 @@ for k in "${(@k)pythons}"; do
   declare -a args
 
   echo "PYTHON ${k}" | colorize green
+
+  if ! "$python" -m pip --version |& colorize black bold; then
+    echo "  skipping" | colorize yellow | offset
+    continue
+  fi
 
   cd ~/.local/share/tools-update/pip
 
