@@ -61,10 +61,11 @@ os_icon
 context
 dir
 dir_writable
-custom_nodenv
-rbenv
+
+# custom_nodenv
+# rbenv
 vcs
-docker_machine
+# docker_machine
 
 newline
 
