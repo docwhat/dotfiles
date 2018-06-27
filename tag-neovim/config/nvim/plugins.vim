@@ -170,7 +170,8 @@ Plug 'tbastos/vim-lua'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'nanotech/jellybeans.vim'
+Plug 'nanotech/jellybeans.vim', { 'as': 'colorscheme-jellybeans' }
+" Plug 'tomasr/molokai', { 'as': 'colorscheme-molokai' }
 
 " Terraform
 Plug 'hashivim/vim-terraform'

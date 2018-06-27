@@ -507,13 +507,14 @@ if has_key(g:plugs, 'indentLine') " {{{
 endif " }}}
 
 " Jellybeans -- syntax theme
-if has_key(g:plugs, 'jellybeans.vim') "{{{
+if has_key(g:plugs, 'colorscheme-jellybeans') "{{{
   let g:jellybeans_overrides = {}
   let g:jellybeans_overrides['background']           = { 'guibg': 'none' }
   let g:jellybeans_overrides['LineNr']               = { 'attr': 'none', 'guifg': '707090', 'guibg': 'none'   }
   let g:jellybeans_overrides['CursorLineNr']         = { 'attr': 'none', 'guifg': 'a0a0f0', 'guibg': 'none'   }
   let g:jellybeans_overrides['IncSearch']            = { 'attr': 'none', 'guifg': '405060', 'guibg': 'ff8b0f' }
   let g:jellybeans_overrides['Search']               = { 'attr': 'none', 'guifg': '203040', 'guibg': 'f7ff0d' }
+  let g:jellybeans_overrides['Boolean']              = { 'attr': 'none', 'guifg': 'c04ccf', 'guibg': 'none'   }
 
   let g:jellybeans_overrides['SyntasticWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
   let g:jellybeans_overrides['SyntasticErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
@@ -536,7 +537,14 @@ if has_key(g:plugs, 'jellybeans.vim') "{{{
   let g:jellybeans_overrides['ALEStyleWarningSign']  = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '333333' }
 
   colorscheme jellybeans
+
+  highlight link phpBoolean Boolean
 endif "}}}
+
+if has_key(g:plugs, 'colorscheme-molokai') " {{{
+  let g:molokai_original = 1
+  let g:rehash256 = 1
+endif " }}}
 
 " Airplane -- cursor line theme
 if has_key(g:plugs, 'vim-airline') " {{{
