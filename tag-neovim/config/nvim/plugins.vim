@@ -33,6 +33,9 @@ Plug 'kana/vim-arpeggio'
 " lets you align comments, equal signs, etc.
 Plug 'godlygeek/tabular'
 
+" TOML
+Plug 'cespare/vim-toml'
+
 " Markdown syntax
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 
