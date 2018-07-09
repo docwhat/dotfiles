@@ -75,6 +75,7 @@ Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 
 " Neovim Development
 Plug 'tweekmonster/nvimdev.nvim'
