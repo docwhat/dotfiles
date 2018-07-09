@@ -42,4 +42,13 @@ done
 echo
 nodenv update --verbose
 
+echo
+for node_ver in "${NODENV_ROOT:-${HOME}/.nodenv}"/versions/*(/n:t); do
+  print -P "%F{blue}===%F{green}${node_ver}%F{blue}=================================%F{reset}"
+  env NODENV_VERSION=${node_ver} npm upgrade --global \
+    neovim \
+    yarn \
+    | offset
+done
+
 # EOF

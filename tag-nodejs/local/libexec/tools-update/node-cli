@@ -13,7 +13,7 @@ source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 cd "${DOTFILES_DIR}/tag-nodejs/bin"
 
 for clicmd in *(.*N); do
-  ./add-node-cli "$clicmd"
+  ./add-node-cli "$clicmd" || :
 done | offset
 
 # EOF
