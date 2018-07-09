@@ -46,9 +46,7 @@ set cursorline                   " highlights the current line
 set conceallevel=2
 set concealcursor=
 
-if has('patch-7.4.1570')
-  set shortmess+=F
-endif
+set shortmess+=F
 
 set autoread
 augroup checktime
