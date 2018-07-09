@@ -50,6 +50,14 @@ if has('patch-7.4.1570')
   set shortmess+=F
 endif
 
+set autoread
+augroup checktime
+  autocmd!
+  if !has('gui_running')
+    autocmd BufEnter,FocusGained,TabEnter * checktime
+  endif
+augroup END
+
 " undo persist between sessions
 set undofile
 
