@@ -389,8 +389,44 @@ if has_key(g:plugs, 'denite.nvim') " {{{
           \      '--hidden', '-g', ''
           \   ] })
   endif
-  nnoremap <silent> <leader>p :Denite file_rec<cr>
-  " nnoremap <C-p> :Denite file_rec<cr>
+  if !has_key(g:plugs, 'fzf.vim') " {{{
+    nnoremap <silent> <leader>p :Denite file_rec<cr>
+  endif
+endif " }}}
+
+function! s:get_git_root()
+  let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+  return v:shell_error ? '' : root
+endfunction
+
+" FZF
+if has_key(g:plugs, 'fzf.vim') " {{{
+
+  function! MyGFilesOrFiles()
+    let root = s:get_git_root()
+    if empty(s:get_git_root())
+      :Files
+    else
+      :GFiles
+    endif
+  endfunction
+
+  let g:fzf_buffers_jump = 1
+  nnoremap <silent> <leader>p :call MyGFilesOrFiles()<CR>
+
+  " Mapping selecting mappings
+  nmap <leader><tab> <plug>(fzf-maps-n)
+  xmap <leader><tab> <plug>(fzf-maps-x)
+  omap <leader><tab> <plug>(fzf-maps-o)
+
+  " Insert mode completion
+  imap <c-x><c-k> <plug>(fzf-complete-word)
+  imap <c-x><c-f> <plug>(fzf-complete-path)
+  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+  imap <c-x><c-l> <plug>(fzf-complete-line)
+
+  " Advanced customization using autoload functions
+  inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 endif " }}}
 
 " Markdown

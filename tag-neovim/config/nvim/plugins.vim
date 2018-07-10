@@ -70,12 +70,10 @@ Plug 'tpope/vim-rhubarb'
 " Comments
 Plug 'scrooloose/nerdcommenter'
 
-" Unite/Denite
-Plug 'Shougo/denite.nvim', { 'do': function('DoRemotePluginsUpdate') }
-
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+" TODO: Consider fzy instead? https://github.com/jhawthorn/fzy
 
 " Neovim Development
 Plug 'tweekmonster/nvimdev.nvim'
