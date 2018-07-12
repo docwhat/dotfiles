@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+exec docker \
+    image \
+    inspect  \
+    '--format={{index .RepoDigests 0}}' \
+    "$@"
