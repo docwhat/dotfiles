@@ -4,7 +4,7 @@ set -eu
 
 for broken_link in \
   ~/.zsh/**/*(N-@) \
-  ~/.bin/**/*(N-@) \
+  ~/bin/**/*(N-@) \
   ~/.local/bin/**/*(N-@) \
   ~/.local/libexec/**/*(N-@) \
   ~/.local/share/**/*(N-@) \
