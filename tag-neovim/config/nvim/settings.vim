@@ -595,6 +595,11 @@ elseif has_key(g:plugs, 'colorscheme-molokai')
 endif
 " }}}
 
+" Rainbow Parentheses -- Color matching parentheses
+if has_key(g:plugs, 'rainbow-parentheses') " {{{
+  let g:rainbow_active = 1
+endif " }}}
+
 " Airplane -- cursor line theme
 if has_key(g:plugs, 'vim-airline') " {{{
   let g:airline_powerline_fonts            = 1

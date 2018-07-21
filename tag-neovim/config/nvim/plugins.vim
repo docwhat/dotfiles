@@ -173,6 +173,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Plug 'tomasr/molokai', { 'as': 'colorscheme-molokai' }
 " Plug 'dracula/vim', { 'as': 'colorscheme-dracula' }
 Plug 'morhetz/gruvbox', { 'as': 'colorscheme-gruvbox' }
+Plug 'luochen1990/rainbow', { 'as': 'rainbow-parentheses' }
 
 " Terraform
 Plug 'hashivim/vim-terraform'
