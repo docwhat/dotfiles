@@ -586,14 +586,14 @@ elseif has_key(g:plugs, 'colorscheme-jellybeans')
   let g:jellybeans_overrides['ALEStyleErrorSign']    = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '333333' }
   let g:jellybeans_overrides['ALEStyleWarningSign']  = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '333333' }
 
+  let g:airline_theme='badwolf'
   colorscheme jellybeans
-  let g:airline_theme='dracula'
-
-elseif has_key(g:plugs, 'colorscheme-molokai') " {{{
+elseif has_key(g:plugs, 'colorscheme-molokai')
   let g:molokai_original = 1
   let g:rehash256 = 1
   colorscheme molokai
-endif " }}}
+endif
+" }}}
 
 " Airplane -- cursor line theme
 if has_key(g:plugs, 'vim-airline') " {{{
