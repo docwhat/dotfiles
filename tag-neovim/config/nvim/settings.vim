@@ -122,6 +122,8 @@ elseif exists('+guicolors')
   set guicolors
 endif
 set background=dark
+highlight link phpBoolean Boolean
+
 
 " Smash escape!
 "-----------------------------------------------------------------------------
@@ -548,8 +550,14 @@ if has_key(g:plugs, 'indentLine') " {{{
   let g:indentLine_setConceal = 0
 endif " }}}
 
-" Jellybeans -- syntax theme
-if has_key(g:plugs, 'colorscheme-jellybeans') "{{{
+" ColorSchemes
+if has_key(g:plugs, 'colorscheme-dracula') "{{{
+  colorscheme dracula
+elseif has_key(g:plugs, 'colorscheme-gruvbox')
+  let g:gruvbox_contrast_dark = 'hard'
+  let g:gruvbox_contrast_light = 'hard'
+  colorscheme gruvbox
+elseif has_key(g:plugs, 'colorscheme-jellybeans')
   let g:jellybeans_overrides = {}
   let g:jellybeans_overrides['background']           = { 'guibg': 'none' }
   let g:jellybeans_overrides['LineNr']               = { 'attr': 'none', 'guifg': '707090', 'guibg': 'none'   }
@@ -579,13 +587,12 @@ if has_key(g:plugs, 'colorscheme-jellybeans') "{{{
   let g:jellybeans_overrides['ALEStyleWarningSign']  = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '333333' }
 
   colorscheme jellybeans
+  let g:airline_theme='dracula'
 
-  highlight link phpBoolean Boolean
-endif "}}}
-
-if has_key(g:plugs, 'colorscheme-molokai') " {{{
+elseif has_key(g:plugs, 'colorscheme-molokai') " {{{
   let g:molokai_original = 1
   let g:rehash256 = 1
+  colorscheme molokai
 endif " }}}
 
 " Airplane -- cursor line theme
@@ -594,10 +601,6 @@ if has_key(g:plugs, 'vim-airline') " {{{
   let g:airline#extensions#tabline#enabled = 1
   let g:airline_left_sep=''
   let g:airline_right_sep=''
-
-  if has_key(g:plugs, 'vim-airline-themes')
-    call airline#switch_theme('badwolf')
-  endif
 endif " }}}
 
 
