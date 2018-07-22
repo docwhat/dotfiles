@@ -3,7 +3,7 @@ flake8
 isort
 jedi
 launchpadlib ; sys_platform == 'linux' or sys_platform == 'linux2'
-neovim ; python_version >= '3'
+neovim
 proselint
 psutil
 pyaml
