@@ -87,29 +87,52 @@ Plug 'w0rp/ale'
 
 
 " Completion
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
-Plug 'docwhat/deoplete-better-length-matcher.nvim'
-Plug 'Shougo/neco-vim'
-Plug 'Shougo/neco-syntax'
-Plug 'zchee/deoplete-go'
-Plug 'Shougo/deoplete-rct'
-Plug 'fishbullet/deoplete-ruby'
-Plug 'eagletmt/neco-ghc'
-Plug 'zchee/deoplete-jedi'
-Plug 'tweekmonster/deoplete-clang2'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
-Plug 'wokalski/autocomplete-flow'
-Plug 'carlitux/deoplete-ternjs'
-Plug 'zchee/deoplete-zsh'
+" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
+" Plug 'docwhat/deoplete-better-length-matcher.nvim'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp' " ncm2 requires nvim-yarp
+
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-github'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-tagprefix'
+Plug 'wellle/tmux-complete.vim'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-cssomni'
+
+Plug 'filipekiss/ncm2-look.vim' " Spelling completion
+Plug 'ncm2/ncm2-match-highlight'
+
+
+Plug 'jsfaint/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+Plug 'jsfaint/ncm2-vim' | Plug 'Shougo/neco-vim'
+Plug 'jsfaint/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
+
+Plug 'ncm2/ncm2-html-subscope'
+Plug 'ncm2/ncm2-markdown-subscope'
+
+" Plug 'Shougo/neco-syntax'
+" Plug 'zchee/deoplete-go'
+" Plug 'Shougo/deoplete-rct'
+" Plug 'fishbullet/deoplete-ruby'
+" Plug 'eagletmt/neco-ghc'
+" Plug 'zchee/deoplete-jedi'
+" Plug 'tweekmonster/deoplete-clang2'
+" Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
+" Plug 'wokalski/autocomplete-flow'
+" Plug 'carlitux/deoplete-ternjs'
+" Plug 'zchee/deoplete-zsh'
 
 " Snippets
+Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
 
 " NGinX
 Plug 'chr4/nginx.vim'

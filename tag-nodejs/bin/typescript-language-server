@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#!/bin/bash
+##marker: NODEJS-CLI-TOOL##
+set -eEuo pipefail
+
+package='typescript-language-server'
+command='typescript-language-server'
+
+export NODENV_VERSION='8'
+
+local_bin="$(npm bin 2>/dev/null)"
+global_bin="$(npm bin --global 2>/dev/null)"
+
+if [ -x "${local_bin}/${command}" ]; then
+  exec "${local_bin}/${command}" "$@"
+fi
+
+if [ -x "${global_bin}/${command}" ]; then
+  exec "${global_bin}/${command}" "$@"
+fi
+
+npm install --global "$package" >/dev/null 2>&1
+exec "${global_bin}/${command}" "$@"
+
+#EOF

@@ -31,8 +31,6 @@ if exists('&inccommand')
   set inccommand=split
 endif
 
-set completeopt=menu,menuone,noselect
-
 set number
 " set wildmode=list:longest,full   " Completion for wildchar (see help)
 set wildignore+=*.o,*.obj,*.pyc,*.pyo,*.pyd,*.class,*.lock
@@ -259,6 +257,11 @@ augroup VimrcMakeParentDirs
   autocmd BufWritePre * nested :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 
+function! s:get_git_root()
+  let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+  return v:shell_error ? '' : root
+endfunction
+
 " Surround
 if has_key(g:plugs, 'vim-surround') " {{{
   let g:surround_no_insert_mappings=1
@@ -391,15 +394,10 @@ if has_key(g:plugs, 'denite.nvim') " {{{
           \      '--hidden', '-g', ''
           \   ] })
   endif
-  if !has_key(g:plugs, 'fzf.vim') " {{{
+  if !has_key(g:plugs, 'fzf.vim')
     nnoremap <silent> <leader>p :Denite file_rec<cr>
   endif
 endif " }}}
-
-function! s:get_git_root()
-  let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
-  return v:shell_error ? '' : root
-endfunction
 
 " FZF
 if has_key(g:plugs, 'fzf.vim') " {{{
@@ -608,7 +606,6 @@ if has_key(g:plugs, 'vim-airline') " {{{
   let g:airline_right_sep=''
 endif " }}}
 
-
 " EditorConfig -- Additional configuration
 if has_key(g:plugs, 'editorconfig-vim') " {{{
   let g:EditorConfig_exclude_patterns = [
@@ -659,8 +656,27 @@ if has_key(g:plugs, 'vim-editorconfig') " {{{
   command! EditorConfigReload call editorconfig#load()
 endif " }}}
 
+" NCM2 -- Neovim Completion Manager
+if has_key(g:plugs, 'ncm2') " {{{
+  augroup VimrcNCM
+    autocmd!
+    " enable ncm2 for all buffers
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+  augroup END
+
+  " :help Ncm2PopupOpen for more information
+  set completeopt=noinsert,menuone,noselect
+  set shortmess+=c
+
+  inoremap <c-c> <ESC>
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+endif " }}}
+
 " Deoplete -- Additional configuration
 if has_key(g:plugs, 'deoplete.nvim') " {{{
+  set completeopt=menu,menuone,noselect
+
   call deoplete#custom#source('_', 'converters', [
         \ 'converter_remove_paren',
         \ 'converter_remove_overlap',
@@ -714,6 +730,14 @@ if has_key(g:plugs, 'ultisnips') " {{{
   let g:UltiSnipsExpandTrigger       = '<Tab>'
   let g:UltiSnipsJumpForwardTrigger  = '<Tab>'
   let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+
+  inoremap <silent> <expr> <CR> ((pumvisible() && empty(v:completed_item)) ?  "\<c-y>\<cr>" : (!empty(v:completed_item) ? ncm2_ultisnips#expand_or("", 'n') : "\<CR>" ))
+
+  " " c-j c-k for moving in snippet
+  " imap <expr> <c-u> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_expand)", 'm')
+  " smap <c-u> <Plug>(ultisnips_expand)
+  " let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+  " let g:UltiSnipsRemoveSelectModeMappings = 0
 
   if filereadable(g:xdg_config_home . '/personalization.vim')
     execute 'source ' . g:xdg_config_home . '/personalization.vim'
@@ -851,29 +875,26 @@ endif " }}}
 
 " LanguageClient - LSP client
 if has_key(g:plugs, 'LanguageClient-neovim') " {{{
-  " ['javascript-typescript-stdio'],
   let g:LanguageClient_serverCommands = {
-        \ 'javascript': ['flow-language-server', '--stdio'],
-        \ 'typescript': ['typescript-language-server', '--stdio'],
-        \ 'haskell': ['hie', '--lsp'],
-        \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
-        \ 'lua': ['lua-lsp'],
+        \ 'Dockerfile': ['docker-langserver', '--stdio'],
+        \ 'bash': [ 'bash-language-server', '--stdio'],
         \ 'c': ['clangd'],
         \ 'cpp': ['clangd'],
+        \ 'dot': ['dot-languageserver', '--stdio'],
+        \ 'go': ['go-langserver', '-mode', 'stdio'],
+        \ 'groovy': ['groovy-language-server'],
+        \ 'haskell': ['hie', '--lsp'],
+        \ 'html': ['html-languageserver', '--stdio'],
+        \ 'javascript': [ 'javascript-typescript-stdio' ],
+        \ 'json' : [ 'vscode-json-languageserver', '--stdio' ],
+        \ 'lua': ['lua-lsp'],
         \ 'objc': ['clangd'],
         \ 'objcpp': ['clangd'],
         \ 'python': ['pyls'],
-        \ 'groovy': ['groovy-language-server'],
-        \ 'html': ['html-languageserver', '--stdio'],
-        \ 'sh': ['bash-language-server', 'start'],
-        \ 'bash': ['bash-language-server', 'start'],
-        \ 'Dockerfile': ['docker-langserver', '--stdio'],
-        \ 'go': ['go-langserver', '-mode', 'stdio'],
+        \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
+        \ 'sh': [ 'bash-language-server', '--stdio'],
+        \ 'typescript': [ 'typescript-language-server', '--stdio'],
         \ }
-
-  if has_key(g:plugs, 'ale')
-    let g:ale_completion_enabled = 0
-  endif
 
   nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
@@ -1002,7 +1023,8 @@ if has_key(g:plugs, 'ale') " {{{
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-  let g:ale_completion_enabled = 1
+  let g:ale_completion_enabled = 0
+  let g:ale_sign_column_always = 1
   let g:ale_use_global_executables = 1
   let g:ale_list_window_size = 5
   let g:ale_echo_msg_error_str = 'E'
@@ -1097,7 +1119,6 @@ if has_key(g:plugs, 'syntastic') " {{{
   let g:syntastic_go_checkers               = ['golint', 'govet', 'errcheck']
   let g:syntastic_mode_map                  = { 'mode': 'active', 'passive_filetypes': ['go'] }
 endif " }}}
-
 
 " Sieve -- mail filtering (RFC 5228)
 if has_key(g:plugs, 'sieve.vim') " {{{
