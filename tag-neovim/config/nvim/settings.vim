@@ -504,7 +504,6 @@ else
   augroup VimrcMarkdown
     autocmd!
     autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
-    autocmd FileType markdown nested setlocal tabstop=4 shiftwidth=4 spell concealcursor= conceallevel=1 wrap linebreak nolist
   augroup END
 endif " }}}
 
