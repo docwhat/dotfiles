@@ -110,3 +110,6 @@
 [filter "wordlist"]
 	smudge = cat
 	clean = env LC_ALL=C sort -u
+[filter "itermprofile"]
+	clean = json-canonicalizer
+	smudge = cat
