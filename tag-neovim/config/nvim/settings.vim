@@ -670,6 +670,9 @@ if has_key(g:plugs, 'ncm2') " {{{
   inoremap <c-c> <ESC>
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+  " ncm2/ncm2-match-highlight
+  let g:ncm2#match_highlight = 'mono-space'
 endif " }}}
 
 " Deoplete -- Additional configuration
