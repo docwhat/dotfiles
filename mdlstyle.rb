@@ -19,4 +19,9 @@ exclude_rule 'no-inline-html'         # MD033
 exclude_rule 'fenced-code-language'   # MD040
 exclude_rule 'first-line-h1'          # MD041
 
+# Bugs:
+# https://github.com/markdownlint/markdownlint/issues/233
+# https://github.com/markdownlint/markdownlint/issues/221
+exclude_rule 'code-block-style' # MD046
+
 # EOF
