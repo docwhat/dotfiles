@@ -14,6 +14,7 @@ set mouse=a
 
 " Note, the sleuth plugin overrides these.
 set tabstop=2
+set shiftwidth=0
 set softtabstop=-1 " Use shiftwidth instead.
 set expandtab
 

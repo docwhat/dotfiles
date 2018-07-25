@@ -10,7 +10,7 @@ if &readonly || ! &modifiable || empty(bufname('%'))
   let s:editable = 0
 endif
 
-setlocal tabstop=4 shiftwidth=4
+setlocal tabstop=4
 setlocal concealcursor= conceallevel=1
 setlocal wrap linebreak nolist
 
