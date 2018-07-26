@@ -84,12 +84,9 @@ Plug 'ynkdir/vim-vimlparser'
 " Style/Lint
 Plug 'dbakker/vim-lint'
 Plug 'w0rp/ale'
-
+Plug 'ruanyl/coverage.vim'
 
 " Completion
-" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemotePluginsUpdate') }
-" Plug 'docwhat/deoplete-better-length-matcher.nvim'
-
 Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp' " ncm2 requires nvim-yarp
 
 Plug 'ncm2/ncm2-bufword'
@@ -110,18 +107,6 @@ Plug 'jsfaint/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
 
 Plug 'ncm2/ncm2-html-subscope'
 Plug 'ncm2/ncm2-markdown-subscope'
-
-" Plug 'Shougo/neco-syntax'
-" Plug 'zchee/deoplete-go'
-" Plug 'Shougo/deoplete-rct'
-" Plug 'fishbullet/deoplete-ruby'
-" Plug 'eagletmt/neco-ghc'
-" Plug 'zchee/deoplete-jedi'
-" Plug 'tweekmonster/deoplete-clang2'
-" Plug 'ternjs/tern_for_vim', { 'do': 'npm upgrade' }
-" Plug 'wokalski/autocomplete-flow'
-" Plug 'carlitux/deoplete-ternjs'
-" Plug 'zchee/deoplete-zsh'
 
 " Snippets
 Plug 'ncm2/ncm2-ultisnips'

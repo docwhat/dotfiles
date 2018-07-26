@@ -1,3 +1,8 @@
+" Must be at the start
+if exists('b:did_ftplugin_javascript')
+  finish
+endif
+
 if has_key(g:plugs, 'ale')
   let b:ale_fix_on_save = 1
   let s:buffer = bufnr('%')
@@ -12,3 +17,13 @@ if has_key(g:plugs, 'ale')
   endif
   let b:ale_fixers += ['remove_trailing_lines']
 endif
+
+" Jest
+if has_key(g:plugs, 'coverage.vim')
+  let g:coverage_json_report_path='coverage/coverage-final.json'
+  let g:coverage_show_covered=0
+  let g:coverage_show_uncovered=1
+endif
+
+" Must be last
+let b:did_ftplugin_javascript = 1
