@@ -1,7 +1,5 @@
-" Must be at the start
-if exists('b:did_ftplugin_markdown')
-  finish
-endif
+" Prevents multiple invocations
+let s:guard = 'b:did_ftplugin_markdown' | if exists(s:guard) | finish | endif
 
 let s:editable = 1
 
@@ -33,5 +31,4 @@ else
   endif
 endif
 
-" Must be last
-let b:did_ftplugin_markdown = 1
+let {s:guard} = 1 " EOF

@@ -1,7 +1,5 @@
-" Must be at the start
-if exists('b:did_ftplugin_javascript')
-  finish
-endif
+" Prevents multiple invocations
+let s:guard = 'b:did_ftplugin_javascript' | if exists(s:guard) | finish | endif
 
 if has_key(g:plugs, 'ale')
   let b:ale_fix_on_save = 1
@@ -25,5 +23,4 @@ if has_key(g:plugs, 'coverage.vim')
   let g:coverage_show_uncovered=1
 endif
 
-" Must be last
-let b:did_ftplugin_javascript = 1
+let {s:guard} = 1 " EOF

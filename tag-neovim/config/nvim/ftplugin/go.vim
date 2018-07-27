@@ -1,3 +1,6 @@
+" Prevents multiple invocations
+let s:guard = 'b:did_ftplugin_go' | if exists(s:guard) | finish | endif
+
 " Go -- GoLang syntax, indentation, and tools
 if has_key(g:plugs, 'vim-go') " {{{
   let g:go_highlight_build_constraints = 1
@@ -33,3 +36,5 @@ if has_key(g:plugs, 'ale')
   let b:ale_fixers = [ 'goimports' ]
   let b:ale_fix_on_save = 1
 endif
+
+let {s:guard} = 1 " EOF
