@@ -724,7 +724,7 @@ endif " }}}
 
 " UltiSnips -- Snippets
 if has_key(g:plugs, 'ultisnips') " {{{
-  let g:UltiSnipsSnippetsDir         = g:xdg_config_home . '/snips'
+  let g:UltiSnipsSnippetDirectories  = ['UltiSnips', 'snips']
   let g:UltiSnipsNoPythonWarning     = 1
   let g:UltiSnipsUsePythonVersion    = 3 " We always have python3 for deoplete.
   let g:UltiSnipsEditSplit           = 'vertical'
