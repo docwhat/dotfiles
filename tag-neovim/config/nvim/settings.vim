@@ -184,7 +184,7 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Indent whole file
 "-----------------------------------------------------------------------------
-function! MyIndentWholeBufferIfEnabled() abort
+function! MyIndentWholeBufferIfEnabled() " abort
   let l:buffer = bufnr('')
 
   if has_key(g:plugs, 'ale')
@@ -198,6 +198,16 @@ function! MyIndentWholeBufferIfEnabled() abort
       call ale#fix#Fix(l:buffer, '')
       return
     endif
+  endif
+
+  if exists('*LCformatting_sync')
+    try
+      let l:did_it_work = LCformatting_sync()
+      if l:did_it_work
+        return
+      endif
+    catch " Ignore errors
+    endtry
   endif
 
   call Preserve('normal gg=G')
@@ -906,6 +916,17 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
   command! LCAction :call LanguageClient#textDocument_codeAction()
   command! LCSyms :call LanguageClient#textDocument_documentSymbol()
   command! LCRefs :call LanguageClient#textDocument_references()
+
+  function! LCformatting_sync() abort
+    if &filetype ==# 'sh'
+      return " This is currently broken.
+    endif
+    let l:result = LanguageClient_runSync('LanguageClient#textDocument_formatting', {
+          \ 'handle': v:true,
+          \ })
+    return l:result isnot v:null
+  endfunction
+
 endif " }}}
 
 " Neomake -- linting and building
