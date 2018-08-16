@@ -80,6 +80,7 @@ Plug 'tweekmonster/nvimdev.nvim'
 Plug 'tweekmonster/helpful.vim'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
+Plug 'vim-scripts/Decho'
 
 " Style/Lint
 Plug 'dbakker/vim-lint'
