@@ -16,16 +16,14 @@ trap _exit_trap EXIT
 trap _err_trap ERR
 _showed_traceback=f
 
-function _exit_trap
-{
+function _exit_trap() {
   local _ec="$?"
-  if [[ $_ec != 0 && "${_showed_traceback}" != t ]]; then
+  if [ "$_ec" != 0 ] && [ "${_showed_traceback}" != t ]; then
     traceback 1
   fi
 }
 
-function _err_trap
-{
+function _err_trap() {
   local _ec="$?"
   local _cmd="${BASH_COMMAND:-unknown}"
   traceback 1
@@ -33,17 +31,16 @@ function _err_trap
   echo "The command ${_cmd} exited with exit code ${_ec}." 1>&2
 }
 
-function traceback
-{
+function traceback() {
   # Hide the traceback() call.
-  local -i start=$(( ${1:-0} + 1 ))
+  local -i start=$((${1:-0} + 1))
   local -i end=${#BASH_SOURCE[@]}
   local -i i=0
   local -i j=0
 
   echo "Traceback (last called is first):" 1>&2
-  for (( i=start; i < end; i++ )); do
-    j=$(( i - 1 ))
+  for ((i = start; i < end; i++)); do
+    j=$((i - 1))
     local function="${FUNCNAME[$i]}"
     local file="${BASH_SOURCE[$i]}"
     local line="${BASH_LINENO[$j]}"
