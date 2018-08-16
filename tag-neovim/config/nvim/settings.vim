@@ -124,13 +124,6 @@ set background=dark
 highlight link phpBoolean Boolean
 
 
-" Smash escape!
-"-----------------------------------------------------------------------------
-augroup VimrcSmashEscape
-  autocmd!
-  autocmd VimEnter * Arpeggio inoremap jk  <Esc>
-augroup END
-
 " Terminal
 " -----------------------------------------------------------------------------
 augroup VimrcTerminal
@@ -272,6 +265,15 @@ function! s:get_git_root()
   let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
   return v:shell_error ? '' : root
 endfunction
+
+" Arpeggio
+if has_key(g:plugs, 'vim-arpeggio') " {{{
+  augroup VimrcSmashEscape
+    autocmd!
+    " Smash escape!
+    autocmd VimEnter * Arpeggio inoremap jk  <Esc>
+  augroup END
+endif " }}}
 
 " Surround
 if has_key(g:plugs, 'vim-surround') " {{{
