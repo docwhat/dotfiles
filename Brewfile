@@ -18,6 +18,7 @@ install git-extras
 install gnu-sed
 install graphviz
 install grep
+install highlight
 install jq
 install htop-osx
 install hub
