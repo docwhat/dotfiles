@@ -915,13 +915,18 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
   nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
   nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
   command! LCAction :call LanguageClient#textDocument_codeAction()
-  command! LCSyms :call LanguageClient#textDocument_documentSymbol()
+  command! LCDefinition :call LanguageClient#textDocument_definition()
+  command! LCHover :call LanguageClient#textDocument_hover()
   command! LCRefs :call LanguageClient#textDocument_references()
+  command! LCRename :call LanguageClient#textDocument_rename()
+  command! LCSyms :call LanguageClient#textDocument_documentSymbol()
 
   function! LCformatting_sync() abort
     if &filetype ==# 'sh'
-      return " This is currently broken.
+      " The sh LanguageServer is currently broken.
+      return
     endif
     let l:result = LanguageClient_runSync('LanguageClient#textDocument_formatting', {
           \ 'handle': v:true,
