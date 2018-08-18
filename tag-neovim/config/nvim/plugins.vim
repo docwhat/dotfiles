@@ -27,9 +27,6 @@ Plug 'cohama/lexima.vim'
 " Detect indentation
 Plug 'tpope/vim-sleuth'
 
-" Allow chording 'jk' as a replacement for ESC
-Plug 'kana/vim-arpeggio'
-
 " lets you align comments, equal signs, etc.
 Plug 'godlygeek/tabular'
 

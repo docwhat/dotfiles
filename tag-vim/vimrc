@@ -442,9 +442,6 @@ function! LoadPlugins()
   " Support '.' correctly for plugins that support this module.
   Plug 'tpope/vim-repeat'
 
-  " Allow chording 'jk' as a replacement for ESC
-  Plug 'kana/vim-arpeggio'
-
   " Allow executing vim with a file:lineno
   Plug 'bogado/file-line'
 
