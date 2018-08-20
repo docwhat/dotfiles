@@ -906,6 +906,7 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
         \ 'objcpp': ['clangd'],
         \ 'python': ['pyls'],
         \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
+        \ 'ruby': [ 'solargraph', 'stdio' ],
         \ 'sh': [ 'bash-language-server', 'start'],
         \ 'typescript': [ 'typescript-language-server', '--stdio'],
         \ }
