@@ -892,7 +892,6 @@ endif " }}}
 if has_key(g:plugs, 'LanguageClient-neovim') " {{{
   let g:LanguageClient_serverCommands = {
         \ 'Dockerfile': ['docker-langserver', '--stdio'],
-        \ 'bash': [ 'bash-language-server', '--stdio'],
         \ 'c': ['clangd'],
         \ 'cpp': ['clangd'],
         \ 'dot': ['dot-languageserver', '--stdio'],
@@ -907,7 +906,7 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
         \ 'objcpp': ['clangd'],
         \ 'python': ['pyls'],
         \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
-        \ 'sh': [ 'bash-language-server', '--stdio'],
+        \ 'sh': [ 'bash-language-server', 'start'],
         \ 'typescript': [ 'typescript-language-server', '--stdio'],
         \ }
 
