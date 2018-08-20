@@ -1,24 +1,43 @@
 #!/bin/bash
 set -Eeuo pipefail
 
-# Get the latest version number at https://bintray.com/palantir/releases/language-servers/_latestVersion
-version='0.5.5'
-jar="${HOME}/.cache/groovy-language-server/groovy-language-server-${version}.jar"
+function myXmlstarlet() {
+  if command -v xmlstarlet >/dev/null 2>&1; then
+    xmlstarlet "$@"
+  elif command -v xml >/dev/null 2>&1; then
+    xml "$@"
+  else
+    false
+  fi
+}
 
-url="https://bintray.com/palantir/releases/download_file?file_path=com%2Fpalantir%2Fls%2Fgroovy-language-server%2F${version}%2Fgroovy-language-server-${version}-all.jar"
+function latestMetadata() {
+  curl -sSfl -o- 'https://palantir.bintray.com/releases/com/palantir/ls/groovy-language-server/maven-metadata.xml'
+}
 
+function getVersion() {
+  latestMetadata | myXmlstarlet sel -t -c '/*/version/text()'
+}
+
+latest_jar="${HOME}/.cache/groovy-language-server/groovy-language-server-latest.jar"
 JAVA_HOME=$(/usr/libexec/java_home)
 export JAVA_HOME
 
-
-if [ ! -r "$jar" ]; then
+if version=$(getVersion); then
+  jar="${HOME}/.cache/groovy-language-server/groovy-language-server-${version}.jar"
+  url="https://palantir.bintray.com/releases/com/palantir/ls/groovy-language-server/${version}/groovy-language-server-${version}-all.jar"
+  if [ ! -r "$jar" ]; then
     mkdir -p "$(dirname "${jar}")"
     curl -sSLf -o "$jar" "$url"
+  fi
+  if [ ! -L "$latest_jar" ]; then
+    ln -nsf "$jar" "$latest_jar"
+  fi
 fi
 
 declare -a args
 args=(
-  -jar "$jar"
+  -jar "$latest_jar"
   "$@"
 )
 
