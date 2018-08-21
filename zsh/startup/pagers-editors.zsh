@@ -42,8 +42,9 @@ fi
 # Pager/Editors
 export PAGER="less"
 export ACK_PAGER="less -R -+F"
-export GIT_EDITOR="vim +1"
-export EDITOR="vim"
+export FPP_EDITOR="$EDITOR"
+export MANPAGER="${HOME}/bin/manpager"
+export VISUAL="${HOME}/bin/visual-editor"
 
 # Use NeoVim if it exists
 if (( $+commands[nvim] )); then
@@ -51,10 +52,11 @@ if (( $+commands[nvim] )); then
   export EDITOR="nvim"
   alias vim=nvim
   alias vi=nvim
+  alias view="nvim -R -c 'set nomodifiable'"
+  alias vimdiff="nvim -d"
+else
+  export GIT_EDITOR="vim +1"
+  export EDITOR="vim"
 fi
-
-export FPP_EDITOR="$EDITOR"
-export MANPAGER="${HOME}/bin/manpager"
-export VISUAL="${HOME}/bin/visual-editor"
 
 # EOF

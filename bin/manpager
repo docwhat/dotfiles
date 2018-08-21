@@ -2,13 +2,16 @@
 
 set -euo pipefail
 
-function pager {
+function pager() {
   if [ -t 1 ]; then
-    # If we have a terminal, use vim
-    "${EDITOR:-vim}" \
-      -R \
-      -c 'set ft=man ts=8 nonumber nolist nomodified nomodifiable' \
-      -
+    if [ "$EDITOR" = vim ] || [ "$EDITOR" ]; then
+      "$EDITOR" \
+        -R \
+        -c 'set ft=man ts=8 nonumber nolist nomodified nomodifiable' \
+        -
+    else
+      "$PAGER"
+    fi
   else
     # If we're piped, then use cat
     cat
