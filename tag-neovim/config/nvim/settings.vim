@@ -566,6 +566,11 @@ if has_key(g:plugs, 'colorscheme-dracula') "{{{
 elseif has_key(g:plugs, 'colorscheme-gruvbox')
   let g:gruvbox_contrast_dark = 'hard'
   let g:gruvbox_contrast_light = 'hard'
+  let g:gruvbox_improved_strings = 0
+  let g:gruvbox_improved_warnings = 0
+  if $TERM_PROGRAM ==? 'iTerm.app'
+    let g:gruvbox_italic=1
+  endif
   colorscheme gruvbox
 elseif has_key(g:plugs, 'colorscheme-jellybeans')
   let g:jellybeans_overrides = {}
