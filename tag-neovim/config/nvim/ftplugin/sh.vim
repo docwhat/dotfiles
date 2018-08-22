@@ -7,8 +7,6 @@ if has_key(g:plugs, 'ale')
     let b:ale_sh_shfmt_options = '-i ' . l:tabwidth . ' -s'
   endfunction
 
-  call SetShfmtOptions()
-
   augroup FtpluginSh
     autocmd!
     autocmd OptionSet tabstop,shiftwidth nested call SetShfmtOptions()
@@ -20,6 +18,12 @@ if has_key(g:plugs, 'ale')
         \ 'trim_whitespace'
         \ ]
   let b:ale_fix_on_save = 1
+
+  " Initialization
+  if exists(':EditorConfigReload') == 2
+    :EditorConfigReload
+  endif
+  call SetShfmtOptions()
 endif
 
 let {s:guard} = 1 " EOF
