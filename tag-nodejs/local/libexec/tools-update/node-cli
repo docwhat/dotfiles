@@ -12,8 +12,13 @@ source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 cd "${DOTFILES_DIR}/tag-nodejs/bin"
 
+# Rebuild scripts
 for clicmd in *(.*N); do
-  ./add-node-cli "$clicmd" || :
-done | offset
+  (./add-node-cli "$clicmd" || :) | offset &
+done
+wait
+
+# Remove cache.
+rm -rf "${HOME}/.cache/nodejs-cli-tool"
 
 # EOF

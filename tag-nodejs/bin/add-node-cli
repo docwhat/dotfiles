@@ -72,6 +72,4 @@ if ! (( update )); then
   rcup -K
 fi
 
-print -P '%B%F{green}done%f%b'
-
 # EOF
