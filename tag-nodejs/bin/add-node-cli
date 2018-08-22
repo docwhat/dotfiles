@@ -5,11 +5,16 @@
 
 set -eu
 
-declare -r node_version=8
+# defaults
+declare -i node_version=8
 
 function error {
   print -P "%B%F{red}ERROR%f%b: $*"
   exit 10
+}
+
+function warn {
+  print -P "%B%F{yellow}WARNING%f%b: $*"
 }
 
 export NODENV_VERSION=$node_version
@@ -22,36 +27,46 @@ fi
 stub=~/.dotfiles/tag-nodejs/bin/"$(basename "$1")"
 
 if [ -x "$stub" ]; then
-  # if ! grep -q '##marker: NODEJS-CLI-TOOL##' "$stub"; then
-  #   error "$stub is not a node-cli stub".
-  # fi
-  eval "$(grep -E '^(package|command)=' "$stub")"
+  if ! grep -qE '^##marker: NODEJS-CLI-TOOL##$' "$stub"; then
+    warn "$stub is not a node-cli stub"
+    exit 0
+  fi
+
+  # Load prefious variables
+  eval "$(grep -E '^(package|command|node_version)=' "$stub")"
+
   if [ -z "${package:-}" ] && [ -z "${command:-}" ]; then
     error "$stub is a malformed node-cli stub".
   fi
-  declare -r package command stub update=1
-  print -P "%F{green}Updating%f $command (from $package)"
+  update=1
+  print -P "%F{green}Updating%f $command (from $package; node $node_version)"
 else
-  declare -r package="$1"
-  declare -r command="${2:-$1}"
-  declare -r stub=~/.dotfiles/tag-nodejs/bin/"$command"
-  declare -r update=0
+  package="$1"
+  command="${2:-$1}"
+  stub=~/.dotfiles/tag-nodejs/bin/"$command"
+  update=0
 
-  print -P "%F{yellow}Creating%f $command (from $package)"
+  print -P "%F{yellow}Creating%f $command (from $package; node $node_version)"
+fi
+prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
+declare -r package command node_version prefix stub update
+
+if ! (( update )) || [ -n "${TOOL_INSTALL:-}" ]; then
+  npm install --global --prefix "$prefix" "$package"
+
+  if [ ! -x "$(npm bin --global 2>/dev/null)/${command}" ]; then
+    error "cannot find $command in $package"
+  fi
 fi
 
-npm install --global "$package" >/dev/null 2>&1
-
-if [ ! -x "$(npm bin --global 2>/dev/null)/${command}" ]; then
-  error "cannot find $command in $package"
-fi
-
-node ~/.dotfiles/tag-nodejs/share/node-cli-template.js\
+~/.dotfiles/tag-nodejs/local/share/node-cli-template.zsh \
   "$package" \
   "$command" \
   "$node_version" \
-  > "$stub"
-chmod +x "$stub"
+  "$prefix" \
+  > "${stub}.tmp" || (rm -f "${stub}.tmp" ; false)
+mv -f "${stub}.tmp" "${stub}"
+chmod +x "${stub}"
 
 if ! (( update )); then
   rcup -K
