@@ -73,6 +73,7 @@ root_indicator
 background_jobs
 status
 )
+POWERLEVEL9K_STATUS_OK=false
 
 if [ -x "$VIM" ]; then
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
@@ -83,6 +84,7 @@ if [ -x "$VIM" ]; then
   background_jobs
   status
   )
+  POWERLEVEL9K_STATUS_OK=false
 fi
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
