@@ -130,8 +130,6 @@ augroup VimrcTerminal
   autocmd!
   autocmd TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
   autocmd WinEnter term://* startinsert | IndentLinesDisable
-  "autocmd TermClose * exec &buftype == 'terminal' ? 'bd!' :  ''
-  autocmd TermClose * exe expand('<abuf>').'bd!'
 augroup END
 
 " GitCommits
