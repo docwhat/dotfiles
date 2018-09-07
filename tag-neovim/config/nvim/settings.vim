@@ -1164,4 +1164,15 @@ if has_key(g:plugs, 'sieve.vim') " {{{
   augroup END
 endif " }}}
 
+" Nuake -- Quake Like terminal popup
+if has_key(g:plugs, 'nuake') " {{{
+  let g:nuake_position = 0 " 0:horizontal & 1:vertical
+  let g:nuake_size     = 0.30
+  let g:nuake_per_tab  = 0
+
+  nnoremap <C-y> :Nuake<CR>
+  inoremap <C-y> <C-\><C-n>:Nuake<CR>
+  tnoremap <C-y> <C-\><C-n>:Nuake<CR>
+endif " }}}
+
 " vim: set foldminlines=0 foldmethod=marker :
