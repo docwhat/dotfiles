@@ -74,10 +74,21 @@ background_jobs
 status
 )
 
+if [ -x "$VIM" ]; then
+  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  dir
+  dir_writable
+  vcs
+  root_indicator
+  background_jobs
+  status
+  )
+fi
+
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 command_execution_time
 )
-if [ -z "$TMUX" ]; then
+if [ -z "$TMUX" ] && ! [ -x "$VIM" ]; then
   POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   "${POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS[@]}"
   time
@@ -121,3 +132,5 @@ POWERLEVEL9K_CHANGESET_HASH_LENGTH=8
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
 POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='yellow'
+
+# vim:set et sw=2 ts=2 ft=zsh:
