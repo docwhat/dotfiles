@@ -1061,9 +1061,14 @@ if has_key(g:plugs, 'ale') " {{{
   let g:ale_sign_column_always = 1
   let g:ale_use_global_executables = 1
   let g:ale_list_window_size = 5
-  let g:ale_echo_msg_error_str = 'E'
+
+  " How messages are displayed
+  let g:ale_echo_cursor          = 1
+  let g:ale_echo_delay           = 20
+  let g:ale_echo_msg_error_str   = 'E'
+  let g:ale_echo_msg_info_str    = 'I'
   let g:ale_echo_msg_warning_str = 'W'
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_echo_msg_format      = '%code: %%s [%linter%/%severity%]'
 
   if $POWERLEVEL9K_MODE ==# 'nerdfont-complete'
     let g:ale_sign_error         = ''
