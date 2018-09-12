@@ -12,20 +12,6 @@ pretty_hostname() {
   echo "${(%)h}"
 }
 
-if ! (( $+functions[prompt_newline] )); then
-  prompt_newline() {
-    local lws
-    [[ "$1" == "right" ]] && return
-    lws=$POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS
-    POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=
-    "$1_prompt_segment" \
-      "$0" \
-      "$2" \
-      "NONE" "NONE" $'\n'
-    POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=$lws
-  }
-fi
-
 # general
 POWERLEVEL9K_MODE='nerdfont-complete'
 export POWERLEVEL9K_MODE # To use in VIM, etc.
