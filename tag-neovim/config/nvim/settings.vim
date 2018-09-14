@@ -289,33 +289,56 @@ if has_key(g:plugs, 'tagbar') " {{{
 
   if executable('gotags')
     let g:tagbar_type_go = {
-          \ 'ctagstype' : 'go',
-          \ 'kinds'     : [
-          \   'p:package',
-          \   'i:imports:1',
-          \   'c:constants',
-          \   'v:variables',
-          \   't:types',
-          \   'n:interfaces',
-          \   'w:fields',
-          \   'e:embedded',
-          \   'm:methods',
-          \   'r:constructor',
-          \   'f:functions'
-          \ ],
-          \ 'sro' : '.',
-          \ 'kind2scope' : {
-          \   't' : 'ctype',
-          \   'n' : 'ntype'
-          \ },
-          \ 'scope2kind' : {
-          \   'ctype' : 't',
-          \   'ntype' : 'n'
-          \ },
-          \ 'ctagsbin'  : 'gotags',
-          \ 'ctagsargs' : '-sort -silent',
+          \   'ctagstype' : 'go',
+          \   'kinds'     : [
+          \     'p:package',
+          \     'i:imports:1',
+          \     'c:constants',
+          \     'v:variables',
+          \     't:types',
+          \     'n:interfaces',
+          \     'w:fields',
+          \     'e:embedded',
+          \     'm:methods',
+          \     'r:constructor',
+          \     'f:functions'
+          \   ],
+          \   'sro' : '.',
+          \   'kind2scope' : {
+          \     't' : 'ctype',
+          \     'n' : 'ntype'
+          \   },
+          \   'scope2kind' : {
+          \     'ctype' : 't',
+          \     'ntype' : 'n'
+          \   },
+          \   'ctagsbin'  : 'gotags',
+          \   'ctagsargs' : '-sort -silent',
           \ }
   endif
+
+  let g:tagbar_type_gradle = {
+        \   'ctagstype' : 'Gradle',
+        \   'kinds'     : [
+        \     't:tasks',
+        \     'm:methods'
+        \   ]
+        \ }
+
+  let g:tagbar_type_groovy = {
+        \   'ctagstype' : 'Groovy',
+        \   'kinds'     : [
+        \     'p:package',
+        \     'c:classes',
+        \     'i:interfaces',
+        \     't:traits',
+        \     'e:enums',
+        \     'r:constructors',
+        \     'm:methods',
+        \     'f:fields:1'
+        \   ]
+        \ }
+
 endif " }}}
 
 " TweekMonster's WStrip -- whitespace trimming and highlighting for
