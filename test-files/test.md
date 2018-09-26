@@ -26,6 +26,12 @@ Please, Don-Bot… look into your hard drive, and open your mercy file! And from
 
 ### I feel like I was mauled by Jesus.
 
+Is it a "Bad Thing!"(TM)?
+
+Should we use Rehat on linode? Or maybe macos? Is bluemix an option?
+
+Did you go to the soiree?
+
 Oh no! The professor will hit me! But if Zoidberg 'fixes' it… then perhaps gifts! This opera's as lousy as it is brilliant! Your lyrics lack subtlety. You can't just have your characters announce how they feel. That makes me feel angry!
 
 1.  I guess because my parents keep telling me to be more ladylike. As though!

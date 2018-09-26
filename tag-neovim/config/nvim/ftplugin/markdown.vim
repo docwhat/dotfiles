@@ -18,6 +18,18 @@ if s:editable >= 1
   if has_key(g:plugs, 'ale')
     let b:ale_fixers = ['prettier']
     let b:ale_fix_on_save = 1
+
+    let s:enabled_linters = deepcopy(ale#linter#Get('markdown'))
+    let s:enabled_names = map(copy(s:enabled_linters), 'v:val[''name'']')
+
+    let b:ale_linters = {
+          \   'markdown': s:enabled_names
+          \ }
+
+    if executable('vale')
+      call filter(b:ale_linters['markdown'], { idx, val -> val != 'proselint' })
+      call filter(b:ale_linters['markdown'], { idx, val -> val != 'writegood' })
+    endif
   endif
 
   if has_key(g:plugs, 'ncm2')
