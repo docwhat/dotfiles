@@ -22,9 +22,8 @@ if s:editable >= 1
     let s:enabled_linters = deepcopy(ale#linter#Get('markdown'))
     let s:enabled_names = map(copy(s:enabled_linters), 'v:val[''name'']')
 
-    let b:ale_linters = {
-          \   'markdown': s:enabled_names
-          \ }
+    let b:ale_linters = get(b:, 'ale_linters', {})
+    let b:ale_linters['markdown'] = s:enabled_names
 
     if executable('vale')
       call filter(b:ale_linters['markdown'], { idx, val -> val != 'proselint' })
