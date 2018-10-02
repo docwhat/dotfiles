@@ -29,6 +29,7 @@ if s:editable >= 1
       call filter(b:ale_linters['markdown'], { idx, val -> val != 'proselint' })
       call filter(b:ale_linters['markdown'], { idx, val -> val != 'writegood' })
     endif
+    call filter(b:ale_linters['markdown'], { idx, val -> val != 'redpen' })
   endif
 
   if has_key(g:plugs, 'ncm2')
