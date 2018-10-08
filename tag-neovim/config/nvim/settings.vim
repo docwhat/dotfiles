@@ -917,37 +917,48 @@ endif " }}}
 " LanguageClient - LSP client
 if has_key(g:plugs, 'LanguageClient-neovim') " {{{
   let g:LanguageClient_serverCommands = {
-        \ 'Dockerfile': ['docker-langserver', '--stdio'],
-        \ 'c': ['clangd'],
-        \ 'cpp': ['clangd'],
-        \ 'dot': ['dot-languageserver', '--stdio'],
-        \ 'go': ['go-langserver', '-mode', 'stdio'],
-        \ 'groovy': ['groovy-language-server'],
-        \ 'haskell': ['hie', '--lsp'],
-        \ 'html': ['html-languageserver', '--stdio'],
-        \ 'javascript': [ 'javascript-typescript-stdio' ],
-        \ 'json' : [ 'vscode-json-languageserver', '--stdio' ],
-        \ 'lua': ['lua-lsp'],
-        \ 'objc': ['clangd'],
-        \ 'objcpp': ['clangd'],
-        \ 'python': ['pyls'],
-        \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
-        \ 'ruby': [ 'solargraph', 'stdio' ],
-        \ 'sh': [ 'bash-language-server', 'start'],
-        \ 'typescript': [ 'typescript-language-server', '--stdio'],
+        \   'Dockerfile': ['docker-langserver', '--stdio'],
+        \   'c': ['clangd'],
+        \   'cpp': ['clangd'],
+        \   'dot': ['dot-languageserver', '--stdio'],
+        \   'go': ['go-langserver', '-mode', 'stdio'],
+        \   'groovy': ['groovy-language-server'],
+        \   'haskell': ['hie', '--lsp'],
+        \   'html': ['html-languageserver', '--stdio'],
+        \   'javascript': [ 'javascript-typescript-stdio' ],
+        \   'json' : [ 'vscode-json-languageserver', '--stdio' ],
+        \   'lua': ['lua-lsp'],
+        \   'objc': ['clangd'],
+        \   'objcpp': ['clangd'],
+        \   'python': ['pyls'],
+        \   'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
+        \   'ruby': [ 'solargraph', 'stdio' ],
+        \   'sh': [ 'bash-language-server', 'start'],
+        \   'typescript': [ 'typescript-language-server', '--stdio'],
         \ }
 
-  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-  nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+  let g:LanguageClient_rootMarkers = {
+        \   'haskell': ['*.cabal', 'stack.yaml'],
+        \ }
 
-  command! LCAction :call LanguageClient#textDocument_codeAction()
+  nnoremap <F5>         :call LanguageClient_contextMenu()<CR>
+  map <Leader>lc        :call LanguageClient_contextMenu()<CR>
+  map <Leader>lk        :call LanguageClient#textDocument_hover()<CR>
+  map <Leader>lg        :call LanguageClient#textDocument_definition()<CR>
+  map <Leader>lr        :call LanguageClient#textDocument_rename()<CR>
+  map <Leader>lf        :call LanguageClient#textDocument_formatting()<CR>
+  map <Leader>lb        :call LanguageClient#textDocument_references()<CR>
+  map <Leader>la        :call LanguageClient#textDocument_codeAction()<CR>
+  map <Leader>ls        :call LanguageClient#textDocument_documentSymbol()<CR>
+
+  command! LCContext    :call LanguageClient_contextMenu()
+  command! LCHover      :call LanguageClient#textDocument_hover()
   command! LCDefinition :call LanguageClient#textDocument_definition()
-  command! LCHover :call LanguageClient#textDocument_hover()
-  command! LCRefs :call LanguageClient#textDocument_references()
-  command! LCRename :call LanguageClient#textDocument_rename()
-  command! LCSyms :call LanguageClient#textDocument_documentSymbol()
+  command! LCRename     :call LanguageClient#textDocument_rename()
+  command! LCFormatting :call LanguageClient#textDocument_formatting()
+  command! LCRefs       :call LanguageClient#textDocument_references()
+  command! LCAction     :call LanguageClient#textDocument_codeAction()
+  command! LCSyms       :call LanguageClient#textDocument_documentSymbol()
 
   function! LCformatting_sync() abort
     if &filetype ==# 'sh'
