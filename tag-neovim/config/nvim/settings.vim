@@ -700,13 +700,44 @@ if has_key(g:plugs, 'ncm2') " {{{
     autocmd!
     " enable ncm2 for all buffers
     autocmd BufEnter * call ncm2#enable_for_buffer()
-  augroup END
 
   " :help Ncm2PopupOpen for more information
-  set completeopt=noinsert,menuone,noselect
+    autocmd User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+    autocmd User Ncm2PopupClose set completeopt=menuone
+  augroup END
+
+  " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+  " found' messages
   set shortmess+=c
 
+  " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
   inoremap <c-c> <ESC>
+
+  " When the <Enter> key is pressed while the popup menu is visible, it only
+  " hides the menu. Use this mapping to close the menu and also start a new
+  " line.
+  " Lexima (auto-pair closing) makes this more complicated, since it also
+  " wants to map <CR>.
+  if has_key(g:plugs, 'lexima.vim')
+    " Lexima conflicts with NCM2 and remapping <CR>
+    " https://github.com/cohama/lexima.vim/issues/65
+    let g:lexima_no_default_rules = 1
+    call lexima#set_default_rules()
+    call lexima#insmode#map_hook('before', '<CR>', '')
+
+    " Do both the expand and closing of the popup.
+    function! s:my_cr_function() abort
+      return pumvisible() ? "\<C-y>\<CR>" : lexima#expand('<CR>', 'i')
+    endfunction
+  else
+    " Just close the popup.
+    function! s:my_cr_function() abort
+      return "\<C-y>\<CR>"
+    endfunction
+  endif
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+
+  " Use <TAB> to select the popup menu:
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
