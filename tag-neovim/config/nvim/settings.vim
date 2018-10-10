@@ -264,6 +264,41 @@ function! s:get_git_root()
   return v:shell_error ? '' : root
 endfunction
 
+" Completion (<CR>) handling.
+"-----------------------------------------------------------------------------
+"
+if has_key(g:plugs, 'lexima.vim')
+  " Lexima conflicts with Deoplete and NCM2, etc. by remapping <CR>
+  " https://github.com/cohama/lexima.vim/issues/65
+  let g:lexima_no_default_rules = 1
+  call lexima#set_default_rules()
+  call lexima#insmode#map_hook('before', '<CR>', '')
+endif
+
+function! DocwhatCR() abort
+  if has_key(g:plugs, 'lexima.vim')
+    let l:cr = lexima#expand('<CR>', 'i')
+  else
+    let l:cr = '<CR>'
+  endif
+  let l:retval = l:cr
+
+  if pumvisible()
+    if has_key(g:plugs, 'deoplete.nvim')
+      let l:retval = deoplete#smart_close_popup() . l:retval
+    else
+      let l:retval = "\<C-y>" . l:retval
+    endif
+  endif
+
+  if has_key(g:plugs, 'ultisnips') && !empty(v:completed_item)
+    let l:retval = ncm2_ultisnips#expand_or(l:retval, 'n')
+  endif
+
+  return l:retval
+endfunction
+inoremap <silent> <expr> <CR> DocwhatCR()
+
 " Arpeggio
 if has_key(g:plugs, 'vim-arpeggio') " {{{
   augroup VimrcSmashEscape
@@ -701,7 +736,7 @@ if has_key(g:plugs, 'ncm2') " {{{
     " enable ncm2 for all buffers
     autocmd BufEnter * call ncm2#enable_for_buffer()
 
-  " :help Ncm2PopupOpen for more information
+    " :help Ncm2PopupOpen for more information
     autocmd User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
     autocmd User Ncm2PopupClose set completeopt=menuone
   augroup END
@@ -712,34 +747,6 @@ if has_key(g:plugs, 'ncm2') " {{{
 
   " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
   inoremap <c-c> <ESC>
-
-  " When the <Enter> key is pressed while the popup menu is visible, it only
-  " hides the menu. Use this mapping to close the menu and also start a new
-  " line.
-  " Lexima (auto-pair closing) makes this more complicated, since it also
-  " wants to map <CR>.
-  if has_key(g:plugs, 'lexima.vim')
-    " Lexima conflicts with NCM2 and remapping <CR>
-    " https://github.com/cohama/lexima.vim/issues/65
-    let g:lexima_no_default_rules = 1
-    call lexima#set_default_rules()
-    call lexima#insmode#map_hook('before', '<CR>', '')
-
-    " Do both the expand and closing of the popup.
-    function! s:my_cr_function() abort
-      return pumvisible() ? "\<C-y>\<CR>" : lexima#expand('<CR>', 'i')
-    endfunction
-  else
-    " Just close the popup.
-    function! s:my_cr_function() abort
-      return "\<C-y>\<CR>"
-    endfunction
-  endif
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-  " Use <TAB> to select the popup menu:
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
   " ncm2/ncm2-match-highlight
   let g:ncm2#match_highlight = 'mono-space'
@@ -771,24 +778,6 @@ if has_key(g:plugs, 'deoplete.nvim') " {{{
   let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
   let g:deoplete#sources.vim             = ['vim', 'around', 'file', 'ultisnips']
 
-  " <CR>: close popup and save indent.
-  if has_key(g:plugs, 'lexima.vim')
-    " Lexima conflicts with Deoplete and remapping <CR>
-    " https://github.com/cohama/lexima.vim/issues/65
-    let g:lexima_no_default_rules = 1
-    call lexima#set_default_rules()
-    call lexima#insmode#map_hook('before', '<CR>', '')
-
-    function! s:my_cr_function() abort
-      return pumvisible() ? deoplete#smart_close_popup() . "\<CR>" : lexima#expand('<CR>', 'i')
-    endfunction
-  else
-    function! s:my_cr_function() abort
-      return deoplete#smart_close_popup() . "\<CR>"
-    endfunction
-  endif
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
 endif " }}}
 
 " UltiSnips -- Snippets
@@ -802,8 +791,6 @@ if has_key(g:plugs, 'ultisnips') " {{{
   let g:UltiSnipsExpandTrigger       = '<Tab>'
   let g:UltiSnipsJumpForwardTrigger  = '<Tab>'
   let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
-
-  inoremap <silent> <expr> <CR> ((pumvisible() && empty(v:completed_item)) ?  "\<c-y>\<cr>" : (!empty(v:completed_item) ? ncm2_ultisnips#expand_or("", 'n') : "\<CR>" ))
 
   " " c-j c-k for moving in snippet
   " imap <expr> <c-u> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_expand)", 'm')
@@ -1238,9 +1225,9 @@ if has_key(g:plugs, 'nuake') " {{{
   let g:nuake_size     = 0.30
   let g:nuake_per_tab  = 0
 
-  nnoremap <C-y> :Nuake<CR>
-  inoremap <C-y> <C-\><C-n>:Nuake<CR>
-  tnoremap <C-y> <C-\><C-n>:Nuake<CR>
+  " nnoremap <C-y> :Nuake<CR>
+  " inoremap <C-y> <C-\><C-n>:Nuake<CR>
+  " tnoremap <C-y> <C-\><C-n>:Nuake<CR>
 endif " }}}
 
 " vim: set foldminlines=0 foldmethod=marker :

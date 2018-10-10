@@ -191,9 +191,6 @@ Plug 'ekalinin/Dockerfile.vim'
 " Sieve (RFC 5228)
 Plug 'vim-scripts/sieve.vim'
 
-" Quake-like Terminal
-Plug 'https://gitlab.com/Lenovsky/nuake.git', { 'as': 'nuake' }
-
 call plug#end()
 
 " vim: set foldminlines=0 foldmethod=marker :
