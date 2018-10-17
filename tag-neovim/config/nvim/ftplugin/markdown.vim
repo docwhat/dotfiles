@@ -28,6 +28,7 @@ if s:editable >= 1
     if executable('vale')
       call filter(b:ale_linters['markdown'], { idx, val -> val != 'proselint' })
       call filter(b:ale_linters['markdown'], { idx, val -> val != 'writegood' })
+      call filter(b:ale_linters['markdown'], { idx, val -> val != 'alex' })
     endif
     call filter(b:ale_linters['markdown'], { idx, val -> val != 'redpen' })
   endif
