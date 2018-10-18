@@ -6,6 +6,8 @@ set -eu
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
+setopt EXTENDED_GLOB
+
 set +eu
 source ~/.zgen/zgen.zsh
 set -eu
