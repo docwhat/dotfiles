@@ -4,9 +4,6 @@ set -euo pipefail
 
 ### Keys
 
-# Use vi keys
-tmux set-window-option -g mode-keys vi
-
 tmux bind-key -t vi-copy 'v' begin-selection
 tmux bind-key -t vi-copy 'V' select-line
 tmux bind-key -t vi-copy 'C-v' rectangle-toggle

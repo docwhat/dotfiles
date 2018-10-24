@@ -16,6 +16,7 @@ source './common.sh'
 for config in $(reverse_array [1-9]*.sh); do
   version=$(basename "$config" .sh)
   if tmux_is_at_least "$version"; then
+    # shellcheck disable=1090,1091
     source "$config"
     break
   fi
