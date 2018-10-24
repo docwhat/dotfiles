@@ -13,6 +13,10 @@ source './common.sh'
 
 ## Version specific configurations
 
+if ! tmux_is_at_least 2.1; then
+  echo "FATAL: $(tmux -V) is unsupported."
+fi
+
 for config in $(reverse_array [1-9]*.sh); do
   version=$(basename "$config" .sh)
   if tmux_is_at_least "$version"; then
