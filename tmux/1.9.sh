@@ -4,9 +4,6 @@ set -euo pipefail
 
 ### Keys
 
-# My favorite prefix.
-tmux set-option -g prefix '`'
-
 # Use vi keys
 tmux set-window-option -g mode-keys vi
 
