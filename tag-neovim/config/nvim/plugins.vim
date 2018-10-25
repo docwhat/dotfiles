@@ -163,7 +163,6 @@ Plug 'martinda/Jenkinsfile-vim-syntax'
 
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'garyburd/go-explorer', { 'for': 'go', 'do': 'go get github.com/garyburd/go-explorer/src/getool' }
 
 " Rust
 Plug 'rust-lang/rust.vim'
