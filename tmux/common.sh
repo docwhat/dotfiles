@@ -24,4 +24,6 @@ tmux bind-key -n C-Space resize-pane -Z
 tmux set-option -g update-environment "DISPLAY WINDOWID SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION TERM"
 tmux set-environment -g "SSH_AUTH_SOCK" "$HOME/.ssh/ssh_auth_sock"
 
+tmux set-option -g renumber-windows on
+
 # EOF
