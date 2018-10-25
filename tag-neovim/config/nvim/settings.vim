@@ -123,6 +123,12 @@ endif
 set background=dark
 highlight link phpBoolean Boolean
 
+" Vim Resizing
+" -----------------------------------------------------------------------------
+augroup VimrcResizing
+  autocmd!
+  autocmd VimResized * :wincmd =
+augroup END
 
 " Terminal
 " -----------------------------------------------------------------------------
