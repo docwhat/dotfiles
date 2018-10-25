@@ -113,3 +113,5 @@
 [filter "itermprofile"]
 	clean = json-canonicalizer
 	smudge = cat
+[mergetool]
+	keepBackup = false
