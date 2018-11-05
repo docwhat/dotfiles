@@ -367,14 +367,13 @@ if has_key(g:plugs, 'tagbar') " {{{
         \ }
 
   let g:tagbar_type_groovy = {
-        \   'ctagstype' : 'Groovy',
+        \   'ctagstype' : 'groovy',
         \   'kinds'     : [
-        \     'p:package',
+        \     'p:package:1',
         \     'c:classes',
         \     'i:interfaces',
         \     't:traits',
         \     'e:enums',
-        \     'r:constructors',
         \     'm:methods',
         \     'f:fields:1'
         \   ]
