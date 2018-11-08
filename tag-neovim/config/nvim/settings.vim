@@ -357,28 +357,6 @@ if has_key(g:plugs, 'tagbar') " {{{
           \   'ctagsargs' : '-sort -silent',
           \ }
   endif
-
-  let g:tagbar_type_gradle = {
-        \   'ctagstype' : 'Gradle',
-        \   'kinds'     : [
-        \     't:tasks',
-        \     'm:methods'
-        \   ]
-        \ }
-
-  let g:tagbar_type_groovy = {
-        \   'ctagstype' : 'groovy',
-        \   'kinds'     : [
-        \     'p:package:1',
-        \     'c:classes',
-        \     'i:interfaces',
-        \     't:traits',
-        \     'e:enums',
-        \     'm:methods',
-        \     'f:fields:1'
-        \   ]
-        \ }
-
 endif " }}}
 
 " TweekMonster's WStrip -- whitespace trimming and highlighting for
