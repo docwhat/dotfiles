@@ -74,7 +74,6 @@ Usage:tools-update [updater...]
   rbenv        rbenv plugins
   terms        updates TERM entries for terminfo
   tmux         tmux plugin manager and plugins
-  yard         yard documentation for Ruby gems
   zgen         zgen and its plugins
 
 $ tools-update default zgen terms tmux

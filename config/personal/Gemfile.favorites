@@ -17,7 +17,6 @@ group :lint do
   gem 'mdl'
 end
 
-gem 'yard'
 gem 'gem-browse'
 gem 'travis'
 gem 'rcodetools'
