@@ -1,4 +1,4 @@
-if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
+if [[ -d /opt/chef || -d /opt/chefdk || -d /opt/chef-workstation ]]; then
   function require-kitchen-yml
   {
     if [ ! -r .kitchen.yml ]; then
@@ -38,4 +38,8 @@ if [[ -d /opt/chef || -d /opt/chefdk || -d ~/.chef ]]; then
 
     env TERM="${new_term}" kitchen login "$@"
   }
+
+  if [[ -d /opt/chef-workstation ]]; then
+    path=( /opt/chef-workstation/bin "${path[@]}" )
+  fi
 fi
