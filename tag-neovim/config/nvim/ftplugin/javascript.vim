@@ -18,6 +18,14 @@ try
       let b:ale_fixers += ['prettier']
     endif
     let b:ale_fixers += ['remove_trailing_lines']
+
+    let s:enabled_linters = deepcopy(ale#linter#Get('javascript'))
+    let s:enabled_names = map(copy(s:enabled_linters), 'v:val[''name'']')
+
+    let b:ale_linters = get(b:, 'ale_linters', {})
+    let b:ale_linters['javascript'] = s:enabled_names
+
+    call filter(b:ale_linters['javascript'], { idx, val -> val != 'tsserver' })
   endif
 
   " Jest
