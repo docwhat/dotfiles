@@ -1,0 +1,34 @@
+#!/bin/bash
+
+##marker: NODEJS-CLI-TOOL##
+
+set -eEuo pipefail
+
+package=flow-language-server
+command=flow-language-server
+node_version=8
+prefix=/Users/docwhat/.cache/nodejs-cli-tool/node-8
+
+export NODENV_VERSION=$node_version
+
+function do_install() {
+  npm install --global --prefix "$prefix" "$package"
+}
+
+if [ -n "${TOOL_INSTALL:-}" ]; then do_install; exit; fi
+
+local_bin="$(npm bin 2>/dev/null)"
+global_bin="${prefix}/bin"
+
+if [ -x "${local_bin}/${command}" ]; then
+  exec "${local_bin}/${command}" "$@"
+fi
+
+if [ -x "${global_bin}/${command}" ]; then
+  exec "${global_bin}/${command}" "$@"
+fi
+
+do_install >/dev/null 2>&1
+exec "${global_bin}/${command}" "$@"
+
+# EOF
