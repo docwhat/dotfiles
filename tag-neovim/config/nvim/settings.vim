@@ -926,7 +926,7 @@ if has_key(g:plugs, 'LanguageClient-neovim') " {{{
         \   'groovy': ['groovy-language-server'],
         \   'haskell': ['hie', '--lsp'],
         \   'html': ['html-languageserver', '--stdio'],
-        \   'javascript': [ 'javascript-typescript-stdio' ],
+        \   'javascript': [ 'flow-language-server', '--stdio' ],
         \   'json' : [ 'vscode-json-languageserver', '--stdio' ],
         \   'lua': ['lua-lsp'],
         \   'objc': ['clangd'],
