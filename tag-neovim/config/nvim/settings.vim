@@ -465,6 +465,7 @@ if has_key(g:plugs, 'fzf.vim') " {{{
 
   let g:fzf_buffers_jump = 1
   nnoremap <silent> <leader>p :call MyGFilesOrFiles()<CR>
+  nnoremap <silent> <leader>b :Buffers<CR>
 
   " Mapping selecting mappings
   nmap <leader><tab> <plug>(fzf-maps-n)
