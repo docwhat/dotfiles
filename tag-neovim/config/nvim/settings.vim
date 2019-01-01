@@ -277,6 +277,7 @@ if has_key(g:plugs, 'lexima.vim')
   " Lexima conflicts with Deoplete and NCM2, etc. by remapping <CR>
   " https://github.com/cohama/lexima.vim/issues/65
   let g:lexima_no_default_rules = 1
+  let g:lexima_map_escape = '<C-y><Esc>'
   call lexima#set_default_rules()
   call lexima#insmode#map_hook('before', '<CR>', '')
 endif
@@ -285,7 +286,7 @@ function! DocwhatCR() abort
   if has_key(g:plugs, 'lexima.vim')
     let l:cr = lexima#expand('<CR>', 'i')
   else
-    let l:cr = '<CR>'
+    let l:cr = "\<CR>"
   endif
   let l:retval = l:cr
 
@@ -730,7 +731,7 @@ if has_key(g:plugs, 'ncm2') " {{{
   set shortmess+=c
 
   " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-  inoremap <c-c> <ESC>
+  inoremap <C-c> <ESC>
 
   " ncm2/ncm2-match-highlight
   let g:ncm2#match_highlight = 'mono-space'
