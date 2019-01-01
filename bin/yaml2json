@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'yaml'
 require 'json'
 
-puts JSON.pretty_generate(YAML.load(ARGF.read))
+puts JSON.pretty_generate(YAML.safe_load(ARGF.read))

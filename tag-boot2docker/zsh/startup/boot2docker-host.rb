@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 HOSTFILE = '/etc/hosts'
 
 ip = ARGV.first
 
-fail 'You need to pass in an ip address' unless ip =~ /\A[0-9.]+\Z/
+raise 'You need to pass in an ip address' unless ip =~ /\A[0-9.]+\Z/
 
 original_hosts = File.read(HOSTFILE)
 original_lines = original_hosts.split("\n").map(&:strip)
@@ -13,7 +14,8 @@ def domains
   resolv_conf = File.read('/etc/resolv.conf').split(/\n+/)
   domains = resolv_conf.grep(/^search\s(.*)$/)
   domains = resolv_conf.grep(/^domain\s(.*)$/) if domains.empty?
-  return %w(home) if domains.empty?
+  return %w[home] if domains.empty?
+
   domains
     .first
     .split(/\s+/)

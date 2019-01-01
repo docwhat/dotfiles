@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'rubygems' unless defined? Gem # Old rubygems.
 
 # My Application
 class Application
   MINIMUM_VERSION = '2.1.11'
-  attr_reader :debug
-  alias_method :debug?, :debug
+  alias debug? debug
 
   def initialize(argv = ARGV)
     @debug = argv.include?('-d') || argv.include?('--debug')
@@ -24,8 +24,10 @@ class Application
     exit 0
   end
 
-  def debug(str)
-    $stderr.puts "** DEBUG: #{str}" if debug?
+  def debug(str = :unset)
+    return @debug if str == :unset
+
+    warn "** DEBUG: #{str}" if debug?
   end
 
   def current
@@ -56,4 +58,4 @@ class Application
   end
 end
 
-Application.new.run if __FILE__ == $PROGRAM_NAME
+Application.new.run if $PROGRAM_NAME == __FILE__

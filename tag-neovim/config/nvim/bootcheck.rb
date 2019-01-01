@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Checks if the plugin list has changed.  If it has, then
 # force a plugin update.
 
@@ -29,6 +31,7 @@ class Plugins
 
   def changed?
     return true if previous_json != to_json
+
     @plugins.each_pair do |_name, data|
       return true unless File.directory? data['dir']
     end

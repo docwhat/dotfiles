@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'net/http'
 require 'net/https'
@@ -15,42 +16,43 @@ url = URI.parse(ARGV.first)
 
 http = Net::HTTP.new(url.host, url.port)
 
-http.open_timeout = http.read_timeout = 10  # Set open and read timeout to 10 seconds
+# Set open and read timeout to 10 seconds
+http.open_timeout = http.read_timeout = 10
 http.use_ssl = (url.scheme == 'https')
 
 puts
 puts '## Initial Request'
-original_response, _ = http.get(
+original_response, = http.get(
   url.request_uri,
-  'If-Modified-Since'   => '',
-  'If-None-Match'       => ''
+  'If-Modified-Since' => '',
+  'If-None-Match' => ''
 )
 
 print_response(original_response)
 
 puts
 puts '## If-Modified-Since Only'
-response, _ = http.get(
+response, = http.get(
   url.request_uri,
-  'If-Modified-Since'   => original_response['last-modified'],
-  'If-None-Match'       => ''
+  'If-Modified-Since' => original_response['last-modified'],
+  'If-None-Match' => ''
 )
 print_response(response)
 
 puts
 puts '## If-None-Match Only'
-response, _ = http.get(
+response, = http.get(
   url.request_uri,
-  'If-Modified-Since'   => '',
-  'If-None-Match'       => original_response['etag']
+  'If-Modified-Since' => '',
+  'If-None-Match' => original_response['etag']
 )
 print_response(response)
 
 puts
 puts '## Both If-Modified-Since and If-None-Match'
-response, _ = http.get(
+response, = http.get(
   url.request_uri,
-  'If-Modified-Since'   => original_response['last-modified'],
-  'If-None-Match'       => original_response['etag']
+  'If-Modified-Since' => original_response['last-modified'],
+  'If-None-Match' => original_response['etag']
 )
 print_response(response)

@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'json'
 require 'optparse'
 
 # JSON Pretty Printer
-class App
+class App # rubocop:disable Metrics/ClassLength
   # Renders code as pretty
   class PrettyRenderer
     # Renders code in plain text
@@ -63,22 +64,22 @@ class App
     exit
   end
 
-  def opt_parser # rubocop:disable MethodLength
+  def opt_parser # rubocop:disable MethodLength,Metrics/AbcSize
     @opt_parser ||= OptionParser.new do |opts|
-      opts.banner = unindent(<<-EOF)
+      opts.banner = unindent(<<-BANNER)
         Usage: #{opts.program_name} [options] [-|file...]
 
         Pretty-prints (and colorizes) JSON using Ruby's built in JSON parser.
 
         If no file names are specified or if '-' is used as a filename then
         stdin will be used as the input.
-      EOF
-      if color_available?
-        color_help = 'Force color on'
-      else
-        color_help = 'Would force color on if you '\
-          "first ran 'gem install coderay'"
-      end
+      BANNER
+      color_help = if color_available?
+                     'Force color on'
+                   else
+                     'Would force color on if you '\
+                       "first ran 'gem install coderay'"
+                   end
       opts.separator ''
       opts.on('-c', '--color', color_help) { options[:color] = true }
       opts.on('-C', '--no-color', 'Force color off') { options[:color] = false }
@@ -133,17 +134,20 @@ class App
     @streams ||= if options[:files].empty?
                    [$stdin]
                  else
-                   options[:files].map { |f| f == '-' ? $stdin : open(f, 'r') }
+                   options[:files]
+                     .map do |fname|
+                       fname == '-' ? $stdin : File.open(fname, 'r')
+                     end
                  end
   end
 
-  def run
+  def run # rubocop:disable Metrics/AbcSize
     patch_colors!
     parse(ARGV)
 
     streams.each_with_index do |stream, i|
       if streams.count > 1
-        puts if i > 0
+        puts if i.positive?
         puts "File: #{stream.path}"
       end
       puts renderer.json(stream.read)
@@ -151,7 +155,7 @@ class App
   end
 end
 
-if __FILE__ == $PROGRAM_NAME
+if $PROGRAM_NAME == __FILE__
   App.new.run
   exit
 end

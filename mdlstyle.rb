@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # MDL style
 # vim:set ft=ruby:
 
