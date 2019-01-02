@@ -6,7 +6,6 @@ require 'rubygems' unless defined? Gem # Old rubygems.
 # My Application
 class Application
   MINIMUM_VERSION = '2.1.11'
-  alias debug? debug
 
   def initialize(argv = ARGV)
     @debug = argv.include?('-d') || argv.include?('--debug')
@@ -29,6 +28,7 @@ class Application
 
     warn "** DEBUG: #{str}" if debug?
   end
+  alias_method :debug?, :debug
 
   def current
     @current ||= Gem::Version.new(Gem::VERSION)
