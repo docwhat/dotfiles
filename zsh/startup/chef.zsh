@@ -18,6 +18,15 @@ if [[ -d /opt/chef || -d /opt/chefdk || -d /opt/chef-workstation ]]; then
   KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
   export KITCHEN_YAML KITCHEN_LOCAL_YAML
 
+  function kcv
+  {
+    require-kitchen-yml || return 1
+
+    chef exec kitchen converge "$@" || return $?
+
+    chef exec kitchen verify   "$@" || return $?
+  }
+
   function ks
   {
     require-kitchen-yml || return 1
