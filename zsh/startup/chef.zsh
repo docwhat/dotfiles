@@ -1,54 +1,47 @@
-if [[ -d /opt/chef || -d /opt/chefdk || -d /opt/chef-workstation ]]; then
-  function require-kitchen-yml
-  {
+if [[ -n $CHEF_LOCATION ]] && [[ -x "${CHEF_LOCATION}/bin/chef" ]]; then
+
+  function require-kitchen-yml() {
     if [ ! -r .kitchen.yml ]; then
       echo 'No .kitchen.yml present!' 1>&2
       return 1
     fi
   }
-  alias kl="require-kitchen-yml && chef exec kitchen list"
-  alias kc="require-kitchen-yml && chef exec kitchen converge"
-  alias kv="require-kitchen-yml && chef exec kitchen verify"
-  alias kd="require-kitchen-yml && chef exec kitchen destroy"
-  alias kt="require-kitchen-yml && chef exec kitchen test"
 
-  # https://github.com/someara/kitchen-dokken
-  # https://kitchen.ci/docs/faq
-  KITCHEN_YAML=.kitchen.yml
-  KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
-  export KITCHEN_YAML KITCHEN_LOCAL_YAML
+  alias kl="kitchen list"
+  alias kc="kitchen converge"
+  alias kv="kitchen verify"
+  alias kd="kitchen destroy"
+  alias kt="kitchen test"
+  alias kitchen='require-kitchen-yml && "${CHEF_LOCATION}/bin/chef" exec kitchen'
 
-  function kcv
-  {
+  function kcv() {
     require-kitchen-yml || return 1
 
-    chef exec kitchen converge "$@" || return $?
+    "${CHEF_LOCATION}/bin/chef" exec kitchen converge "$@" || return $?
 
-    chef exec kitchen verify   "$@" || return $?
+    "${CHEF_LOCATION}/bin/chef" exec kitchen verify "$@" || return $?
   }
 
-  function ks
-  {
+  function ks() {
     require-kitchen-yml || return 1
 
     case "$TERM" in
-      screen*)
-        new_term=screen
-        ;;
-      tmux*)
-        new_term=screen
-        ;;
-      xterm*)
-        new_term=xterm
-        ;;
-      *)
-        new_term=$TERM
+    screen*)
+      new_term=screen
+      ;;
+    tmux*)
+      new_term=screen
+      ;;
+    xterm*)
+      new_term=xterm
+      ;;
+    *)
+      new_term=$TERM
+      ;;
     esac
 
-    env TERM="${new_term}" kitchen login "$@"
+    env TERM="${new_term}" "${CHEF_LOCATION}/bin/chef" exec kitchen login "$@"
   }
 
-  if [[ -d /opt/chef-workstation ]]; then
-    path=( /opt/chef-workstation/bin "${path[@]}" )
-  fi
+  eval "$("${CHEF_LOCATION}/bin/chef" shell-init zsh | grep -Ev '^export')"
 fi
