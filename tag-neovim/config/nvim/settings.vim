@@ -1107,7 +1107,7 @@ if has_key(g:plugs, 'ale') " {{{
   let g:ale_echo_msg_warning_str = 'W'
   let g:ale_echo_msg_format      = '%code: %%s [%linter%/%severity%]'
 
-  if $POWERLEVEL9K_MODE ==# 'nerdfont-complete'
+  if $P9K_MODE ==# 'nerdfont-complete'
     let g:ale_sign_error         = ''
     let g:ale_sign_warning       = ''
     let g:ale_sign_info          = ''
@@ -1125,7 +1125,7 @@ if has_key(g:plugs, 'ale') " {{{
     " Set this. Airline will handle the rest.
     let g:airline#extensions#ale#enabled = 1
 
-    if $POWERLEVEL9K_MODE ==# 'nerdfont-complete'
+    if $P9K_MODE ==# 'nerdfont-complete'
       let g:airline#extensions#ale#error_symbol = ' '
       let g:airline#extensions#ale#warning_symbol = '𥉉'
     else
