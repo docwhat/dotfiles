@@ -4,6 +4,7 @@ isort
 jedi
 launchpadlib ; sys_platform == 'linux' or sys_platform == 'linux2'
 neovim
+neovim-remote ; python_version >= '3.6'
 proselint
 psutil
 pyaml
