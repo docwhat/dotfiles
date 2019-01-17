@@ -1,12 +1,19 @@
 #!/bin/bash
 
+if [[ $COLORTERM == truecolor ]]; then
+  header_color='#008800 #112233'
+else
+  header_color='yellow blue'
+fi
+
 format=(
-'%(HEAD)'
-'%(color:green)%(align:width=40)%(refname:lstrip=2)%(end)'
-'%(color:bold black)%(align:width=13)%(authordate:relative)%(end)'
-'%(color:blue)(%(authorname))'
-'%0a   '
-'%(color:white)%(subject)'
+  '%(HEAD)'
+  "%(color:${header_color})%(align:40)%(refname:lstrip=2)%(end)"
+  '%(objectname:short)'
+  '%(align:25)%(authordate:relative)%(end)'
+  '%(authorname)'
+  '%0a   '
+  '%(color:white)%(subject)'
 )
 
 exec git branch --format="${format[*]}" "$@"
