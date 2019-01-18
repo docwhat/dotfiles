@@ -15,9 +15,9 @@ group :lint do
   gem 'rubocop'
   gem 'reek'
   gem 'mdl'
+  gem 'solargraph'
 end
 
-gem 'gem-browse'
 gem 'travis'
 gem 'rcodetools'
 gem 'fastri'
