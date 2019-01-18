@@ -1,0 +1,13 @@
+--context=3
+--smart-case
+
+--colors=match:fg:red
+--colors=match:style:underline
+--colors=match:style:intense
+--colors=match:style:bold
+
+--colors=path:style:bold
+--colors=path:fg:34
+
+--colors=line:style:bold
+--colors=line:fg:32

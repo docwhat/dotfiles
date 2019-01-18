@@ -122,6 +122,7 @@ elseif exists('+guicolors')
 endif
 set background=dark
 highlight link phpBoolean Boolean
+let g:docwhat_commandline_prompt = '➭'
 
 " Vim Resizing
 " -----------------------------------------------------------------------------
@@ -296,6 +297,9 @@ function! DocwhatCR() abort
     else
       let l:retval = "\<C-y>" . l:retval
     endif
+  else
+    " `<C-g>u` means break undo chain at current position.
+    let l:retval = "\<C-g>u" . l:retval
   endif
 
   if has_key(g:plugs, 'ultisnips') && !empty(v:completed_item)
@@ -439,7 +443,29 @@ endif " }}}
 
 " Denite
 if has_key(g:plugs, 'denite.nvim') " {{{
-  if executable('ag')
+
+  call denite#custom#option('_', {
+        \ 'auto-accel': 1,
+        \ 'auto-highlight': 1,
+        \ 'auto_resize': 0,
+        \ 'highlight_matched_char': 'MoreMsg',
+        \ 'highlight_mode_normal': 'MoreMsg',
+        \ 'mode': 'insert',
+        \ 'prompt': g:docwhat_commandline_prompt,
+        \ 'quit': 1,
+        \ 'reversed': 1,
+        \ 'updatetime': 1,
+        \ 'winheight': 15,
+        \})
+
+  call denite#custom#var(
+        \ 'buffer',
+        \ 'date_format', '%Y-%m-%d %H:%M:%S')
+
+  if executable('pt')
+    call denite#custom#var('file_rec', 'command',
+          \ ['pt', '--nocolor', '--ignore', '.git', '--hidden', '-g=', ''])
+  elseif executable('ag')
     call denite#custom#source(
           \ 'file_rec', 'vars', {
           \   'command': [
@@ -449,6 +475,7 @@ if has_key(g:plugs, 'denite.nvim') " {{{
   endif
   if !has_key(g:plugs, 'fzf.vim')
     nnoremap <silent> <leader>p :Denite file_rec<cr>
+    nnoremap <silent> <leader>b :Denite buffer<cr>
   endif
 endif " }}}
 
@@ -712,6 +739,141 @@ if has_key(g:plugs, 'vim-editorconfig') " {{{
   let g:editorconfig_local_vimrc = 0 " Never!
 
   command! EditorConfigReload call editorconfig#load()
+endif " }}}
+
+" CoC -- Conquer of Completion
+if has_key(g:plugs, 'coc.nvim') " {{{
+  set hidden
+  set cmdheight=2
+  set updatetime=300
+  set shortmess+=c
+  set signcolumn=yes
+
+  " Use tab for trigger completion with characters ahead and navigate.
+  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  " Use <c-space> for trigger completion.
+  inoremap <silent><expr> <c-space> coc#refresh()
+
+  " " Use `[c` and `]c` for navigate diagnostics
+  nmap <silent> [c <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+  " Remap keys for gotos
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+
+  " Use K for show documentation in preview window
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  function! s:show_documentation()
+    if &filetype ==# 'vim'
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
+
+  " Remap for rename current word
+  nmap <leader>rn <Plug>(coc-rename)
+
+  " Remap for format selected region
+  nmap <leader>f  <Plug>(coc-format-selected)
+
+  augroup CocGroup
+    autocmd!
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  augroup end
+
+  " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+  vmap <leader>a  <Plug>(coc-codeaction-selected)
+  nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+  " Remap for do codeAction of current line
+  nmap <leader>ac  <Plug>(coc-codeaction)
+  " Fix autofix problem of current line
+  nmap <leader>qf  <Plug>(coc-fix-current)
+
+  " Use `:Format` for format current buffer
+  command! -nargs=0 Format :call CocAction('format')
+
+  " Use `:Fold` for fold current buffer
+  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+  function! DocwhatCocInstallAll()
+    let dir = coc#util#extension_root()
+    let res = coc#util#init_extension_root(dir)
+    if res == -1| return | endif
+    call coc#util#open_terminal({
+          \ 'cwd': dir,
+          \ 'cmd': 'yarn install',
+          \ 'keepfocus': 1
+          \})
+  endfunction
+
+  " Add diagnostic info for https://github.com/itchyny/lightline.vim
+  let g:lightline = {
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+        \ },
+        \ 'component_function': {
+        \   'cocstatus': 'coc#status'
+        \ },
+        \ }
+
+  if has_key(g:plugs, 'colorscheme-gruvbox')
+    highlight link CocErrorSign GruvboxRedSign
+    highlight link CocWarningSign GruvboxYellowSign
+    highlight link CocInfoSign GruvboxBlueSign
+    highlight link CocHintSign GruvboxAquaSign
+  endif
+
+  if has_key(g:plugs, 'vim-airline')
+    let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+    let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+  endif
+
+  " Shortcuts for denite interface
+  if has_key(g:plugs, 'denite.nvim')
+    " Show extension list
+    nnoremap <silent> <space>e  :<C-u>Denite coc-extension<cr>
+
+    " Show symbols of current buffer
+    nnoremap <silent> <space>o  :<C-u>Denite coc-symbols<cr>
+
+    " Search symbols of current workspace
+    nnoremap <silent> <space>t  :<C-u>Denite coc-workspace<cr>
+
+    " Show diagnostics of current workspace
+    nnoremap <silent> <space>a  :<C-u>Denite coc-diagnostic<cr>
+
+    " Show available commands
+    nnoremap <silent> <space>c  :<C-u>Denite coc-command<cr>
+
+    " Show available services
+    nnoremap <silent> <space>s  :<C-u>Denite coc-service<cr>
+
+    " Show links of current buffer
+    nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
+  endif
 endif " }}}
 
 " NCM2 -- Neovim Completion Manager
