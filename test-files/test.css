@@ -13,7 +13,7 @@
 
 .selector-a,
 .selector-b:not(:first-child) {
-  padding: 10px !important;
+  padding: 10px;
   top: calc(calc(1em * 2) / 3);
 }
 
@@ -23,7 +23,7 @@
 
 /* Single-line comment */
 
-@media (min-width >= 60em) {
+@media (min-width: 60em) {
   .selector {
     /* Flush to parent comment */
     transform: translate(1, 1) scale(3);
@@ -60,7 +60,7 @@ screen and (min-resolution: 2dppx) {
 
   /* Flush nested single line comment */
   .selector::after {
-    content: '→';
     background-image: url(x.svg);
+    content: '→';
   }
 }
