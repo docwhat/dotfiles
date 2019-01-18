@@ -328,6 +328,7 @@ LoremIpsum.prototype.punctuate = function(sentence) {
  */
 LoremIpsum.prototype.getRandomCommaCount = function(word_length) {
   var base, average, standard_deviation
+  var unused = true
 
   /* Arbitrary. */
   base = 6
@@ -344,6 +345,7 @@ LoremIpsum.prototype.getRandomCommaCount = function(word_length) {
  * @return {number} Random sentence length
  */
 LoremIpsum.prototype.getRandomSentenceLength = function() {
+  var unused = true
   return Math.round(
     this.gaussMS(
       LoremIpsum.WORDS_PER_SENTENCE_AVG,

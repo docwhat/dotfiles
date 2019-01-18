@@ -2,11 +2,6 @@ scriptencoding utf-8
 
 call plug#begin(g:xdg_data_home . '/plugged')
 
-" Usage: Plug 'blah', { 'do': function('DoRemotePluginsUpdate') }
-function! DoRemotePluginsUpdate(arg)
-  UpdateRemotePlugins
-endfunction
-
 " -- Utilities
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
@@ -18,11 +13,13 @@ Plug 'tpope/vim-surround'
 
 Plug 'tpope/vim-speeddating'
 
-" Paired commands (using '[' and ']')
+" Paired commands like:
+"
+" [<Space>                Add [count] blank lines above the cursor.
+" ]<Space>                Add [count] blank lines below the cursor.
+" [e                      Exchange the current line with [count] lines above it.
+" ]e                      Exchange the current line with [count] lines below it.
 Plug 'tpope/vim-unimpaired'
-
-" Auto-pairing, including adding `end` to if statements.
-Plug 'cohama/lexima.vim'
 
 " Detect indentation
 Plug 'tpope/vim-sleuth'
@@ -69,8 +66,8 @@ Plug 'scrooloose/nerdcommenter'
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-" TODO: Consider fzy instead? https://github.com/jhawthorn/fzy
+" Plug 'junegunn/fzf.vim'
+" " TODO: Consider fzy instead? https://github.com/jhawthorn/fzy
 
 " Neovim Development
 Plug 'tweekmonster/nvimdev.nvim'
@@ -84,37 +81,38 @@ Plug 'dbakker/vim-lint'
 Plug 'w0rp/ale'
 Plug 'ruanyl/coverage.vim'
 
-" Completion
-Plug 'ncm2/ncm2' | Plug 'roxma/nvim-yarp' " ncm2 requires nvim-yarp
+" Completion & Snippets
+let g:coc_global_extensions = [
+      \  'coc-css',
+      \  'coc-emmet',
+      \  'coc-highlight',
+      \  'coc-html',
+      \  'coc-dictionary',
+      \  'coc-emoji',
+      \  'coc-omni',
+      \  'coc-tag',
+      \  'coc-pairs',
+      \  'coc-java',
+      \  'coc-json',
+      \  'coc-pyls',
+      \  'coc-rls',
+      \  'coc-snippets',
+      \  'coc-solargraph',
+      \  'coc-yaml',
+      \  'coc-eslint',
+      \  'coc-jest',
+      \  'coc-prettier',
+      \  'coc-tslint',
+      \  'coc-tsserver',
+      \ ]
 
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-github'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-tagprefix'
-Plug 'wellle/tmux-complete.vim'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-cssomni'
 
-Plug 'filipekiss/ncm2-look.vim' " Spelling completion
-Plug 'ncm2/ncm2-match-highlight'
-
-
-Plug 'jsfaint/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-Plug 'jsfaint/ncm2-vim' | Plug 'Shougo/neco-vim'
-Plug 'jsfaint/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
-
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-markdown-subscope'
-
-" Snippets
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-" Plug 'autozimu/LanguageClient-neovim', {
-"       \ 'branch': 'next',
-"       \ 'do': 'bash install.sh',
-"       \ }
+Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
+" Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': { -> coc#util#install() } }
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+Plug 'Shougo/denite.nvim', { 'tag': '*', 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/neoyank.vim'
 
 " NGinX
 Plug 'chr4/nginx.vim'
@@ -126,7 +124,6 @@ Plug 'tpope/vim-liquid'
 Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'neoclide/vim-jsx-improve'
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
 
 " XML, HTML & CSS

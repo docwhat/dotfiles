@@ -54,7 +54,7 @@ declare -r package command node_version prefix stub update
 if ! (( update )) || [ -n "${TOOL_INSTALL:-}" ]; then
   npm install --global --prefix "$prefix" "$package"
 
-  if [ ! -x "$(npm bin --global 2>/dev/null)/${command}" ]; then
+  if [ ! -x "$(npm bin --global --prefix "$prefix" 2>/dev/null)/${command}" ]; then
     error "cannot find $command in $package"
   fi
 fi

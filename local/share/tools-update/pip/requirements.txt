@@ -3,7 +3,7 @@ flake8
 isort
 jedi
 launchpadlib ; sys_platform == 'linux' or sys_platform == 'linux2'
-neovim
+pynvim
 neovim-remote ; python_version >= '3.6'
 proselint
 psutil
