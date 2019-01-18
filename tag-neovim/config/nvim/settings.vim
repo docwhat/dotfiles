@@ -34,9 +34,11 @@ endif
 
 set number
 " set wildmode=list:longest,full   " Completion for wildchar (see help)
-set wildignore+=*.o,*.obj,*.pyc,*.pyo,*.pyd,*.class,*.lock
-set wildignore+=*.png,*.gif,*.jpg,*.ico
-set wildignore+=.git,.svn,.hg
+set wildignore+=*.o,*.obj,*.pyc,*.pyo,*.pyd
+set wildignore+=*.png,*.gif,*.jpg,*.ico,*.ttf,*.TTF,*.svg
+set wildignore+=.git,.svn,.hg,.DS_Store
+set wildignore+=*.so,*.class,*.lock
+set wildignore+=*/tmp/*,*/target/*
 
 set showmatch                    " Show the matching bracket
 set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pairs
@@ -462,9 +464,43 @@ if has_key(g:plugs, 'denite.nvim') " {{{
         \ 'buffer',
         \ 'date_format', '%Y-%m-%d %H:%M:%S')
 
-  if executable('pt')
+  function! s:deniteRgGlobalIgnore(ignore, ...) abort
+    let ignore = []
+    for ig in split(a:ignore,',')
+      call add(ignore, '-g')
+      if get(a:000, 0, 0) == 1
+        call add(ignore, "'!" . ig . "'")
+      else
+        call add(ignore, '!' . ig)
+      endif
+    endfor
+    return ignore
+  endf
+
+  if executable('rg')
+    call denite#custom#var('file_rec', 'command',
+          \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
+          \ + s:deniteRgGlobalIgnore(&wildignore, 'rg')
+          \ )
+    " Ripgrep command on grep source
+    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'default_opts',
+          \ ['--vimgrep', '--no-heading'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
+  elseif executable('pt')
     call denite#custom#var('file_rec', 'command',
           \ ['pt', '--nocolor', '--ignore', '.git', '--hidden', '-g=', ''])
+    " Pt command on grep source
+    call denite#custom#var('grep', 'command', ['pt'])
+    call denite#custom#var('grep', 'default_opts',
+          \ ['--nogroup', '--nocolor', '--smart-case'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
   elseif executable('ag')
     call denite#custom#source(
           \ 'file_rec', 'vars', {
@@ -472,6 +508,13 @@ if has_key(g:plugs, 'denite.nvim') " {{{
           \      'ag', '--follow', '--nocolor', '--nogroup',
           \      '--hidden', '-g', ''
           \   ] })
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'default_opts',
+          \ [ '--vimgrep', '--smart-case' ])
   endif
   if !has_key(g:plugs, 'fzf.vim')
     nnoremap <silent> <leader>p :Denite file_rec<cr>
