@@ -335,6 +335,37 @@ endif " }}}
 if has_key(g:plugs, 'tagbar') " {{{
   nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
+  let g:tagbar_type_typescript = {
+        \   'ctagstype': 'typescript',
+        \   'kinds': [
+        \     'C:classes',
+        \     'N:namespaces',
+        \     'M:modules',
+        \     'f:functions:1',
+        \     'v:variables',
+        \     'V:varlambdas',
+        \     'm:members',
+        \     'i:interfaces',
+        \     't:types',
+        \     'e:enums',
+        \     'I:imports',
+        \   ],
+        \   'kind2scope' : {
+        \     'e' : 'enums',
+        \     'C' : 'classes',
+        \     'N' : 'namespaces',
+        \     'M' : 'modules',
+        \     'i' : 'interfaces',
+        \   },
+        \   'scope2kind' : {
+        \     'enums' : 'e',
+        \     'classes' : 'C',
+        \     'namespaces' : 'N',
+        \     'modules' : 'M',
+        \     'interfaces' : 'i',
+        \   },
+        \ }
+
   if executable('gotags')
     let g:tagbar_type_go = {
           \   'ctagstype' : 'go',
