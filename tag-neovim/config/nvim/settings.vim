@@ -1011,6 +1011,11 @@ if has_key(g:plugs, 'vim-javascript') " {{{
   let g:javascript_plugin_flow = 1
 endif " }}}
 
+" JSX Pretty -- by MaxMEllon
+if has_key(g:plugs, 'vim-jsx-pretty')
+  let g:vim_jsx_pretty_colorful_config = 1
+endif
+
 " Prettier -- Specialized formatting tool
 if has_key(g:plugs, 'vim-prettier') " {{{
   function! s:myPrettierSetup()
