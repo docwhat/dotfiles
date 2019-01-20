@@ -15,7 +15,7 @@ if [ "${ZSH_ENABLENODE}" != false ]; then
   ## Set the shell for NODENV
   NODENV_SHELL=zsh
 
-  if [ -d "$NODENV_ROOT" ]; then
+  if [[ -d "$NODENV_ROOT" ]] && [[ -x "${NODENV_ROOT}/bin/nodenv" ]]; then
     if ! (( $+commands[nodenv] )); then
       path+="${NODENV_ROOT}/bin"
     fi
@@ -24,5 +24,8 @@ if [ "${ZSH_ENABLENODE}" != false ]; then
     if ! (( $+functions[nodenv] )); then
       eval "$(nodenv init - --no-rehash)"
     fi
+  else
+    # nodenv is not installed.
+    unset NODENV_ROOT NODENV_SHELL
   fi
 fi
