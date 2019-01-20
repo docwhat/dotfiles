@@ -6,8 +6,8 @@ set -eEuo pipefail
 
 package=alex
 command=alex
-node_version=8
-prefix=/Users/docwhat/.cache/nodejs-cli-tool/node-8
+node_version=10
+prefix=/Users/docwhat/.cache/nodejs-cli-tool/node-10
 
 export NODENV_VERSION=$node_version
 

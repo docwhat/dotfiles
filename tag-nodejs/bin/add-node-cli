@@ -6,7 +6,7 @@
 set -eu
 
 # defaults
-declare -i node_version=8
+declare -i node_version=10
 
 function error {
   print -P "%B%F{red}ERROR%f%b: $*"
