@@ -21,4 +21,7 @@ wait
 # Remove cache.
 rm -rf "${HOME}/.cache/nodejs-cli-tool"
 
+# Install global packages
+yarn global add neovim
+
 # EOF
