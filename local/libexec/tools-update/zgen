@@ -14,6 +14,8 @@ set -eu
 
 echo
 print -P "%F{cyan}z %F{blue}updating plugins %F{reset}"
+set +eu
 zgen update |& offset | colorize yellow
+set -eu
 
 # EOF
