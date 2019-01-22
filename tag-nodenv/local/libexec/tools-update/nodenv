@@ -11,6 +11,11 @@ plugins=( $(cat "${HOME}/.config/personal/nodenv-plugins") )
 typeset -a plugin_names
 setopt extendedglob
 
+if [[ -z "${NODENV_ROOT:-}" ]]; then
+  echo "NODENV_ROOT is not set; skipping" | colorize red
+  exit 0
+fi
+
 # We always want this
 plugins=( "${plugins[@]}" nodenv/nodenv-update )
 
