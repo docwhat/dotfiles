@@ -3,10 +3,6 @@
 
 set -euo pipefail
 
-if [ $UID = 0 ]; then
-  exit 0
-fi
-
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
@@ -20,8 +16,10 @@ wait
 
 # Remove cache.
 rm -rf "${HOME}/.cache/nodejs-cli-tool"
+mkdir -p "${HOME}/.cache/nodejs-cli-tool"
 
 # Install global packages
-yarn global add neovim
+env TOOL_INSTALL=t ~/bin/yarn
+~/bin/yarn global add neovim
 
 # EOF

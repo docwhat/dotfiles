@@ -63,7 +63,6 @@ fi
   "$package" \
   "$command" \
   "$node_version" \
-  "$prefix" \
   > "${stub}.tmp" || (rm -f "${stub}.tmp" ; false)
 mv -f "${stub}.tmp" "${stub}"
 chmod +x "${stub}"

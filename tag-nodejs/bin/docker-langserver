@@ -7,7 +7,7 @@ set -eEuo pipefail
 package=dockerfile-language-server-nodejs
 command=docker-langserver
 node_version=10
-prefix=/Users/docwhat/.cache/nodejs-cli-tool/node-10
+prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
 
 export NODENV_VERSION=$node_version
 
@@ -15,7 +15,10 @@ function do_install() {
   npm install --global --prefix "$prefix" "$package"
 }
 
-if [ -n "${TOOL_INSTALL:-}" ]; then do_install; exit; fi
+if [ -n "${TOOL_INSTALL:-}" ]; then
+  do_install
+  exit
+fi
 
 local_bin="$(npm bin 2>/dev/null)"
 global_bin="${prefix}/bin"

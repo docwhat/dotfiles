@@ -6,7 +6,6 @@ setopt pipefail
 package="$1"
 command="$2"
 node_version="$3"
-prefix="$4"
 
 echo '#!/bin/bash'
 echo
@@ -17,7 +16,7 @@ echo
 echo "package=${(q)package}"
 echo "command=${(q)command}"
 echo "node_version=${(q)node_version}"
-echo "prefix=${(q)prefix}"
+echo 'prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"'
 echo
 echo 'export NODENV_VERSION=$node_version'
 echo
@@ -25,7 +24,10 @@ echo 'function do_install() {'
 echo '  npm install --global --prefix "$prefix" "$package"'
 echo '}'
 echo
-echo 'if [ -n "${TOOL_INSTALL:-}" ]; then do_install; exit; fi'
+echo 'if [ -n "${TOOL_INSTALL:-}" ]; then'
+echo '  do_install'
+echo '  exit'
+echo 'fi'
 echo
 echo 'local_bin="$(npm bin 2>/dev/null)"'
 echo 'global_bin="${prefix}/bin"'
