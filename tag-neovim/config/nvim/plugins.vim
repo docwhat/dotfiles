@@ -7,15 +7,15 @@ endfunction
 call plug#begin(g:xdg_data_home . '/plugged')
 
 " -- Utilities
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Shougo/vimproc.vim', { 'tag': 'ver.*', 'do' : 'make'}
 
 " Support '.' correctly for plugins that support this module.
 Plug 'tpope/vim-repeat'
 
 " ds/cs/ys for deleting, changing, your surrounding chars (like ', ", etc.)
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround', { 'tag': 'v*' }
 
-Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-speeddating', { 'tag': 'v*' }
 
 " Paired commands like:
 "
@@ -23,7 +23,7 @@ Plug 'tpope/vim-speeddating'
 " ]<Space>                Add [count] blank lines below the cursor.
 " [e                      Exchange the current line with [count] lines above it.
 " ]e                      Exchange the current line with [count] lines below it.
-Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired', { 'tag': 'v*' }
 
 " Detect indentation
 Plug 'tpope/vim-sleuth'
@@ -41,12 +41,12 @@ Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'machakann/vim-highlightedyank'
 
 " Visualize the undo tree
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'tag': 'rel_*' }
 
 " Tags support; I recommend Universal Ctags
 "   https://ctags.io/
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'tag': 'v*' }
 
 " Convert single line things to multi-line and back
 "   gS - single -> multi
@@ -66,7 +66,7 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-rhubarb'
 
 " Comments
-Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter', { 'tag': '*' }
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -78,11 +78,11 @@ Plug 'tweekmonster/nvimdev.nvim'
 Plug 'tweekmonster/helpful.vim'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
-Plug 'vim-scripts/Decho'
+Plug 'vim-scripts/Decho', { 'tag': '*' }
 
 " Style/Lint
 Plug 'dbakker/vim-lint'
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', { 'tag': 'v*' }
 Plug 'ruanyl/coverage.vim'
 
 " Completion & Snippets
@@ -111,8 +111,8 @@ let g:coc_global_extensions = [
       \ ]
 
 
-Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
-" Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': { -> coc#util#install() } }
+" Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
+Plug 'neoclide/coc.nvim', { 'tag': 'v*', 'do': { -> coc#util#install() } }
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'Shougo/neoyank.vim'
@@ -126,7 +126,7 @@ Plug 'tpope/vim-liquid'
 " Javascript & JSON
 Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'maxmellon/vim-jsx-pretty', { 'tag': 'v*' }
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
 
 " XML, HTML & CSS
@@ -140,9 +140,9 @@ Plug 'tpope/vim-ragtag'
 Plug 'chrisbra/color_highlight'
 
 " Ruby
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-bundler'
+Plug 'vim-ruby/vim-ruby', { 'tag': 'stable-*' }
+Plug 'tpope/vim-rails', { 'tag': 'v*' }
+Plug 'tpope/vim-bundler', { 'tag': 'v*' }
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-projectionist'
@@ -161,7 +161,7 @@ Plug 'vim-scripts/groovyindent-unix'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 
 " Go
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -171,7 +171,7 @@ Plug 'tbastos/vim-lua'
 
 " Display
 Plug 'Yggdroot/indentLine'
-Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline', { 'tag': 'v*' }
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'nanotech/jellybeans.vim', { 'as': 'colorscheme-jellybeans' }
 " Plug 'tomasr/molokai', { 'as': 'colorscheme-molokai' }
