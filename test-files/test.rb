@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 SOME_CONSTANT = 'This is a string from the edge of the world.'
 
 def sample_function(aaa, bbb)
@@ -19,3 +21,10 @@ class SampleClass
     puts "#{alpha} #{beta}"
   end
 end
+
+{
+  fish: true
+}.to_json
+
+sc = SampleClass.new
+sc.sample_method(1, 2)
