@@ -12,6 +12,7 @@ notifications:
     on_failure: "never"
     on_success: "never"
   pushover:
+    on_success: "change"
     api_key:
       secure: "e2joFHX80Vmi1mBK/mKfs2TBmCNBDHGRvhvWbPz+clddPUKDDjIIe24iyAKqAR743iC0SvOyBHLLAKFh5Ovf/JJLwMZtf2jT8hiP/d2GEBK0LRXAM4viYloSwhx1sj4ofsZHVxGtIl2ikNllT1pv6GmXoAwSry7LE+Zp9AMv7iY="
     users:
