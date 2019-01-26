@@ -67,7 +67,6 @@ if s:bootstrap && ! exists('$NVIM_SKIP_PLUGIN_CHECK')
   quit
 endif
 
-execute 'source ' . g:xdg_config_home . '/functions.vim'
 execute 'source ' . g:xdg_config_home . '/settings.vim'
 
 " Local settings

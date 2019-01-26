@@ -8,4 +8,6 @@ setlocal formatoptions=croql
 " Continue \ lines after one is found.
 setlocal comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",b:\\
 
+let b:ale_fixers = ['remove_trailing_lines']
+
 let {s:guard} = 1 " EOF

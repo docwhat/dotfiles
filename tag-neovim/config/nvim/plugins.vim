@@ -1,5 +1,9 @@
 scriptencoding utf-8
 
+function! HasPlugin(name) abort
+  return has_key(g:plugs, a:name)
+endfunction
+
 call plug#begin(g:xdg_data_home . '/plugged')
 
 " -- Utilities
@@ -66,7 +70,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim'
 " " TODO: Consider fzy instead? https://github.com/jhawthorn/fzy
 
 " Neovim Development
@@ -111,7 +115,6 @@ Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 " Plug 'neoclide/coc.nvim', { 'tag': '*', 'do': { -> coc#util#install() } }
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-Plug 'Shougo/denite.nvim', { 'tag': '*', 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neoyank.vim'
 
 " NGinX

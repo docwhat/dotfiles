@@ -146,7 +146,7 @@ augroup END
 augroup VimrcGit
   autocmd!
   autocmd FileType gitcommit setlocal spell
-  if has_key(g:plugs, 'vim-pandoc')
+  if HasPlugin('vim-pandoc')
     autocmd VimEnter .git/PULLREQ_EDITMSG setlocal filetype=pandoc spell
   else
     autocmd VimEnter .git/PULLREQ_EDITMSG setlocal filetype=markdown spell
@@ -183,37 +183,7 @@ cnoremap <C-e> <End>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Indent whole file
-"-----------------------------------------------------------------------------
-function! MyIndentWholeBufferIfEnabled() " abort
-  let l:buffer = bufnr('')
-
-  if has_key(g:plugs, 'ale')
-    if type(get(b:, 'ale_fixers')) is type([])
-      let l:fixers = b:ale_fixers
-    else
-      let l:fixers = get(ale#Var(l:buffer, 'fixers'), &filetype, [])
-    endif
-
-    if len(l:fixers) > 0
-      call ale#fix#Fix(l:buffer, '')
-      return
-    endif
-  endif
-
-  if exists('*LCformatting_sync')
-    try
-      let l:did_it_work = LCformatting_sync()
-      if l:did_it_work
-        return
-      endif
-    catch " Ignore errors
-    endtry
-  endif
-
-  call Preserve('normal gg=G')
-endfunction
-
-nmap <silent> <Leader>g :verbose call MyIndentWholeBufferIfEnabled()<CR>
+nmap <Leader>g <Plug>SmartIndentWholeBufferIfEnabled
 
 " Turn off highlights
 "-----------------------------------------------------------------------------
@@ -268,15 +238,10 @@ augroup VimrcMakeParentDirs
   autocmd BufWritePre * nested :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 
-function! s:get_git_root()
-  let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
-  return v:shell_error ? '' : root
-endfunction
-
 " Completion (<CR>) handling.
 "-----------------------------------------------------------------------------
 "
-if has_key(g:plugs, 'lexima.vim')
+if HasPlugin('lexima.vim')
   " Lexima conflicts with Deoplete and NCM2, etc. by remapping <CR>
   " https://github.com/cohama/lexima.vim/issues/65
   let g:lexima_no_default_rules = 1
@@ -286,7 +251,7 @@ if has_key(g:plugs, 'lexima.vim')
 endif
 
 function! DocwhatCR() abort
-  if has_key(g:plugs, 'lexima.vim')
+  if HasPlugin('lexima.vim')
     let l:cr = lexima#expand('<CR>', 'i')
   else
     let l:cr = "\<CR>"
@@ -294,7 +259,7 @@ function! DocwhatCR() abort
   let l:retval = l:cr
 
   if pumvisible()
-    if has_key(g:plugs, 'deoplete.nvim')
+    if HasPlugin('deoplete.nvim')
       let l:retval = deoplete#smart_close_popup() . l:retval
     else
       let l:retval = "\<C-y>" . l:retval
@@ -304,7 +269,7 @@ function! DocwhatCR() abort
     let l:retval = "\<C-g>u" . l:retval
   endif
 
-  if has_key(g:plugs, 'ultisnips') && !empty(v:completed_item)
+  if HasPlugin('ultisnips') && !empty(v:completed_item)
     let l:retval = ncm2_ultisnips#expand_or(l:retval, 'n')
   endif
 
@@ -312,112 +277,8 @@ function! DocwhatCR() abort
 endfunction
 inoremap <silent> <expr> <CR> DocwhatCR()
 
-" Arpeggio
-if has_key(g:plugs, 'vim-arpeggio') " {{{
-  augroup VimrcSmashEscape
-    autocmd!
-    " Smash escape!
-    autocmd VimEnter * Arpeggio inoremap jk  <Esc>
-  augroup END
-endif " }}}
-
-" Surround
-if has_key(g:plugs, 'vim-surround') " {{{
-  let g:surround_no_insert_mappings=1
-endif " }}}
-
-" Gutentags
-if has_key(g:plugs, 'vim-gutentags') " {{{
-  let g:gutentags_enabled=0
-endif " }}}
-
-" Tagbar
-if has_key(g:plugs, 'tagbar') " {{{
-  nnoremap <silent> <Leader>tb :TagbarToggle<CR>
-
-  let g:tagbar_type_typescript = {
-        \   'ctagstype': 'typescript',
-        \   'kinds': [
-        \     'C:classes',
-        \     'N:namespaces',
-        \     'M:modules',
-        \     'f:functions:1',
-        \     'v:variables',
-        \     'V:varlambdas',
-        \     'm:members',
-        \     'i:interfaces',
-        \     't:types',
-        \     'e:enums',
-        \     'I:imports',
-        \   ],
-        \   'kind2scope' : {
-        \     'e' : 'enums',
-        \     'C' : 'classes',
-        \     'N' : 'namespaces',
-        \     'M' : 'modules',
-        \     'i' : 'interfaces',
-        \   },
-        \   'scope2kind' : {
-        \     'enums' : 'e',
-        \     'classes' : 'C',
-        \     'namespaces' : 'N',
-        \     'modules' : 'M',
-        \     'interfaces' : 'i',
-        \   },
-        \ }
-
-  if executable('gotags')
-    let g:tagbar_type_go = {
-          \   'ctagstype' : 'go',
-          \   'kinds'     : [
-          \     'p:package',
-          \     'i:imports:1',
-          \     'c:constants',
-          \     'v:variables',
-          \     't:types',
-          \     'n:interfaces',
-          \     'w:fields',
-          \     'e:embedded',
-          \     'm:methods',
-          \     'r:constructor',
-          \     'f:functions'
-          \   ],
-          \   'sro' : '.',
-          \   'kind2scope' : {
-          \     't' : 'ctype',
-          \     'n' : 'ntype'
-          \   },
-          \   'scope2kind' : {
-          \     'ctype' : 't',
-          \     'ntype' : 'n'
-          \   },
-          \   'ctagsbin'  : 'gotags',
-          \   'ctagsargs' : '-sort -silent',
-          \ }
-  endif
-endif " }}}
-
-" TweekMonster's WStrip -- whitespace trimming and highlighting for
-" only changed lines.
-if has_key(g:plugs, 'wstrip.vim') " {{{
-  nmap <silent> <Leader><space> :WStrip<CR>
-  augroup VimrcWStrip
-    autocmd!
-    autocmd FileType ruby,php,c,cpp,java,vim,html,xml,xsl let b:wstrip_auto = 1
-  augroup END
-endif " }}}
-
-" Better Whitespace -- whitespace trimming and highlighting
-if has_key(g:plugs, 'vim-better-whitespace') " {{{
-  nmap <silent> <Leader><space> :StripWhitespace<CR>
-  augroup VimrcBetterWhitespace
-    autocmd!
-    autocmd FileType ruby,php,json,c,cpp,js,java,vim,html,xml,xsl :EnableStripWhitespaceOnSave
-  augroup END
-endif " }}}
-
 " Codi -- Scratch Pad testing of various languages
-if has_key(g:plugs, 'codi.vim') " {{{
+if HasPlugin('codi.vim') " {{{
   let g:codi#interpreters = {
         \   'bash': {
         \     'bin': [ 'env',
@@ -436,7 +297,7 @@ if has_key(g:plugs, 'codi.vim') " {{{
 endif " }}}
 
 " Dirvish -- path navigator
-if has_key(g:plugs, 'vim-dirvish') " {{{
+if HasPlugin('vim-dirvish') " {{{
   augroup VimrcDirvish
     autocmd!
     autocmd FileType dirvish call fugitive#detect(@%)
@@ -444,7 +305,7 @@ if has_key(g:plugs, 'vim-dirvish') " {{{
 endif " }}}
 
 " Committia -- Git commit message helper
-if has_key(g:plugs, 'committia.vim') " {{{
+if HasPlugin('committia.vim') " {{{
   let g:committia_hooks = {}
   function! g:committia_hooks.edit_open(info)
     " Additional settings
@@ -463,7 +324,7 @@ if has_key(g:plugs, 'committia.vim') " {{{
 endif " }}}
 
 " NerdCommenter
-if has_key(g:plugs, 'nerdcommenter') " {{{
+if HasPlugin('nerdcommenter') " {{{
   " Command and uncomment code easily
   " <leader>cc -- comment ragged style
   " <leader>cl -- comment aligned style
@@ -474,118 +335,8 @@ if has_key(g:plugs, 'nerdcommenter') " {{{
   let g:NERDCommentWholeLinesInVMode=2
 endif " }}}
 
-" Denite
-if has_key(g:plugs, 'denite.nvim') " {{{
-
-  call denite#custom#option('_', {
-        \ 'auto-accel': 1,
-        \ 'auto-highlight': 1,
-        \ 'auto_resize': 0,
-        \ 'highlight_matched_char': 'MoreMsg',
-        \ 'highlight_mode_normal': 'MoreMsg',
-        \ 'mode': 'insert',
-        \ 'prompt': g:docwhat_commandline_prompt,
-        \ 'quit': 1,
-        \ 'reversed': 1,
-        \ 'updatetime': 1,
-        \ 'winheight': 15,
-        \})
-
-  call denite#custom#var(
-        \ 'buffer',
-        \ 'date_format', '%Y-%m-%d %H:%M:%S')
-
-  function! s:deniteRgGlobalIgnore(ignore, ...) abort
-    let ignore = []
-    for ig in split(a:ignore,',')
-      call add(ignore, '-g')
-      if get(a:000, 0, 0) == 1
-        call add(ignore, "'!" . ig . "'")
-      else
-        call add(ignore, '!' . ig)
-      endif
-    endfor
-    return ignore
-  endf
-
-  if executable('rg')
-    call denite#custom#var('file_rec', 'command',
-          \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
-          \ + s:deniteRgGlobalIgnore(&wildignore, 'rg')
-          \ )
-    " Ripgrep command on grep source
-    call denite#custom#var('grep', 'command', ['rg'])
-    call denite#custom#var('grep', 'default_opts',
-          \ ['--vimgrep', '--no-heading'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-  elseif executable('pt')
-    call denite#custom#var('file_rec', 'command',
-          \ ['pt', '--nocolor', '--ignore', '.git', '--hidden', '-g=', ''])
-    " Pt command on grep source
-    call denite#custom#var('grep', 'command', ['pt'])
-    call denite#custom#var('grep', 'default_opts',
-          \ ['--nogroup', '--nocolor', '--smart-case'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-  elseif executable('ag')
-    call denite#custom#source(
-          \ 'file_rec', 'vars', {
-          \   'command': [
-          \      'ag', '--follow', '--nocolor', '--nogroup',
-          \      '--hidden', '-g', ''
-          \   ] })
-    call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-    call denite#custom#var('grep', 'default_opts',
-          \ [ '--vimgrep', '--smart-case' ])
-  endif
-  if !has_key(g:plugs, 'fzf.vim')
-    nnoremap <silent> <leader>p :Denite file_rec<cr>
-    nnoremap <silent> <leader>b :Denite buffer<cr>
-  endif
-endif " }}}
-
-" FZF
-if has_key(g:plugs, 'fzf.vim') " {{{
-
-  function! MyGFilesOrFiles()
-    let root = s:get_git_root()
-    if empty(s:get_git_root())
-      :Files
-    else
-      :GFiles
-    endif
-  endfunction
-
-  let g:fzf_buffers_jump = 1
-  nnoremap <silent> <leader>p :call MyGFilesOrFiles()<CR>
-  nnoremap <silent> <leader>b :Buffers<CR>
-
-  " Mapping selecting mappings
-  nmap <leader><tab> <plug>(fzf-maps-n)
-  xmap <leader><tab> <plug>(fzf-maps-x)
-  omap <leader><tab> <plug>(fzf-maps-o)
-
-  " Insert mode completion
-  imap <c-x><c-k> <plug>(fzf-complete-word)
-  imap <c-x><c-f> <plug>(fzf-complete-path)
-  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-  imap <c-x><c-l> <plug>(fzf-complete-line)
-
-  " Advanced customization using autoload functions
-  inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
-endif " }}}
-
 " Markdown
-if has_key(g:plugs, 'vim-markdown') " {{{
+if HasPlugin('vim-markdown') " {{{
   let g:vim_markdown_folding_disabled = 1
   let g:vim_markdown_folding_style_pythonic = 1
 
@@ -604,85 +355,14 @@ if has_key(g:plugs, 'vim-markdown') " {{{
 
 endif " }}}
 
-" Pandoc -- Markdown, Text, and HTML formatter/converter
-if has_key(g:plugs, 'vim-pandoc') " {{{
-  let g:pandoc#modules#disabled = ['chdir']
-  let g:pandoc#folding#fold_yaml = 1
-  let g:pandoc#formatting#smart_autoformat_on_cursormoved = 1
-  let g:pandoc#formatting#mode = 'sa'
-  let g:pandoc#formatting#equalprg = ''
-  let g:pandoc#formatting#extra_equalprg = '--standalone'
-  let g:pandoc#formatting#textwidth = 76
-
-  function! MyCaptureMarkdownOptions()
-    if &filetype ==# 'pandoc' || &filetype ==# 'markdown'
-      let l:pandoc_to='markdown_github+yaml_metadata_block+smart'
-      let g:pandoc#formatting#equalprg = 'pandoc'
-      let g:pandoc#formatting#textwidth = &textwidth
-
-      if !exists('b:my_pandoc_disable_footnotes')
-        let b:my_pandoc_disable_footnotes = 0
-      endif
-      if !exists('b:my_pandoc_reference_links')
-        let b:my_pandoc_reference_links = 0
-      endif
-
-      if !b:my_pandoc_disable_footnotes
-        let l:pandoc_to.='+footnotes+inline_notes'
-      endif
-
-      if &textwidth > 0
-        let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.'-hard_line_breaks --columns=' . &textwidth
-      else
-        let g:pandoc#formatting#equalprg .= ' --to='.l:pandoc_to.' --wrap=none'
-      endif
-
-      if b:my_pandoc_reference_links || expand('%:t:r') ==# 'CHANGELOG'
-        let g:pandoc#formatting#equalprg .= ' --reference-links'
-      endif
-
-      let &l:equalprg=g:pandoc#formatting#equalprg.' '.g:pandoc#formatting#extra_equalprg
-      setlocal concealcursor= conceallevel=1
-    endif
-  endfunction
-
-  augroup VimrcPandoc
-    autocmd!
-    autocmd OptionSet textwidth nested :call MyCaptureMarkdownOptions()
-    autocmd BufEnter * nested :call MyCaptureMarkdownOptions()
-    if has_key(g:plugs, 'editorconfig-vim')
-      autocmd FileType pandoc,markdown :EditorConfigReload
-    endif
-    autocmd FileType pandoc,markdown normal zR
-  augroup END
-else
-  augroup VimrcMarkdown
-    autocmd!
-    autocmd BufNewFile,BufRead *.{mdwn,mkd,md,markdown} nested setlocal filetype=markdown
-  augroup END
-endif " }}}
-
-" WriteGood
-if has_key(g:plugs, 'writegood.vim') " {{{
-  augroup VimrcWritegood
-    autocmd!
-    autocmd FileType markdown,pandoc :WritegoodEnable
-  augroup END
-endif " }}}
-
-" Color Highlight -- Show CSS colors via highlights
-if has_key(g:plugs, 'color_highlight') " {{{
-  let g:colorizer_auto_filetype='css,scss,sass,html'
-endif " }}}
-
 " Ruby -- syntaxt and indentation (overrides built-in version)
-if has_key(g:plugs, 'vim-ruby') " {{{
+if HasPlugin('vim-ruby') " {{{
   let g:ruby_indent_block_style = 'do'
   let g:ruby_indent_assignment_style = 'variable'
 endif " }}}
 
 " Jenkinsfile Syntax
-if has_key(g:plugs, 'Jenkinsfile-vim-syntax') " {{{
+if HasPlugin('Jenkinsfile-vim-syntax') " {{{
   augroup VimrcJenkinsfile
     autocmd!
     autocmd BufRead,BufNewFile Ghenkinsfile  nested setlocal filetype=Jenkinsfile
@@ -691,318 +371,13 @@ if has_key(g:plugs, 'Jenkinsfile-vim-syntax') " {{{
 endif " }}}
 
 " Rust -- rust syntax and indentation
-if has_key(g:plugs, 'indentLine') " {{{
+if HasPlugin('rust.vim') " {{{
   let g:rustfmt_autosave = 1
 endif
 " }}}
 
-" Indentline -- show indentation markers
-if has_key(g:plugs, 'indentLine') " {{{
-  let g:indentLine_char = '¦'
-  let g:indentLine_setConceal = 0
-endif " }}}
-
-" ColorSchemes
-if has_key(g:plugs, 'colorscheme-dracula') "{{{
-  colorscheme dracula
-elseif has_key(g:plugs, 'colorscheme-gruvbox')
-  let g:gruvbox_contrast_dark = 'hard'
-  let g:gruvbox_contrast_light = 'hard'
-  let g:gruvbox_improved_strings = 0
-  let g:gruvbox_improved_warnings = 0
-  if $TERM_PROGRAM ==? 'iTerm.app'
-    let g:gruvbox_italic=1
-  endif
-  colorscheme gruvbox
-elseif has_key(g:plugs, 'colorscheme-jellybeans')
-  let g:jellybeans_overrides = {}
-  let g:jellybeans_overrides['background']           = { 'guibg': 'none' }
-  let g:jellybeans_overrides['LineNr']               = { 'attr': 'none', 'guifg': '707090', 'guibg': 'none'   }
-  let g:jellybeans_overrides['CursorLineNr']         = { 'attr': 'none', 'guifg': 'a0a0f0', 'guibg': 'none'   }
-  let g:jellybeans_overrides['IncSearch']            = { 'attr': 'none', 'guifg': '405060', 'guibg': 'ff8b0f' }
-  let g:jellybeans_overrides['Search']               = { 'attr': 'none', 'guifg': '203040', 'guibg': 'f7ff0d' }
-  let g:jellybeans_overrides['Boolean']              = { 'attr': 'none', 'guifg': 'c04ccf', 'guibg': 'none'   }
-
-  let g:jellybeans_overrides['SyntasticWarningSign'] = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
-  let g:jellybeans_overrides['SyntasticErrorSign']   = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
-
-  let g:jellybeans_overrides['NeomakeInfoSign']      = { 'attr': 'none', 'guifg': '00dcff', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeMessageSign']   = { 'attr': 'none', 'guifg': 'eeeeee', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeWarningSign']   = { 'attr': 'none', 'guifg': 'ffdc00', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeErrorSign']     = { 'attr': 'none', 'guifg': 'ff4136', 'guibg': '333333' }
-
-  let g:jellybeans_overrides['NeomakeInfo']          = { 'attr': 'none', 'guifg': '0000ff', 'guibg': '333388' }
-  let g:jellybeans_overrides['NeomakeMessage']       = { 'attr': 'none', 'guifg': 'ffffff', 'guibg': '333333' }
-  let g:jellybeans_overrides['NeomakeWarning']       = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '888833' }
-  let g:jellybeans_overrides['NeomakeError']         = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '883333' }
-
-  let g:jellybeans_overrides['ALEErrorSign']         = { 'attr': 'none', 'guifg': '990000', 'guibg': '333333' }
-  let g:jellybeans_overrides['ALEWarningSign']       = { 'attr': 'none', 'guifg': 'df5f00', 'guibg': '333333' }
-  let g:jellybeans_overrides['ALEInfoSign']          = { 'attr': 'none', 'guifg': 'aeee00', 'guibg': '333333' }
-
-  let g:jellybeans_overrides['ALEStyleErrorSign']    = { 'attr': 'none', 'guifg': 'ff0000', 'guibg': '333333' }
-  let g:jellybeans_overrides['ALEStyleWarningSign']  = { 'attr': 'none', 'guifg': 'ffff00', 'guibg': '333333' }
-
-  let g:airline_theme='badwolf'
-  colorscheme jellybeans
-elseif has_key(g:plugs, 'colorscheme-molokai')
-  let g:molokai_original = 1
-  let g:rehash256 = 1
-  colorscheme molokai
-endif
-" }}}
-
-" Rainbow Parentheses -- Color matching parentheses
-if has_key(g:plugs, 'rainbow-parentheses') " {{{
-  let g:rainbow_active = 1
-endif " }}}
-
-" Airplane -- cursor line theme
-if has_key(g:plugs, 'vim-airline') " {{{
-  let g:airline_powerline_fonts            = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline_left_sep=''
-  let g:airline_right_sep=''
-endif " }}}
-
-" EditorConfig -- Additional configuration
-if has_key(g:plugs, 'editorconfig-vim') " {{{
-  let g:EditorConfig_exclude_patterns = [
-        \ 'scp://.*',
-        \ 'rsync://.*',
-        \ '*.diff',
-        \ '*/.git/*',
-        \ ]
-  let g:EditorConfig_max_line_indicator = 'fill'
-  let g:EditorConfig_preserve_formatoptions = 1
-
-  function! EditorConfigFiletypeHook(config)
-    if exists('g:myvim_editor_config_filetype_hook') && g:myvim_editor_config_filetype_hook > 0
-      return 0
-    endif
-    let g:myvim_editor_config_filetype_hook = 1
-    if has_key(a:config, 'vim_filetype')
-      let &filetype = a:config['vim_filetype']
-    endif
-
-    if has_key(g:plugs, 'vim-pandoc')
-      for l:opt in ['reference_links', 'disable_footnotes']
-        if has_key(a:config, 'pandoc_' . l:opt)
-          execute ':let b:my_pandoc_' . l:opt .' = a:config["pandoc_' . l:opt .'"] ==? "true"'
-        else
-          execute ':let b:my_pandoc_' . l:opt .' = 0'
-        endif
-      endfor
-
-      :call MyCaptureMarkdownOptions()
-    endif
-
-    let g:myvim_editor_config_filetype_hook = 0
-    return 0   " Return 0 to show no error happened
-  endfunction
-  call editorconfig#AddNewHook(function('EditorConfigFiletypeHook'))
-endif " }}}
-
-" EditorConfig -- Additional configuration
-if has_key(g:plugs, 'vim-editorconfig') " {{{
-  let g:editorconfig_blacklist = {
-        \ 'filetype': ['git.*', 'fugitive', 'diff'],
-        \ 'pattern': ['\.un~$']}
-  let g:editorconfig_root_chdir = 1
-  let g:editorconfig_verbose = 1
-  let g:editorconfig_local_vimrc = 0 " Never!
-
-  command! EditorConfigReload call editorconfig#load()
-endif " }}}
-
-" CoC -- Conquer of Completion
-if has_key(g:plugs, 'coc.nvim') " {{{
-  set hidden
-  set cmdheight=2
-  set updatetime=300
-  set shortmess+=c
-  set signcolumn=yes
-
-  " Use tab for trigger completion with characters ahead and navigate.
-  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
-
-  " Use <c-space> for trigger completion.
-  inoremap <silent><expr> <c-space> coc#refresh()
-
-  " " Use `[c` and `]c` for navigate diagnostics
-  nmap <silent> [c <Plug>(coc-diagnostic-prev)
-  nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-  " Remap keys for gotos
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
-
-  " Use K for show documentation in preview window
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-  function! s:show_documentation()
-    if &filetype ==# 'vim'
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-  endfunction
-
-  " Remap for rename current word
-  nmap <leader>rn <Plug>(coc-rename)
-
-  " Remap for format selected region
-  nmap <leader>f  <Plug>(coc-format-selected)
-
-  augroup CocGroup
-    autocmd!
-    " Highlight symbol under cursor on CursorHold
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  augroup end
-
-  " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-  vmap <leader>a  <Plug>(coc-codeaction-selected)
-  nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-  " Remap for do codeAction of current line
-  nmap <leader>ac  <Plug>(coc-codeaction)
-  " Fix autofix problem of current line
-  nmap <leader>qf  <Plug>(coc-fix-current)
-
-  " Use `:Format` for format current buffer
-  command! -nargs=0 Format :call CocAction('format')
-
-  " Use `:Fold` for fold current buffer
-  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-  function! DocwhatCocInstallAll()
-    let dir = coc#util#extension_root()
-    let res = coc#util#init_extension_root(dir)
-    if res == -1| return | endif
-    call coc#util#open_terminal({
-          \ 'cwd': dir,
-          \ 'cmd': 'yarn install',
-          \ 'keepfocus': 1
-          \})
-  endfunction
-
-  " Add diagnostic info for https://github.com/itchyny/lightline.vim
-  let g:lightline = {
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-        \ },
-        \ 'component_function': {
-        \   'cocstatus': 'coc#status'
-        \ },
-        \ }
-
-  if has_key(g:plugs, 'colorscheme-gruvbox')
-    highlight link CocErrorSign GruvboxRedSign
-    highlight link CocWarningSign GruvboxYellowSign
-    highlight link CocInfoSign GruvboxBlueSign
-    highlight link CocHintSign GruvboxAquaSign
-  endif
-
-  if has_key(g:plugs, 'vim-airline')
-    let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-    let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-  endif
-
-  " Shortcuts for denite interface
-  if has_key(g:plugs, 'denite.nvim')
-    " Show extension list
-    nnoremap <silent> <space>e  :<C-u>Denite coc-extension<cr>
-
-    " Show symbols of current buffer
-    nnoremap <silent> <space>o  :<C-u>Denite coc-symbols<cr>
-
-    " Search symbols of current workspace
-    nnoremap <silent> <space>t  :<C-u>Denite coc-workspace<cr>
-
-    " Show diagnostics of current workspace
-    nnoremap <silent> <space>a  :<C-u>Denite coc-diagnostic<cr>
-
-    " Show available commands
-    nnoremap <silent> <space>c  :<C-u>Denite coc-command<cr>
-
-    " Show available services
-    nnoremap <silent> <space>s  :<C-u>Denite coc-service<cr>
-
-    " Show links of current buffer
-    nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
-  endif
-endif " }}}
-
-" NCM2 -- Neovim Completion Manager
-if has_key(g:plugs, 'ncm2') " {{{
-  augroup VimrcNCM
-    autocmd!
-    " enable ncm2 for all buffers
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-
-    " :help Ncm2PopupOpen for more information
-    autocmd User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-    autocmd User Ncm2PopupClose set completeopt=menuone
-  augroup END
-
-  " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-  " found' messages
-  set shortmess+=c
-
-  " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-  inoremap <C-c> <ESC>
-
-  " ncm2/ncm2-match-highlight
-  let g:ncm2#match_highlight = 'mono-space'
-endif " }}}
-
-" Deoplete -- Additional configuration
-if has_key(g:plugs, 'deoplete.nvim') " {{{
-  set completeopt=menu,menuone,noselect
-
-  call deoplete#custom#source('_', 'converters', [
-        \ 'converter_remove_paren',
-        \ 'converter_remove_overlap',
-        \ 'converter_truncate_abbr',
-        \ 'converter_truncate_menu',
-        \ 'converter_auto_delimiter',
-        \ ])
-  call deoplete#custom#source('_', 'matchers', ['matcher_length', 'matcher_fuzzy'])
-  call deoplete#custom#source('ultisnips', 'matchers', ['matcher_full_fuzzy'])
-
-
-  let g:deoplete#enable_at_startup       = 1
-  let g:deoplete#enable_smart_case       = 1
-  let g:deoplete#enable_camel_case       = 1
-  let g:deoplete#file#enable_buffer_path = 1
-
-  let g:deoplete#sources                 = {}
-  let g:deoplete#sources._               = []
-  let g:deoplete#sources.ruby            = ['rct', 'ruby', 'ultisnips', 'around']
-  let g:deoplete#sources.go              = ['go', 'around', 'ultisnips']
-  let g:deoplete#sources.vim             = ['vim', 'around', 'file', 'ultisnips']
-
-endif " }}}
-
 " UltiSnips -- Snippets
-if has_key(g:plugs, 'ultisnips') " {{{
+if HasPlugin('ultisnips') " {{{
   let g:UltiSnipsSnippetDirectories  = ['UltiSnips', 'snips']
   let g:UltiSnipsNoPythonWarning     = 1
   let g:UltiSnipsUsePythonVersion    = 3 " We always have python3 for deoplete.
@@ -1038,422 +413,16 @@ if has_key(g:plugs, 'ultisnips') " {{{
 endif " }}}
 
 " Javascript -- by pangloss
-if has_key(g:plugs, 'vim-javascript') " {{{
+if HasPlugin('vim-javascript') " {{{
   let g:javascript_plugin_flow = 1
 endif " }}}
 
-" JSX Pretty -- by MaxMEllon
-if has_key(g:plugs, 'vim-jsx-pretty')
-  let g:vim_jsx_pretty_colorful_config = 1
-endif
-
-" Prettier -- Specialized formatting tool
-if has_key(g:plugs, 'vim-prettier') " {{{
-  function! s:myPrettierSetup()
-    let l:whitelist = [ 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue' ]
-    if &readonly                         | return | endif
-    if ! &modifiable                     | return | endif
-    if index(l:whitelist, &filetype) < 0 | return | endif
-
-    function! s:PrettierEnable()
-      let b:my_prettier_disable = 0
-
-      augroup VimrcPrettier
-        autocmd! * <buffer>
-        autocmd BufWritePre <buffer> Prettier
-      augroup END
-    endfunction
-
-    function! s:PrettierDisable()
-      let b:my_prettier_disable = 1
-
-      augroup VimrcPrettier
-        autocmd! * <buffer>
-      augroup END
-      augroup! VimrcPrettier
-    endfunction
-
-    function! PrettierToggle()
-      if b:my_prettier_disable
-        echomsg 'Prettier on save: ENABLED'
-        call s:PrettierEnable()
-      else
-        echomsg 'Prettier on save: DISABLED'
-        call s:PrettierDisable()
-      endif
-    endfunction
-    command! PrettierToggle call PrettierToggle()
-
-    if !exists('b:my_neoformat_disable')
-      let b:my_prettier_disable = 0
-      call s:PrettierEnable()
-    endif
-
-    nmap <buffer> <Leader>g <Plug>(PrettierAsync)
-  endfunction
-
-  let g:prettier#autoformat = 0
-  let g:prettier#config#config_precedence = 'file-override'
-  let g:prettier#config#prose_wrap = 'always'
-
-  augroup VimrcPrettierSetup
-    autocmd!
-    autocmd BufEnter * call s:myPrettierSetup()
-  augroup END
-endif " }}}
-
-" Neoformat -- forced formatting
-if has_key(g:plugs, 'neoformat') " {{{
-  " Enable alignment
-  let g:neoformat_basic_format_align = 1
-
-  " Enable tab to spaces conversion
-  let g:neoformat_basic_format_retab = 1
-
-  " Disable trimmming of trailing whitespace, we have that elsewhere.
-  let g:neoformat_basic_format_trim = 0
-
-  function! s:myNeoformat()
-    if !exists('b:my_neoformat_disable')
-      let b:my_neoformat_disable = 0
-    endif
-
-    if b:my_neoformat_disable
-      return
-    endif
-
-    let l:whitelist = [
-          \ 'html',
-          \ 'lua',
-          \ 'sh',
-          \ 'terraform',
-          \ 'xml',
-          \ ]
-    if &readonly                         | return | endif
-    if ! &modifiable                     | return | endif
-    if index(l:whitelist, &filetype) < 0 | return | endif
-
-    " Ignore error from undojoin: E790
-    Neoformat
-  endfunction
-
-  function! NeoformatToggle()
-    if !exists('b:my_neoformat_disable')
-      let b:my_neoformat_disable = 0
-    endif
-
-    if b:my_neoformat_disable
-      echomsg 'Neoformat: ENABLED'
-      let b:my_neoformat_disable = 0
-    else
-      echomsg 'Neoformat: DISABLED'
-      let b:my_neoformat_disable = 1
-    endif
-  endfunction
-  command! NeoformatToggle call NeoformatToggle()
-
-  augroup VimrcNeoformat
-    autocmd!
-    autocmd BufWritePre * call s:myNeoformat()
-  augroup END
-endif " }}}
-
-" LanguageClient - LSP client
-if has_key(g:plugs, 'LanguageClient-neovim') " {{{
-  let g:LanguageClient_serverCommands = {
-        \   'Dockerfile': ['docker-langserver', '--stdio'],
-        \   'c': ['clangd'],
-        \   'cpp': ['clangd'],
-        \   'dot': ['dot-languageserver', '--stdio'],
-        \   'go': ['go-langserver', '-mode', 'stdio'],
-        \   'groovy': ['groovy-language-server'],
-        \   'haskell': ['hie', '--lsp'],
-        \   'html': ['html-languageserver', '--stdio'],
-        \   'javascript': [ 'flow-language-server', '--stdio' ],
-        \   'json' : [ 'vscode-json-languageserver', '--stdio' ],
-        \   'lua': ['lua-lsp'],
-        \   'objc': ['clangd'],
-        \   'objcpp': ['clangd'],
-        \   'python': ['pyls'],
-        \   'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
-        \   'ruby': [ 'solargraph', 'stdio' ],
-        \   'sh': [ 'bash-language-server', 'start'],
-        \   'typescript': [ 'typescript-language-server', '--stdio'],
-        \ }
-
-  let g:LanguageClient_rootMarkers = {
-        \   'haskell': ['*.cabal', 'stack.yaml'],
-        \ }
-
-  nnoremap <F5>         :call LanguageClient_contextMenu()<CR>
-  map <Leader>lc        :call LanguageClient_contextMenu()<CR>
-  map <Leader>lk        :call LanguageClient#textDocument_hover()<CR>
-  map <Leader>lg        :call LanguageClient#textDocument_definition()<CR>
-  map <Leader>lr        :call LanguageClient#textDocument_rename()<CR>
-  map <Leader>lf        :call LanguageClient#textDocument_formatting()<CR>
-  map <Leader>lb        :call LanguageClient#textDocument_references()<CR>
-  map <Leader>la        :call LanguageClient#textDocument_codeAction()<CR>
-  map <Leader>ls        :call LanguageClient#textDocument_documentSymbol()<CR>
-
-  command! LCContext    :call LanguageClient_contextMenu()
-  command! LCHover      :call LanguageClient#textDocument_hover()
-  command! LCDefinition :call LanguageClient#textDocument_definition()
-  command! LCRename     :call LanguageClient#textDocument_rename()
-  command! LCFormatting :call LanguageClient#textDocument_formatting()
-  command! LCRefs       :call LanguageClient#textDocument_references()
-  command! LCAction     :call LanguageClient#textDocument_codeAction()
-  command! LCSyms       :call LanguageClient#textDocument_documentSymbol()
-
-  function! LCformatting_sync() abort
-    if &filetype ==# 'sh'
-      " The sh LanguageServer is currently broken.
-      return
-    endif
-    let l:result = LanguageClient_runSync('LanguageClient#textDocument_formatting', {
-          \ 'handle': v:true,
-          \ })
-    return l:result isnot v:null
-  endfunction
-
-endif " }}}
-
-" Neomake -- linting and building
-if has_key(g:plugs, 'neomake') " {{{
-  " Tools to install:
-  "   - ruby:         rubocop reek
-  "   - css:          stylelint csslint
-  "   - vim:          vim-vint
-  "   - python:       flake8
-  "   - html:         tidy-html5 htmlhint
-  "   - sh:           shellcheck checkbashisms
-  "   - coffeescript: coffeelint
-  "   - javascript:   eslint
-  "   - perl:         perlcritic
-  "   - lua:          luacheck
-  "   - markdown:     proselint markdownlint(mdl)
-  "   - yaml:         yamllint
-  "
-  " gem install rubocop reek mdl
-  " npm install --global eslint csslint htmlhint coffeelint stylelint
-  " write-good
-  " brew install tidy-html5 shellcheck
-  " pip3 install --upgrade vim-vint flake8 proselint yamllint jedi
-  " cpanm Perl::Critic
-  " luarocks install luacheck
-
-  let g:neomake_verbose=0
-  let g:neomake_warning_sign = { 'text': '', 'texthl': 'NeomakeWarningSign' }
-  let g:neomake_error_sign   = { 'text': '', 'texthl': 'NeomakeErrorSign' }
-  let g:neomake_message_sign = { 'text': '', 'texthl': 'NeomakeMessageSign' }
-  let g:neomake_info_sign    = { 'text': '', 'texthl': 'NeomakeInfoSign' }
-
-  let g:neomake_sh_enabled_makers = neomake#makers#ft#sh#EnabledMakers() + [ 'checkbashisms' ]
-  let g:neomake_zsh_enabled_makers = neomake#makers#ft#zsh#EnabledMakers()
-  let g:neomake_sh_bats_enabled_makers = []
-
-  let g:neomake_sh_shellcheck_maker = neomake#makers#ft#sh#shellcheck()
-  let g:neomake_sh_shellcheck_maker.args += ['-x']
-
-  let g:neomake_sh_checkbashisms_maker = neomake#makers#ft#sh#checkbashisms()
-  let g:neomake_sh_checkbashisms_maker.args = ['-x']
-
-  let g:neomake_ruby_enabled_makers = neomake#makers#ft#ruby#EnabledMakers()
-  call filter(g:neomake_ruby_enabled_makers, "v:val !=# 'rubylint'")
-
-  let g:neomake_chef_rubocop_maker = neomake#makers#ft#ruby#rubocop()
-  if executable('cookstyle')
-    let g:neomake_chef_rubocop_maker.exe = 'cookstyle'
-  endif
-  let g:neomake_ruby_chef_enabled_makers = neomake#makers#ft#ruby#EnabledMakers()
-  call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubocop_rails'")
-  call filter(g:neomake_ruby_chef_enabled_makers, "v:val !=# 'rubylint'")
-
-  let g:neomake_markdown_enabled_makers = neomake#makers#ft#markdown#EnabledMakers()
-  let g:neomake_markdown_enabled_makers += ['alex', 'proselint']
-
-  let g:neomake_javascript_eslint_maker = neomake#makers#ft#javascript#eslint()
-  let g:neomake_javascript_eslint_maker.args = [ 'eslint', '--format=compact' ]
-  let g:neomake_javascript_eslint_maker.exe = 'npx'
-  " Workaround until neomake/neomake#1939 is accepted.
-  function! g:neomake_javascript_eslint_maker.supports_stdin(jobinfo) abort
-    " vint: -ProhibitImplicitScopeVariable
-    let self.args += ['--stdin', '--stdin-filename', '%:p' ]
-    let self.tempfile_name = ''
-    " vint: +ProhibitImplicitScopeVariable
-    return 1
-  endfunction
-
-  let g:neomake_text_writegood_maker = neomake#makers#ft#text#writegood()
-  let g:neomake_text_writegood_maker.args = [ 'writegood', '--format=compact' ]
-  let g:neomake_text_writegood_maker.exe = 'npx'
-
-  " jshint never works quite right...
-  let g:neomake_javascript_enabled_makers = filter( filter(neomake#makers#ft#javascript#EnabledMakers(), "v:val !=# 'jshint'"), "v:val !=# 'jscs'")
-
-  call neomake#configure#automake({
-        \ 'TextChanged': {'delay': 1000},
-        \ 'InsertLeave': {'delay': 1000},
-        \ 'TextChangedI': {'delay': 2000},
-        \ 'BufWritePost': {'delay': 0},
-        \ 'BufWinEnter': {'delay': 200},
-        \ 'FileType': {'delay': 200},
-        \ 'FileChangedShellPost': {'delay': 500}
-        \ }, 1000)
-
-  function! s:myNeomake()
-    " Buffer must be writable.
-    if &readonly           | return | endif
-    " Buffer must be modifiable.
-    if ! &modifiable       | return | endif
-    " Neomake must be installed.
-    if !exists(':Neomake') | return | endif
-    " The buffer must point at a file that exists.
-    if !filereadable(expand('%')) | return | endif
-
-    Neomake
-  endfunction
-
-  function! s:detectChefSubFileType()
-    let l:gitroot = systemlist('git rev-parse --show-toplevel')[0]
-    if l:gitroot ==# '' | return | endif
-    if filereadable(l:gitroot . '/metadata.rb')
-      let &filetype = &filetype . '.chef'
-    endif
-  endfunction
-
-  augroup VimrcNeomake
-    autocmd!
-    autocmd BufEnter *     call s:myNeomake()
-    autocmd BufWritePost * call s:myNeomake()
-    autocmd BufEnter Gemfile*,Guardfile let b:neomake_ruby_enabled_makers = ['mri', 'rubocop']
-    autocmd FileType ruby,eruby call s:detectChefSubFileType()
-  augroup END
-endif " }}}
-
-" ALE -- linting, completion, and formatting
-if has_key(g:plugs, 'ale') " {{{
-  nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-  nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-  let g:ale_completion_enabled = 0
-  let g:ale_sign_column_always = 1
-  let g:ale_use_global_executables = 1
-  let g:ale_list_window_size = 5
-
-  " How messages are displayed
-  let g:ale_echo_cursor          = 1
-  let g:ale_echo_delay           = 20
-  let g:ale_echo_msg_error_str   = 'E'
-  let g:ale_echo_msg_info_str    = 'I'
-  let g:ale_echo_msg_warning_str = 'W'
-  let g:ale_echo_msg_format      = '%code: %%s [%linter%/%severity%]'
-
-  if $P9K_MODE ==# 'nerdfont-complete'
-    let g:ale_sign_error         = ''
-    let g:ale_sign_warning       = ''
-    let g:ale_sign_info          = ''
-    let g:ale_sign_style_error   = ''
-    let g:ale_sign_style_warning = '𥉉'
-  else
-    let g:ale_sign_error         = '◉'
-    let g:ale_sign_warning       = '◉'
-    let g:ale_sign_info          = '◉'
-    let g:ale_sign_style_error   = '!'
-    let g:ale_sign_style_warning = '!'
-  endif
-
-  if has_key(g:plugs, 'vim-airline')
-    " Set this. Airline will handle the rest.
-    let g:airline#extensions#ale#enabled = 1
-
-    if $P9K_MODE ==# 'nerdfont-complete'
-      let g:airline#extensions#ale#error_symbol = ' '
-      let g:airline#extensions#ale#warning_symbol = '𥉉'
-    else
-      let g:airline#extensions#ale#error_symbol = 'E:'
-      let g:airline#extensions#ale#warning_symbol = 'W:'
-    endif
-  endif
-
-  augroup VimrcALE
-    autocmd!
-    autocmd OptionSet tabstop,shiftwidth nested :call s:fixPrettierOptions()
-    autocmd BufEnter *                   nested :call s:fixPrettierOptions()
-  augroup END
-
-  function! s:fixPrettierOptions()
-    let l:tabwidth = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
-    let b:ale_javascript_prettier_options =
-          \ get(g:, 'ale_javascript_prettier_options', '')
-          \ . ' --tab-width=' . l:tabwidth
-
-    if &textwidth > 0
-      let b:ale_javascript_prettier_options = b:ale_javascript_prettier_options . ' --print-width=' . &textwidth . ' --prose-wrap=always'
-    else
-      let b:ale_javascript_prettier_options = b:ale_javascript_prettier_options . ' --prose-wrap=never'
-    endif
-  endfunction
-
-  " ALE isn't going to add the fixers to the normal enable/disable.
-  " reference: https://github.com/w0rp/ale/issues/1353
-  command! ALEFixersDisable       let b:ale_fix_on_save=0
-  command! ALEFixersEnable        let b:ale_fix_on_save=1
-  command! ALEFixersToggle        let b:ale_fix_on_save = get(b:, 'ale_fix_on_save', get(g:, 'ale_fix_on_save', 0)) ? 0 : 1
-
-endif " }}}
-
-" Syntastic -- linting
-if has_key(g:plugs, 'syntastic') " {{{
-  let g:syntastic_warning_symbol            = ''
-  let g:syntastic_error_symbol              = ''
-  let g:syntastic_style_warning_symbol      = ''
-  let g:syntastic_style_error_symbol        = ''
-
-  let g:syntastic_always_populate_loc_list  = 1
-  let g:syntastic_auto_loc_list             = 1 " Close the location-list when errors are gone
-  let g:syntastic_loc_list_height           = 5
-  let g:syntastic_check_on_open = 0
-  let g:syntastic_check_on_wq = 0
-
-  let g:syntastic_sh_checkers               = ['shellcheck', 'checkbashisms', 'sh']
-  let g:syntastic_sh_checkbashisms_args     = '--extra' " Turn off the --force flag
-  let g:syntastic_sh_shellcheck_args        = '--external-sources' " Follow sources/dependencies explicitly added
-  let g:syntastic_ruby_checkers             = ['mri', 'jruby', 'rubocop']
-  if executable('rubocop-workaround.sh')
-    let g:syntastic_ruby_rubocop_exec       = 'rubocop-workaround.sh'
-  endif
-  let g:syntastic_ruby_rubocop_args         = '--display-cop-names'
-  let g:syntastic_eruby_ruby_quiet_messages = {'regex': 'possibly useless use of a variable in void context'}
-  let g:syntastic_scss_checkers             = ['sass']
-  let g:syntastic_sass_checkers             = ['sass']
-  let g:syntastic_python_checkers           = ['python', 'flake8', 'pep8', 'pylint']
-  let g:syntastic_chef_checkers             = [''] " I'm sick of foodcritic
-  let g:syntastic_xml_checkers              = ['xmllint']
-  let g:syntastic_xslt_checkers             = ['xmllint']
-  let g:syntastic_html_tidy_ignore_errors = [ '<link> proprietary attribute "integrity"', '<link> proprietary attribute "crossorigin"' ]
-  " npm install js-yaml
-  let g:syntastic_yaml_checkers             = ['jsyaml']
-  let g:syntastic_go_checkers               = ['golint', 'govet', 'errcheck']
-  let g:syntastic_mode_map                  = { 'mode': 'active', 'passive_filetypes': ['go'] }
-endif " }}}
-
 " Sieve -- mail filtering (RFC 5228)
-if has_key(g:plugs, 'sieve.vim') " {{{
+if HasPlugin('sieve.vim') " {{{
   augroup VimrcSieve
     autocmd!
     autocmd BufNewFile,BufRead *.sieve nested setlocal filetype=sieve
   augroup END
-endif " }}}
-
-" Nuake -- Quake Like terminal popup
-if has_key(g:plugs, 'nuake') " {{{
-  let g:nuake_position = 0 " 0:horizontal & 1:vertical
-  let g:nuake_size     = 0.30
-  let g:nuake_per_tab  = 0
-
-  " nnoremap <C-y> :Nuake<CR>
-  " inoremap <C-y> <C-\><C-n>:Nuake<CR>
-  " tnoremap <C-y> <C-\><C-n>:Nuake<CR>
 endif " }}}
 
 " vim: set foldminlines=0 foldmethod=marker :
