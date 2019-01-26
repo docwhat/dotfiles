@@ -238,45 +238,6 @@ augroup VimrcMakeParentDirs
   autocmd BufWritePre * nested :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 
-" Completion (<CR>) handling.
-"-----------------------------------------------------------------------------
-"
-if HasPlugin('lexima.vim')
-  " Lexima conflicts with Deoplete and NCM2, etc. by remapping <CR>
-  " https://github.com/cohama/lexima.vim/issues/65
-  let g:lexima_no_default_rules = 1
-  let g:lexima_map_escape = '<C-y><Esc>'
-  call lexima#set_default_rules()
-  call lexima#insmode#map_hook('before', '<CR>', '')
-endif
-
-function! DocwhatCR() abort
-  if HasPlugin('lexima.vim')
-    let l:cr = lexima#expand('<CR>', 'i')
-  else
-    let l:cr = "\<CR>"
-  endif
-  let l:retval = l:cr
-
-  if pumvisible()
-    if HasPlugin('deoplete.nvim')
-      let l:retval = deoplete#smart_close_popup() . l:retval
-    else
-      let l:retval = "\<C-y>" . l:retval
-    endif
-  else
-    " `<C-g>u` means break undo chain at current position.
-    let l:retval = "\<C-g>u" . l:retval
-  endif
-
-  if HasPlugin('ultisnips') && !empty(v:completed_item)
-    let l:retval = ncm2_ultisnips#expand_or(l:retval, 'n')
-  endif
-
-  return l:retval
-endfunction
-inoremap <silent> <expr> <CR> DocwhatCR()
-
 " Codi -- Scratch Pad testing of various languages
 if HasPlugin('codi.vim') " {{{
   let g:codi#interpreters = {

@@ -3,27 +3,48 @@ if ! HasPlugin('coc.nvim')
   finish
 endif
 
+" if hidden not set, TextEdit might fail.
 set hidden
+
+" Better display for messages
 set cmdheight=2
+
+" Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
+
+" don't give |ins-completion-menu| messages.
 set shortmess+=c
+
+" always show signcolumns
 set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <TAB> pumvisible() ? "\<DOWN>"
+      \ : (<SID>is_whitespace() ? "\<TAB>"
+      \ : coc#refresh())
+snoremap <silent><expr> <TAB> pumvisible() ? "\<DOWN>"
+      \ : (<SID>is_whitespace() ? "\<TAB>"
+      \ : coc#refresh())
+inoremap <expr><S-TAB> pumvisible() ? "\<UP>" : "\<C-h>"
+inoremap <silent><expr> <C-n>
+      \ pumvisible() ? "\<DOWN>" : coc#refresh()
+inoremap <silent><expr> <C-p>
+      \ pumvisible() ? "\<UP>" : coc#refresh()
 
-function! s:check_back_space() abort
+" Checks if the cursor is at the beginning of a line or
+" it is after whitespace.
+function! s:is_whitespace()
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+  return !col || getline('.')[col - 1] =~? '\s'
 endfunction
 
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -60,6 +81,8 @@ augroup CocGroup
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  " " Close preview when done with popup.
+  autocmd! CompleteDone * if ! pumvisible() | pclose | endif
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph

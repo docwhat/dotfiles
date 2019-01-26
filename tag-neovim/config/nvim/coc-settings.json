@@ -1,5 +1,7 @@
 {
   "coc.preferences.diagnostic.displayByAle": true,
+  "coc.preferences.noselect": false,
+  "coc.preferences.formatOnType": true,
 
   "coc.preferences.codeLens.enable": true,
   "coc.preferences.diagnostic.errorSign": "",
