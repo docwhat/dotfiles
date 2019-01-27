@@ -1,8 +1,8 @@
-# vi: ft=ruby :
-# encoding: utf-8
+#!/usr/bin/env ruby
+# frozen_string_literal: true
 
-PRY_GOODIES = []
-PRY_BUMMERS = []
+pry_goodies = []
+pry_bummers = []
 
 ruby_version =
   if defined? RUBY_VERSION && defined? RUBY_PATCHLEVEL
@@ -13,37 +13,16 @@ ruby_version =
     (`ruby -v` || '').split(' ')[1].sub('p', '-p')
   end
 
-%w(
+%w[
   hirb-unicode
   hirb
   pry-theme
-).each do |gem|
-  begin
-    require gem
-    PRY_GOODIES << gem
-  rescue LoadError
-    PRY_BUMMERS << gem
-  end
-end
+].each do |gem|
 
-# Slightly dirty hack to fully support in-session Hirb.disable/enable toggling
-if defined? Hirb
-  Hirb::View.instance_eval do
-    def enable_output_method
-      @output_method = true
-      @old_print = Pry.config.print
-      Pry.config.print = proc do |*args|
-        Hirb::View.view_or_page_output(args[1]) || @old_print.call(*args)
-      end
-    end
-
-    def disable_output_method
-      Pry.config.print = @old_print
-      @output_method = nil
-    end
-  end
-
-  Hirb.enable
+  require gem
+  pry_goodies << gem
+rescue LoadError
+  pry_bummers << gem
 end
 
 # Awesome print is nice at times.
@@ -53,7 +32,6 @@ AwesomePrint.pry! if defined? AwesomePrint
 Pry.config.pager = true
 Pry.config.color = true
 Pry.config.editor = 'vim'
-Pry.config.prompt = Pry::NAV_PROMPT
 Pry.config.theme = 'pry-modern-256'
 
 Pry.config.commands.instance_eval do
@@ -68,14 +46,22 @@ File.expand_path('~/.pry/history').tap do |history_file|
 end
 
 # Welcome message.
-Pry.hooks.add_hook(:before_session, "pryrc_start_hook") do |output, binding, pry|
+Pry.hooks.add_hook(
+  :before_session, 'pryrc_start_hook'
+) do |output, _binding, _pry|
   output.print "Pry running on #{ruby_version} "
   output.print "with RubyGems #{Gem::VERSION} " if defined? Gem::VERSION
-  output.puts "and #{PRY_GOODIES.join ', '}."
-  output.puts "Unable to load gems: #{PRY_BUMMERS.join ', '}" unless PRY_BUMMERS.empty?
+  output.puts "and #{pry_goodies.join ', '}."
+  unless pry_bummers.empty?
+    output.puts "Unable to load gems: #{pry_bummers.join ', '}"
+  end
 end
-Pry.hooks.add_hook(:after_session, "pryrc_start_hook") do |output, binding, pry|
-  output.puts "Buh-bye!"
+
+# Farewell message.
+Pry.hooks.add_hook(
+  :after_session, 'pryrc_start_hook'
+) do |output, _binding, _pry|
+  output.puts 'Buh-bye!'
 end
 
 # EOF
