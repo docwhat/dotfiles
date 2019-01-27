@@ -6,10 +6,13 @@
   "coc.preferences.noselect": false,
   "coc.preferences.preferCompleteThanJumpPlaceholder": true,
 
-  "snippets.ultisnips.directories": [
-    "UltiSnips",
-    "snips"
-  ],
+  "list.insertMappings": {
+    "<C-t>": "action:tabe",
+    "<C-n>": "normal:j",
+    "<C-p>": "normal:k"
+  },
+
+  "snippets.ultisnips.directories": ["UltiSnips", "snips"],
   "snippets.ultisnips.pythonVersion": 3,
 
   "coc.preferences.codeLens.enable": true,
