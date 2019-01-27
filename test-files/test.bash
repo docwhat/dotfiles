@@ -10,7 +10,7 @@
 # Donated to the public domain in 2013
 
 #--------->8---------cut here---------8<---------
-set -eu
+set -Eeuo pipefail
 
 trap _exit_trap EXIT
 trap _err_trap ERR
@@ -47,3 +47,5 @@ function traceback() {
     echo "     ${function}() in ${file}:${line}" 1>&2
   done
 }
+
+false
