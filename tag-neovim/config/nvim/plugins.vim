@@ -189,6 +189,9 @@ Plug 'ekalinin/Dockerfile.vim'
 " Sieve (RFC 5228)
 Plug 'vim-scripts/sieve.vim'
 
+" Pretty icons
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 
 " vim: set foldminlines=0 foldmethod=marker :

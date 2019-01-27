@@ -81,8 +81,9 @@ augroup CocGroup
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  " " Close preview when done with popup.
-  autocmd! CompleteDone * if ! pumvisible() | pclose | endif
+  " Close preview when done with popup.
+  autocmd CursorMovedI * if ! pumvisible() | silent! pclose | endif
+  autocmd InsertLeave  * if ! pumvisible() | silent! pclose | endif
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
