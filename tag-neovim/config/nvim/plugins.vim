@@ -86,28 +86,29 @@ Plug 'w0rp/ale', { 'tag': 'v*' }
 Plug 'ruanyl/coverage.vim'
 
 " Completion & Snippets
+" ruby -rjson -e 'puts JSON.parse(ARGF.read)["dependencies"].keys().sort.map { |x| "      \\ #{39.chr}#{x}#{39.chr}," }' ~/.config/coc/extensions/package.json
 let g:coc_global_extensions = [
-      \  'coc-css',
-      \  'coc-emmet',
-      \  'coc-highlight',
-      \  'coc-html',
-      \  'coc-dictionary',
-      \  'coc-emoji',
-      \  'coc-omni',
-      \  'coc-tag',
-      \  'coc-pairs',
-      \  'coc-java',
-      \  'coc-json',
-      \  'coc-pyls',
-      \  'coc-rls',
-      \  'coc-snippets',
-      \  'coc-solargraph',
-      \  'coc-yaml',
-      \  'coc-eslint',
-      \  'coc-jest',
-      \  'coc-prettier',
-      \  'coc-tslint',
-      \  'coc-tsserver',
+      \ 'coc-css',
+      \ 'coc-dictionary',
+      \ 'coc-emmet',
+      \ 'coc-emoji',
+      \ 'coc-eslint',
+      \ 'coc-highlight',
+      \ 'coc-html',
+      \ 'coc-java',
+      \ 'coc-jest',
+      \ 'coc-json',
+      \ 'coc-omni',
+      \ 'coc-pairs',
+      \ 'coc-prettier',
+      \ 'coc-pyls',
+      \ 'coc-rls',
+      \ 'coc-snippets',
+      \ 'coc-solargraph',
+      \ 'coc-tag',
+      \ 'coc-tslint',
+      \ 'coc-tsserver',
+      \ 'coc-yaml',
       \ ]
 
 
@@ -116,7 +117,6 @@ Plug 'neoclide/coc.nvim', { 'tag': 'v*', 'do': { -> coc#util#install() } }
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'Shougo/neoyank.vim'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " NGinX

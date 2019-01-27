@@ -4,6 +4,13 @@
 
   "coc.preferences.snippetIndicator": "\uf5d4",
   "coc.preferences.noselect": false,
+  "coc.preferences.preferCompleteThanJumpPlaceholder": true,
+
+  "snippets.ultisnips.directories": [
+    "UltiSnips",
+    "snips"
+  ],
+  "snippets.ultisnips.pythonVersion": 3,
 
   "coc.preferences.codeLens.enable": true,
   "coc.preferences.diagnostic.errorSign": "",
