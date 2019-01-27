@@ -116,6 +116,8 @@ Plug 'neoclide/coc.nvim', { 'tag': 'v*', 'do': { -> coc#util#install() } }
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'Shougo/neoyank.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " NGinX
 Plug 'chr4/nginx.vim'

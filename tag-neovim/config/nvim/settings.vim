@@ -318,42 +318,6 @@ if HasPlugin('rust.vim') " {{{
 endif
 " }}}
 
-" UltiSnips -- Snippets
-if HasPlugin('ultisnips') " {{{
-  let g:UltiSnipsSnippetDirectories  = ['UltiSnips', 'snips']
-  let g:UltiSnipsNoPythonWarning     = 1
-  let g:UltiSnipsUsePythonVersion    = 3 " We always have python3 for deoplete.
-  let g:UltiSnipsEditSplit           = 'vertical'
-
-  let g:UltiSnipsListSnippets        = '<C-s>'
-  let g:UltiSnipsExpandTrigger       = '<Tab>'
-  let g:UltiSnipsJumpForwardTrigger  = '<Tab>'
-  let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
-
-  " " c-j c-k for moving in snippet
-  " imap <expr> <c-u> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_expand)", 'm')
-  " smap <c-u> <Plug>(ultisnips_expand)
-  " let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-  " let g:UltiSnipsRemoveSelectModeMappings = 0
-
-  if filereadable(g:xdg_config_home . '/personalization.vim')
-    execute 'source ' . g:xdg_config_home . '/personalization.vim'
-  endif
-  " You'll want to set these in ~/.config/nvim/personalization.vim
-  " let g:snips_email="you@example.com"
-  " let g.snips_author="Your Name Here"
-  " let g.snips_github="https://github.com/your id here"
-  "
-  " Needed for some snippets
-  if !exists('*Filename')
-    function! Filename(...)
-      let l:filename = expand('%:t:r')
-      if l:filename ==# '' | return a:0 == 2 ? a:2 : '' | endif
-      return !a:0 || a:1 ==# '' ? l:filename : substitute(a:1, '$1', l:filename, 'g')
-    endfunction
-  endif
-endif " }}}
-
 " Javascript -- by pangloss
 if HasPlugin('vim-javascript') " {{{
   let g:javascript_plugin_flow = 1
