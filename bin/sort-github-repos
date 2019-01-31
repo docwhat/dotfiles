@@ -62,7 +62,7 @@ class GitDir < Pathname
   end
 
   def host
-    origin ? origin.host : ''
+    (origin ? origin.host : '').sub(/[:]$/, '')
   end
 
   def github?
