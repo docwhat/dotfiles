@@ -78,7 +78,8 @@ class GitDir < Pathname
   end
 
   def desired
-    Pathname.new('~/').expand_path + host + organization + repository
+    top_directory = Pathname.new('~/src/').expand_path
+     top_directory + host + organization + repository
   end
 
   def desired?
@@ -151,6 +152,11 @@ class App
 
     if dry_run?
       puts "DRYRUN: mv #{source} #{destination}"
+      return
+    end
+
+    if destination.exist?
+      puts "skipping: '#{source}': '#{destination}' already exists."
       return
     end
 
