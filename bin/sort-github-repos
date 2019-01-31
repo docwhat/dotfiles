@@ -1,0 +1,174 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+begin
+  require 'git/remote/parser'
+rescue LoadError
+  STDERR.puts
+  STDERR.puts 'Have you tried:  gem install git-remote-parser'
+  STDERR.puts
+  raise
+end
+
+require 'fileutils'
+require 'optparse'
+require 'pathname'
+require 'English'
+require 'pp'
+
+# Errors for my application
+class AppErrors < StandardError; end
+# Something exited with a non-zero exit code.
+class NonZeroExitCodeError < AppErrors; end
+# No such directory
+class NoSuchDirectory < AppErrors; end
+
+# Pathname representing a git repository.
+class GitDir < Pathname
+  def chdir
+    dir = basename.to_s == '.git' ? dirname : self
+    raise NoSuchDirectory, "Missing directory: #{dir}\n(From: #{self}})" \
+      unless dir.directory?
+
+    Dir.chdir(dir.to_s) do
+      yield
+    end
+  end
+
+  def git?
+    gitroot.directory?
+  rescue NonZeroExitCodeError
+    false
+  end
+
+  def gitroot
+    @gitroot ||= GitDir.new(system('git rev-parse --show-toplevel'))
+  end
+
+  def system(command)
+    chdir do
+      `#{command} 2>/dev/null`.chomp
+    end
+  ensure
+    raise NonZeroExitCodeError, "command:#{command}\n\tdirectory:#{self}" \
+      if $CHILD_STATUS.exitstatus != 0
+  end
+
+  def origin
+    @origin ||= \
+      Git::Remote::Parser.new.parse system('git remote get-url origin')
+  rescue NonZeroExitCodeError
+    nil
+  end
+
+  def host
+    origin ? origin.host : ''
+  end
+
+  def github?
+    host.start_with? 'github.'
+  end
+
+  def organization
+    origin.owner
+  end
+
+  def repository
+    origin.repo
+  end
+
+  def desired
+    Pathname.new('~/').expand_path + host + organization + repository
+  end
+
+  def desired?
+    cleanpath.to_s == desired.cleanpath.to_s
+  end
+end
+
+# Application to move directories to the "correct place".
+class App
+  attr_reader :arguments, :directories, :dry_run
+  alias dry_run? dry_run
+
+  USAGE = <<~USAGETEXT
+    Usage: #{$PROGRAM_NAME} [--dry-run|-k] directory ...
+
+    Moves github checkouts to ~/Play/github/<org>/<repo>
+    based on origin.
+  USAGETEXT
+
+  def initialize(argv) # rubocop:disable AbcSize
+    init_vars argv
+
+    arguments.each do |argument|
+      git_dir = GitDir.new argument
+      if git_dir.directory?
+        unless git_dir.git?
+          puts "skipping: '#{argument}' is not a git directory"
+          next
+        end
+        directories << git_dir.gitroot
+      elsif %w[--dry-run -k --dry --k].include? argument
+        @dry_run = true
+      elsif argument.start_with? '-'
+        die_with_usage "Unknown option '#{argument}'"
+      else
+        die_with_usage "Unknown argument '#{argument}'"
+      end
+    end
+  ensure
+    freeze_vars
+  end
+
+  def init_vars(argv)
+    @arguments = argv.map(&:to_s).freeze
+    @directories = []
+    @dry_run = false
+  end
+
+  def freeze_vars
+    directories.freeze
+    dry_run.freeze
+  end
+
+  def die_with_usage(message)
+    STDERR.puts USAGE
+    STDERR.puts
+    die message
+  end
+
+  def die(message)
+    STDERR.puts "ERROR: #{message}"
+    exit 2
+  end
+
+  # I don't care about :reek:TooManyStatements
+  def run_one(source) # rubocop:disable MethodLength
+    return if source.desired?
+
+    destination = source.desired
+
+    if dry_run?
+      puts "DRYRUN: mv #{source} #{destination}"
+      return
+    end
+
+    puts "#{source} -> #{destination}"
+    destination.dirname.mkpath
+    source.rename destination
+  rescue StandardError
+    STDERR.puts "Failed on directory: #{source}"
+    raise
+  end
+
+  def run
+    directories.each do |directory|
+      next unless directory.github?
+
+      run_one directory
+    end
+  end
+end
+
+App.new(ARGV).run if $PROGRAM_NAME == __FILE__
