@@ -13,6 +13,12 @@ source ~/.zgen/zgen.zsh
 set -eu
 
 echo
+print -P "%F{cyan}z %F{blue}updating zgen %F{reset}"
+set +eu
+zgen selfupdate |& offset | colorize yellow
+set -eu
+
+echo
 print -P "%F{cyan}z %F{blue}updating plugins %F{reset}"
 set +eu
 zgen update |& offset | colorize yellow

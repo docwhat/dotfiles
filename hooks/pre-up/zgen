@@ -5,6 +5,8 @@ set -eu
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-hh_git 'ZGen' https://github.com/tarjoilija/zgen.git ~/.zgen
+if [[ ! -f ~/.zgen/zgen.zsh ]]; then
+  hh_git 'ZGen' https://github.com/tarjoilija/zgen.git ~/.zgen
+fi
 
 # EOF
