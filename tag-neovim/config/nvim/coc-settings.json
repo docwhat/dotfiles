@@ -20,5 +20,19 @@
   "coc.preferences.diagnostic.errorSign": "",
   "coc.preferences.diagnostic.warningSign": "",
   "coc.preferences.diagnostic.infoSign": "",
-  "coc.preferences.diagnostic.hintSign": "履"
+  "coc.preferences.diagnostic.hintSign": "履",
+
+  "languageserver": {
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile", "Dockerfile"],
+      "args": [ "--stdio" ]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    }
+  }
 }
