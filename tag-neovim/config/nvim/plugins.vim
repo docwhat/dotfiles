@@ -128,6 +128,7 @@ Plug 'tpope/vim-liquid'
 
 " Javascript & JSON
 Plug 'elzr/vim-json'
+Plug 'neoclide/jsonc.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty', { 'tag': 'v*' }
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
