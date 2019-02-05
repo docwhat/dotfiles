@@ -17,6 +17,9 @@
   "snippets.ultisnips.pythonVersion": 3,
   "coc.preferences.snippetIndicator": "\uf5d4",
 
+  // Type Script
+  "tsserver.enableJavascript": false,
+
   // Linting/Warnings
   "coc.preferences.diagnostic.displayByAle": true,
   "coc.preferences.diagnostic.errorSign": "",
@@ -36,6 +39,15 @@
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
+    },
+    "flow": {
+      "command": "flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
     }
   }
 }
