@@ -3,7 +3,8 @@
   "coc.preferences.formatOnType": true,
 
   "coc.preferences.snippetIndicator": "\uf5d4",
-  "coc.preferences.noselect": false,
+  "coc.preferences.noselect": true,
+  "coc.preferences.hoverTarget": "preview",
   "coc.preferences.preferCompleteThanJumpPlaceholder": true,
 
   "list.insertMappings": {
