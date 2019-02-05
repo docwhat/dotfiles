@@ -110,7 +110,6 @@ let g:coc_global_extensions = [
       \ 'coc-tslint',
       \ 'coc-tsserver',
       \ 'coc-yaml',
-      \ 'https://github.com/andys8/vscode-jest-snippets.git#master',
       \ ]
 
 
