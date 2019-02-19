@@ -52,4 +52,7 @@ if [ "$TERM_PROGRAM" = 'iTerm.app' ]; then
 
   [[ -z $chpwd_functions ]] && chpwd_functions=()
   chpwd_functions=($chpwd_functions iterm-send-cwd)
+else
+  ITERM_SHELL_INTEGRATION_INSTALLED=no
+  ITERM2_SHOULD_DECORATE_PROMPT=0
 fi
