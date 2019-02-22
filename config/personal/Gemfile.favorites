@@ -14,7 +14,6 @@ group :lint do
   gem 'gem-ctags'
   gem 'rubocop'
   gem 'reek'
-  gem 'mdl'
   gem 'solargraph'
 end
 
