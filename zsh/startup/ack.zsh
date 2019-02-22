@@ -6,7 +6,11 @@
 
 if (( $+commands[rg] )); then
   function rg() {
-    =rg --pretty "$@" | less -RFX
+    if [ -t 1 ]; then
+      =rg --pretty "$@" | less -RFX
+    else
+      =rg "$@"
+    fi
   }
 fi
 
