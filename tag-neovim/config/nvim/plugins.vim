@@ -100,7 +100,6 @@ let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-lists',
       \ 'coc-omni',
-      \ 'coc-pairs',
       \ 'coc-prettier',
       \ 'coc-pyls',
       \ 'coc-rls',
@@ -119,6 +118,7 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'Shougo/neoyank.vim'
 Plug 'honza/vim-snippets'
+Plug 'cohama/lexima.vim'
 
 " NGinX
 Plug 'chr4/nginx.vim'
