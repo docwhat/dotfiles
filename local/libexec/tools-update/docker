@@ -14,16 +14,18 @@ fi
 hh_curl \
   "Docker ZSH completion" \
   ~/.zsh/functions/_docker \
-  https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
+  https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker &
 
 hh_curl \
   "Docker-Compose ZSH completion" \
   ~/.zsh/functions/_docker-compose \
-  https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+  https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose &
 
 hh_curl \
   "Docker-Machine ZSH completion" \
   ~/.zsh/functions/_docker-machine \
-  https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine
+  https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine &
+
+wait
 
 # EOF
