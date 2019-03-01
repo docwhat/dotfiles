@@ -20,12 +20,7 @@ if [ -n "${TOOL_INSTALL:-}" ]; then
   exit
 fi
 
-local_bin="$(npm bin 2>/dev/null)"
 global_bin="${prefix}/bin"
-
-if [ -x "${local_bin}/${bin}" ]; then
-  exec "${local_bin}/${bin}" "$@"
-fi
 
 if [ -x "${global_bin}/${bin}" ]; then
   exec "${global_bin}/${bin}" "$@"

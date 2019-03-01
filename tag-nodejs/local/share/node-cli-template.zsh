@@ -29,12 +29,7 @@ echo '  do_install'
 echo '  exit'
 echo 'fi'
 echo
-echo 'local_bin="$(npm bin 2>/dev/null)"'
 echo 'global_bin="${prefix}/bin"'
-echo
-echo 'if [ -x "${local_bin}/${bin}" ]; then'
-echo '  exec "${local_bin}/${bin}" "$@"'
-echo 'fi'
 echo
 echo 'if [ -x "${global_bin}/${bin}" ]; then'
 echo '  exec "${global_bin}/${bin}" "$@"'
