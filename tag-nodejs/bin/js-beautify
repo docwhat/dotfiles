@@ -4,15 +4,15 @@
 
 set -eEuo pipefail
 
-package=js-beautify
-command=js-beautify
+bin=js-beautify
+packages=( js-beautify )
 node_version=10
 prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
 
 export NODENV_VERSION=$node_version
 
 function do_install() {
-  npm install --global --prefix "$prefix" "$package"
+  npm install --global --prefix "$prefix" "${packages[@]}"
 }
 
 if [ -n "${TOOL_INSTALL:-}" ]; then
@@ -23,15 +23,15 @@ fi
 local_bin="$(npm bin 2>/dev/null)"
 global_bin="${prefix}/bin"
 
-if [ -x "${local_bin}/${command}" ]; then
-  exec "${local_bin}/${command}" "$@"
+if [ -x "${local_bin}/${bin}" ]; then
+  exec "${local_bin}/${bin}" "$@"
 fi
 
-if [ -x "${global_bin}/${command}" ]; then
-  exec "${global_bin}/${command}" "$@"
+if [ -x "${global_bin}/${bin}" ]; then
+  exec "${global_bin}/${bin}" "$@"
 fi
 
 do_install >/dev/null 2>&1
-exec "${global_bin}/${command}" "$@"
+exec "${global_bin}/${bin}" "$@"
 
 # EOF
