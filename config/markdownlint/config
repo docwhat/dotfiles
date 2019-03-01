@@ -5,6 +5,7 @@
   "MD004": false, // ul-style
   "MD007": { "indent": 4 },
   "MD013": false, // line-length
+  "MD026": { "punctuation": ".,;:" },
   "MD029": false, // header-style
   "MD030": false, // list-marker-space
   "MD033": false, // no-inline-html
