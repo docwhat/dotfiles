@@ -51,6 +51,14 @@
       "requireRootPattern": true,
       "settings": {},
       "rootPatterns": [".flowconfig"]
+    },
+    "golang": {
+      "command": "/Users/docwhat/go/bin/bingo",
+      "args": ["--diagnostics-style=instant"],
+      "filetypes": ["go"],
+      "initializationOptions": {},
+      "trace.server": "verbose",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
     }
   }
 }
