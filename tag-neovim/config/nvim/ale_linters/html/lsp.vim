@@ -26,7 +26,7 @@ endfunction
 call ale#linter#Define('html', {
 \   'name': 'lsp',
 \   'lsp': 'stdio',
-\   'executable_callback': 'ale_linters#html#lsp#GetExecutable',
-\   'command_callback': 'ale_linters#html#lsp#GetCommand',
-\   'project_root_callback': 'ale_linters#html#lsp#GetProjectRoot',
+\   'executable': 'ale_linters#html#lsp#GetExecutable',
+\   'command': 'ale_linters#html#lsp#GetCommand',
+\   'project_root': 'ale_linters#html#lsp#GetProjectRoot',
 \})

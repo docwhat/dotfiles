@@ -26,7 +26,7 @@ endfunction
 call ale#linter#Define('dockerfile', {
 \   'name': 'lsp',
 \   'lsp': 'stdio',
-\   'executable_callback': 'ale_linters#dockerfile#lsp#GetExecutable',
-\   'command_callback': 'ale_linters#dockerfile#lsp#GetCommand',
-\   'project_root_callback': 'ale_linters#dockerfile#lsp#GetProjectRoot',
+\   'executable': 'ale_linters#dockerfile#lsp#GetExecutable',
+\   'command': 'ale_linters#dockerfile#lsp#GetCommand',
+\   'project_root': 'ale_linters#dockerfile#lsp#GetProjectRoot',
 \})
