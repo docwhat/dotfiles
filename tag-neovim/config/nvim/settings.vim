@@ -94,6 +94,14 @@ augroup VimrcShada
   autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
 augroup END
 
+" Disable Python 2
+let g:loaded_python_provider = 1
+
+" Detect Python 3
+if executable('/usr/local/opt/python3/bin/python3')
+  let g:python3_host_prog='/usr/local/opt/python3/bin/python3'
+endif
+
 " }}}
 
 " Spelling {{{
