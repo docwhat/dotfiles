@@ -16,7 +16,9 @@ function! s:SmartIndentWholeBufferIfEnabled() " abort
     endif
   endif
 
-  if exists('*LCformatting_sync')
+  if HasPlugin('coc.nvim')
+    call CocAction('format')
+  elseif exists('*LCformatting_sync')
     try
       let l:did_it_work = LCformatting_sync()
       if l:did_it_work
