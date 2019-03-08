@@ -26,7 +26,7 @@ endfunction
 call ale#linter#Define('json', {
 \   'name': 'lsp',
 \   'lsp': 'stdio',
-\   'executable': 'ale_linters#json#lsp#GetExecutable',
-\   'command': 'ale_linters#json#lsp#GetCommand',
-\   'project_root': 'ale_linters#json#lsp#GetProjectRoot',
+\   'executable_callback': 'ale_linters#json#lsp#GetExecutable',
+\   'command_callback': 'ale_linters#json#lsp#GetCommand',
+\   'project_root_callback': 'ale_linters#json#lsp#GetProjectRoot',
 \})
