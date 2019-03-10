@@ -123,9 +123,6 @@ Plug 'cohama/lexima.vim'
 " NGinX
 Plug 'chr4/nginx.vim'
 
-" Jekyll/Liquid
-Plug 'tpope/vim-liquid'
-
 " Javascript & JSON
 Plug 'elzr/vim-json'
 Plug 'neoclide/jsonc.vim'
