@@ -4,7 +4,7 @@ function! HasPlugin(name) abort
   return has_key(g:plugs, a:name)
 endfunction
 
-call plug#begin(g:xdg_data_home . '/plugged')
+call plug#begin(stdpath('cache') . '/plugged')
 
 " -- Utilities
 Plug 'Shougo/vimproc.vim', { 'tag': 'ver.*', 'do' : 'make'}

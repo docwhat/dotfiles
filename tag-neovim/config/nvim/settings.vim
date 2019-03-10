@@ -59,19 +59,18 @@ augroup END
 
 " undo persist between sessions
 set undofile
+execute 'silent !mkdir -p ' . stdpath('cache') . '/undo'
+let &undodir=stdpath('cache') . '/undo,' . stdpath('data') . '/undo'
 
 " Backups
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/backup or . if all else fails.
-if isdirectory(g:xdg_data_home . '/backup') == 0
-  execute 'silent !mkdir -p ' . g:xdg_data_home . '/backup >/dev/null 2>&1'
+if isdirectory(stdpath('cache') . '/backup') == 0
+  execute 'silent !mkdir -p ' . stdpath('cache') . '/backup >/dev/null 2>&1'
 endif
-set backupdir-=.
-set backupdir+=.
-execute 'set backupdir^=' . g:xdg_data_home . '/backup'
-set backupdir^=./.vim-backup
-set backup
+let &backupdir=stdpath('cache') . '/backup' . ',' . stdpath('data') . '/backup' . ',' . '.'
+
 augroup VimrcBackups
   autocmd!
   autocmd BufWritePre * let &backupext = '-' . substitute(expand('%:p:h'), '/', '%', 'g') . '~'
@@ -120,7 +119,7 @@ endif
 " :e sftp://[user@]machine/path                 uses sftp
 " :e rsync://[user@]machine[:port]/path         uses rsync
 " :e scp://[user@]machine[[:#]port]/path        uses scp
-let g:netrw_home = g:xdg_data_home
+let g:netrw_home = stdpath('data')
 let g:netrw_silent = 1
 
 " Themes/Colors
