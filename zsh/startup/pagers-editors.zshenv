@@ -59,4 +59,6 @@ export FPP_EDITOR="$EDITOR"
 export MANPAGER="${HOME}/bin/manpager"
 export VISUAL="${HOME}/bin/visual-editor"
 
+export REACT_EDITOR=atom
+
 # EOF
