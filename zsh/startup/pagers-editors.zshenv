@@ -39,13 +39,6 @@ elif (( $+commands[lesspipe] )); then
   export LESSOPEN
 fi
 
-# Pager/Editors
-export PAGER="less"
-export ACK_PAGER="less -R -+F"
-export FPP_EDITOR="$EDITOR"
-export MANPAGER="${HOME}/bin/manpager"
-export VISUAL="${HOME}/bin/visual-editor"
-
 # Use NeoVim if it exists
 if (( $+commands[nvim] )); then
   export GIT_EDITOR="nvim +1"
@@ -58,5 +51,12 @@ else
   export GIT_EDITOR="vim +1"
   export EDITOR="vim"
 fi
+
+# Pager/Editors
+export PAGER="less"
+export ACK_PAGER="less -R -+F"
+export FPP_EDITOR="$EDITOR"
+export MANPAGER="${HOME}/bin/manpager"
+export VISUAL="${HOME}/bin/visual-editor"
 
 # EOF
