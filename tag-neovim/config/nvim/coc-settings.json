@@ -25,10 +25,11 @@
 
   // Linting/Warnings
   "diagnostic.displayByAle": true,
+  "diagnostic.enable": true,
   "diagnostic.errorSign": "",
-  "diagnostic.warningSign": "",
-  "diagnostic.infoSign": "",
   "diagnostic.hintSign": "履",
+  "diagnostic.infoSign": "",
+  "diagnostic.warningSign": "",
 
   // Additional Language Servers
   "languageserver": {
