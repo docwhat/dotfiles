@@ -1,8 +1,5 @@
 # vim: ft=gitconfig :
 
-[color]
-	ui = auto
-
 [alias]
 	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/'
 	lc       = log ORIG_HEAD.. --stat --no-merges
@@ -43,23 +40,26 @@
 [instaweb]
 	port = 2001
 
-[merge]
-	tool = opendiff
-	ff = only
+[color]
+	ui = auto
 
 [core]
 	excludesfile = ~/.config/git/ignore
 	attributesfile = ~/.config/git/attributes
 	autocrlf = input
 
-[fetch]
-	prune = true
+[merge]
+	tool = opendiff
+	ff = only
+
+[mergetool]
+	keepBackup = false
+
+[mergetool "nvr"]
+	cmd = nvr -s -d $LOCAL $BASE $REMOTE $MERGED -c 'wincmd J | wincmd ='
 
 [difftool]
 	prompt = false
-
-[difftool "kitty"]
-	cmd = kitty +kitten diff $LOCAL $REMOTE
 
 [diff]
 	tool = opendiff
@@ -68,6 +68,15 @@
 [diff "scpt"]
 	textconv = osadecompile
 	binary = true
+
+[difftool "kitty"]
+	cmd = kitty +kitten diff $LOCAL $REMOTE
+
+[difftool "nvr"]
+	cmd = nvr -s -d $LOCAL $REMOTE
+
+[fetch]
+	prune = true
 
 [push]
 	default = current
@@ -116,5 +125,3 @@
 [filter "itermprofile"]
 	clean = json-canonicalizer
 	smudge = cat
-[mergetool]
-	keepBackup = false

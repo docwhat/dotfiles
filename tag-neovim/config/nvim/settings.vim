@@ -150,6 +150,10 @@ augroup END
 
 " GitCommits
 "
+if has('nvim') && executable('nvr')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif
+
 augroup VimrcGit
   autocmd!
   autocmd FileType gitcommit setlocal spell
