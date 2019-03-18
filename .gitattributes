@@ -3,5 +3,5 @@
 *.zshrc                                                               text eol=lf
 *.zshenv                                                              text eol=lf
 *.zprofile                                                            text eol=lf
-"tag-macos/config/nvim/spell/*.add"                                   text eol=lf filter=wordlist
+**/spell/*.add                                                        text eol=lf filter=wordlist
 "tag-macos/Library/Application Support/iTerm2/DynamicProfiles/*.json" text eol=lf filter=itermprofile
