@@ -58,6 +58,9 @@
 [difftool]
 	prompt = false
 
+[difftool "kitty"]
+	cmd = kitty +kitten diff $LOCAL $REMOTE
+
 [diff]
 	tool = opendiff
 	renames = copy
