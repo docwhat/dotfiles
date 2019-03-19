@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 
-if (( $+commands[mvim] )); then
+if (( $+commands[nvr] )); then
+  nvr -s --nostart --remote-wait "$@"
+elif (( $+commands[mvim] )); then
   mvim -f "$@"
 elif (( $+commands[gvim] )); then
   gvim "$@"
