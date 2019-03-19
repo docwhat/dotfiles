@@ -1,1 +1,2 @@
 "\e[3~": delete-char
+set enable-bracketed-paste on

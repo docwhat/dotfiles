@@ -12,6 +12,7 @@ zgen oh-my-zsh plugins/vagrant
 
 zgen oh-my-zsh plugins/git
 zgen oh-my-zsh plugins/github
+zgen oh-my-zsh plugins/safe-paste
 
 if [ $(uname -a | grep -ci Darwin) = 1 ]; then
   # Load OSX-specific plugins
