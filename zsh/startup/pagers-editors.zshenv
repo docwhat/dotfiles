@@ -25,7 +25,7 @@ if (( $+commands[highlight] )); then
   else
     lf=ansi
   fi
-  LESSOPEN="| ${commands[highlight]} %s --out-format=${lf} --base16 --style=gruvbox-dark-hard --force --line-numbers --no-trailing-nl"
+  LESSOPEN="| ${commands[highlight]} %s --out-format=${lf} --base16 --style=gruvbox-dark-hard --force --no-trailing-nl"
   unset lf
   export LESSOPEN
 elif (( $+commands[src-hilite-lesspipe.sh] )); then
