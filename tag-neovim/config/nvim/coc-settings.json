@@ -3,9 +3,8 @@
   "coc.preferences.formatOnType": true,
   "coc.preferences.hoverTarget": "preview",
 
-  "suggest.noselect": false,
-  "suggest.preferCompleteThanJumpPlaceholder": false,
   "suggest.triggerAfterInsertEnter": true,
+  "suggest.autoTrigger": "always",
   "suggest.enablePreview": true,
   "suggest.snippetIndicator": "\uf5d4",
 
