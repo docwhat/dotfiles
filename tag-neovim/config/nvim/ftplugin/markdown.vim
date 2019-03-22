@@ -11,7 +11,7 @@ endif
 " Disable vim-sleuth
 let b:sleuth_automatic = 0
 setlocal tabstop=4
-setlocal concealcursor= conceallevel=1
+setlocal concealcursor= conceallevel=2
 setlocal wrap linebreak nolist
 
 if s:editable >= 1
