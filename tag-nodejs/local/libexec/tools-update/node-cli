@@ -16,7 +16,6 @@ rm -rf "${HOME}/.cache/nodejs-cli-tool"
 mkdir -p "${HOME}/.cache/nodejs-cli-tool"
 
 # Install global packages
-env TOOL_INSTALL=t ~/bin/yarn
-~/bin/yarn global add neovim
+yarn global add neovim
 
 # EOF
