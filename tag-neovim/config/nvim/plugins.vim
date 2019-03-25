@@ -131,6 +131,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty', { 'tag': 'v*' }
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
 
+" GraphQL Schemas
+Plug 'jparise/vim-graphql'
+
 " XML, HTML & CSS
 Plug 'othree/html5.vim'
 " TODO: Use polyglot instead? It's a curated list of languages, syntaxes, and indentations.
