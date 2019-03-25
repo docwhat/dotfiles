@@ -79,6 +79,7 @@ Plug 'tweekmonster/helpful.vim'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
 Plug 'vim-scripts/Decho', { 'tag': '*' }
+Plug 'junegunn/vader.vim'
 
 " Style/Lint
 Plug 'dbakker/vim-lint'
