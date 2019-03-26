@@ -94,7 +94,6 @@ let g:coc_global_extensions = [
       \ 'coc-emmet',
       \ 'coc-emoji',
       \ 'coc-eslint',
-      \ 'coc-highlight',
       \ 'coc-html',
       \ 'coc-java',
       \ 'coc-jest',
@@ -141,8 +140,11 @@ Plug 'othree/html5.vim'
 
 Plug 'tpope/vim-ragtag'
 
-" Show a facsimile of CSS colors as a highlight.
-Plug 'chrisbra/color_highlight'
+" Show colors in the text as reference.
+Plug 'RRethy/vim-hexokinase'
+
+" Highlight the word under the cursor.
+Plug 'RRethy/vim-illuminate'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', { 'tag': 'stable-*' }

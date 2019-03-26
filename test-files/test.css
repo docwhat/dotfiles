@@ -37,6 +37,10 @@
   }
 }
 
+.color {
+  color: #ffeedd;
+}
+
 /* Flush single line comment */
 @media
 screen and (min-resolution: 192dpi),
