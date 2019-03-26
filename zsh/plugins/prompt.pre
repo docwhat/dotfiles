@@ -76,12 +76,6 @@ fi
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 command_execution_time
 )
-if [ -z "$TMUX" ] && ! [ -x "$VIM" ]; then
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-  "${POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS[@]}"
-  time
-  )
-fi
 
 # OS Icon
 POWERLEVEL9K_OS_ICON_BACKGROUND=16
