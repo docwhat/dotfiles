@@ -47,6 +47,7 @@ Plug 'mbbill/undotree', { 'tag': 'rel_*' }
 "   https://ctags.io/
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar', { 'tag': 'v*' }
+Plug 'aymericbeaumet/symlink.vim'
 
 " Convert single line things to multi-line and back
 "   gS - single -> multi
