@@ -1,0 +1,85 @@
+#!/usr/bin/ruby
+# frozen_string_literal: true
+
+require 'openssl'
+require 'digest'
+require 'English'
+
+# My App
+class App
+  attr_reader :certificates
+
+  def read_certificates
+    @certificates = PrettyCert
+                    .parse(ARGF.read)
+                    .reject(&:too_early?)
+                    .reject(&:expired?)
+  end
+
+  def run
+    certs = read_certificates
+    puts certs.map(&:to_s).join("\n")
+  end
+end
+
+# Allows pretty printing certificates.
+class PrettyCert < OpenSSL::X509::Certificate
+  def self.parse(string)
+    string
+      .scan(/-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/m)
+      .map { |pem| new pem }
+  end
+
+  def too_early?
+    not_before > Time.now
+  end
+
+  def expired?
+    not_after < Time.now
+  end
+
+  def md5_fingerprint
+    Digest::MD5
+      .hexdigest(to_der)
+      .upcase.scan(/.{1,2}/)
+      .join(':')
+  end
+
+  def sha1_fingerprint
+    Digest::SHA1
+      .hexdigest(to_der)
+      .upcase
+      .scan(/.{1,2}/)
+      .join(':')
+  end
+
+  def sha256_fingerprint
+    Digest::SHA256
+      .hexdigest(to_der)
+      .upcase
+      .scan(/.{1,2}/)
+      .join(':')
+  end
+
+  def self_signed?
+    issuer.to_s == subject.to_s
+  end
+
+  def to_s
+    [
+      "# Subject: #{subject}",
+      "# Issuer:  #{self_signed? ? 'self' : issuer}",
+      "# Serial: #{serial}",
+      "# Not Before:         #{not_before}",
+      "# Not After:          #{not_after}",
+      "# MD5 Fingerprint:    #{md5_fingerprint}",
+      "# SHA1 Fingerprint:   #{sha1_fingerprint}",
+      "# SHA256 Fingerprint: #{sha256_fingerprint}",
+      to_pem
+    ].join("\n")
+  end
+end
+
+App.new.run if $PROGRAM_NAME == __FILE__
+
+# EOF
