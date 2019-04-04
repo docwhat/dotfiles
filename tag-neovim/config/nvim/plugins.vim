@@ -46,7 +46,7 @@ Plug 'mbbill/undotree', { 'tag': 'rel_*' }
 " Tags support; I recommend Universal Ctags
 "   https://ctags.io/
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar', { 'tag': 'v*' }
+Plug 'liuchengxu/vista.vim' " Tagbar clone with LSP support
 Plug 'aymericbeaumet/symlink.vim'
 
 " Convert single line things to multi-line and back
