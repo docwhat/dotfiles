@@ -53,12 +53,15 @@
       "rootPatterns": [".flowconfig"]
     },
     "golang": {
-      "command": "/Users/docwhat/go/bin/bingo",
-      "args": ["--diagnostics-style=instant"],
+      "command": "/Users/docwhat/go/bin/gopls",
       "filetypes": ["go"],
       "initializationOptions": {},
       "trace.server": "verbose",
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
     }
   }
 }
