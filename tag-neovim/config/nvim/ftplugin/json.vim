@@ -8,6 +8,4 @@ if has_key(g:plugs, 'ale')
   let b:ale_fixers = ['prettier', 'fixjson']
 endif
 
-:setlocal foldmethod=syntax
-
 let {s:guard} = 1 " EOF
