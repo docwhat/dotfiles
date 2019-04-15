@@ -21,7 +21,8 @@ function getVersion() {
 
 latest_jar="${HOME}/.cache/groovy-language-server/groovy-language-server-latest.jar"
 JAVA_HOME=$(/usr/libexec/java_home)
-export JAVA_HOME
+JAVA_OPTS='-Djava.awt.headless=true'
+export JAVA_HOME JAVA_OPTS
 
 if version=$(getVersion); then
   jar="${HOME}/.cache/groovy-language-server/groovy-language-server-${version}.jar"
