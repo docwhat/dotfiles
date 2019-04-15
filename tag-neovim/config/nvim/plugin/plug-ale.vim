@@ -8,7 +8,6 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_completion_enabled = 0
 let g:ale_sign_column_always = 1
-let g:ale_use_global_executables = 1
 let g:ale_list_window_size = 5
 
 " How messages are displayed

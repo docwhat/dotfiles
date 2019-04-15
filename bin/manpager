@@ -4,8 +4,8 @@ set -euo pipefail
 
 function pager() {
   if [ -t 1 ]; then
-    if [ "$EDITOR" = vim ] || [ "$EDITOR" ]; then
-      "$EDITOR" \
+    if [[ $EDITOR == vim* ]] || [[ $EDITOR == nvim* ]]; then
+      ${EDITOR} \
         -R \
         -c 'set ft=man ts=8 nonumber nolist nomodified nomodifiable' \
         -

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -eux
-
-rm -rvf "$HOME/.ssh/socket"
-mkdir "$HOME/.ssh/socket"
-chmod 0750 -c "$HOME/.ssh/socket"

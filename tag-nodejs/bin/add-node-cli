@@ -1,73 +1,226 @@
-#!/usr/bin/env zsh
-#
-# Usage: add-nodejs-cli-tool <npm-package> [<command-name>]
-#    or: add-nodejs-cli-tool <existing-nodejs-cli-tool>
+#!/usr/bin/env bash
 
-set -eu
+set -eEuo pipefail
 
-# defaults
-declare -i node_version=10
+declare -r template="${HOME}/.dotfiles/tag-nodejs/local/share/node-cli-template.zsh"
 
-function error {
-  print -P "%B%F{red}ERROR%f%b: $*"
+function error() {
+  echo "$(tput setaf 1)ERROR$(tput sgr0): $*"
   exit 10
 }
 
-function warn {
-  print -P "%B%F{yellow}WARNING%f%b: $*"
+function warn() {
+  echo "$(tput setaf 3)WARNING$(tput sgr0): $*"
 }
 
-export NODENV_VERSION=$node_version
+function stub_path() {
+  local -r bin=$1
+  echo -n "${HOME}/.dotfiles/tag-nodejs/bin/$(basename "$bin")"
+}
 
-if [ -z "${1:-}" ] || [[ "${1:-}" = -* ]]; then
-  echo "Usage: $0 <npm-package> [<command-name>]"
+function mkstub() {
+  local -r bin=$1
+
+  path="$(stub_path "$bin")"
+  if "${template}" "$@" >"${path}.tmp"; then
+    chmod +x "${path}.tmp"
+    mv -f "${path}.tmp" "${path}"
+  else
+    rm -f "${path}.tmp"
+    error "Failed to create ${path}"
+  fi
+}
+
+function show_help() {
+  echo "Usage: $0 <bin-name> [-p <package-name>...]"
+  exit 0
+}
+
+declare -a packages=() bins=()
+declare -i node_version=10
+declare -i is_updating=0
+declare -i is_overwriting=0
+declare -i is_installing=1
+while (($#)); do
+  case "$1" in
+  --help | --h | -h)
+    show_help
+    ;;
+  --package | --p | -p)
+    shift
+    packages=("${packages[@]}" "$1")
+    ;;
+  --node | --n | -n)
+    node_version=$2
+    shift
+    ;;
+  --update | --u | -u)
+    is_updating=1
+    ;;
+  --overwrite | --f | -f)
+    is_overwriting=1
+    ;;
+  --no-install | --n | -n)
+    is_installing=0
+    ;;
+  -*)
+    error "I don't understand the flag $1"
+    ;;
+  *)
+    bins=("${bins[@]}" "$1")
+    ;;
+  esac
+  shift
+done
+declare -r \
+  packages \
+  bins \
+  node_version \
+  is_updating \
+  is_overwriting \
+  is_installing
+
+if ! ((${#bins})); then
+  error 'You must specify at least one command!'
+fi
+
+if ((is_updating)); then
+  if (("${#packages[@]}")); then
+    error "You mustn't specify packages when updating."
+  fi
+  if ((is_overwriting)); then
+    error "--overwrite makes no sense when updating."
+  fi
+fi
+
+export NODENV_VERSION=$node_version
+declare -r node_prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
+
+if ((is_updating)); then
+  for bin in "${bins[@]}"; do
+    path="$(stub_path "$bin")"
+    if ! [[ -x $path ]]; then
+      error "Cannot update $bin; it does not exist\!"
+    fi
+
+    if grep -qE '^##marker: NODEJS-CLI-TOOL##$' "$path"; then
+      declare -a update_packages=()
+      declare -i update_node_version=0
+      while read -r line; do
+        if [[ $line == packages=* ]] || [[ $line == node_version=* ]]; then
+          eval "update_${line}"
+        fi
+        if (("${#update_packages[@]}")) && ((update_node_version)); then
+          mkstub "$bin" "$update_node_version" "${update_packages[@]}"
+          break
+        fi
+      done <"$path"
+    else
+      warn "$path is not a node-cli; skipping "
+    fi
+  done
   exit 0
 fi
 
-stub=~/.dotfiles/tag-nodejs/bin/"$(basename "$1")"
+declare -a bins_to_create=()
+for bin in "${bins[@]}"; do
+  path="$(stub_path "$bin")"
+  if [[ -x $path ]]; then
+    if ! ((is_overwriting)); then
+      warn "$path already exists; skipping"
+      continue
+    fi
+  fi
 
-if [ -x "$stub" ]; then
-  if ! grep -qE '^##marker: NODEJS-CLI-TOOL##$' "$stub"; then
-    warn "$stub is not a node-cli stub"
+  bins_to_create+=("$bin")
+done
+declare -r bins_to_create
+
+if ! (("${#bins_to_create[@]}")); then
+  error 'No bins to create!'
+fi
+
+echo "add-node-cli will do the following:"
+echo "  install:    ${packages[*]}"
+echo "  create:     ${bins_to_create[*]}"
+echo "  using node: ${node_version}"
+echo
+
+npm_bin=$(npm bin --global --prefix "$node_prefix" 2>/dev/null)
+declare -r npm_bin
+
+if ((is_installing)) && ((${#packages[@]})); then
+  npm install --global --prefix "$node_prefix" "${packages[@]}"
+fi
+
+for bin in "${bins[@]}"; do
+  if [[ ! -x "${npm_bin}/${bin}" ]]; then
+    error "cannot find ${bin} in ${packages[*]}"
+  fi
+done
+
+for bin in "${bins_to_create[@]}"; do
+  mkstub "$bin" "$node_version" "${packages[@]}"
+done
+
+rcup -K
+
+exit 0
+
+# EOF
+
+package="$1"
+bin="${2:-$1}"
+
+stub_path=~/.dotfiles/tag-nodejs/bin/"$(basename "$bin")"
+
+if [ -x "$stub_path" ]; then
+  if ! grep -qE '^##marker: NODEJS-CLI-TOOL##$' "$stub_path"; then
+    warn "$stub_path is not a node-cli stub_path"
     exit 0
   fi
 
   # Load prefious variables
-  eval "$(grep -E '^(package|command|node_version)=' "$stub")"
+  eval "$(grep -E '^(package|node_version)=' "$stub_path")"
 
-  if [ -z "${package:-}" ] && [ -z "${command:-}" ]; then
-    error "$stub is a malformed node-cli stub".
+  if [[ ${2:-} == "$bin" ]]; then
+    package=$1
+  fi
+
+  if [ -z "${package:-}" ] && [ -z "${bin:-}" ]; then
+    error "$stub_path is a malformed node-cli stub".
   fi
   update=1
-  print -P "%F{green}Updating%f $command (from $package; node $node_version)"
+  print -P "%F{green}Updating%f $bin (from $package; node $node_version)"
 else
-  package="$1"
-  command="${2:-$1}"
-  stub=~/.dotfiles/tag-nodejs/bin/"$command"
   update=0
 
-  print -P "%F{yellow}Creating%f $command (from $package; node $node_version)"
+  print -P "%F{yellow}Creating%f $bin (from $package; node $node_version)"
 fi
-prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
-declare -r package command node_version prefix stub update
 
-if ! (( update )) || [ -n "${TOOL_INSTALL:-}" ]; then
+prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
+declare -r package bin node_version prefix stub_path update
+
+if ! ((update)) || [ -n "${TOOL_INSTALL:-}" ]; then
   npm install --global --prefix "$prefix" "$package"
 
-  if [ ! -x "$(npm bin --global --prefix "$prefix" 2>/dev/null)/${command}" ]; then
-    error "cannot find $command in $package"
+  if [ ! -x "$(npm bin --global --prefix "$prefix" 2>/dev/null)/${bin}" ]; then
+    error "cannot find $bin in $package"
   fi
 fi
 
 ~/.dotfiles/tag-nodejs/local/share/node-cli-template.zsh \
   "$package" \
-  "$command" \
+  "$bin" \
   "$node_version" \
-  > "${stub}.tmp" || (rm -f "${stub}.tmp" ; false)
-mv -f "${stub}.tmp" "${stub}"
-chmod +x "${stub}"
+  >"${stub_path}.tmp" || (
+  rm -f "${stub_path}.tmp"
+  false
+)
+mv -f "${stub_path}.tmp" "${stub_path}"
+chmod +x "${stub_path}"
 
-if ! (( update )); then
+if ! ((update)); then
   rcup -K
 fi
 

@@ -36,7 +36,7 @@ for k in "${(@k)pythons}"; do
     continue
   fi
 
-  cd ~/.local/share/tools-update/pip
+  cd ~/.config/tools-update
 
   # These are important and should be done first.
   "$python" -m pip install --user --upgrade pip wheel | offset
@@ -46,7 +46,7 @@ for k in "${(@k)pythons}"; do
     install \
     --user \
     --upgrade \
-    --requirement ./requirements.txt \
+    --requirement ./pip.txt \
     | offset
 
   echo

@@ -4,7 +4,7 @@ function! HasPlugin(name) abort
   return has_key(g:plugs, a:name)
 endfunction
 
-call plug#begin(g:xdg_data_home . '/plugged')
+call plug#begin(stdpath('cache') . '/plugged')
 
 " -- Utilities
 Plug 'Shougo/vimproc.vim', { 'tag': 'ver.*', 'do' : 'make'}
@@ -46,7 +46,8 @@ Plug 'mbbill/undotree', { 'tag': 'rel_*' }
 " Tags support; I recommend Universal Ctags
 "   https://ctags.io/
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar', { 'tag': 'v*' }
+Plug 'liuchengxu/vista.vim' " Tagbar clone with LSP support
+Plug 'aymericbeaumet/symlink.vim'
 
 " Convert single line things to multi-line and back
 "   gS - single -> multi
@@ -79,6 +80,7 @@ Plug 'tweekmonster/helpful.vim'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
 Plug 'vim-scripts/Decho', { 'tag': '*' }
+Plug 'junegunn/vader.vim'
 
 " Style/Lint
 Plug 'dbakker/vim-lint'
@@ -93,7 +95,6 @@ let g:coc_global_extensions = [
       \ 'coc-emmet',
       \ 'coc-emoji',
       \ 'coc-eslint',
-      \ 'coc-highlight',
       \ 'coc-html',
       \ 'coc-java',
       \ 'coc-jest',
@@ -123,15 +124,15 @@ Plug 'cohama/lexima.vim'
 " NGinX
 Plug 'chr4/nginx.vim'
 
-" Jekyll/Liquid
-Plug 'tpope/vim-liquid'
-
 " Javascript & JSON
 Plug 'elzr/vim-json'
 Plug 'neoclide/jsonc.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty', { 'tag': 'v*' }
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
+
+" GraphQL Schemas
+Plug 'jparise/vim-graphql'
 
 " XML, HTML & CSS
 Plug 'othree/html5.vim'
@@ -140,8 +141,11 @@ Plug 'othree/html5.vim'
 
 Plug 'tpope/vim-ragtag'
 
-" Show a facsimile of CSS colors as a highlight.
-Plug 'chrisbra/color_highlight'
+" Show colors in the text as reference.
+Plug 'RRethy/vim-hexokinase'
+
+" Highlight the word under the cursor.
+Plug 'RRethy/vim-illuminate'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby', { 'tag': 'stable-*' }

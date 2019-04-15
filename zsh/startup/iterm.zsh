@@ -1,4 +1,7 @@
 if [ "$TERM_PROGRAM" = 'iTerm.app' ]; then
+
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
   iterm-emit() {
     local template="\e]${1}\007"
     shift

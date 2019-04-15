@@ -22,19 +22,7 @@ endif
 
 let s:bootstrap=0
 
-if exists('*stdpath')
-  let g:xdg_config_home = stdpath('config')
-  let g:xdg_data_home = stdpath('data')
-else
-  " Figure out the XDG_CONFIG_HOME and XDG_DATA_HOME directories by hand.
-  let g:xdg_config_home = fnamemodify(expand('<sfile>'), ':p:h')
-  let g:xdg_data_home = fnamemodify(g:xdg_config_home, ':s?/.config/nvim?/.local/share/nvim?')
-  if filewritable(g:xdg_data_home) != 2
-    let g:xdg_data_home = g:xdg_config_home
-  endif
-endif
-
-let s:vim_plug_path = g:xdg_config_home . '/autoload/plug.vim'
+let s:vim_plug_path = stdpath('config') . '/autoload/plug.vim'
 
 if !filereadable(s:vim_plug_path)
   let s:bootstrap=1
@@ -53,10 +41,11 @@ if s:bootstrap
   execute 'source ' . s:vim_plug_path
 endif
 
-execute 'source ' . g:xdg_config_home . '/plugins.vim'
+execute 'source ' . stdpath('config') . '/plugins.vim'
 
 if has('ruby')
-  ruby load "#{VIM.evaluate('g:xdg_config_home')}/bootcheck.rb"
+  let s:bootcheck_path = stdpath('config') . '/bootcheck.rb'
+  ruby load VIM.evaluate('s:bootcheck_path')
 endif
 
 if s:bootstrap && ! exists('$NVIM_SKIP_PLUGIN_CHECK')
@@ -67,11 +56,11 @@ if s:bootstrap && ! exists('$NVIM_SKIP_PLUGIN_CHECK')
   quit
 endif
 
-execute 'source ' . g:xdg_config_home . '/settings.vim'
+execute 'source ' . stdpath('config') . '/settings.vim'
 
 " Local settings
-if filereadable(g:xdg_config_home . '/local.vim')
-  execute 'source ' . g:xdg_config_home . '/local.vim'
+if filereadable(stdpath('config') . '/local.vim')
+  execute 'source ' . stdpath('config') . '/local.vim'
 endif
 
 " EOF

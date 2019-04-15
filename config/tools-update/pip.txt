@@ -1,0 +1,15 @@
+black ; python_version >= '3.6'
+flake8 ; python_version >= '3.6'
+isort ; python_version >= '3.6'
+jedi ; python_version >= '3.6'
+launchpadlib ; sys_platform == 'linux' or sys_platform == 'linux2'
+pynvim
+neovim-remote ; python_version >= '3.6'
+proselint ; python_version >= '3.6'
+psutil ; python_version >= '3.6'
+pyaml ; python_version >= '3.6'
+python-language-server
+ruamel.yaml.cmd ; python_version >= '3.6'
+setproctitle ; python_version >= '3.6'
+vim-vint ; python_version >= '3.6'
+yamllint ; python_version >= '3.6'

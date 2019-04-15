@@ -4,6 +4,7 @@
 # force a plugin update.
 
 require 'json'
+require 'fileutils'
 
 # Class to hold plugins
 class Plugins
@@ -15,14 +16,12 @@ class Plugins
     JSON.pretty_generate(@plugins) + "\n"
   end
 
-  def data_home
-    @data_home ||= File.expand_path(
-      VIM.evaluate('g:xdg_data_home') || '~/.config/nvim'
-    )
+  def data_cache
+    @data_cache ||= File.expand_path(VIM.evaluate("stdpath('cache')"))
   end
 
   def filename
-    @filename ||= File.join(data_home, 'plugins.json')
+    @filename ||= File.join(data_cache, 'plugins.json')
   end
 
   def previous_json
@@ -39,6 +38,7 @@ class Plugins
   end
 
   def write
+    FileUtils.mkdir_p(File.dirname(filename))
     File.write(filename, to_json)
   end
 end

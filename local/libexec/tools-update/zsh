@@ -1,0 +1,44 @@
+#!/usr/bin/env zsh
+#DESC# zsh: compile functions
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+setopt EXTENDED_GLOB
+
+set +eu
+source ~/.zgen/zgen.zsh
+set -eu
+
+function zc() {
+  local file
+  for file in "$@"; do
+    if [[ $file == *.zwc ]]; then continue; fi
+    print -P "%F{blue}zcompile %F{cyan}${file}%F{reset}"
+    zcompile "$file"
+  done
+}
+
+# Remove old compile files that may be stale
+rm -f ~/.*.zwc(N.)
+find \
+  ~/.zsh(N/) \
+  ~/.zgen(N/) \
+  -name '*.zwc' \
+  -print0 \
+  | xargs -0 rm
+
+# My stuff
+zc ~/.zshrc ~/.zshenv ~/.zprofile
+zc ~/.zsh/startup/*.{zshrc,zprofile,zshenv}(N^/)
+zc ~/.zsh/functions/*(N^/)
+
+# zgen
+zgen_mods=${HOME}/.zgen
+zc "${zgen_mods}"/*.zsh(N.)
+
+for dir in "${(@)ZGEN_COMPLETIONS}"; do
+  for file in ${dir}/**/*.zsh(N.); do
+    zc "$file"
+  done
+done

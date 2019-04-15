@@ -3,9 +3,8 @@
   "coc.preferences.formatOnType": true,
   "coc.preferences.hoverTarget": "preview",
 
-  "suggest.noselect": false,
-  "suggest.preferCompleteThanJumpPlaceholder": false,
   "suggest.triggerAfterInsertEnter": true,
+  "suggest.autoTrigger": "always",
   "suggest.enablePreview": true,
   "suggest.snippetIndicator": "\uf5d4",
 
@@ -25,10 +24,11 @@
 
   // Linting/Warnings
   "diagnostic.displayByAle": true,
+  "diagnostic.enable": true,
   "diagnostic.errorSign": "",
-  "diagnostic.warningSign": "",
-  "diagnostic.infoSign": "",
   "diagnostic.hintSign": "履",
+  "diagnostic.infoSign": "",
+  "diagnostic.warningSign": "",
 
   // Additional Language Servers
   "languageserver": {
@@ -51,6 +51,17 @@
       "requireRootPattern": true,
       "settings": {},
       "rootPatterns": [".flowconfig"]
+    },
+    "golang": {
+      "command": "/Users/docwhat/go/bin/gopls",
+      "filetypes": ["go"],
+      "initializationOptions": {},
+      "trace.server": "verbose",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
     }
   }
 }
