@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -eu
+
+exec groovy-env /usr/local/bin/groovy "$@"

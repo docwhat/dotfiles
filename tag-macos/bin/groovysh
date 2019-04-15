@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eu
+
+export JAVA_OPTS="${JAVA_OPTS:-} -Djava.awt.headless=true"
+exec groovy-env /usr/local/bin/groovysh "$@"
