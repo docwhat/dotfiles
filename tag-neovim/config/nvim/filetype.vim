@@ -3,12 +3,17 @@ if exists('did_load_filetypes')
   finish
 endif
 
+function! s:inChef()
+  let l:gitroot = GetGitRoot()
+  if l:gitroot ==# '' | return v:false | endif
+  return filereadable(l:gitroot . '/metadata.rb')
+endfunction
+
 function! s:detectChefSubFileType()
-  let l:gitroot = systemlist('git rev-parse --show-toplevel')[0]
-  if l:gitroot ==# '' | return | endif
-  if filereadable(l:gitroot . '/metadata.rb')
-    let &filetype = &filetype . '.chef'
-  endif
+  if !s:inChef() | return | endif
+  if &filetype !=# 'ruby' | return | endif
+
+  let &filetype = &filetype . '.chef'
 endfunction
 
 augroup filetypedetect
@@ -16,7 +21,6 @@ augroup filetypedetect
 
   " Common JSON conf files.
   autocmd BufRead,BufNewFile .prettierrc,.babelrc,.eslintrc,.jscsrc setfiletype json
-
 
   " Chef
   autocmd FileType ruby,eruby call s:detectChefSubFileType()
