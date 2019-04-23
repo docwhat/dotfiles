@@ -38,15 +38,6 @@ Install:andUse(
 )
 
 Install:andUse(
-  "KSheet",
-  {
-    hotkeys = {
-      toggle = {hyper, "/"}
-    }
-  }
-)
-
-Install:andUse(
   "Hammer",
   {
     repo = "zzspoons",
