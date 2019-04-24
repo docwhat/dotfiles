@@ -11,20 +11,6 @@ tmux bind-key -r '`' send-prefix
 tmux set-window-option -g mode-keys vi
 tmux set-option -g status-keys "emacs"
 
-# # Window movement without prefix
-# tmux bind-key -n C-h select-pane -L
-# tmux bind-key -n C-j select-pane -D
-# tmux bind-key -n C-k select-pane -U
-# tmux bind-key -n C-l select-pane -R
-
-tmux bind-key -r k select-pane -U \\\; display-pane
-tmux bind-key -r j select-pane -D \\\; display-pane
-tmux bind-key -r h select-pane -L \\\; display-pane
-tmux bind-key -r l select-pane -R \\\; display-pane
-
-tmux bind-key '|' split-window -h \\\; display-pane
-tmux bind-key '-' split-window -v \\\; display-pane
-
 # Zoom
 tmux bind-key -n C-Space resize-pane -Z
 
