@@ -49,6 +49,10 @@ tmux set-option -g status-style "fg=colour235,bg=colour235,none"
 tmux set-option -g pane-border-style "fg=colour238"
 tmux set-option -g pane-border-style "fg=colour27"
 
+# pane number display
+tmux set-option -g display-panes-active-colour "colour154"
+tmux set-option -g display-panes-colour "colour244"
+
 tmux set-option -g status-left-length $((short_host_size + 4))
 tmux set-option -g status-left-style "none"
 tmux set-option -g status-left "#{prefix_highlight}#[fg=colour232,bg=colour154] $short_host #[fg=colour154,bg=colour235,nobold,nounderscore,noitalics]${rf_arr}#[default]"
