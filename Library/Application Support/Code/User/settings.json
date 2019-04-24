@@ -1,0 +1,37 @@
+{
+  "editor.cursorBlinking": "solid",
+  "editor.cursorStyle": "block",
+  "editor.fontFamily": "'FuraCode Nerd Font', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "eslint.packageManager": "yarn",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "git.autofetch": true,
+  "markdownlint.config": {
+    "default": true,
+    "extends": "~/.config/markdownlint/config",
+    "MD002": false, // first-header-h1
+    "MD004": false, // ul-style
+    "MD007": { "indent": 4 },
+    "MD013": false, // line-length
+    "MD026": { "punctuation": ".,;:" },
+    "MD029": false, // header-style
+    "MD030": false, // list-marker-space
+    "MD033": false, // no-inline-html
+    "MD035": { "style": "---" },
+    "MD040": false, // fenced-code-language
+    "MD041": false, // first-line-h1
+    "MD046": { "style": "fenced" } // code-block-style
+  },
+  "workbench.colorTheme": "Gruvbox Dark Hard",
+  "workbench.statusBar.feedback.visible": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.fontSize": 14
+}
