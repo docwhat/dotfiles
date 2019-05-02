@@ -2,9 +2,14 @@
 
 set -eu
 
+function die() {
+  echo "FATAL: $*" 1>&2
+  exit 10
+}
+
 JAVACMD="${JAVACMD:-}"
 JAVA_OPTS="${JAVA_OPTS:-}"
-JAVA_HOME="${JAVA_HOME:-}"
+JAVA_HOME="${JAVA_HOME:-$(/usr/libexec/java_home)}"
 
 if [ -z "${JAVACMD}" ]; then
   if [ -n "$JAVA_HOME" ]; then
@@ -18,6 +23,7 @@ if [ -z "${JAVACMD}" ]; then
     JAVACMD="java"
   fi
 fi
+
 if [ ! -x "$JAVACMD" ]; then
   die "JAVA_HOME is not defined correctly, can not execute: $JAVACMD"
 fi
@@ -25,7 +31,7 @@ fi
 JAVA_MAJOR_VERSION=$("$JAVACMD" -version 2>&1 |
   sed -E -n 's/.* version "([^.-]*).*"/\1/p' | cut -d' ' -f1)
 
-if (("$JAVA_MAJOR_VERSION" > 8)); then
+if ((JAVA_MAJOR_VERSION > 8)) && ((JAVA_MAJOR_VERSION < 13)); then
   declare -a jopts=(
     '--add-opens=java.base/java.io=ALL-UNNAMED'
     '--add-opens=java.base/java.lang=ALL-UNNAMED'
