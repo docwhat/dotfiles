@@ -12,6 +12,10 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "git.autofetch": true,
+  "git.confirmSync": false,
+  "jenkins.pipeline.linter.connector.pass": "1169f1b33fa5343e3ff31bb9b3e985bc80",
+  "jenkins.pipeline.linter.connector.url": "https://ghenkins.bigdatalab.ibm.com/pipeline-model-converter/validate",
+  "jenkins.pipeline.linter.connector.user": "choltje",
   "markdownlint.config": {
     "default": true,
     "extends": "~/.config/markdownlint/config",
