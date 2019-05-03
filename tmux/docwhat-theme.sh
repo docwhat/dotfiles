@@ -42,9 +42,8 @@ flames | f*)
   ;;
 esac
 
-tmux set-option -g status-attr dim
 tmux set-option -g status-justify centre # center spelled funny
-tmux set-option -g status-style "fg=colour235,bg=colour235,none"
+tmux set-option -g status-style "fg=colour235,bg=colour235,dim,none"
 
 tmux set-option -g pane-border-style "fg=colour238"
 tmux set-option -g pane-border-style "fg=colour27"
@@ -66,7 +65,6 @@ tmux set-option -g message-command-style "fg=colour222,bg=colour238"
 tmux set-option -g message-style "fg=colour222,bg=colour27"
 
 tmux set-window-option -g mode-style fg='#dddddd',bg='#2222ee'
-tmux set-window-option -g window-status-activity-attr "none"
 tmux set-window-option -g window-status-activity-style "fg=colour154,bg=colour235,none"
 tmux set-window-option -g window-status-separator ""
 tmux set-window-option -g window-status-style "fg=colour121,bg=colour235,none"
