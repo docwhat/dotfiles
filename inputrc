@@ -1,15 +1,19 @@
 $include /etc/inputrc
 
 "\e[3~": delete-char
-set enable-bracketed-paste on
 
 "\C-p":history-search-backward
 "\C-n":history-search-forward
+"\C-i":menu-complete
+"\C-I":menu-complete-backward
 
-set colored-stats On
-set completion-ignore-case On
+set colored-stats on
+set completion-ignore-case on
 set completion-prefix-display-length 3
-set mark-symlinked-directories On
-set show-all-if-ambiguous On
-set show-all-if-unmodified On
-set visible-stats On
+set enable-bracketed-paste on
+set mark-symlinked-directories on
+set page-completions off
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set visible-stats on
+

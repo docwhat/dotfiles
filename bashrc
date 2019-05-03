@@ -28,10 +28,6 @@ PROMPT_COMMAND='history -a'
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-shopt -s globstar
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm* | rxvt*)
@@ -59,7 +55,14 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  # If set, the pattern "**" used in a pathname expansion context will
+  # match all files and zero or more directories and subdirectories.
+  shopt -s globstar
+
+  if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+    # shellcheck disable=SC1091
+    . "/usr/local/etc/profile.d/bash_completion.sh"
+  elif [ -f /usr/share/bash-completion/bash_completion ]; then
     # shellcheck disable=SC1091
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
