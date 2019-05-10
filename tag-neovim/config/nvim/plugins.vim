@@ -203,6 +203,9 @@ Plug 'vim-scripts/sieve.vim'
 " Pretty icons
 Plug 'ryanoasis/vim-devicons'
 
+" Diff changes between buffer and saved
+Plug 'plytophogy/vim-diffchanges'
+
 call plug#end()
 
 " vim: set foldminlines=0 foldmethod=marker :

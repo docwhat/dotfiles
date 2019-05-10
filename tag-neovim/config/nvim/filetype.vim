@@ -24,4 +24,7 @@ augroup filetypedetect
 
   " Chef
   autocmd FileType ruby,eruby call s:detectChefSubFileType()
+
+  " React
+  autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 augroup END
