@@ -26,6 +26,8 @@ try
     let b:ale_linters['javascript'] = s:enabled_names
 
     call filter(b:ale_linters['javascript'], { idx, val -> val != 'tsserver' })
+    " Dead project
+    call filter(b:ale_linters['javascript'], { idx, val -> val != 'flow-language-server' })
   endif
 
   " Jest
