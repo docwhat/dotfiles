@@ -10,10 +10,11 @@ try
     let s:prettier_eslint = ale#fixers#prettier_eslint#GetExecutable(s:buffer)
     let s:prettier_standard = ale#fixers#prettier_standard#GetExecutable(s:buffer)
 
+
     if !empty(s:prettier_eslint) && executable(s:prettier_eslint)
-      let b:ale_fixers += ['prettier-eslint']
+      let b:ale_fixers += ['prettier_eslint']
     elseif !empty(s:prettier_standard) && executable(s:prettier_standard)
-      let b:ale_fixers += ['prettier-standard']
+      let b:ale_fixers += ['prettier_standard']
     else
       let b:ale_fixers += ['prettier']
     endif
