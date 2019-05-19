@@ -33,6 +33,7 @@ if s:editable >= 1
       call filter(b:ale_linters['markdown'], { idx, val -> val != 'alex' })
     endif
     call filter(b:ale_linters['markdown'], { idx, val -> val != 'redpen' })
+    call filter(b:ale_linters['markdown'], { idx, val -> val != 'mdl' })
   endif
 
   if has_key(g:plugs, 'ncm2')
