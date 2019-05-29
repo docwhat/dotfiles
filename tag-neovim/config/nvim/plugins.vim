@@ -116,8 +116,10 @@ let g:coc_global_extensions = [
       \ ]
 
 
-" Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
-Plug 'neoclide/coc.nvim', { 'tag': 'v*', 'do': { -> coc#util#install() } }
+" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install({'tag':1})}}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'Shougo/neoyank.vim'
