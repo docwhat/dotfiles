@@ -97,6 +97,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
+
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -122,11 +123,6 @@ if HasPlugin('colorscheme-gruvbox')
   highlight link CocWarningSign GruvboxYellowSign
   highlight link CocInfoSign GruvboxBlueSign
   highlight link CocHintSign GruvboxAquaSign
-endif
-
-if HasPlugin('vim-airline')
-  let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-  let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 endif
 
 " Using CocList
