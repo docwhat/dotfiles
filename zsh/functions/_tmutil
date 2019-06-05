@@ -1,0 +1,249 @@
+#compdef tmutil
+# Autocompletion for macOS `tmutil`
+#
+# From https://github.com/fgr0/dotfiles
+# https://github.com/fgr0/dotfiles/blob/aec1f52d5aa5a7b90a4803bab56a89e7f458e0c9/zsh/.zsh/func/_tmutil
+
+#
+# utility functions
+#
+
+# tmutil <verbs>
+__tmutil_verbs() {
+  local -a allverbs
+
+  allverbs=( ${${${(M)${(f)"$(tmutil)"}:#Usage*}#Usage: tmutil }/ */} )
+  allverbs+=( "status" ) # oddly, not listed in either man-page or usage output
+  _describe -t allverbs "tmutil subcommands" allverbs
+
+  return 0
+}
+
+# completion for destination ids
+__tmutil_destids() {
+  local -a destids
+
+  # parse `tmutil destinationinfo` output into sections
+  local -a tmdi_output; tmdi_output=( ${(f)"$(tmutil destinationinfo)"} )
+  local d_id d_name
+
+  for (( l = 1; l <= ${#tmdi_output}; l++ )); do
+    # Clear variables when detecting new destination
+    if [[ "${tmdi_output[$l]}" == "==="* ]]; then
+      d_name=""
+      d_id=""
+      continue
+    fi
+
+    # Parse destination for id/name
+    local -a info; info=( ${(a)=tmdi_output[$l]} )
+    case "${info[1]}" in
+      (Name)
+        : ${d_name::=$info[3]}
+        ;;
+      (ID)
+        : ${d_id::=$info[3]}
+        ;;
+    esac
+
+    # Save parsed (id,name) tuple to destid array
+    if [[ ${#d_id} == 36 && ${#d_name} > 0 ]]; then
+      destids+=( "${d_id}:${d_name}" )
+    fi
+
+  done
+
+  _describe -t destids 'destination ids' destids
+
+  return 0
+}
+
+# completion for local snapshot dates
+__tmutil_dates() {
+  local -a dates; dates=( ${${(f)"$(tmutil listlocalsnapshotdates)"}[2,-1]} )
+
+  _describe 'local snapshot creation dates' dates
+
+  return 0
+}
+
+
+#
+# tmutil verb autocompletions
+#
+
+# tmutil setdestination [-ap] arg
+_tmutil_setdestination() {
+  _arguments -s -A "-*" \
+    '-a[add new destination instead of replacing the current list]' \
+    '-p[provide the network share password using a prompt]' \
+    '1:volume or network share: '
+}
+
+# tmutil destinationinfo [-X]
+_tmutil_destinationinfo() {
+  _arguments -A "-*" \
+    '-X[use XML output]'
+}
+
+# tmutil removedestination identifier
+_tmutil_removedestination() {
+  _arguments \
+    '1:destination identifier:__tmutil_destids'
+}
+
+# tmutil addexclusion [-p|-v] item ...
+_tmutil_addexclusion() {
+  _arguments -A "-*" \
+    '(-v)-p[add fixed path exclusion]' \
+    '(-p)-v[add volume exclusion]' \
+    '*:item(s):_files'
+}
+
+# tmutil removeexclusion [-p|-v] item ...
+_tmutil_removeexclusion() {
+  _arguments -A "-*" \
+    '(-v)-p[remove fixed path exclusion]' \
+    '(-p)-v[remove volume exclusion]' \
+    '*:item(s):_files'
+}
+
+# tmutil isexcluded [-X] item ...
+_tmutil_isexcluded() {
+  _arguments -A "-*" \
+    '-X[use XML output]' \
+    '*:item(s):_files'
+}
+
+# tmutil startbackup [-a | --auto] [-b | --block] [-r | --rotation] [-d | --destination dest_id]
+_tmutil_startbackup() {
+  _arguments -s \
+    '(-a, --auto)'{-a,--auto}'[run backup similar to system-scheduled backups]' \
+    '(-b, --block)'{-b,--block}'[wait until the backup is finished before exiting]' \
+    '(-r, --rotation)'{-r,--rotation}'[allow automatic destination rotation during the backup]' \
+    '(-d, --destination)'{-d+,--destination+}'[perform the backup to the specified destination]:destination identifier:__tmutil_destids'
+}
+
+# tmutil compare [-@axdefglmnstuEUX] [-D depth] [-I name] [snapshot_path | path1 path2]
+_tmutil_compare() {
+  _arguments -s -A "-*" \
+    '-a[compare all supported metadata]' \
+    '-n[no metadata comparison]' \
+    '-@[compare extended attributes]' \
+    '-c[compare creation times]' \
+    '-d[compare file data forks]' \
+    '-e[compare ACLs]' \
+    '-f[compare file flags]' \
+    '-g[compare GIDs]' \
+    '-m[compare file modes]' \
+    '-s[compare sizes]' \
+    '-t[compare modification times]' \
+    '-u[compare UIDs]' \
+    '-D+[limit traversal depth]: :_guard "[0-9]#" "traversal depth"' \
+    '-E[dont take exclusions into account when comparing items]' \
+    '*-I+[ignore path (may be specified multiple times)]:path component: ' \
+    '-U[ignore logical volume identity when directly comparing volumes]' \
+    '-X[use XML output]' \
+    '1:snapshot path:_files' \
+    '::snapshot path:_files'
+}
+
+# tmutil verifychecksums path ...
+_tmutil_verifychecksums() {
+  _arguments \
+    '*:path:_files'
+}
+
+# tmutil restore [-v] src ... dst
+_tmutil_restore() {
+  _arguments -A "-*" \
+    '-v' \
+    '*:file or directory:_files'
+}
+
+# tmutil delete path ...
+_tmutil_delete() {
+  _arguments \
+    '*:snapshot path:_files'
+}
+
+# tmutil calculatedrift machine_directory
+_tmutil_calculatedrift() {
+  _arguments \
+    '1:machine directory:_files'
+}
+
+# tmutil uniquesize path ...
+_tmutil_uniquesize() {
+  _arguments \
+    '*:path:_files'
+}
+
+# tmutil inheritbackup {machine_directory | sparsebundle}
+_tmutil_inheritbackup() {
+  _arguments \
+    '1:machine directory/sparsebundle:_files'
+}
+
+# tmutil associatedisk [-a] mount_point snapshot_volume
+_tmutil_associatedisk() {
+  _arguments -A "-*" \
+    '-a[perform association on all snapshot volumes]' \
+    '1:mount point of new disk:_files' \
+    ':path to snapshot volume:_files'
+}
+
+# tmutil listlocalsnapshots mount_point
+_tmutil_listlocalsnapshots() {
+  _arguments \
+    '1:mount point:_files'
+}
+
+# tmutil listlocalsnapshotdates [mount_point]
+_tmutil_listlocalsnapshotdates() {
+  _arguments \
+    '1::mount point:_files'
+}
+
+# tmutil deletelocalsnapshots date
+_tmutil_deletelocalsnapshots() {
+  _arguments \
+    ':date:__tmutil_dates'
+}
+
+# tmutil thinlocalsnapshots mount_point [purge_amount] [urgency]
+_tmutil_thinlocalsnapshots() {
+  _arguments \
+    '1:mount point:_files' \
+    '2::purge amount (in bytes):_guard "[0-9]#" "purge amount (in bytes)"' \
+    '3::urgency:(1 2 3 4)'
+}
+
+
+#
+# main completion funcion
+#
+
+_tmutil() {
+  local curcontext=$curcontext state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    '1:commands:->verbs' \
+    '*::options:->options'
+
+  case $state in
+    ("verbs")
+      __tmutil_verbs
+      ;;
+
+    ("options")
+      curcontext="${curcontext%:*:*}:tmutil-${line[1]}"
+
+      local completion_func="_tmutil_${line[1]}"
+      _call_function ret "${completion_func}" && return ret
+      ;;
+  esac
+}
+
+_tmutil "$@"
