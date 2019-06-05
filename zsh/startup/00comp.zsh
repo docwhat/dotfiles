@@ -1,6 +1,6 @@
 # Create a cache directory if it doesn't exist.
-if [ ! -d "${ZDOTDIR:-${HOME}}/.zsh/cache" ]; then
-  mkdir -p "${ZDOTDIR:-${HOME}}/.zsh/cache"
+if [[ ! -d "${ZSH_CACHE_DIR}" ]]; then
+  mkdir -p "${ZSH_CACHE_DIR}"
 fi
 
 # Force starting compinit as early as possible

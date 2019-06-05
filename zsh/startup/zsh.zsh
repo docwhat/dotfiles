@@ -26,8 +26,8 @@ alias reload='exec zsh -l'
 # Overwrite Oh-My-Zsh's settings
 zstyle ':completion:*'           use-cache on
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion:*'           cache-path ~/.zsh/cache
-zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+zstyle ':completion:*'           cache-path "${ZSH_CACHE_DIR}"
+zstyle ':completion::complete:*' cache-path "${ZSH_CACHE_DIR}"
 
 zstyle ':completion:*' accept-exact '*(N)'
 
