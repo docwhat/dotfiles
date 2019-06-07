@@ -1,4 +1,0 @@
-# FZF completion fun
-if (( $+commands[fzf] )); then
-  zgen load "rupa/z" z.sh
-fi
