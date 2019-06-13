@@ -37,5 +37,10 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.fontSize": 14
+  "editor.fontSize": 14,
+  "java.configuration.checkProjectSettingsExclusions": false,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false
 }
