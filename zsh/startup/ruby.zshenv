@@ -5,6 +5,6 @@ if [[ -z ${GEM_HOME:-} ]] \
   && [[ $commands[ruby] == /usr/bin/ruby ]] \
   && [[ $commands[gem] == /usr/bin/gem ]]
 then
-  export GEM_HOME="$(ruby -rubygems -e 'puts Gem.user_dir')"
+  export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
   path=( "${path[@]}"  "${GEM_HOME}/bin" )
 fi
