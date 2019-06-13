@@ -78,17 +78,26 @@ nmap <leader>f  <Plug>(coc-format-selected)
 
 highlight link CocHighlightText CursorLine
 
+let g:fishmouse = "quoteme"
+
 augroup CocGroup
   autocmd!
   " Highlight symbol under cursor on CursorHold
-  " autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+
+  " Show signature of current function.
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
   " Close preview when done with popup.
-  autocmd CursorMovedI * if ! pumvisible() | silent! pclose | endif
-  autocmd InsertLeave  * if ! pumvisible() | silent! pclose | endif
+  autocmd CursorMovedI * if pumvisible() != 0 | silent! pclose | endif
+  autocmd InsertLeave  * if pumvisible() != 0 | silent! pclose | endif
+  autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph

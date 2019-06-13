@@ -3,6 +3,13 @@ if !HasPlugin('ale')
   finish
 end
 
+if HasPlugin('coc.nvim')
+  " Start disabled
+  let g:ale_enabled     = 0
+  let g:ale_fix_on_save = 0
+  let g:ale_disable_lsp = 1
+end
+
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 

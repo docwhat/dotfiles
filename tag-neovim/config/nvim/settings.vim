@@ -95,11 +95,12 @@ set path+=**
 
 augroup VimrcShada
   autocmd!
-  autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+  autocmd FocusGained,FocusLost * rshada|wshada
 augroup END
 
 " Disable Python 2
 let g:loaded_python_provider = 1
+set pyxversion=3
 
 " Detect Python 3
 if executable('/usr/local/opt/python3/bin/python3')

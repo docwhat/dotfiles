@@ -1,12 +1,12 @@
 {
-  "codeLens.enable": true,
   "coc.preferences.formatOnType": true,
   "coc.preferences.hoverTarget": "preview",
 
   "suggest.triggerAfterInsertEnter": true,
-  "suggest.autoTrigger": "always",
+  "suggest.autoTrigger": "trigger",
+  "suggest.acceptSuggestionOnCommitCharacter": true,
   "suggest.enablePreview": true,
-  "suggest.snippetIndicator": "\uf5d4",
+  "suggest.snippetIndicator": "✂️",
 
   // CocList (fzf)
   "list.insertMappings": {
@@ -22,8 +22,12 @@
   // Type Script
   "tsserver.enableJavascript": false,
 
+  // Code Lens
+  "codeLens.enable": true,
+
   // Linting/Warnings
-  "diagnostic.displayByAle": true,
+  "diagnostic.virtualText": true,
+  "diagnostic.displayByAle": false,
   "diagnostic.enable": true,
   "diagnostic.errorSign": "",
   "diagnostic.hintSign": "履",
