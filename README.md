@@ -15,11 +15,13 @@ And of course, borrow whatever you want!
     git clone https://github.com/docwhat/dotfiles.git .dotfiles
     ```
 
-3.  `rcup && rcup` — This second run picks up changes to the `~/.rcrc` file from the first run.
+3.  `rcup && rcup` — This second run picks up changes to the `~/.rcrc`
+    file from the first run.
 
 ### Customizing your dotfiles
 
-To make changes, customize, or override my files you can create `~/.dotfiles-custom`.
+To make changes, customize, or override my files you can create
+`~/.dotfiles-custom`.
 
 To get started:
 
@@ -29,7 +31,10 @@ cd ~/.dotfiles-custom
 git init
 ```
 
-_NOTE:_ If you're upgrading from an older version of my dotfiles, you may need to update your `~/.rcrc` file. Ensure it has `${HOME}/.dotfiles-custom` in the `DOTFILES_DIRS`. See [`rcrc.example`](https://github.com/docwhat/dotfiles/blob/master/rcrc.example).
+_NOTE:_ If you're upgrading from an older version of my dotfiles, you
+may need to update your `~/.rcrc` file. Ensure it has
+`${HOME}/.dotfiles-custom` in the `DOTFILES_DIRS`. See
+[`rcrc.example`](https://github.com/docwhat/dotfiles/blob/master/rcrc.example).
 
 To replace my files, use the same path in the repository.
 
@@ -47,13 +52,16 @@ An incomplete list:
 
 ### Storing secrets
 
-If you want to store secrets or personal info, you can use `~/.dotfiles-personal` the same way as with `~/.dotfiles-custom`
+If you want to store secrets or personal info, you can use
+`~/.dotfiles-personal` the same way as with `~/.dotfiles-custom`
 
-You may or may not want to use `git` to store this and you shouldn't upload it to a _public_ GitHub repository.
+You may or may not want to use `git` to store this and you shouldn't
+upload it to a _public_ GitHub repository.
 
 ## Updating everything
 
-Use the `tools-update` command. It offers suggestions of other commands you can run.
+Use the `tools-update` command. It offers suggestions of other commands
+you can run.
 
 ```sh
 $ tools-update --help
