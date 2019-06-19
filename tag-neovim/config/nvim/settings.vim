@@ -100,7 +100,9 @@ augroup END
 
 " Disable Python 2
 let g:loaded_python_provider = 1
-set pyxversion=3
+if has('pythonx')
+  set pyxversion=3
+endif
 
 " Detect Python 3
 if executable('/usr/local/opt/python3/bin/python3')
