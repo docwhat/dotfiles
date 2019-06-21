@@ -5,7 +5,7 @@
 set -eEuo pipefail
 
 bin=prettier
-packages=( prettier )
+packages=( prettier prettier-plugin-toml )
 node_version=10
 prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
 
