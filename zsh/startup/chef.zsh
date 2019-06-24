@@ -43,5 +43,11 @@ if [[ -n $CHEF_LOCATION ]] && [[ -x "${CHEF_LOCATION}/bin/chef" ]]; then
     env TERM="${new_term}" "${CHEF_LOCATION}/bin/chef" exec kitchen login "$@"
   }
 
-  eval "$("${CHEF_LOCATION}/bin/chef" shell-init zsh | grep -Ev '^export')"
+  mkdir -p ~/.cache/zsh/
+
+  if [[ ! -r  ~/.cache/zsh/chef-shell-init.zsh ]] || [[ ~/.cache/zsh/chef-shell-init.zsh -ot "$CHEF_LOCATION" ]]; then
+    "${CHEF_LOCATION}/bin/chef" shell-init zsh | grep -Ev '^export' > ~/.cache/zsh/chef-shell-init.zsh
+  fi
+
+  eval "$(cat ~/.cache/zsh/chef-shell-init.zsh)"
 fi
