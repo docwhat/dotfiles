@@ -18,7 +18,7 @@
   "jenkins.pipeline.linter.connector.user": "choltje",
   "markdownlint.config": {
     "default": true,
-    "extends": "~/.config/markdownlint/config",
+    "extends": ".config/markdownlint/config.json",
     "MD002": false, // first-header-h1
     "MD004": false, // ul-style
     "MD007": { "indent": 4 },
@@ -42,5 +42,7 @@
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "explorer.confirmDragAndDrop": false,
-  "explorer.confirmDelete": false
+  "explorer.confirmDelete": false,
+  "python.jediEnabled": false,
+  "python.formatting.provider": "black"
 }
