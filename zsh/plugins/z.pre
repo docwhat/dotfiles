@@ -1,0 +1,19 @@
+# vim:set ft=zsh:
+
+unset _ZL_ADD_ONCE
+unset _ZL_CD
+unset _ZL_CMD
+unset _ZL_DATA
+unset _ZL_ECHO
+unset _ZL_EXCLUDE_DIRS
+unset _ZL_MATCH_MODE
+unset _ZL_MAXAGE
+unset _ZL_NO_CHECK
+unset _ZL_NO_PROMPT_COMMAND
+unset _ZL_ROOT_MARKERS
+
+export _ZL_DATA=~/.config/zlua
+export _ZL_ECHO=1
+export _ZL_FZF_FLAG=-e
+export _ZL_MATCH_MODE=1
+export _ZL_ROOT_MARKERS=".git,.svn,.hg,.root,package.json"
