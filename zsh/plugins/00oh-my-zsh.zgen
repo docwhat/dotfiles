@@ -1,3 +1,5 @@
+# vim:set ft=zsh:
+
 # Has to be run first.
 zgen oh-my-zsh
 
@@ -12,7 +14,9 @@ zgen oh-my-zsh plugins/vagrant
 
 zgen oh-my-zsh plugins/git
 zgen oh-my-zsh plugins/github
-zgen oh-my-zsh plugins/safe-paste
+if ! is-at-least 5.1; then
+  zgen oh-my-zsh plugins/safe-paste
+fi
 
 if [ $(uname -a | grep -ci Darwin) = 1 ]; then
   # Load OSX-specific plugins
