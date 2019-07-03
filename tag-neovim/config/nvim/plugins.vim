@@ -130,6 +130,7 @@ Plug 'cohama/lexima.vim'
 Plug 'chr4/nginx.vim'
 
 " Javascript & JSON
+Plug 'google/vim-jsonnet'
 Plug 'elzr/vim-json'
 Plug 'neoclide/jsonc.vim'
 Plug 'pangloss/vim-javascript'
