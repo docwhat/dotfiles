@@ -1,13 +1,28 @@
 #!/usr/bin/env zsh
 
-if (( $+commands[nvr] )); then
-  nvr -s --nostart --remote-wait "$@"
-elif (( $+commands[mvim] )); then
-  mvim -f "$@"
-elif (( $+commands[gvim] )); then
-  gvim "$@"
-else
-  "$EDITOR" "$@"
+set -eu
+
+if (( $+commands[nvr] )) && [[ -n $NVIM_LISTEN_ADDRESS ]]; then
+  exec nvr --nostart --remote-tab-wait +'setlocal bufhidden=wipe' "$@"
 fi
+
+if (( $+commands[mvim] )); then
+  exec mvim -f "$@"
+fi
+
+if (( $+commands[gvim] )); then
+  exec gvim "$@"
+fi
+
+if (( $+commands[code] )); then
+  exec code --wait "$@"
+fi
+
+if (( $+commands[atom] )); then
+  exec atom --wait "$@"
+fi
+
+# fallback
+exec ${EDITOR} "$@"
 
 # EOF

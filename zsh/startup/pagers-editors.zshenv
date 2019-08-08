@@ -44,28 +44,22 @@ export REACT_EDITOR=atom
 # Use NeoVim if it exists
 if (( $+commands[nvim] )); then
   export NVIM_LISTEN_ADDRESS="${NVIM_LISTEN_ADDRESS:-${TMPDIR:/tmp/docwhat-nvr}/nvr.socket}"
-  if (( $+commands[nvr] )); then
-    export GIT_EDITOR="nvr -s --remote-tab-wait"
-    export REACT_EDITOR="nvr -s --remote-tab-wait"
-    export EDITOR="nvr -s"
-  else
-    export GIT_EDITOR="nvim +1"
-    export EDITOR="nvim"
-  fi
   alias vim=nvim
   alias vi=nvim
   alias view="nvim -R -c 'set nomodifiable'"
   alias vimdiff="nvim -d"
-else
-  export GIT_EDITOR="vim +1"
-  export EDITOR="vim"
 fi
 
 # Pager/Editors
 export PAGER="less"
 export ACK_PAGER="less -R -+F"
-export FPP_EDITOR="$EDITOR"
 export MANPAGER="${HOME}/bin/manpager"
+
+export EDITOR="${HOME}/bin/editor"
 export VISUAL="${HOME}/bin/visual-editor"
+
+export GIT_EDITOR="$EDITOR +1"
+export FPP_EDITOR=$EDITOR
+export REACT_EDITOR=$EDITOR
 
 # EOF

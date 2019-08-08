@@ -160,6 +160,7 @@ augroup END
 "
 if has('nvim') && executable('nvr')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+  let $EDITOR = 'nvr --remote-wait'
 endif
 
 augroup VimrcGit

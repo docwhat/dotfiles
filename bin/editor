@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+if (( $+commands[nvr] )) && [[ -n $NVIM_LISTEN_ADDRESS ]]; then
+  exec nvr --remote-tab-wait-silent +'setlocal bufhidden=wipe' "$@"
+fi
+
+if (( $+commands[nvim] )); then
+  exec nvim "$@"
+fi
+
+if (( $+commands[vim] )); then
+  exec vim "$@"
+fi
+
+# fallback
+exec vi "$@"
+
+# EOF
+
