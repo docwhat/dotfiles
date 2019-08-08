@@ -19,6 +19,10 @@
 *.rb   diff=ruby
 *.tex  diff=tex
 *.scpt diff=scpt
+*.docx diff=textract
+*.xlsx diff=textract
+*.pptx diff=textract
+*.pdf  diff=textract
 
 *.bash text eol=lf
 *.sh   text eol=lf

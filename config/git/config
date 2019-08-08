@@ -69,6 +69,10 @@
 	textconv = osadecompile
 	binary = true
 
+[diff "textract"]
+	textconv = textract
+	binary = true
+
 [difftool "kitty"]
 	cmd = kitty +kitten diff $LOCAL $REMOTE
 
