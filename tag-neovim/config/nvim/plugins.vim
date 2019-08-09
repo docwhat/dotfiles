@@ -112,6 +112,7 @@ let g:coc_global_extensions = [
       \ 'coc-tag',
       \ 'coc-tslint',
       \ 'coc-tsserver',
+      \ 'coc-vimlsp',
       \ 'coc-yaml',
       \ ]
 
