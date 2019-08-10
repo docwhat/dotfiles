@@ -42,9 +42,30 @@ endfunction
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Use <cr> for confirm completion when something is selected.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+function DocwhatLeximaCompleteOrNewline() abort
+  if pumvisible()
+    if empty(v:completed_item)
+      return "\<C-y>" . lexima#expand('<CR>', 'i')
+    else
+      return "\<C-y>"
+    endif
+  else
+    " `<C-g>u` means break undo chain at current position.
+    return "\<C-g>u" . lexima#expand('<CR>', 'i')
+  endif
+endfunction
+
+if HasPlugin('lexima.vim')
+  let g:lexima_no_default_rules = 1
+  call lexima#set_default_rules()
+  inoremap <expr> <CR> DocwhatLeximaCompleteOrNewline()
+else
+  " `<C-g>u` means break undo chain at current position.
+  inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<C-g>u\<CR>"
+endif
+
 let g:coc_snippet_next = '<TAB>'
 let g:coc_snippet_prev = '<S-TAB>'
 
@@ -86,7 +107,7 @@ augroup CocGroup
   autocmd CursorHold * silent call CocActionAsync('highlight')
 
   " Show signature of current function.
-	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
