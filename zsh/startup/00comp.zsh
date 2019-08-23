@@ -5,7 +5,7 @@ fi
 
 # Force starting compinit as early as possible
 declare -a compinit_args=( '-d' "$ZSH_COMPDUMP" )
-if [[ "$module_path" =~ /usr/local/Cellar/* ]] && (( UID == 0 )); then
+if [[ "$module_path" =~ /usr/local/Cellar/* ]]; then
   compinit_args+=( '-u' )
 fi
 autoload -Uz compinit && compinit "${(@)compinit_args}"
