@@ -1,5 +1,6 @@
 if [[ "$TERM" == dumb ]] || [[ "$EMACS" == t ]] || [[ "$TERM_PROGRAM" == Prompt_2 ]]; then
    PS4='+%N:%i> '
+   SUDO_PROMPT='[sudo] %p -> %U: '
 else
    # The execution trace prompt.  Default is `+%N:%i> ', which displays the
    # name of the current shell structure and the line number within
@@ -24,6 +25,10 @@ else
    # PS4+=$'%{\u03BB%}'
    PS4+='%s%f%b%k' # reset all colors
    PS4+=$'\t'
+
+   SUDO_PROMPT='🔐 [sudo] %p → %U: '
 fi
+
+export SUDO_PROMPT
 
 # vim: set ft=zsh :
