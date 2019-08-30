@@ -21,11 +21,9 @@ set signcolumn=yes
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB> pumvisible() ? "\<DOWN>"
-      \ : (<SID>is_whitespace() ? "\<TAB>"
-      \ : coc#refresh())
+      \ : (<SID>is_whitespace() ? "\<TAB>" : coc#refresh())
 snoremap <silent><expr> <TAB> pumvisible() ? "\<DOWN>"
-      \ : (<SID>is_whitespace() ? "\<TAB>"
-      \ : coc#refresh())
+      \ : (<SID>is_whitespace() ? "\<TAB>" : coc#refresh())
 inoremap <expr><S-TAB> pumvisible() ? "\<UP>" : "\<C-h>"
 inoremap <silent><expr> <C-n>
       \ pumvisible() ? "\<DOWN>" : coc#refresh()
@@ -47,9 +45,13 @@ inoremap <silent><expr> <c-space> coc#refresh()
 function DocwhatLeximaCompleteOrNewline() abort
   if pumvisible()
     if empty(v:completed_item)
-      return "\<C-y>" . lexima#expand('<CR>', 'i')
-    else
+      " Something has been selected from the menu (pum). Accept
+      " that item.
       return "\<C-y>"
+    else
+      " Nothing has been selected from the menu (pum). Close menu
+      " and add literal CR.
+      return "\<C-y>" . lexima#expand('<CR>', 'i')
     endif
   else
     " `<C-g>u` means break undo chain at current position.

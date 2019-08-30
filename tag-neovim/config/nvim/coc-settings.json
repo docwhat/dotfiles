@@ -1,12 +1,18 @@
 {
   "coc.preferences.formatOnType": true,
-  "coc.preferences.hoverTarget": "preview",
+  "coc.preferences.extensionUpdateCheck": "daily",
 
   "suggest.triggerAfterInsertEnter": true,
-  "suggest.autoTrigger": "trigger",
-  "suggest.acceptSuggestionOnCommitCharacter": true,
+  "suggest.autoTrigger": "always",
+  "suggest.acceptSuggestionOnCommitCharacter": false,
+
+  "suggest.noselect": true,
+  "suggest.enablePreselect": false,
+  "suggest.floatEnable": true,
+  "suggest.fixInsertedWord": true,
+
   "suggest.enablePreview": true,
-  "suggest.snippetIndicator": "✂️",
+  "suggest.snippetIndicator": " ✂️",
 
   // CocList (fzf)
   "list.insertMappings": {

@@ -32,6 +32,12 @@ if exists('&inccommand')
   set inccommand=split
 endif
 
+" PUM - Popup Menu
+set completeopt=menu,menuone,preview
+if exists('&pumblend')
+  set pumblend=15
+endif
+
 set number
 " set wildmode=list:longest,full   " Completion for wildchar (see help)
 set wildignore+=*.o,*.obj,*.pyc,*.pyo,*.pyd
