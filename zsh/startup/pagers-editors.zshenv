@@ -43,7 +43,6 @@ export REACT_EDITOR=atom
 
 # Use NeoVim if it exists
 if (( $+commands[nvim] )); then
-  export NVIM_LISTEN_ADDRESS="${NVIM_LISTEN_ADDRESS:-${TMPDIR:/tmp/docwhat-nvr}/nvr.socket}"
   alias vim=nvim
   alias vi=nvim
   alias view="nvim -R -c 'set nomodifiable'"
