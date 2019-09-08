@@ -50,10 +50,10 @@ Install:andUse(
   }
 )
 
--- Handy for debugging. From:
---    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
--- luacheck: globals inspect
-inspect = require("inspect")
+-- -- Handy for debugging. From:
+-- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
+-- -- luacheck: globals inspect
+-- inspect = require("inspect")
 
 Install:andUse(
   "FadeLogo",
