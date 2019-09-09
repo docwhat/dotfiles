@@ -2,7 +2,7 @@
 
 set -eu
 
-if (( $+commands[nvr] )) && [[ -n $NVIM_LISTEN_ADDRESS ]]; then
+if (( $+commands[nvr] )) && [[ -n "${NVIM_LISTEN_ADDRESS:-}" ]]; then
   exec nvr --remote-tab-wait-silent +'setlocal bufhidden=wipe' "$@"
 fi
 
@@ -18,4 +18,3 @@ fi
 exec vi "$@"
 
 # EOF
-
