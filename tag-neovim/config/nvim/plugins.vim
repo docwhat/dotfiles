@@ -166,9 +166,6 @@ else
   Plug 'tpope/vim-rbenv'
 endif
 
-" BATS - Bash Automated Testing System
-Plug 'docwhat/bats.vim'
-
 " Groovy
 Plug 'vim-scripts/groovyindent-unix'
 Plug 'martinda/Jenkinsfile-vim-syntax'

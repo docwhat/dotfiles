@@ -27,4 +27,7 @@ augroup filetypedetect
 
   " React
   autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+
+  " BATS
+  autocmd BufNewFile,BufRead *.bats set filetype=bats
 augroup END
