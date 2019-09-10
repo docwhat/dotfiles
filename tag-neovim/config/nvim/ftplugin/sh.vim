@@ -18,6 +18,7 @@ if has_key(g:plugs, 'ale')
         \ 'trim_whitespace'
         \ ]
   let b:ale_fix_on_save = 1
+  let g:ale_sh_shellcheck_change_directory = 0
 
   " Initialization
   if exists(':EditorConfigReload') == 2
