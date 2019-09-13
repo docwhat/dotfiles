@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -eu
+
+apt update
+
+echo
+
+apt list --upgradeable
+
+echo "Press enter or C-c"
+read ignoremeplease
+
+apt upgrade -y
+
+apt autoremove -y
+
+# EOF
