@@ -147,7 +147,7 @@ Plug 'othree/html5.vim'
 Plug 'tpope/vim-ragtag'
 
 " Show colors in the text as reference.
-Plug 'RRethy/vim-hexokinase'
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 " Highlight the word under the cursor.
 Plug 'RRethy/vim-illuminate'
