@@ -1,0 +1,28 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+jar="${HOME}/.cache/SSLPoke/SSLPoke.jar"
+url="https://github.com/MichalHecko/SSLPoke/releases/latest/download/SSLPoke.jar"
+
+if [[ -z ${JAVA_HOME:-} ]]; then
+  JAVA_HOME=$(/usr/libexec/java_home)
+fi
+export JAVA_HOME
+
+if ! [[ -r ${jar} ]]; then
+  mkdir -p "$(dirname "$jar")"
+  curl -sSLf -o "$jar" "$url"
+fi
+
+declare -a args
+args=(
+  -D"java.awt.headless=true"
+  -D"javax.net.debug=ssl"
+  -jar "$jar"
+  "$@"
+)
+
+exec 2>&1
+exec java "${args[@]}"
+
+# EOF
