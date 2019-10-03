@@ -4,9 +4,6 @@ if !HasPlugin('ale')
 end
 
 if HasPlugin('coc.nvim')
-  " Start disabled
-  let g:ale_enabled     = 0
-  let g:ale_fix_on_save = 0
   let g:ale_disable_lsp = 1
 end
 
