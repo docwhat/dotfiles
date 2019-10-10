@@ -4,15 +4,19 @@
 
   "suggest.triggerAfterInsertEnter": true,
   "suggest.autoTrigger": "always",
-  "suggest.acceptSuggestionOnCommitCharacter": false,
+  "suggest.acceptSuggestionOnCommitCharacter": true,
 
   "suggest.noselect": true,
   "suggest.enablePreselect": false,
+  "suggest.preferCompleteThanJumpPlaceholder": false,
+
   "suggest.floatEnable": true,
   "suggest.fixInsertedWord": true,
 
   "suggest.enablePreview": true,
   "suggest.snippetIndicator": " ✂️",
+
+  "docker.enable": true,
 
   // CocList (fzf)
   "list.insertMappings": {
