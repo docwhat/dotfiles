@@ -33,9 +33,10 @@
 	l  = log -1
 	pt = !git push && git push --tags
 	rv = remote -v
-	s  = status --short --branch
-	ss = status
-	st = status
+	s  = status --short --branch --show-stash
+	ss = status --show-stash
+	st = status --show-stash
+	sv = status --verbose
 	sw = switch
 	up = !git fetch && git rebase
 	w  = whatchanged
