@@ -2,7 +2,6 @@
 
 [alias]
 	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/'
-	lc       = log ORIG_HEAD.. --stat --no-merges
 	share    = !git daemon --reuseaddr --base-path=./.git --verbose --export-all
 	squash   = commit --amend -C HEAD
 	root     = !pwd -P
@@ -13,29 +12,33 @@
 	merge-branch = !git checkout master && git merge @{-1}
 
 	graph = log --graph --abbrev-commit --decorate --date=relative --all
+
+	### Logs
+	lc       = log ORIG_HEAD.. --stat --no-merges
 	lg = log --graph --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
 	ls = log --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
-	up = !git fetch origin && git rebase origin/master
+	home = rev-parse --show-toplevel
 	fap = fetch --all --prune --prune-tags
 
-### shorts
+	### shorts
 	aa = add --all
 	ap = add --patch
 	ca = commit --amend
 	cah = commit --amend -CHEAD
-	ci = commit -v
-	co = checkout
-	w  = whatchanged
-	s  = status --short --branch
+	ci = commit --verbose
 	cm = commit -m
-	l  = log -1
+	co = checkout
 	d  = diff
 	dc = diff --cached
+	l  = log -1
+	pt = !git push && git push --tags
+	rv = remote -v
+	s  = status --short --branch
 	ss = status
 	st = status
-	rv = remote -v
-	pt = !git push && git push --tags
-	home = rev-parse --show-toplevel
+	sw = switch
+	up = !git fetch && git rebase
+	w  = whatchanged
 
 [instaweb]
 	port = 2001
