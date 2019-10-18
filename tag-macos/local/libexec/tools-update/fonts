@@ -62,6 +62,12 @@ for font in "${fonts[@]}"; do
 done
 
 # Install SF-Mono fonts for general usage.
-rsync -av --delete /Applications/Utilities/Terminal.app/Contents/Resources/Fonts ~/Library/Fonts/TerminalAppFonts/
+terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts
+if ! [[ -d $terminal_font_dir ]]; then
+  terminal_font_dir="/System/${terminal_font_dir}"
+fi
+declare -r terminal_font_dir
+
+rsync -av --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
 
 # EOF
