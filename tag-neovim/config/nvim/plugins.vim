@@ -171,7 +171,7 @@ Plug 'vim-scripts/groovyindent-unix'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 
 " Go
-Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
+Plug 'fatih/vim-go', { 'tag': 'v*', 'do': ':GoInstallBinaries' }
 
 " Rust
 Plug 'rust-lang/rust.vim'
