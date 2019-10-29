@@ -7,7 +7,4 @@ fi
 [ -d "$GOPATH" ] || mkdir -p "$GOPATH"
 path=($path "${GOPATH}/bin")
 
-# https://github.com/jfrog/gocenter/wiki
-export GOPROXY=https://gocenter.io
-
 # vim: set ft=zsh :
