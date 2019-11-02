@@ -181,7 +181,7 @@ Plug 'tbastos/vim-lua'
 
 " Display
 Plug 'Yggdroot/indentLine'
-Plug 'vim-airline/vim-airline', { 'tag': 'v*' }
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'nanotech/jellybeans.vim', { 'as': 'colorscheme-jellybeans' }
 " Plug 'tomasr/molokai', { 'as': 'colorscheme-molokai' }
