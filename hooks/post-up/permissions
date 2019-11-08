@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+if [[ -d ~/.dotfiles-personal ]]; then
+  chmod -R og-rwx ~/.dotfiles-personal
+fi
+
+# EOF
