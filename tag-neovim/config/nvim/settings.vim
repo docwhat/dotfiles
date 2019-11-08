@@ -53,7 +53,7 @@ set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pair
 
 set diffopt+=iwhiteall,hiddenoff
 if has("patch-8.1.0360")
-    set diffopt+=internal,algorithm:patience
+  set diffopt+=internal,algorithm:patience
 endif
 
 set cursorline                   " highlights the current line
@@ -330,6 +330,12 @@ if HasPlugin('vim-ruby') " {{{
   let g:ruby_indent_block_style = 'do'
   let g:ruby_indent_assignment_style = 'variable'
 endif " }}}
+
+" Detect Secrets baseline syntax
+augroup VimrcDetectSecretsBaseline " {{{
+  autocmd!
+  autocmd BufRead,BufNewFile .secrets.baseline nested setlocal filetype=json
+augroup END " }}}
 
 " Jenkinsfile Syntax
 if HasPlugin('Jenkinsfile-vim-syntax') " {{{
