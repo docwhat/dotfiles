@@ -2,16 +2,18 @@
 # frozen_string_literal: true
 # rubocop:disable Metrics/LineLength,Metrics/AbcSize
 
-require 'json'
-require 'open-uri'
-require 'pathname'
-require 'open3'
-require 'English'
+require "English"
+require "json"
+require "open-uri"
+require "open3"
+require "pathname"
+require "rbconfig"
 
-# The application
+# Kubernetes client needs to be within 1 minor version of the server.
 class App
-  NAME = 'kubectl-smart'.freeze
-  DIRECTORY = Pathname.new("~/.cache/#{NAME}").expand_path.freeze
+  NAME = "kubectl-smart".freeze
+  DIRECTORY = Pathname.new("~/.cache/#{NAME}").expand_path.realpath.freeze
+  PROGRAM_NAME = Pathname.new($PROGRAM_NAME).expand_path.realpath.freeze
 
   def die(msg)
     STDERR.puts msg
@@ -19,19 +21,39 @@ class App
   end
 
   def path
-    DIRECTORY + "kubectl-#{major_minor}"
+    DIRECTORY + "kubectl-#{os}-#{arch}-#{major_minor}"
   end
 
   def exact_path
-    DIRECTORY + "kubectl-#{version}"
+    DIRECTORY + "kubectl-#{os}-#{arch}-#{version}"
   end
 
   def os
-    'darwin'
+    @os ||= begin
+      host_os = RbConfig::CONFIG["host_os"]
+      case host_os
+      when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+        "windows"
+      when /darwin|mac os/
+        "darwin"
+      when /linux/
+        "linux"
+      else
+        die "I don't know what os #{host_os.inspect} is."
+      end
+    end
   end
 
   def arch
-    'amd64'
+    @archh ||= begin
+      host_cpu = RbConfig::CONFIG["host_cpu"]
+      case host_cpu
+      when /x86_64/
+        "amd64"
+      else
+        die "I don't know what arch #{host_cpu.inspect} is."
+      end
+    end
   end
 
   def url
@@ -48,7 +70,13 @@ class App
     path.dirname.mkpath
 
     case io = open(url)
-    when StringIO then exact_path.open('w', 0755) { |fd| fd.write(io) }
+    when StringIO
+      begin
+        exact_path.open("w", 0755) { |fd| fd.write(io) }
+      rescue
+        exact_path.unlink if exact_path.exist?
+        raise
+      end
     when Tempfile
       io.close
       iopath = Pathname.new(io.path)
@@ -62,19 +90,16 @@ class App
 
   def any_kubectl_path
     begin
-      if DIRECTORY.directory?
-        DIRECTORY.children.select(&:file?).select(&:executable?).reverse.first
-      else
-        ENV['PATH']
-          .split(':')
-          .map { |pth| Pathname.new pth }
-          .map { |pth| pth + 'kubectl' }
-          .select(&:file?)
-          .select(&:executable?)
-          .map(&:realpath)
-          .reject { |pth| $PROGRAM_NAME == pth.to_s }
-          .first
-      end || 'kubectl'
+      (DIRECTORY.children.reverse +
+       ENV["PATH"]
+         .split(":")
+         .map { |pth| Pathname.new pth }
+         .map { |pth| pth + "kubectl" })
+        .select(&:file?)
+        .select(&:executable?)
+        .map(&:realpath)
+        .reject { |pth| PROGRAM_NAME == pth }
+        .first || die("Unable to find a kubectl to run in $PATH.")
     end.to_s
   end
 
@@ -82,7 +107,7 @@ class App
     @version_data ||= begin
       stdout, stderr, status = Open3.capture3(
         any_kubectl_path,
-        'version', '--output=json'
+        "version", "--output=json"
       )
       die "Failed to use any kubectl to get version information: #{stderr}" if
         status.exitstatus != 0
@@ -92,11 +117,12 @@ class App
 
   # I don't care about :reek:FeatureEnvy
   def major_minor
-    ver = version_data['serverVersion']
-    [ver['major'], ver['minor']]
+    # TODO: It would be cool to try <major>.<minor + 1> if possible.
+    ver = version_data["serverVersion"]
+    [ver["major"], ver["minor"]]
       .map(&:to_i)
       .map(&:to_s)
-      .join('.')
+      .join(".")
   end
 
   def version
