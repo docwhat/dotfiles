@@ -1,0 +1,119 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+# rubocop:disable Metrics/LineLength,Metrics/AbcSize
+
+require 'json'
+require 'open-uri'
+require 'pathname'
+require 'open3'
+require 'English'
+
+# The application
+class App
+  NAME = 'kubectl-smart'.freeze
+  DIRECTORY = Pathname.new("~/.cache/#{NAME}").expand_path.freeze
+
+  def die(msg)
+    STDERR.puts msg
+    exit(2)
+  end
+
+  def path
+    DIRECTORY + "kubectl-#{major_minor}"
+  end
+
+  def exact_path
+    DIRECTORY + "kubectl-#{version}"
+  end
+
+  def os
+    'darwin'
+  end
+
+  def arch
+    'amd64'
+  end
+
+  def url
+    "https://storage.googleapis.com/kubernetes-release/release/#{version}/bin/#{os}/#{arch}/kubectl"
+  end
+
+  def ready?
+    path.symlink? && path.executable? && exact_path.executable?
+  end
+
+  # This smells of :reek:TooManyStatements
+  # rubocop:disable Metrics/MethodLength
+  def download
+    path.dirname.mkpath
+
+    case io = open(url)
+    when StringIO then exact_path.open('w', 0755) { |fd| fd.write(io) }
+    when Tempfile
+      io.close
+      iopath = Pathname.new(io.path)
+      iopath.chmod(0755)
+      iopath.rename exact_path
+    end
+
+    path.delete if path.symlink?
+    path.make_symlink exact_path
+  end
+
+  def any_kubectl_path
+    begin
+      if DIRECTORY.directory?
+        DIRECTORY.children.select(&:file?).select(&:executable?).reverse.first
+      else
+        ENV['PATH']
+          .split(':')
+          .map { |pth| Pathname.new pth }
+          .map { |pth| pth + 'kubectl' }
+          .select(&:file?)
+          .select(&:executable?)
+          .map(&:realpath)
+          .reject { |pth| $PROGRAM_NAME == pth.to_s }
+          .first
+      end || 'kubectl'
+    end.to_s
+  end
+
+  def version_data
+    @version_data ||= begin
+      stdout, stderr, status = Open3.capture3(
+        any_kubectl_path,
+        'version', '--output=json'
+      )
+      die "Failed to use any kubectl to get version information: #{stderr}" if
+        status.exitstatus != 0
+      JSON.parse stdout
+    end
+  end
+
+  # I don't care about :reek:FeatureEnvy
+  def major_minor
+    ver = version_data['serverVersion']
+    [ver['major'], ver['minor']]
+      .map(&:to_i)
+      .map(&:to_s)
+      .join('.')
+  end
+
+  def version
+    @version ||= begin
+      open(
+        "https://storage.googleapis.com/kubernetes-release/release/stable-#{major_minor}.txt",
+        &:read
+      ).chomp
+    end
+  end
+
+  def run
+    download unless ready?
+    Process.exec path.to_s, *ARGV
+  end
+end
+
+App.new.run if __FILE__ == $PROGRAM_NAME
+
+# EOF
