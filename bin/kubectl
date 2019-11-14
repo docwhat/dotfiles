@@ -105,13 +105,17 @@ class App
 
   def version_data
     @version_data ||= begin
-      stdout, stderr, status = Open3.capture3(
+      stdout, _, status = Open3.capture3(
         any_kubectl_path,
         "version", "--output=json"
       )
-      die "Failed to use any kubectl to get version information: #{stderr}" if
-        status.exitstatus != 0
-      JSON.parse stdout
+      case status.exitstatus
+      when 0
+        JSON.parse stdout
+      else
+        # Fallback to just trying to execute the command with any kubectl.
+        Process.exec any_kubectl_path, *ARGV
+      end
     end
   end
 
