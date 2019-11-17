@@ -1,4 +1,24 @@
 {
+  "vs-kubernetes": {
+    "vs-kubernetes.namespace": "",
+    "vs-kubernetes.kubectl-path": "/Users/docwhat/bin/kubectl",
+    "vs-kubernetes.helm-path": "",
+    "vs-kubernetes.draft-path": "",
+    "vs-kubernetes.minikube-path": "",
+    "vs-kubernetes.kubectlVersioning": "user-provided",
+    "vs-kubernetes.outputFormat": "yaml",
+    "vs-kubernetes.kubeconfig": "/Users/docwhat/.config/k3d/k3s-default/kubeconfig.yaml",
+    "vs-kubernetes.knownKubeconfigs": [
+      "/Users/docwhat/.config/k3d/k3s-default/kubeconfig.yaml"
+    ],
+    "vs-kubernetes.autoCleanupOnDebugTerminate": false,
+    "vs-kubernetes.nodejs-autodetect-remote-root": true,
+    "vs-kubernetes.nodejs-remote-root": "",
+    "vs-kubernetes.nodejs-debug-port": 9229,
+    "checkForMinikubeUpgrade": true,
+    "logsDisplay": "webview",
+    "imageBuildTool": "Docker"
+  },
   "editor.cursorBlinking": "solid",
   "editor.cursorStyle": "block",
   "editor.fontFamily": "'FuraCode Nerd Font', monospace",
@@ -47,5 +67,26 @@
   "python.formatting.provider": "black",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
+  "window.zoomLevel": 1,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.userWords": [
+    "docwhat",
+    "monospace"
+  ],
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveshare.guestApprovalRequired": true,
+  "liveshare.languages.allowGuestCommandControl": true,
+  "liveshare.publishWorkspaceInfo": true,
+  "liveshare.connectionMode": "direct",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.host": "0.0.0.0",
+  "files.autoSave": "onWindowChange",
+  "eslint.autoFixOnSave": true,
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   }
 }
