@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-# rubocop:disable Metrics/LineLength,Metrics/AbcSize
+
+# rubocop:disable Lint/MissingCopEnableDirective
+# rubocop:disable Metrics/LineLength,Metrics/AbcSize,Metrics/MethodLength,Metrics/ClassLength
+# rubocop:enable Lint/MissingCopEnableDirective
 
 require "English"
 require "json"
@@ -12,7 +15,7 @@ require "rbconfig"
 # Kubernetes client needs to be within 1 minor version of the server.
 class App
   NAME = "kubectl-smart".freeze
-  DIRECTORY = Pathname.new("~/.cache/#{NAME}").expand_path.realpath.freeze
+  DIRECTORY = Pathname.new("~/.cache/#{NAME}").expand_path.realdirpath.tap(&:mkpath).freeze
   PROGRAM_NAME = Pathname.new($PROGRAM_NAME).expand_path.realpath.freeze
 
   def die(msg)
@@ -99,7 +102,7 @@ class App
         .select(&:executable?)
         .map(&:realpath)
         .reject { |pth| PROGRAM_NAME == pth }
-        .first || die("Unable to find a kubectl to run in $PATH.")
+        .first || exit(127)
     end.to_s
   end
 
