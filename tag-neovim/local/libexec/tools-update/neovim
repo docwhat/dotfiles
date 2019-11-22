@@ -11,10 +11,10 @@ if ! (( $+commands[nvim] )) > /dev/null; then
   exit 0
 fi
 
-if [[ -r ~/.zgen/zgen.zsh ]]; then
+if [[ -r ~/.zplug/init.zsh ]]; then
   export NVM_NO_USE=false
   set +eu
-  source ~/.zgen/zgen.zsh
+  source ~/.zplug/init.zsh
   set -eu
 fi
 

@@ -1,27 +1,27 @@
 autoload -U is-at-least
-ZGEN_RESET_ON_CHANGE=(
-"${HOME}/.zsh/startup/0plugins.zsh"
-"${HOME}/.zsh/plugins/"*(UN)
-)
+
+ZPLUG_CACHE_DIR=~/.cache/zplug/
+ZPLUG_REPOS=~/.cache/zplug-repos/
 
 for _plugin_file in ~/.zsh/plugins/*.pre(UN); do
   source "$_plugin_file"
 done
 
-source "${HOME}/.zgen/zgen.zsh"
+source "${HOME}/.zplug/init.zsh"
 
-if ! zgen saved; then
-  for _plugin_file in ~/.zsh/plugins/*.zgen(UN); do
+  for _plugin_file in ~/.zsh/plugins/*.plug(UN); do
     source "$_plugin_file"
   done
-
-  # Save it all to init script
-  zgen save
-fi
 
 for _plugin_file in ~/.zsh/plugins/*.post(UN); do
   source "$_plugin_file"
 done
 unset _plugin_file
+
+if ! zplug check; then
+  zplug install
+fi
+
+zplug load --verbose
 
 # EOF

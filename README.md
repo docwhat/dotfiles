@@ -74,123 +74,143 @@ Usage:tools-update [updater...]
   default      updates the dotfiles and runs 'rcup'
   all          alias for all the commands
   alfred       alfred configuration files
+  brew         Manage brew via the ~/.Brewfile
   docker       docker completion files
   fonts        fonts for macOS
   gems         Ruby gems
-  npm          Node.js packages
+  neovim       nvim plugins and plugin manager
+  node-cli     Node CLI applications
   pip          python packages (2 & 3)
   rbenv        rbenv plugins
   terms        updates TERM entries for terminfo
   tmux         tmux plugin manager and plugins
-  zgen         zgen and its plugins
+  zplug        zplug and its plugins
+  zsh
 
-$ tools-update default zgen terms tmux
+$ tools-update default tmux zplug zsh
 ===================================================
 Updating dotfiles
 ===================================================
 
 ∓ Dotfiles
-  Already up-to-date.
-∓ Custom Dotfiles
-  Already up-to-date.
+  Can't update /Users/docwhat/.dotfiles repository due to changes:
+     M README.md
 ∓ Personal Dotfiles
-  Already up-to-date.
-
-===================================================
-Zgen
-===================================================
-
-∓ ZGen
-  Already up-to-date.
-
-z updating plugins
-  -- zgen: Updating '/Users/docwhat/.zgen/RobSis/zsh-completion-generator-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/changyuheng/fz-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/chrissicool/zsh-256color-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/lukechilds/zsh-better-npm-completion-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/lukechilds/zsh-nvm-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/robbyrussell/oh-my-zsh-master' ...
-  From github.com:robbyrussell/oh-my-zsh
-     5667161..291e96d  master     -> origin/master
-  Updating 5667161..291e96d
-  Fast-forward
-   themes/rkj-repos.zsh-theme | 6 +++---
-   1 file changed, 3 insertions(+), 3 deletions(-)
-  -- zgen: Updating '/Users/docwhat/.zgen/rupa/z-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/sharat87/pip-app-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/sorin-ionescu/prezto-master' ...
-  From github.com:sorin-ionescu/prezto
-     876f426..6975b11  master     -> origin/master
-  Updating 876f426..6975b11
-  Fast-forward
-   modules/completion/init.zsh        | 15 ++++++++++++---
-   modules/git/README.md              | 17 +++++++++++------
-   modules/git/alias.zsh              | 26 ++++++++++++++++++--------
-   modules/node/init.zsh              |  2 +-
-   modules/prompt/functions/promptpwd |  4 ++++
-   modules/python/init.zsh            | 27 ++++++++++++++++++++++++---
-   modules/rsync/README.md            |  2 +-
-   modules/tmux/README.md             |  4 ++++
-   modules/tmux/init.zsh              |  2 +-
-   runcoms/zpreztorc                  |  6 ++++++
-   10 files changed, 82 insertions(+), 23 deletions(-)
-  -- zgen: Updating '/Users/docwhat/.zgen/srijanshetty/docker-zsh-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/unixorn/git-extra-commands-master' ...
-  From github.com:unixorn/git-extra-commands
-     87cd2ab..4f10834  master     -> origin/master
-  Updating 87cd2ab..4f10834
-  Fast-forward
-   bin/git-incoming | 30 +++++++++++++++---------------
-   1 file changed, 15 insertions(+), 15 deletions(-)
-  -- zgen: Updating '/Users/docwhat/.zgen/unixorn/rake-completion.zshplugin-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/zsh-users/zsh-autosuggestions-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/zsh-users/zsh-completions-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/zsh-users/zsh-history-substring-search-master' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/zsh-users/zsh-syntax-highlighting-0.5.0' ...
-  Already up-to-date.
-  -- zgen: Updating '/Users/docwhat/.zgen/zsh-users/zsh-syntax-highlighting-0.5.x' ...
-  Already up-to-date.
-  -- zgen: Deleting `/Users/docwhat/.zgen/init.zsh` ...
-  -- zgen: Deleting `/Users/docwhat/.zsh/cache/zcompdump-lithium-5.3.1` ...
-  27% cpu  7984 KiB  10.783 total
-  0% cpu  1776 KiB  10.782 total
-
-===================================================
-Terms
-===================================================
-
-"terminfo.src", line 2361, terminal 'pccon+base': enter_bold_mode but no exit_attribute_mode
-"terminfo.src", line 2361, terminal 'pccon+base': enter_reverse_mode but no exit_attribute_mode
+  Already up to date.
+  Current branch master is up to date.
+λ7 ./broken-links:7     declare -ar broken=( )
+λ7 ./broken-links:17    rm -vf
 
 ===================================================
 Tmux
 ===================================================
 
 ∓ Tmux Package Manager
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-copycat
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-fpp
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-open
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-pain-control
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-prefix-highlight
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-sensible
-  Already up-to-date.
+  Already up to date.
+  Current branch master is up to date.
 ∓ tmux plugin tmux-yank
+  Already up to date.
+  Current branch master is up to date.
+∓ tmux plugin tpm
+  Already up to date.
+  Current branch master is up to date.
+
+===================================================
+Zplug
+===================================================
+
+
+z updating zplug
+  [zplug] --self: unknown option
+
+z updating plugins
+  [zplug] Start to update 0 plugins in parallel
+
+
+  [zplug] Elapsed time: 0.0196 sec.
+   ==> Updating finished successfully!
+
+===================================================
+Zsh
+===================================================
+
+zcompile /Users/docwhat/.zshrc
+zcompile /Users/docwhat/.zshenv
+zcompile /Users/docwhat/.zprofile
+zcompile /Users/docwhat/.zsh/startup/99ibm.zprofile
+zcompile /Users/docwhat/.zsh/startup/default_user.zprofile
+zcompile /Users/docwhat/.zsh/startup/github.zprofile
+zcompile /Users/docwhat/.zsh/startup/homebrew.zprofile
+zcompile /Users/docwhat/.zsh/startup/java.zprofile
+zcompile /Users/docwhat/.zsh/startup/kube-solo.zprofile
+zcompile /Users/docwhat/.zsh/startup/locale.zprofile
+zcompile /Users/docwhat/.zsh/startup/macos.zprofile
+zcompile /Users/docwhat/.zsh/startup/openstack.zprofile
+zcompile /Users/docwhat/.zsh/startup/perl.zprofile
+zcompile /Users/docwhat/.zsh/startup/personal.zprofile
+zcompile /Users/docwhat/.zsh/startup/python.zprofile
+zcompile /Users/docwhat/.zsh/startup/rust.zprofile
+zcompile /Users/docwhat/.zsh/startup/ssh.zprofile
+zcompile /Users/docwhat/.zsh/startup/zsh.zprofile
+zcompile /Users/docwhat/.zsh/startup/000zsh.zshenv
+zcompile /Users/docwhat/.zsh/startup/00comp.zshenv
+zcompile /Users/docwhat/.zsh/startup/ack.zshenv
+zcompile /Users/docwhat/.zsh/startup/asdf.zshenv
+zcompile /Users/docwhat/.zsh/startup/bash.zshenv
+zcompile /Users/docwhat/.zsh/startup/chef.zshenv
+zcompile /Users/docwhat/.zsh/startup/docker.zshenv
+zcompile /Users/docwhat/.zsh/startup/file.zshenv
+zcompile /Users/docwhat/.zsh/startup/fzf.zshenv
+zcompile /Users/docwhat/.zsh/startup/golang.zshenv
+zcompile /Users/docwhat/.zsh/startup/haskell.zshenv
+zcompile /Users/docwhat/.zsh/startup/homebrew.zshenv
+zcompile /Users/docwhat/.zsh/startup/macos.zshenv
+zcompile /Users/docwhat/.zsh/startup/make.zshenv
+zcompile /Users/docwhat/.zsh/startup/node.zshenv
+zcompile /Users/docwhat/.zsh/startup/pagers-editors.zshenv
+zcompile /Users/docwhat/.zsh/startup/prompt.zshenv
+zcompile /Users/docwhat/.zsh/startup/python.zshenv
+zcompile /Users/docwhat/.zsh/startup/rust.zshenv
+zcompile /Users/docwhat/.zsh/startup/snap.zshenv
+zcompile /Users/docwhat/.zsh/startup/terminals.zshenv
+zcompile /Users/docwhat/.zsh/startup/tmux.zshenv
+zcompile /Users/docwhat/.zsh/startup/z-nodenv.zshenv
+zcompile /Users/docwhat/.zsh/startup/z-rbenv.zshenv
+zcompile /Users/docwhat/.zsh/startup/zsh.zshenv
+zcompile /Users/docwhat/.zsh/startup/zz-last.zshenv
+zcompile /Users/docwhat/.zsh/functions/_docker
+zcompile /Users/docwhat/.zsh/functions/_docker-compose
+zcompile /Users/docwhat/.zsh/functions/_docker-machine
+zcompile /Users/docwhat/.zsh/functions/_gotmux
+zcompile /Users/docwhat/.zsh/functions/_gulp
+zcompile /Users/docwhat/.zsh/functions/_kind
+zcompile /Users/docwhat/.zsh/functions/_kubectl
+zcompile /Users/docwhat/.zsh/functions/_rustup
+zcompile /Users/docwhat/.zsh/functions/_tmutil
+zcompile /Users/docwhat/.zsh/functions/_tools-update
+zcompile /Users/docwhat/.zsh/functions/colorize
+zcompile /Users/docwhat/.zsh/functions/offset
+zcompile /Users/docwhat/.zsh/functions/prompt_docwhat2_precmd
+zcompile /Users/docwhat/.zsh/functions/prompt_docwhat2_ruby
+zcompile /Users/docwhat/.zsh/functions/prompt_docwhat2_schars
+zcompile /Users/docwhat/.zsh/functions/prompt_docwhat2_setup
+zcompile /Users/docwhat/.zsh/functions/prompt_docwhat_setup
 ```

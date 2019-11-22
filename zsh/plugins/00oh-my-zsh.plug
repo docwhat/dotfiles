@@ -1,0 +1,25 @@
+# vim:set ft=zsh:
+
+zplug plugins/python, from:oh-my-zsh
+zplug plugins/pip, from:oh-my-zsh
+
+zplug plugins/golang, from:oh-my-zsh
+
+zplug plugins/sudo, from:oh-my-zsh
+zplug plugins/rsync, from:oh-my-zsh
+zplug plugins/vagrant, from:oh-my-zsh
+
+zplug plugins/git, from:oh-my-zsh
+zplug plugins/github, from:oh-my-zsh
+if ! is-at-least 5.1; then
+  zplug plugins/safe-paste, from:oh-my-zsh
+fi
+
+if [ $(uname -a | grep -ci Darwin) = 1 ]; then
+  # Load OSX-specific plugins
+  zplug plugins/osx, from:oh-my-zsh
+fi
+
+zplug plugins/redis-cli, from:oh-my-zsh
+zplug plugins/rsync, from:oh-my-zsh
+zplug plugins/marked2, from:oh-my-zsh

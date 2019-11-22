@@ -6,10 +6,11 @@
 # zle -N zle-isearch-exit
 
 ### Emacs mode
+set -o emacs
 
-bindkey '^P'  up-history
-bindkey '^N'  down-history
-bindkey '^W'  backward-kill-word
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^W' backward-kill-word
 
 # I like pattern searches.
 bindkey "^R" history-incremental-pattern-search-backward

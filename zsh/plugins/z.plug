@@ -1,0 +1,3 @@
+# vim:set ft=zsh:
+
+zplug skywind3000/z.lua

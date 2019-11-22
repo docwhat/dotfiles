@@ -2,7 +2,7 @@
 
 if is-at-least 5.0; then
   # Add Fish-like autosuggestions to your ZSH
-  zgen load zsh-users/zsh-autosuggestions
+  zplug zsh-users/zsh-autosuggestions
 
-  zgen load zdharma/fast-syntax-highlighting
+  zplug zdharma/fast-syntax-highlighting
 fi
