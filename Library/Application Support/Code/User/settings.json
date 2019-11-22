@@ -69,14 +69,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
+  "shellformat.flag": "-s -m",
   "window.zoomLevel": 1,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.userWords": [
-    "docwhat",
-    "monospace"
-  ],
+  "cSpell.userWords": ["docwhat", "monospace"],
   "liveServer.settings.donotShowInfoMsg": true,
   "liveshare.guestApprovalRequired": true,
   "liveshare.languages.allowGuestCommandControl": true,
@@ -88,5 +86,9 @@
   "eslint.autoFixOnSave": true,
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  }
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "mrmlnc.vscode-remark"
+  },
+  "workbench.iconTheme": "vscode-icons"
 }
