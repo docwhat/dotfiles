@@ -69,7 +69,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
-  "shellformat.flag": "-s -m",
+  "shellformat.flag": "-s",
   "window.zoomLevel": 1,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -90,5 +90,8 @@
   "[markdown]": {
     "editor.defaultFormatter": "mrmlnc.vscode-remark"
   },
-  "workbench.iconTheme": "vscode-icons"
+  "workbench.iconTheme": "vscode-icons",
+  "path-intellisense.absolutePathToWorkspace": false,
+  "path-intellisense.autoSlashAfterDirectory": true,
+  "path-intellisense.showHiddenFiles": true
 }
