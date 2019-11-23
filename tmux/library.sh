@@ -6,7 +6,7 @@ cd "$tmux_dir"
 
 set -euo pipefail
 
-tmux_version="$(tmux -V | cut -d ' ' -f 2)"
+tmux_version="$(tmux -V | cut -d ' ' -f 2 | sed 's/[^0-9.]*//g')"
 
 function tmux_is_at_least() {
   if [[ $tmux_version == "$1" ]] || [[ $tmux_version == master ]]; then
