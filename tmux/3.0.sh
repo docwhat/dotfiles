@@ -16,9 +16,6 @@ tmux bind-key k confirm-before kill-window
 # unbind space
 tmux bind-key space last-window
 
-# Zoom
-tmux bind-key -n C-Space resize-pane -Z
-
 tmux bind-key S command-prompt -p "fssh: " "new-window 'fssh %1'"
 tmux bind-key M command-prompt -p "fmosh: " "new-window 'fmosh %1'"
 tmux bind-key c new-window -c "#{?pane_current_path,#{pane_current_path},$HOME}"

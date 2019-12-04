@@ -11,9 +11,6 @@ tmux bind-key -r '`' send-prefix
 tmux set-window-option -g mode-keys vi
 tmux set-option -g status-keys "emacs"
 
-# Zoom
-tmux bind-key -n C-Space resize-pane -Z
-
 # Use SSH-Agent OMZ plugin ###
 tmux set-option -g update-environment "DISPLAY WINDOWID SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION TERM"
 tmux set-environment -g "SSH_AUTH_SOCK" "$HOME/.ssh/ssh_auth_sock"
