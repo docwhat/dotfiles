@@ -1,3 +1,5 @@
+autoload -U is-at-least
+
 function compute_host_completion
 {
   local -a completions

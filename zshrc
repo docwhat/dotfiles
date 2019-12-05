@@ -3,7 +3,7 @@
 
 # Load my customized environment.
 for config_file (~/.zsh/startup/*.zsh(rN)); do
-  source $config_file
+  source "$config_file"
 done
 unset config_file
 

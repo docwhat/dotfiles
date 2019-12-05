@@ -1,6 +1,18 @@
-# Get kubectl completion
-if (( $+commands[kubectl] )) && [ -x "${commands[kubectl]}" ] && is-at-least 5.2; then
-  {
-    source <(kubectl completion zsh)
-  } &!
+#!zsh
+
+autoload -U is-at-least
+
+if is-at-least 5.2; then
+  # Get kubectl completion
+  if (( $+commands[kubectl] )); then
+    {
+      source <(kubectl completion zsh)
+    } &!
+  fi
+
+  if (( $+commands[tkn] )); then
+    {
+      source <(tkn completion zsh)
+    } &!
+  fi
 fi

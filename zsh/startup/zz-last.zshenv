@@ -1,3 +1,5 @@
+#!zsh
+
 path=(~/bin ~/.local/bin "$path[@]")
 
 # Fix the paths up
