@@ -4,9 +4,7 @@
 begin
   require 'git/remote/parser'
 rescue LoadError
-  STDERR.puts
-  STDERR.puts 'Have you tried:  gem install git-remote-parser'
-  STDERR.puts
+  warn 'Have you tried:  gem install git-remote-parser'
   raise
 end
 
@@ -79,7 +77,7 @@ class GitDir < Pathname
 
   def desired
     top_directory = Pathname.new('~/src/').expand_path
-     top_directory + host + organization + repository
+    top_directory + host + organization + repository
   end
 
   def desired?
@@ -99,7 +97,7 @@ class App
     based on origin.
   USAGETEXT
 
-  def initialize(argv) # rubocop:disable AbcSize
+  def initialize(argv) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     init_vars argv
 
     arguments.each do |argument|
@@ -134,18 +132,18 @@ class App
   end
 
   def die_with_usage(message)
-    STDERR.puts USAGE
+    warn USAGE
     STDERR.puts
     die message
   end
 
   def die(message)
-    STDERR.puts "ERROR: #{message}"
+    warn "ERROR: #{message}"
     exit 2
   end
 
   # I don't care about :reek:TooManyStatements
-  def run_one(source) # rubocop:disable MethodLength
+  def run_one(source) # rubocop:disable Metrics/MethodLength
     return if source.desired?
 
     destination = source.desired
@@ -164,7 +162,7 @@ class App
     destination.dirname.mkpath
     source.rename destination
   rescue StandardError
-    STDERR.puts "Failed on directory: #{source}"
+    warn "Failed on directory: #{source}"
     raise
   end
 
