@@ -52,7 +52,7 @@ set showmatch                    " Show the matching bracket
 set matchpairs=(:),{:},[:]       " List of characters we expect in balanced pairs
 
 set diffopt+=iwhiteall,hiddenoff
-if has("patch-8.1.0360")
+if has('patch-8.1.0360')
   set diffopt+=internal,algorithm:patience
 endif
 
