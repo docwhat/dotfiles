@@ -15,4 +15,10 @@ if is-at-least 5.2; then
       source <(tkn completion zsh)
     } &!
   fi
+
+  if (( $+commands[helm] )); then
+    {
+      source <(helm completion zsh)
+    } &!
+  fi
 fi
