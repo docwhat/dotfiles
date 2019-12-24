@@ -31,13 +31,6 @@ spoon.SpoonInstall.repos.zzspoons = {
 hs.loadSpoon("ControlEscape"):start()
 
 Install:andUse(
-  "TimeMachineProgress",
-  {
-    start = true
-  }
-)
-
-Install:andUse(
   "Hammer",
   {
     repo = "zzspoons",
