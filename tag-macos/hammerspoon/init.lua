@@ -43,6 +43,17 @@ Install:andUse(
   }
 )
 
+Install:andUse(
+  "SleepCorners",
+  {
+    config = {
+      neverSleepCorner = "*",
+      sleepNowCorner = "LL",
+      sleepNowShouldLock = true
+    },
+   start = true
+  }
+)
 -- -- Handy for debugging. From:
 -- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
 -- -- luacheck: globals inspect
