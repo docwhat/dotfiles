@@ -14,53 +14,58 @@ set encoding=utf-8
 scriptencoding utf-8
 language en_US.UTF-8
 
-if has('win16') || has('win32') || has('win64')
-  set termencoding=cp850
-  setglobal fileencoding=utf-8
-  set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
-endif
+if exists('g:scode')
+  echomsg 'Running under VS code.'
+else
 
-let s:bootstrap=0
+  if has('win16') || has('win32') || has('win64')
+    set termencoding=cp850
+    setglobal fileencoding=utf-8
+    set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
+  endif
 
-let s:vim_plug_path = stdpath('config') . '/autoload/plug.vim'
+  let s:bootstrap=0
 
-if !filereadable(s:vim_plug_path)
-  let s:bootstrap=1
-endif
+  let s:vim_plug_path = stdpath('config') . '/autoload/plug.vim'
 
-if s:bootstrap
-  echomsg '********************'
-  echomsg 'Bootstrapping NeoVim'
-  echomsg '********************'
-  echomsg ''
-endif
+  if !filereadable(s:vim_plug_path)
+    let s:bootstrap=1
+  endif
 
-" ** Plugins
-if s:bootstrap
-  execute 'silent !curl -qSLo ' . s:vim_plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  execute 'source ' . s:vim_plug_path
-endif
+  if s:bootstrap
+    echomsg '********************'
+    echomsg 'Bootstrapping NeoVim'
+    echomsg '********************'
+    echomsg ''
+  endif
 
-execute 'source ' . stdpath('config') . '/plugins.vim'
+  " ** Plugins
+  if s:bootstrap
+    execute 'silent !curl -qSLo ' . s:vim_plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute 'source ' . s:vim_plug_path
+  endif
 
-if has('ruby')
-  let s:bootcheck_path = stdpath('config') . '/bootcheck.rb'
-  ruby load VIM.evaluate('s:bootcheck_path')
-endif
+  execute 'source ' . stdpath('config') . '/plugins.vim'
 
-if s:bootstrap && ! exists('$NVIM_SKIP_PLUGIN_CHECK')
-  echo "Installing missing plugins. Please wait...\n"
-  :silent PlugClean!
-  :silent PlugInstall
-  :silent PlugUpgrade
-  quit
-endif
+  if has('ruby')
+    let s:bootcheck_path = stdpath('config') . '/bootcheck.rb'
+    ruby load VIM.evaluate('s:bootcheck_path')
+  endif
 
-execute 'source ' . stdpath('config') . '/settings.vim'
+  if s:bootstrap && ! exists('$NVIM_SKIP_PLUGIN_CHECK')
+    echo "Installing missing plugins. Please wait...\n"
+    :silent PlugClean!
+    :silent PlugInstall
+    :silent PlugUpgrade
+    quit
+  endif
 
-" Local settings
-if filereadable(stdpath('config') . '/local.vim')
-  execute 'source ' . stdpath('config') . '/local.vim'
+  execute 'source ' . stdpath('config') . '/settings.vim'
+
+  " Local settings
+  if filereadable(stdpath('config') . '/local.vim')
+    execute 'source ' . stdpath('config') . '/local.vim'
+  endif
 endif
 
 " EOF
