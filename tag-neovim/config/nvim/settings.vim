@@ -21,8 +21,6 @@ set expandtab
 set hidden
 set modeline
 
-set clipboard+=unnamedplus
-
 set shiftround
 
 set linebreak                    " Only wrap on characters in `breakat`
