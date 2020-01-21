@@ -17,6 +17,7 @@ class App
   NAME = "kubectl-smart".freeze
   DIRECTORY = Pathname.new("~/.cache/#{NAME}").expand_path.realdirpath.tap(&:mkpath).freeze
   PROGRAM_NAME = Pathname.new($PROGRAM_NAME).expand_path.realpath.freeze
+  KREW_BIN_DIR = Pathname.new('~/.krew/bin').expand_path.freeze
 
   def die(msg)
     STDERR.puts msg
@@ -142,6 +143,7 @@ class App
   end
 
   def run
+    ENV['PATH'] = ENV['PATH'] + ":#{KREW_BIN_DIR}" if KREW_BIN_DIR.directory?
     download unless ready?
     Process.exec path.to_s, *ARGV
   end
