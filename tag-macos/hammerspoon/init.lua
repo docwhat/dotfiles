@@ -47,7 +47,7 @@ Install:andUse(
   "SleepCorners",
   {
     config = {
-      neverSleepCorner = "*",
+      neverSleepCorner = "LR",
       sleepNowCorner = "LL"
     },
    start = true
