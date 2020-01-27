@@ -2,8 +2,6 @@
 
 set -eu
 
-set -x
-
 declare -ar broken=(
   ~/.zsh/**/*(N-@)
   ~/bin/**/*(N-@)
