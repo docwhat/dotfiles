@@ -1,0 +1,149 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+begin
+  require 'git/remote/parser'
+rescue LoadError
+  warn 'Have you tried:  gem install git-remote-parser'
+  raise
+end
+
+require 'fileutils'
+require 'optparse'
+require 'pathname'
+require 'English'
+require 'pp'
+
+# Errors for my application
+class AppErrors < StandardError; end
+# Something exited with a non-zero exit code.
+class NonZeroExitCodeError < AppErrors; end
+# No such directory
+class NoSuchDirectory < AppErrors; end
+
+# Pathname representing a git repository.
+class GitDir < Pathname
+  def chdir
+    dir = basename.to_s == '.git' ? dirname : self
+    raise NoSuchDirectory, "Missing directory: #{dir}\n(From: #{self}})" \
+      unless dir.directory?
+
+    Dir.chdir(dir.to_s) do
+      yield
+    end
+  end
+
+  def git?
+    gitroot.directory?
+  rescue NonZeroExitCodeError
+    false
+  end
+
+  def gitroot
+    @gitroot ||= GitDir.new(system('git rev-parse --show-toplevel'))
+  end
+
+  def system(command)
+    chdir do
+      `#{command} 2>/dev/null`.chomp
+    end
+  ensure
+    raise NonZeroExitCodeError, "command:#{command}\n\tdirectory:#{self}" \
+      if $CHILD_STATUS.exitstatus != 0
+  end
+
+  def origin
+    @origin ||= \
+      Git::Remote::Parser.new.parse system('git remote get-url origin')
+  rescue NonZeroExitCodeError
+    nil
+  end
+
+  def host
+    (origin ? origin.host : '').sub(/[:]$/, '')
+  end
+
+  def github?
+    host.start_with? 'github.'
+  end
+
+  def organization
+    origin.owner
+  end
+
+  def repository
+    origin.repo
+  end
+
+  def desired
+    top_directory = Pathname.new('~/src/').expand_path
+    top_directory + host + organization + repository
+  end
+
+  def desired?
+    cleanpath.to_s == desired.cleanpath.to_s
+  end
+end
+
+# Application to move directories to the "correct place".
+class App
+  attr_reader :arguments, :directories
+
+  USAGE = <<~USAGETEXT
+    Usage: #{$PROGRAM_NAME} directory
+
+    Returns the canonical checkout directory.
+  USAGETEXT
+
+  def initialize(argv) # rubocop:disable Metrics/MethodLength
+    init_vars argv
+
+    arguments.each do |argument|
+      git_dir = GitDir.new argument
+      if git_dir.directory?
+        unless git_dir.git?
+          puts "skipping: '#{argument}' is not a git directory"
+          next
+        end
+        directories << git_dir.gitroot
+      elsif argument.start_with? '-'
+        die_with_usage "Unknown option '#{argument}'"
+      else
+        die_with_usage "Unknown argument '#{argument}'"
+      end
+    end
+  ensure
+    freeze_vars
+  end
+
+  def init_vars(argv)
+    @arguments = argv.map(&:to_s).freeze
+    @directories = []
+  end
+
+  def freeze_vars
+    directories.freeze
+  end
+
+  def die_with_usage(message)
+    warn USAGE
+    STDERR.puts
+    die message
+  end
+
+  def die(message)
+    warn "ERROR: #{message}"
+    exit 2
+  end
+
+  def run
+    die_with_usage 'Use only one git directory.' if directories.length > 1
+    die_with_usage 'A git directory is required.' if directories.empty?
+
+    directory = directories.first
+    die directory.inspect.to_s unless directory.github?
+    puts directory.desired
+  end
+end
+
+App.new(ARGV).run if $PROGRAM_NAME == __FILE__
