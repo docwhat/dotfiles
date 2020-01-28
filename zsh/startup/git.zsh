@@ -16,6 +16,7 @@ function clone-repo() {
     return 0
   fi
 
+  mkdir -p "$(dirname "$dir")"
   mv "$tmpdir" "$dir"
   cd "$dir"
 }
