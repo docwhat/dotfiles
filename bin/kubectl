@@ -49,7 +49,7 @@ class App
   end
 
   def arch
-    @archh ||= begin
+    @arch ||= begin
       host_cpu = RbConfig::CONFIG['host_cpu']
       case host_cpu
       when /x86_64/
@@ -142,7 +142,9 @@ class App
   end
 
   def run
+    Process.exec any_kubectl_path, *ARGV if ARGV.first == 'completion'
     ENV['PATH'] = ENV['PATH'] + ":#{KREW_BIN_DIR}" if KREW_BIN_DIR.directory?
+
     download unless ready?
     Process.exec path.to_s, *ARGV
   end
