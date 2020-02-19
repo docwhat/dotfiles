@@ -18,18 +18,6 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB> pumvisible() ? "\<DOWN>"
-      \ : (<SID>is_whitespace() ? "\<TAB>" : coc#refresh())
-snoremap <silent><expr> <TAB> pumvisible() ? "\<DOWN>"
-      \ : (<SID>is_whitespace() ? "\<TAB>" : coc#refresh())
-inoremap <expr><S-TAB> pumvisible() ? "\<UP>" : "\<C-h>"
-inoremap <silent><expr> <C-n>
-      \ pumvisible() ? "\<DOWN>" : coc#refresh()
-inoremap <silent><expr> <C-p>
-      \ pumvisible() ? "\<UP>" : coc#refresh()
-
 " Checks if the cursor is at the beginning of a line or
 " it is after whitespace.
 function! s:is_whitespace()
@@ -68,6 +56,21 @@ else
   inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<C-g>u\<CR>"
 endif
 
+" Use <Tab> for confirm completion.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
+
+inoremap <silent><expr> <C-n>
+      \ pumvisible() ? "\<DOWN>" : coc#refresh()
+inoremap <silent><expr> <C-p>
+      \ pumvisible() ? "\<UP>" : coc#refresh()
+
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <C-Space> coc#refresh()
+
+" Use <C-x><C-o> to complete 'word', 'emoji' and 'include' sources
+imap <silent> <C-x><C-o> <Plug>(coc-complete-custom)
+
 let g:coc_snippet_next = '<TAB>'
 let g:coc_snippet_prev = '<S-TAB>'
 
@@ -100,8 +103,6 @@ vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 highlight link CocHighlightText CursorLine
-
-let g:fishmouse = "quoteme"
 
 augroup CocGroup
   autocmd!
@@ -137,7 +138,7 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 function! DocwhatCocInstallAll()
   let dir = coc#util#extension_root()
