@@ -40,10 +40,7 @@ ensure
   yield if block_given?
 end
 
-auto_require('awesome_print') do
-  # Awesome print is nice at times.
-  AwesomePrint.pry!
-end
+auto_require 'awesome_print'
 
 auto_require 'pry-doc'
 
@@ -56,6 +53,22 @@ auto_require 'hirb' do
 end
 
 auto_require 'hirb-unicode'
+
+auto_require 'pry-nav' do
+  Pry::Commands.command(/^$/, 'repeat last command') do
+    _pry_.run_command Pry.history.to_a.last
+  end
+end
+
+# auto_require 'pry-byebug' do
+#   Pry.commands.alias_command 'c', 'continue'
+#   Pry.commands.alias_command 's', 'step'
+#   Pry.commands.alias_command 'n', 'next'
+#   Pry.commands.alias_command 'f', 'finish'
+#   Pry::Commands.command(/^$/, 'repeat last command') do
+#     _pry_.run_command Pry.history.to_a.last
+#   end
+# end
 
 # Configuration
 Pry.config.pager = true
