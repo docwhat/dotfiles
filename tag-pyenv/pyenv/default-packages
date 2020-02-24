@@ -1,0 +1,7 @@
+autoflake
+bandit
+black
+isort
+pip-tools
+pylint
+yapf
