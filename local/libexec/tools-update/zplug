@@ -1,21 +1,20 @@
 #!/usr/bin/env zsh
 #DESC# zplug and its plugins #DESC#
 
-set -eu
+# Do not set -e -u or zplug causes problems.
+# https://github.com/zplug/zplug/issues/419
+export LC_ALL=en_US.UTF-8
 
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
 setopt EXTENDED_GLOB
 
-set +eu
-source ~/.zplug/init.zsh
-set -eu
+source ~/.zshrc
 
 echo
 print -P "%F{cyan}zplug %F{blue}updating... %F{reset}"
-set +eu
+
 zplug update
-set -eu
 
 # EOF
