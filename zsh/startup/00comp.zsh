@@ -12,6 +12,3 @@ autoload -Uz compinit && compinit "${(@)compinit_args}"
 
 unset compinit_args
 function compinit { }
-
-# Complete aliases
-setopt complete_aliases
