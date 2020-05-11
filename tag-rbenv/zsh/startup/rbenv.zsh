@@ -1,5 +1,5 @@
 if [ "${ZSH_ENABLERUBY}" != false ]; then
-  if (( $+commands[rbenv] )) && [ -d "${RBENV_ROOT}" ]; then
+  if [ -d "${RBENV_ROOT}" ]; then
     mkdir -p "${RBENV_ROOT}/cache"
 
     # TODO make this smarter
@@ -13,8 +13,5 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
 
     function rbenv_rehash { rbenv rehash }
     custom_rehash_hooks=( rbenv_rehash "${custom_rehash_hooks[@]}" )
-    alias bi="bundle install --binstubs .bundle/bin"
   fi
-else
-  alias bi="bundle install"
 fi
