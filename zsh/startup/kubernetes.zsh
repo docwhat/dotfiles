@@ -7,8 +7,6 @@ if is-at-least 5.2; then
   if (( $+commands[kubectl] )); then
     {
       source <(kubectl completion zsh)
-      alias k=kubectl
-      complete -F __start_kubectl k
     } &!
   fi
 
