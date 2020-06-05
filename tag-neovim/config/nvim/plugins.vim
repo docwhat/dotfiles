@@ -91,7 +91,6 @@ Plug 'ruanyl/coverage.vim'
 " Completion & Snippets
 " ruby -rjson -e 'puts JSON.parse(ARGF.read)["dependencies"].keys().sort.map { |x| "      \\ #{39.chr}#{x}#{39.chr}," }' ~/.config/coc/extensions/package.json
 let g:coc_global_extensions = [
-      \ 'coc-ccls',
       \ 'coc-css',
       \ 'coc-dictionary',
       \ 'coc-emmet',
