@@ -31,19 +31,19 @@ if [[ "${OSTYPE}" == darwin* ]]; then
 puts "The process is #{phrases.sample}."
 '
 
-local phrase="$(ruby -e "${prog}")"
-if [ 0 != "${ec}" ]; then
-  say  "Uh-oh! ${phrase} The exit code was $ec."
-  echo " ** ${phrase} The exit code was $ec **" 1>&2
-else
-  say "${phrase}."
-fi
+    local phrase="$(/usr/bin/ruby -e "${prog}")"
+    if [ 0 != "${ec}" ]; then
+      say  "Uh-oh! ${phrase} The exit code was $ec."
+      echo " ** ${phrase} The exit code was $ec **" 1>&2
+    else
+      say "${phrase}."
+    fi
 
-if (( $+functions[iterm-get-attention] )); then
-  iterm-get-attention
-fi
+    if (( $+functions[iterm-get-attention] )); then
+      iterm-get-attention
+    fi
 
-return $ec
+    return $ec
   }
 
   function set-hostname() {
