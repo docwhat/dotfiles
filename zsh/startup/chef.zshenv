@@ -13,12 +13,4 @@ done
 
 unset chef_location chef_locations
 
-if [[ -n $CHEF_LOCATION ]]; then
-  # https://github.com/someara/kitchen-dokken
-  # https://kitchen.ci/docs/faq
-  KITCHEN_YAML=.kitchen.yml
-  KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
-  export KITCHEN_YAML KITCHEN_LOCAL_YAML
-fi
-
 # vim: set ft=zsh :
