@@ -135,3 +135,5 @@
 [filter "itermprofile"]
 	clean = json-canonicalizer
 	smudge = cat
+[pull]
+	ff = only
