@@ -5,7 +5,7 @@ require 'json'
 require 'optparse'
 
 # JSON Pretty Printer
-class App # rubocop:disable Metrics/ClassLength
+class App
   # Renders code as pretty
   class PrettyRenderer
     # Renders code in plain text
@@ -64,7 +64,7 @@ class App # rubocop:disable Metrics/ClassLength
     exit
   end
 
-  def opt_parser # rubocop:disable MethodLength,Metrics/AbcSize
+  def opt_parser # rubocop:disable Metrics/MethodLength
     @opt_parser ||= OptionParser.new do |opts|
       opts.banner = unindent(<<-BANNER)
         Usage: #{opts.program_name} [options] [-|file...]
@@ -97,12 +97,10 @@ class App # rubocop:disable Metrics/ClassLength
     text.gsub(/^#{Regexp.quote first_indent}/, '')
   end
 
-  def patch_colors! # rubocop:disable MethodLength
+  def patch_colors!
     return unless color_available?
     return unless CodeRay::Encoders::Terminal.const_defined? :TOKEN_COLORS
-    unless CodeRay::Encoders::Terminal::TOKEN_COLORS[:debug] == "\e[1;37;44m"
-      return
-    end
+    return unless CodeRay::Encoders::Terminal::TOKEN_COLORS[:debug] == "\e[1;37;44m"
 
     # This sets up solarized colors
 
@@ -141,7 +139,7 @@ class App # rubocop:disable Metrics/ClassLength
                  end
   end
 
-  def run # rubocop:disable Metrics/AbcSize
+  def run
     patch_colors!
     parse(ARGV)
 

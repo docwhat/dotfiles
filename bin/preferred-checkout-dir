@@ -60,7 +60,7 @@ class GitDir < Pathname
   end
 
   def host
-    (origin ? origin.host : '').sub(/[:]$/, '')
+    (origin ? origin.host : '').sub(/:$/, '')
   end
 
   def github?
@@ -95,7 +95,7 @@ class App
     Returns the canonical checkout directory.
   USAGETEXT
 
-  def initialize(argv) # rubocop:disable Metrics/MethodLength
+  def initialize(argv)
     init_vars argv
 
     arguments.each do |argument|

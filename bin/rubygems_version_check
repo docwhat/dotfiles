@@ -28,7 +28,7 @@ class Application
 
     warn "** DEBUG: #{str}" if debug?
   end
-  alias_method :debug?, :debug
+  alias debug? debug
 
   def current
     @current ||= Gem::Version.new(Gem::VERSION)

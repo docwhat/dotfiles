@@ -60,7 +60,7 @@ class GitDir < Pathname
   end
 
   def host
-    (origin ? origin.host : '').sub(/[:]$/, '')
+    (origin ? origin.host : '').sub(/:$/, '')
   end
 
   def github?
@@ -97,7 +97,7 @@ class App
     based on origin.
   USAGETEXT
 
-  def initialize(argv) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def initialize(argv) # rubocop:disable Metrics/MethodLength
     init_vars argv
 
     arguments.each do |argument|
@@ -143,7 +143,7 @@ class App
   end
 
   # I don't care about :reek:TooManyStatements
-  def run_one(source) # rubocop:disable Metrics/MethodLength
+  def run_one(source)
     return if source.desired?
 
     destination = source.desired

@@ -1,10 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# rubocop:disable Lint/MissingCopEnableDirective
-# rubocop:disable Metrics/LineLength,Metrics/AbcSize,Metrics/MethodLength,Metrics/ClassLength
-# rubocop:enable Lint/MissingCopEnableDirective
-
 require 'English'
 require 'json'
 require 'open-uri'
@@ -34,30 +30,30 @@ class App
 
   def os
     @os ||= begin
-      host_os = RbConfig::CONFIG['host_os']
-      case host_os
-      when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
-        'windows'
-      when /darwin|mac os/
-        'darwin'
-      when /linux/
-        'linux'
-      else
-        die "I don't know what os #{host_os.inspect} is."
+        host_os = RbConfig::CONFIG['host_os']
+        case host_os
+        when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+          'windows'
+        when /darwin|mac os/
+          'darwin'
+        when /linux/
+          'linux'
+        else
+          die "I don't know what os #{host_os.inspect} is."
+        end
       end
-    end
   end
 
   def arch
     @arch ||= begin
-      host_cpu = RbConfig::CONFIG['host_cpu']
-      case host_cpu
-      when /x86_64/
-        'amd64'
-      else
-        die "I don't know what arch #{host_cpu.inspect} is."
+        host_cpu = RbConfig::CONFIG['host_cpu']
+        case host_cpu
+        when /x86_64/
+          'amd64'
+        else
+          die "I don't know what arch #{host_cpu.inspect} is."
+        end
       end
-    end
   end
 
   def url
@@ -72,7 +68,7 @@ class App
   def download
     path.dirname.mkpath
 
-    case io = open(url)
+    case io = URI.open(url)
     when StringIO
       begin
         exact_path.open('w', 0o755) { |fd| fd.write(io) }
@@ -108,18 +104,18 @@ class App
 
   def version_data
     @version_data ||= begin
-      stdout, _, status = Open3.capture3(
-        any_kubectl_path,
-        'version', '--output=json'
-      )
-      case status.exitstatus
-      when 0
-        JSON.parse stdout
-      else
-        # Fallback to just trying to execute the command with any kubectl.
-        Process.exec any_kubectl_path, *ARGV
+        stdout, _, status = Open3.capture3(
+          any_kubectl_path,
+          'version', '--output=json'
+        )
+        case status.exitstatus
+        when 0
+          JSON.parse stdout
+        else
+          # Fallback to just trying to execute the command with any kubectl.
+          Process.exec any_kubectl_path, *ARGV
+        end
       end
-    end
   end
 
   # I don't care about :reek:FeatureEnvy
@@ -134,11 +130,11 @@ class App
 
   def version
     @version ||= begin
-      open(
-        "https://storage.googleapis.com/kubernetes-release/release/stable-#{major_minor}.txt",
-        &:read
-      ).chomp
-    end
+        URI.open(
+          "https://storage.googleapis.com/kubernetes-release/release/stable-#{major_minor}.txt",
+          &:read
+        ).chomp
+      end
   end
 
   def run
