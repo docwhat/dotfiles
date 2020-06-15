@@ -18,8 +18,7 @@ fi
 if [ $(uname -a | grep -ci Darwin) = 1 ]; then
   # Load OSX-specific plugins
   zplug plugins/osx, from:oh-my-zsh
+  zplug plugins/marked2, from:oh-my-zsh
 fi
 
 zplug plugins/redis-cli, from:oh-my-zsh
-zplug plugins/rsync, from:oh-my-zsh
-zplug plugins/marked2, from:oh-my-zsh
