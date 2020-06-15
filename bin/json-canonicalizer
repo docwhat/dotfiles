@@ -1,0 +1,11 @@
+#!/bin/bash
+
+py=python
+
+if command -v python3 >/dev/null; then
+  py=python3
+fi
+
+exec "$py" "-mjson.tool" "$@"
+
+# EOF
