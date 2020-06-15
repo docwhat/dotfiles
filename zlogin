@@ -1,11 +1,5 @@
 # vi: ft=zsh :
 
-if (( $+commands[mackey] )); then
-  mackey
-elif (( $+commands[archey] )); then
-  archey
-fi
-
 if (( $+functions[compinit] )); then
   unfunction compinit
 fi
