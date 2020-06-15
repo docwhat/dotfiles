@@ -2,5 +2,5 @@
 
 # Prefer the HomeBrew version since it is the latest stable version.
 if ! [[ -d /usr/local/opt/zsh-completion ]]; then
-  zplug zsh-users/zsh-completions src
+  zplug zsh-users/zsh-completions
 fi
