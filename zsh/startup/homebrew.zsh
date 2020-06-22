@@ -18,27 +18,6 @@ if (( $+commands[brew] )); then
   if [ -x /usr/local/opt/openssl/bin/openssl ]; then
     alias openssl=/usr/local/opt/openssl/bin/openssl
   fi
-
-  function brew() {
-    local myterm=$TERM
-    case "$TERM" in
-      tmux-256color)
-        myterm=screen-256color
-        ;;
-      tmux)
-        myterm=screen
-        ;;
-    esac
-
-    # We want to use the system ruby to compile vim.
-    env \
-      RBENV_VERSION=system \
-      TERM="$myterm" \
-      =brew "$@"
-    if [[ "$1" == *install* ]]; then
-      rehash
-    fi
-  }
 fi
 
 # vim: set ft=zsh :
