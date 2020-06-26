@@ -1,6 +1,11 @@
 if (( $+commands[rustup] )); then
   # Rustup Completions
-  rustup completions zsh > ~/.zsh/functions/_rustup
+  if [[ -n ~/.zsh/functions/_rustup(#qN.mh+24) ]]; then
+    {
+    rustup completions zsh \
+      > ~/.zsh/functions/_rustup
+    } &!
+  fi
 
   # Cargo Completions
   c="$(rustup which cargo)"
