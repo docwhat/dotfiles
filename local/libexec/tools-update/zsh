@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-#DESC# zsh: compile functions
+#DESC# zsh: compile functions #DESC#
 
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
