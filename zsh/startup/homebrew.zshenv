@@ -11,9 +11,6 @@ if (( $+commands[brew] )); then
   if [[ -d /usr/local/share/zsh-completions ]]; then
     fpath=(/usr/local/share/zsh-completions "${fpath[@]}")
   fi
-
-  # Disable auto update; it is annoyingly slow.
-  export HOMEBREW_NO_AUTO_UPDATE=1
 fi
 
 # vim: set ft=zsh :
