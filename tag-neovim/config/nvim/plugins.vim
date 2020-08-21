@@ -131,6 +131,7 @@ Plug 'chr4/nginx.vim'
 Plug 'google/vim-jsonnet'
 Plug 'elzr/vim-json'
 Plug 'neoclide/jsonc.vim'
+Plug 'GutenYe/json5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty', { 'tag': 'v*' }
 Plug 'HerringtonDarkholme/yats.vim' " TypeScript Syntax
