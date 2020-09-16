@@ -85,7 +85,7 @@ Plug 'junegunn/vader.vim'
 
 " Style/Lint
 Plug 'dbakker/vim-lint'
-Plug 'w0rp/ale', { 'tag': 'v*' }
+Plug 'dense-analysis/ale', { 'tag': 'v*' }
 Plug 'ruanyl/coverage.vim'
 
 " Completion & Snippets
