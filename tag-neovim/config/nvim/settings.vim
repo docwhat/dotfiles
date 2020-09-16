@@ -264,14 +264,6 @@ if HasPlugin('codi.vim') " {{{
   endif
 endif " }}}
 
-" Dirvish -- path navigator
-if HasPlugin('vim-dirvish') " {{{
-  augroup VimrcDirvish
-    autocmd!
-    autocmd FileType dirvish call fugitive#detect(@%)
-  augroup END
-endif " }}}
-
 " Committia -- Git commit message helper
 if HasPlugin('committia.vim') " {{{
   let g:committia_hooks = {}
