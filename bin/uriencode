@@ -1,18 +1,18 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'cgi'
+require 'erb'
 
 if ARGV.empty?
   if STDIN.tty?
     puts 'URI encodes text via stdin or on the command line.'
     exit 0
   else
-    puts CGI.escape(STDIN.read.chomp)
+    puts ERB::Util.url_encode STDIN.read.chomp
   end
 else
   ARGV.each do |arg|
-    puts CGI.escape(arg)
+    puts ERB::Util.url_encode arg
   end
 end
 
