@@ -138,3 +138,6 @@
 	smudge = cat
 [pull]
 	ff = only
+[delta]
+	keep-plus-minus-markers = true
+	syntax-theme = DarkNeon

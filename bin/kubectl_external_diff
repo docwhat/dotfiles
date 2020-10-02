@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -eu
+
+function has() {
+  local -r name=$1
+  command -v "$name" >/dev/null 2>&1
+}
+
+if [[ -x /usr/local/opt/git-delta/bin/delta ]]; then
+  diff -u "$@" | /usr/local/opt/git-delta/bin/delta
+elif has diff-so-fancy; then
+  diff -u "$@" | diff-so-fancy
+elif has bat; then
+  diff -u "$@" | bat --style=changes
+elif has colordiff; then
+  colordiff -u "$@"
+elif [[ -x /usr/local/opt/diffutils/bin/diff ]]; then
+  /usr/local/opt/diffutils/bin/diff -u --color "$@"
+else
+  diff -u "$@"
+fi
+
+# Ensure the exitcode is correct
+exec diff "$@" >/dev/null 2>&1

@@ -15,3 +15,7 @@ function reset-kubeconfig {
 if [[ "${KUBECONFIG:-$HOME/.kube/config}" == "$HOME/.kube/config" ]]; then
   reset-kubeconfig
 fi
+
+export KUBECTL_EXTERNAL_DIFF="${KUBECTL_EXTERNAL_DIFF:-$HOME/bin/kubectl_external_diff}"
+
+# EOF
