@@ -1,12 +1,11 @@
 # vi: ft=zsh :
 
 # Less Options
-export LESS='-AFgiJMnqRsuXx4'
+export LESS='-AFgiMnqRsuXx4'
 # A  - SEARCH-SKIP-SCREEN
 # F  - quit-if-one-screen
 # g  - hilite-search
 # i  - ignore-case
-# J  - quit-if-one-screen
 # M  - LONG-PROMPT
 # n  - line-numbers
 # q  - silent
