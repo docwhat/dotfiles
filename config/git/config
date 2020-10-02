@@ -67,6 +67,7 @@
 [diff]
 	tool = vscode
 	renames = copy
+	colorMoved = default
 
 [diff "scpt"]
 	textconv = osadecompile
