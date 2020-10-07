@@ -51,6 +51,7 @@
 	excludesfile = ~/.config/git/ignore
 	attributesfile = ~/.config/git/attributes
 	autocrlf = input
+	pager = delta
 
 [merge]
 	ff = only
