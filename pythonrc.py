@@ -37,8 +37,7 @@ class pythonrc:
     debug = None
 
     def init(cls):
-        """Initialize a nice environment to run in
-        """
+        """Initialize a nice environment to run in"""
         import os
 
         cls.debug = os.getenv("PYTHONRC_DEBUG")
@@ -110,8 +109,8 @@ class pythonrc:
         "Returns the time in a nicely formatted string"
         import time
 
-        format = "%A %I:%M %p, %B %d, %Y %Z"
-        return time.strftime(format)
+        fmtstr = "%A %I:%M %p, %B %d, %Y %Z"
+        return time.strftime(fmtstr)
 
     strtime = classmethod(strtime)
 
