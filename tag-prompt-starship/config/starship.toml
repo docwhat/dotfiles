@@ -7,6 +7,10 @@ charging_symbol = ""
 discharging_symbol = ""
 full_symbol = ""
 
+[cmd_duration]
+min_time = 3_000 # ms
+show_milliseconds = true
+
 [conda]
 symbol = " "
 
@@ -60,6 +64,8 @@ stashed = '[$count ](blue)'
 untracked = '[$count‍ ](#dddddd)'
 
 [git_branch]
+# symbol = " "
+# symbol = " "
 symbol = " "
 
 [golang]
@@ -103,16 +109,23 @@ symbol = " "
 symbol = " "
 
 [python]
-symbol = " "
+symbol = " "
 
 [ruby]
-symbol = " "
+symbol = " "
 
 [rust]
-symbol = " "
+symbol = " "
+
+[shlvl]
+# disabled = false
+symbol = "↕️ "
 
 [status]
 disabled = false
 
 [swift]
 symbol = "ﯣ "
+
+[terraform]
+symbol = "💠 "
