@@ -70,3 +70,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+for rc in ~/.bash/startup/*-rc.bash; do
+  . "$rc"
+done
+
+# EOF

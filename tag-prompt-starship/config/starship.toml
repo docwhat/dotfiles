@@ -1,0 +1,118 @@
+[aws]
+disabled = true
+symbol = " "
+
+[battery]
+charging_symbol = ""
+discharging_symbol = ""
+full_symbol = ""
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_commit]
+# commit_hash_length = 5
+# only_detached = false
+
+[git_status]
+conflicted_count.enabled = true
+deleted_count.enabled = true
+modified_count.enabled = true
+renamed_count.enabled = true
+show_sync_count.enabled = true
+staged_count.enabled = true
+stashed_count.enabled = true
+untracked_count.enabled = true
+
+format = """([\
+$stashed\
+$ahead_behind\
+$deleted\
+$renamed\
+$modified\
+$staged\
+$untracked\
+$conflicted\
+]($style))"""
+style = ""
+
+ahead = '[$count ](bg:#1e90ff fg:#ffffff) '
+behind = '[$count ](bg:#32cd32 fg:#ffffff) '
+conflicted = '[$count ](bold red)'
+deleted = '[$count ](bold red)'
+diverged = '[$behind_count $ahead_count ](bg:#ffd700 fg:#000000)'
+modified = '[$count ](#ffd700)'
+renamed = '[$count ](#ff8c00)'
+staged = '[$count ](#32cd32)'
+stashed = '[$count ](blue)'
+untracked = '[$count‍ ](#dddddd)'
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kubernetes]
+# format = 'on [⛵ $context \($namespace\)](dimmed green) '
+disabled = true
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[status]
+disabled = false
+
+[swift]
+symbol = "ﯣ "
