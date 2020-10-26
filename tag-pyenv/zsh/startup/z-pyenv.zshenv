@@ -18,11 +18,6 @@ if [[ ${ZSH_ENABLEPYTHON} != false ]]; then
 
   if [[ -d $PYENV_ROOT ]]; then
     path+="${PYENV_ROOT}/bin"
-
-    ## Initialize the PYENV environment.
-    if ! typeset -f pyenv >/dev/null; then
-      eval "$(pyenv init - --no-rehash)"
-    fi
   else
     # pyenv is not installed.
     unset PYENV_ROOT PYENV_SHELL
