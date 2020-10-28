@@ -1,3 +1,5 @@
+add_newline = false
+
 [aws]
 disabled = true
 symbol = " "
@@ -16,6 +18,20 @@ symbol = " "
 
 [dart]
 symbol = " "
+
+[directory]
+truncation_length = 1
+fish_style_pwd_dir_length = 1
+
+format = "[$read_only]($read_only_style)[$path]($style) "
+style = "bold italic #87A752"
+
+read_only = " "
+read_only_style = "red dimmed"
+
+[directory.substitutions]
+# "~" = " "
+# "/" = "[/](dimmed)" # https://github.com/starship/starship/issues/1837
 
 [docker]
 symbol = " "
@@ -74,6 +90,9 @@ symbol = " "
 [haskell]
 symbol = " "
 
+[hostname]
+format = "[$hostname]($style) "
+
 [hg_branch]
 symbol = " "
 
@@ -129,3 +148,7 @@ symbol = "ﯣ "
 
 [terraform]
 symbol = "💠 "
+
+[username]
+format = "[$user]($style) "
+style_user = "bold dimmed blue"
