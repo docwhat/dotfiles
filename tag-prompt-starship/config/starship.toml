@@ -20,8 +20,8 @@ symbol = " "
 symbol = " "
 
 [directory]
-truncation_length = 1
-fish_style_pwd_dir_length = 1
+truncation_length = 3
+truncate_to_repo = false
 
 format = "[$read_only]($read_only_style)[$path]($style) "
 style = "bold italic #87A752"
@@ -30,7 +30,12 @@ read_only = " "
 read_only_style = "red dimmed"
 
 [directory.substitutions]
-# "~" = " "
+
+"~" = " "
+# "~/src/github.com" = " "
+# "src/github.com" = " "
+# "github.com" = " "
+
 # "/" = "[/](dimmed)" # https://github.com/starship/starship/issues/1837
 
 [docker]
