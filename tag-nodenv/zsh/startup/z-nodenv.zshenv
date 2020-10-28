@@ -8,21 +8,16 @@ if [ "${ZSH_ENABLENODE}" != false ]; then
   else
     NODENV_ROOT="${HOME}/.nodenv"
     # Save it for future use.
-    echo "$NODENV_ROOT" > ~/.config/personal/nodenv-root
+    echo "$NODENV_ROOT" >~/.config/personal/nodenv-root
   fi
   export NODENV_ROOT
 
   ## Set the shell for NODENV
   NODENV_SHELL=zsh
 
-  if [[ -d "$NODENV_ROOT" ]] && [[ -x "${NODENV_ROOT}/bin/nodenv" ]]; then
-    if ! (( $+commands[nodenv] )); then
+  if [[ -d $NODENV_ROOT ]] && [[ -x "${NODENV_ROOT}/bin/nodenv" ]]; then
+    if ! (($ + commands[nodenv])); then
       path+="${NODENV_ROOT}/bin"
-    fi
-
-    ## Initialize the NODENV environment.
-    if ! (( $+functions[nodenv] )); then
-      eval "$(nodenv init - --no-rehash)"
     fi
   else
     # nodenv is not installed.
