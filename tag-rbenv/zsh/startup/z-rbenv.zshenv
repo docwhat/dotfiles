@@ -19,10 +19,5 @@ if [ "${ZSH_ENABLERUBY}" != false ]; then
     if ! (( $+commands[rbenv] )); then
       path+="${RBENV_ROOT}/bin"
     fi
-
-    ## Initialize the RBENV environment.
-    if ! (( $+functions[rbenv] )); then
-      eval "$(rbenv init - --no-rehash)"
-    fi
   fi
 fi
