@@ -13,6 +13,9 @@ full_symbol = ""
 min_time = 3_000 # ms
 show_milliseconds = true
 
+show_notifications = true
+min_time_to_notify = 10_000 # ms
+
 [conda]
 symbol = " "
 
