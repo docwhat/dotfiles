@@ -68,21 +68,21 @@ full_symbol = ""
 min_time = 3_000 # ms
 show_milliseconds = true
 
-show_notifications = true
 min_time_to_notify = 10_000 # ms
+show_notifications = true
 
 [conda]
 symbol = " "
 
 [custom.shell]
-command = "shell-name"
-when = "true"
-style = "fg:33"
+command = "starship-shell"
 shell = ["bash", "--noprofile", "--norc"]
+style = "fg:33"
+when = "true"
 
 [custom.sudo]
-description = "sudo: valid timestamp marker"
 command = "echo -n '🔓'"
+description = "sudo: valid timestamp marker"
 format = "$output "
 style = ""
 when = "sudo -vn &>/dev/null"
@@ -109,8 +109,8 @@ when = "sudo -vn &>/dev/null"
 symbol = " "
 
 [directory]
-truncation_length = 3
 truncate_to_repo = false
+truncation_length = 3
 
 format = "[$read_only]($read_only_style)[$path]($style) "
 style = "bold italic #87A752"

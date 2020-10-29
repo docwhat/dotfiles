@@ -1,8 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 set -eu
 
-shell=$(basename "$SHELL")
+shell=$(basename "${1:-$STARSHIP_SHELL}")
+declare -r shell
 
 case "$shell" in
 bash)
