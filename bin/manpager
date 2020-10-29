@@ -3,23 +3,25 @@
 set -euo pipefail
 
 function has_exe() {
-  command -v "$1">/dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 function pager() {
-  if [ -t 1 ]; then
+  if command -v bat 2>/dev/null >&2; then
+    bat -l man
+  elif [ -t 1 ]; then
     if has_exe nvim; then
       nvim -R \
         -c 'set filetype=man shiftwidth=8 cmdheight=1 nonumber nolist nomodified nomodifiable' \
         -
-              return
+      return
     fi
 
     if has_exe vim; then
       vim -R \
         -c 'set filetype=man shiftwidth=8 cmdheight=1 nonumber nolist nomodified nomodifiable' \
         -
-              return
+      return
     fi
 
     "$PAGER"
