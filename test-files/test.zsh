@@ -2,6 +2,6 @@
 
 set -x
 
-if (($+commands[zsh])); then
+if (( $+commands[zsh] )); then
   echo found zsh
 fi

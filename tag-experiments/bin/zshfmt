@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+
+declare -r INDENTSIZE=2
+
+printsymbol() {
+  local -ri indent=$(( $1 * INDENTSIZE ))
+  local -r symbol=$2
+
+  printf "% ${indent}s" ""
+  printf "%s " "$symbol"
+}
+
+fmtone() {
+  set -x
+  local -r content=$(cat "$1")
+  local -i indent=0
+  local -i newline=0
+  local line
+  for line in "${(Z+c+@)content}"; do
+    case "$line" in
+      ';' )
+        printf "\n"
+        newline=1
+        continue
+        ;;
+      'do' | '{' )
+        indent=$(( indent + 1 ))
+        printsymbol $(( indent * newline )) $line
+      ;;
+      'done' | '}' )
+        indent=$(( indent - 1 ))
+        printsymbol $(( indent * newline )) $line
+      ;;
+      *)
+        printsymbol $(( indent * newline )) $line
+        ;;
+    esac
+    newline=0
+  done
+  printf "\n"
+  set +x
+}
+
+for file in "$@"; do
+  fmtone "$file"
+done
