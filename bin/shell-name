@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -eu
+
+shell=$(basename "$SHELL")
+
+case "$shell" in
+bash)
+  printf '%s' '🏏sh'
+  ;;
+zsh)
+  printf '%s' 'ⓩ sh'
+  ;;
+fish)
+  # printf '%s' '🐟sh'
+  printf '%s' ' sh'
+  ;;
+sh)
+  printf '%s' '🐚'
+  ;;
+*)
+  printf '%s' "$shell"
+  ;;
+esac
+
+# EOF

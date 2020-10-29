@@ -1,5 +1,60 @@
 add_newline = false
 
+format = """
+${custom.shell}\
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$ruby\
+$rust\
+$swift\
+$terraform\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$cmd_duration\
+$custom\
+$line_break\
+${custom.sudo}\
+$lua\
+$jobs\
+$battery\
+$time\
+$status\
+$character"""
+
 [aws]
 disabled = true
 symbol = " "
@@ -18,6 +73,37 @@ min_time_to_notify = 10_000 # ms
 
 [conda]
 symbol = " "
+
+[custom.shell]
+command = "shell-name"
+when = "true"
+style = "fg:33"
+shell = ["bash", "--noprofile", "--norc"]
+
+[custom.sudo]
+description = "sudo: valid timestamp marker"
+command = "echo -n '🔓'"
+format = "$output "
+style = ""
+when = "sudo -vn &>/dev/null"
+
+# [custom.ssh_no_keys]
+# description = "SSH missing keys"
+# when = "ssh-add -l | grep -q 'no identities'"
+# command = "echo 🚫"
+# format = "[$output]($style)$symbol "
+# shell = ["bash", "--noprofile", "--norc"]
+# symbol = "🔑"
+# style = "bold fg:red"
+
+# [custom.ssh_keys]
+# description = "SSH key count"
+# when = "ssh-add -l | grep -v -q 'no identities'"
+# command = "ssh-add -l | grep -v 'no identities' | wc -l"
+# format = "[$output]($style)$symbol "
+# shell = ["bash", "--noprofile", "--norc"]
+# symbol = "🔑"
+# style = "bold fg:green"
 
 [dart]
 symbol = " "
@@ -84,8 +170,8 @@ diverged = '[$behind_count $ahead_count ](bg:#ffd700 fg:#000000)'
 modified = '[$count ](#ffd700)'
 renamed = '[$count ](#ff8c00)'
 staged = '[$count ](#32cd32)'
-stashed = '[$count ](blue)'
-untracked = '[$count‍ ](#dddddd)'
+stashed = '[$count ](#0088ff)'
+untracked = '[$count ](#ffaadd)'
 
 [git_branch]
 # symbol = " "
