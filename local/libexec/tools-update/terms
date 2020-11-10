@@ -1,41 +1,88 @@
 #!/bin/bash
 #DESC# updates TERM entries for terminfo #DESC#
 
-set -euo pipefail
+set -Eeuo pipefail
+
+trap _exit_trap EXIT
+trap _err_trap ERR
+_showed_traceback=f
+
+function _exit_trap() {
+  local _ec="$?"
+  if [[ $_ec != 0 && ${_showed_traceback} != t ]]; then
+    traceback 1
+  fi
+}
+
+function _err_trap() {
+  local _ec="$?"
+  local _cmd="${BASH_COMMAND:-unknown}"
+  traceback 1
+  _showed_traceback=t
+  echo "The command ${_cmd} exited with exit code ${_ec}." 1>&2
+}
+
+function traceback() {
+  # Hide the traceback() call.
+  local -i start=$((${1:-0} + 1))
+  local -i end=${#BASH_SOURCE[@]}
+  local -i i=0
+  local -i j=0
+
+  echo "Traceback (last called is first):" 1>&2
+  for ((i = start; i < end; i++)); do
+    j=$((i - 1))
+    local function="${FUNCNAME[$i]}"
+    local file="${BASH_SOURCE[$i]}"
+    local line="${BASH_LINENO[$j]}"
+    echo "     ${function}() in ${file}:${line}" 1>&2
+  done
+}
 
 typeset -ar terms=(
-xterm
-xtermc
-xterm-color
-xterm-256color
-
-screen
-screen-256color
-screen.xterm-new
-
-tmux
-tmux-256color
+  xterm
+  xtermc
+  xterm-color
+  xterm-256color
+  \
+  screen
+  screen-256color
+  screen.xterm-new
+  \
+  tmux
+  tmux-256color
 )
 
+declare -r cachedir="${HOME}/.cache/tools-update"
+declare -r tidir="${cachedir}/terminfo.tmp"
+declare -r tarfile="${cachedir}/terminfo.src.gz"
+
 fetch_term_source() {
-  if [ ! -r terminfo.src.gz ]; then
-    curl -LsSf -o terminfo.src.gz http://invisible-island.net/datafiles/current/terminfo.src.gz
+  if [ ! -r "$tarfile" ]; then
+    curl -LsSf -o "$tarfile" http://invisible-island.net/datafiles/current/terminfo.src.gz
   else
-    curl -LsSf -z terminfo.src.gz -o terminfo.src.gz http://invisible-island.net/datafiles/current/terminfo.src.gz
+    curl -LsSf -z "$tarfile" -o "$tarfile" http://invisible-island.net/datafiles/current/terminfo.src.gz
   fi
 }
 
 unpack_terms() {
-  gzip -dc terminfo.src.gz > terminfo.src
-  env TERMINFO=terminfo.tmp tic -xa terminfo.src
+  rm -rf "$cachedir"/*.tmp
+  gzip -dc "$tarfile" >"${cachedir}/terminfo.src"
+  env TERMINFO="$tidir" tic "${cachedir}/terminfo.src"
 }
 
 correct_backspace() {
+  local tmpfile term
+  mkdir terms.tmp
   # Fix backspace character
   for term in "${terms[@]}"; do
     tmpfile="terms.tmp/${term}.terminfo"
-    env TERMINFO=terminfo.tmp infocmp -1IL "$term"| sed 's/key_backspace=^[hH]/key_backspace=\\177/' > "$tmpfile"
-    env TERMINFO=terminfo.tmp tic -xa "$tmpfile"
+    env TERMINFO="$tidir" \
+      infocmp -1IL "$term" |
+      sed 's/key_backspace=^[hH]/key_backspace=\\177/' \
+        >"$tmpfile"
+    env TERMINFO="$tidir" \
+      tic -xa "$tmpfile"
     unset tmpfile
   done
 
@@ -43,25 +90,27 @@ correct_backspace() {
   # rm -rf terms.tmp
 }
 
+import_terminals() {
+  local tmpfile term
+  ## Import terminals for use.
+  for term in "${terms[@]}"; do
+    tmpfile="terms.tmp/${term}.terminfo"
+    env TERMINFO="$tidir" \
+      infocmp -1IL "$term" \
+      >"$tmpfile"
+    tic -xa "$tmpfile"
+  done
+}
 ## Main
-mkdir -p "$HOME/.cache/tools-update"
-cd "$HOME/.cache/tools-update"
-
-rm -rf ./*.tmp
-mkdir terms.tmp
+mkdir -p "$cachedir"
+cd "$cachedir"
 
 fetch_term_source
 
 unpack_terms
 correct_backspace
 
-## Import terminals for use.
-for term in "${terms[@]}"; do
-  tmpfile="terms.tmp/${term}.terminfo"
-  env TERMINFO=terminfo.tmp infocmp -1IL "$term" > "$tmpfile"
-  tic -xa "$tmpfile"
-  unset tmpfile
-done
+import_terminals
 
 rm -rf ./terminfo.src ./*.tmp
 
