@@ -137,8 +137,8 @@ symbol = " "
 symbol = " "
 
 [git_commit]
-# commit_hash_length = 5
-# only_detached = false
+commit_hash_length = 5
+tag_disabled = false
 
 [git_status]
 conflicted_count.enabled = true
