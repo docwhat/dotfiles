@@ -1,8 +1,0 @@
-# vim:set ft=zsh:
-
-if is-at-least 5.0; then
-  # Add Fish-like autosuggestions to your ZSH
-  zplug zsh-users/zsh-autosuggestions
-
-  zplug zdharma/fast-syntax-highlighting
-fi

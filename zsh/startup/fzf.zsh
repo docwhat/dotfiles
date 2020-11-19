@@ -1,4 +1,4 @@
-if [ -d ~/.fzf ]; then
+if [[ -d ~/.fzf ]]; then
   source ~/.fzf/shell/completion.zsh
   source ~/.fzf/shell/key-bindings.zsh
   # bindkey '^T' fzf-completion
@@ -22,7 +22,7 @@ if [ -d ~/.fzf ]; then
     fi
   }
 
-  if (( $+commands[fd] )); then
+  if (( ${+commands[fd]} )); then
     # Use fd (https://github.com/sharkdp/fd) instead of the default find
     # command for listing path candidates.
     # - The first argument to the function ($1) is the base path to start traversal
@@ -37,6 +37,6 @@ if [ -d ~/.fzf ]; then
     }
   fi
 
-  manpath=( "${manpath[@]}" ~/.fzf/man )
+  manpath+=( ~/.fzf/man )
 fi
 # vim: set ft=zsh :

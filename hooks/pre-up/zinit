@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+if [[ ! -f ~/.zinit/bin/.git ]]; then
+  mkdir -p ~/.zinit
+  hh_git 'ZInit' https://github.com/zdharma/zinit.git ~/.zinit/bin
+fi
+
+# EOF

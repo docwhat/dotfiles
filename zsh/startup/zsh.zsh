@@ -53,8 +53,11 @@ if is-at-least 4.3; then
 fi
 
 alias copy-last-command='fc -l -n -1 -1 | tr -d "\n" | pbcopy'
-if (( $+commands[resize] )); then
+if (( ${+commands[resize]} )); then
   alias resize='eval "$(\resize)"'
 fi
+
+# Fixes paste being slow.
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
 # EOF

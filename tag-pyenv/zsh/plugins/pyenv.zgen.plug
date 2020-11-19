@@ -1,1 +1,0 @@
-zplug "davidparsson/zsh-pyenv-lazy", from:github, use:"pyenv-lazy.plugin.zsh"

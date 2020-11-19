@@ -1,2 +1,0 @@
-# Fixes paste being slow.
-zstyle ':bracketed-paste-magic' active-widgets '.self-*'
