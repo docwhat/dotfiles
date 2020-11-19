@@ -1,5 +1,5 @@
 # Settings related to homebrew
-if (( $+commands[brew] )); then
+if (( ${+commands[brew]} )); then
   # Docbook support
   export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
