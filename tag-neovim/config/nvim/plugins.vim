@@ -205,6 +205,9 @@ Plug 'ryanoasis/vim-devicons'
 " Diff changes between buffer and saved
 Plug 'plytophogy/vim-diffchanges'
 
+" zinit syntax
+Plug 'zinit-zsh/zinit-vim-syntax'
+
 call plug#end()
 
 " vim: set foldminlines=0 foldmethod=marker :
