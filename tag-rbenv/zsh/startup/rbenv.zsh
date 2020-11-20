@@ -1,7 +1,6 @@
-if [ "${ZSH_ENABLERUBY}" != false ]; then
-  if [ -d "${RBENV_ROOT}" ]; then
-    mkdir -p "${RBENV_ROOT}/cache"
-    function rbenv_rehash { rbenv rehash }
-    custom_rehash_hooks=( rbenv_rehash "${custom_rehash_hooks[@]}" )
-  fi
+if (( ${+commands[rbenv]} )); then
+  function rbenv_rehash { command rbenv rehash }
+  custom_rehash_hooks=( rbenv_rehash "${custom_rehash_hooks[@]}" )
+
+  eval "$(rbenv init - | sed -e 's/^\(command.*null$\)/& \&!/')"
 fi

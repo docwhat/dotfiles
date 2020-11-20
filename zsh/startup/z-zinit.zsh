@@ -3,6 +3,13 @@ if ((${+functions[compinit]})); then
   unfunction compinit
 fi
 
+function from-where {
+  echo "Completion used:"
+  whence -v $_comps[$1] | offset
+  echo "Candidate completions:"
+  print -l $^fpath/$_comps[$1](N) | offset
+}
+
 declare -a zinit_plugins=(
   id-as"z.lua"
   has"lua"
@@ -47,13 +54,5 @@ fi
 zinit wait lucid light-mode for "${zinit_plugins[@]}"
 
 unset zinit_plugins
-
-function from-where {
-  echo "Completion used:"
-  whence -v $_comps[$1] | offset
-  echo "Candidate completions:"
-  print -l $^fpath/$_comps[$1](N) | offset
-}
-
 
 # EOF
