@@ -1,6 +1,4 @@
 if (( ${+commands[nodenv]} )); then
-  function nodenv_rehash { command nodenv rehash }
-  custom_rehash_hooks=( nodenv_rehash "${custom_rehash_hooks[@]}" )
-
-  eval "$(nodenv init - | sed -e 's/^\(command.*null$\)/& \&!/')"
+  add-rehash-hook command nodenv rehash
+  eval "$(nodenv init - --no-rehash zsh)"
 fi

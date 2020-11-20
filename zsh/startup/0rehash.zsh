@@ -1,8 +1,13 @@
 typeset -a custom_rehash_hooks=()
 
-function custom_rehash {
-  for hook in "${custom_rehash_hooks[@]}"; do
-    "$hook"
+add-rehash-hook() {
+  custom_rehash_hooks+=("$*")
+}
+
+custom_rehash() {
+  local cmd
+  for cmd in "${custom_rehash_hooks[@]}"; do
+    eval "$cmd"
   done
   builtin rehash
 }
