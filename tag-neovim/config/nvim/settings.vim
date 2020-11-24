@@ -110,11 +110,6 @@ if has('pythonx')
   set pyxversion=3
 endif
 
-" Detect Python 3
-if executable('/usr/local/opt/python3/bin/python3')
-  let g:python3_host_prog='/usr/local/opt/python3/bin/python3'
-endif
-
 " }}}
 
 " Spelling {{{
