@@ -84,7 +84,7 @@ function scan_ssh_configs {
 }
 
 # Gather info from the known_hosts files
-for khostfile in /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts; do
+for khostfile in /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts ~/.ssh/known_hosts.d/*(N); do
   if [[ -r "$khostfile" ]]; then
     potential_khosts=(${(s/,/j/,/u)${(f)"$(<$khostfile)"}%%[ |#]*})
     addhosts "$potential_khosts[@]"
