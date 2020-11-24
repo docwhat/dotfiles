@@ -1,4 +1,4 @@
-zinit ice from"gh-r" as"program"
+zinit ice id-as"starship" from"gh-r" as"program"
 zinit light starship/starship
 
 if (( $+commands[starship] )); then
