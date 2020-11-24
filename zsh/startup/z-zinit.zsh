@@ -28,6 +28,12 @@ declare -a zinit_plugins=(
   id-as"completion-generator"
   @RobSis/zsh-completion-generator
 
+  id-as"shfmt"
+  as"program"
+  from"gh-r"
+  mv'shfmt* -> $ZPFX/bin/shfmt'
+  @mvdan/sh
+
   id-as"fast-syntax-highlighting"
   atinit"ZINIT[COMPINIT_OPTS]='-i -d "${ZSH_COMPDUMP}"'; zicompinit; zicdreplay"
   @zdharma/fast-syntax-highlighting
