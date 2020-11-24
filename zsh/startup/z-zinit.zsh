@@ -38,7 +38,7 @@ declare -a zinit_plugins=(
   atinit"ZINIT[COMPINIT_OPTS]='-i -d "${ZSH_COMPDUMP}"'; zicompinit; zicdreplay"
   @zdharma/fast-syntax-highlighting
 
-	id-as"zsh-autopair"
+  id-as"zsh-autopair"
   @hlissner/zsh-autopair
 
   id-as"alias-tips"
@@ -46,43 +46,45 @@ declare -a zinit_plugins=(
   atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
   @djui/alias-tips
 
-	id-as"fzf-tab"
-	has"fzf"
-	atload"zstyle ':fzf-tab:complete:cd:*' fzf-preview --height=100% 'lsd -1 --color=always $realpath'"
+  id-as"fzf-tab"
+  has"fzf"
+  atload"zstyle ':fzf-tab:complete:cd:*' fzf-preview --height=100% 'lsd -1 --color=always $realpath'"
   @Aloxaf/fzf-tab
 
-	id-as"bat"
-	as"program"
-	from"gh-r"
-	mv"bat-* -> bat"
-	atclone'mv bat/bat.1 "$ZPFX/share/man/man1/" && mv bat/autocomplete/bat.zsh bat/autocomplete/_bat'
-	atpull'%atclone'
-	pick"bat"
-	atload'alias less="bat"'
+  id-as"bat"
+  as"program"
+  from"gh-r"
+  mv"bat-* -> files"
+  atclone'mkdir -p "$ZPFX/share/man/man1/"'
+  atclone'mv files/bat.1 "$ZPFX/share/man/man1/"'
+  atclone'mv files/autocomplete/bat.zsh _bat'
+  atpull'%atclone'
+  pick"files/bat"
+  atload'alias less="bat"'
   @sharkdp/bat
 
   id-as"fd"
   as"program"
   from"gh-r"
-  mv"fd-* -> fd"
-	atclone'mv fd/fd.1 "$ZPFX/share/man/man1/"'
-	atpull'%atclone'
-  atinit'source fd/autocomplete/fd.bash'
-  pick"fd"
+  mv"fd-* -> files"
+  atclone'mkdir -p "$ZPFX/share/man/man1"'
+  atclone'mv files/fd.1 "$ZPFX/share/man/man1/"'
+  atpull'%atclone'
+  pick"files/fd"
   @sharkdp/fd
 
   id-as"bat-extras"
   as"program"
   atclone'./build.sh --prefix "$ZPFX" --install && mv man/*.1 "$ZPFX/share/man/man1"'
-	atpull'%atclone'
+  atpull'%atclone'
   @eth-p/bat-extras
 
-	id-as"lsd"
-	as"program"
-	from"gh-r"
-	mv"lsd* -> lsd"
-	pick"lsd/lsd"
-	atload'alias ls="lsd"'
+  id-as"lsd"
+  as"program"
+  from"gh-r"
+  mv"lsd* -> lsd"
+  pick"lsd/lsd"
+  atload'alias ls="lsd"'
   @Peltoche/lsd
 
   id-as"autosuggestions"
