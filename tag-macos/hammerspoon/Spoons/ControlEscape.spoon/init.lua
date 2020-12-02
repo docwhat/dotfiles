@@ -48,7 +48,8 @@ function obj:init()
         self.controlKeyTimer:start()
       else
         if self.sendEscape then
-          hs.eventtap.keyStroke({}, 'escape')
+          -- See https://github.com/jasonrudolph/ControlEscape.spoon/pull/9
+          hs.eventtap.keyStroke({}, 'escape', 1)
         end
         self.lastModifiers = newModifiers
         self.controlKeyTimer:stop()
