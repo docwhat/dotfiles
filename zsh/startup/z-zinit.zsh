@@ -31,8 +31,16 @@ declare -a zinit_plugins=(
   id-as"shfmt"
   as"program"
   from"gh-r"
-  mv'shfmt* -> $ZPFX/bin/shfmt'
+  atclone"mv shfmt* shfmt"
+  pick"shfmt"
   @mvdan/sh
+
+  id-as"shellcheck"
+  as"program"
+  from"gh-r"
+  mv"shellcheck* -> shellcheck"
+  pick"shellcheck/shellcheck"
+  @koalaman/shellcheck
 
   id-as"fast-syntax-highlighting"
   atinit"ZINIT[COMPINIT_OPTS]='-i -d "${ZSH_COMPDUMP}"'; zicompinit; zicdreplay"
