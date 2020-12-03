@@ -18,7 +18,8 @@ declare -a zinit_plugins=(
   id-as"git-extras"
   has"git"
   src"etc/git-extras-completion.zsh"
-  make"PREFIX=$ZPFX"
+  atclone'make PREFIX=$ZPFX uninstall >/dev/null ; make PREFIX=$ZPFX <<(yes n)'
+  atpull'%atclone'
   @tj/git-extras
   # TODO: is it a bug that 'zi clist' does not show completions?
 
