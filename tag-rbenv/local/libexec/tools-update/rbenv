@@ -42,7 +42,7 @@ for plugin in "${plugins[@]}"; do
     popd > /dev/null
   else
     echo "${fg[blue]}Installing ${plugin}${reset_color}"
-    hub clone "${plugin}" "${RBENV_ROOT}/plugins/${name}"
+    gh repo clone "${plugin}" "${RBENV_ROOT}/plugins/${name}"
   fi
 done
 

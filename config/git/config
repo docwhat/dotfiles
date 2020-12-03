@@ -14,6 +14,9 @@
 	home = rev-parse --show-toplevel
 	fap = fetch --all --prune --prune-tags
 
+	# gh -- GitHub CLI
+	fork = !gh repo fork
+
 	### shorts
 	aa = add --all
 	ap = add --patch

@@ -2,7 +2,7 @@ function clone-repo() {
   local url="$1"
 
   local tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/repo.XXXXXXXXXX")"
-  if ! hub clone "$url" "$tmpdir"; then
+  if ! gh repo clone "$url" "$tmpdir"; then
     local ec=$?
     rm -rf "$tmpdir"
     return $ec
