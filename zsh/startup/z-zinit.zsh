@@ -39,6 +39,12 @@ declare -a zinit_plugins=(
   id-as"completion-generator"
   @RobSis/zsh-completion-generator
 
+  id-as"jq"
+  from"gh-r"
+  mv"jq-* -> jq"
+  as"program"
+  @stedolan/jq
+
   id-as"shfmt"
   as"program"
   from"gh-r"
