@@ -1,4 +1,4 @@
-if ((${+functions[compinit]})); then
+if (( ${+functions[compinit]} )); then
   # remove our dummy compinit
   unfunction compinit
 fi
@@ -22,6 +22,14 @@ declare -a zinit_plugins=(
   @tj/git-extras
   # TODO: is it a bug that 'zi clist' does not show completions?
 
+  id-as"gh"
+  from"gh-r"
+  as"program"
+  has"git"
+  mv"gh* -> files"
+  pick"files/bin/gh"
+  @cli/cli
+
   id-as"256color"
   @chrissicool/zsh-256color
 
@@ -32,6 +40,7 @@ declare -a zinit_plugins=(
   as"program"
   from"gh-r"
   atclone"mv shfmt* shfmt"
+  atpull'%atclone'
   pick"shfmt"
   @mvdan/sh
 
@@ -62,12 +71,13 @@ declare -a zinit_plugins=(
   id-as"bat"
   as"program"
   from"gh-r"
-  mv"bat-* -> files"
-  atclone'mkdir -p "$ZPFX/share/man/man1/"'
-  atclone'mv files/bat.1 "$ZPFX/share/man/man1/"'
-  atclone'mv files/autocomplete/bat.zsh _bat'
+  mv"bat-* -> src"
+  atclone'mkdir -p man/man1 bin completions'
+  atclone'mv src/bat bin/'
+  atclone'mv src/autocomplete/bat.zsh bin/_bat'
+  atclone'mv src/*.1 man/man1/'
   atpull'%atclone'
-  pick"files/bat"
+  pick"bin/bat"
   atload'alias less="bat"'
   @sharkdp/bat
 
