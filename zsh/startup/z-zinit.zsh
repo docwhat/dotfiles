@@ -26,8 +26,10 @@ declare -a zinit_plugins=(
   from"gh-r"
   as"program"
   has"git"
-  mv"gh* -> files"
-  pick"files/bin/gh"
+  mv"gh* -> src"
+  atclone'src/bin/gh completion -s zsh > src/bin/_gh'
+  atpull'%atclone'
+  pick"src/bin/gh"
   @cli/cli
 
   id-as"256color"
