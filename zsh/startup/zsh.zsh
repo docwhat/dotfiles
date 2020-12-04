@@ -25,15 +25,22 @@ compute_host_completion
 
 alias reload='exec zsh -l'
 
-# Overwrite Oh-My-Zsh's settings
 zstyle ':completion:*'           use-cache on
-zstyle ':completion::complete:*' use-cache on
 zstyle ':completion:*'           cache-path "${ZSH_CACHE_DIR}"
-zstyle ':completion::complete:*' cache-path "${ZSH_CACHE_DIR}"
+
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+
+function _set-list-colors() {
+	zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+	unfunction _set-list-colors
+}
+sched 0 _set-list-colors  # deferred since LC_COLORS might not be available yet
 
 zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' accept-exact-dirs '*(/N)'
 
-setopt dvorak
+zstyle ':completion:*:functions' ignored-patterns '([@:+_/.-]*|pre(cmd|exec)|TRAP*)'
 
 unsetopt correctall
 setopt correct

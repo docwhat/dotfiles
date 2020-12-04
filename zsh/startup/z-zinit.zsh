@@ -72,11 +72,6 @@ declare -a zinit_plugins=(
   atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
   @djui/alias-tips
 
-  id-as"fzf-tab"
-  has"fzf"
-  atload"zstyle ':fzf-tab:complete:cd:*' fzf-preview --height=100% 'lsd -1 --color=always $realpath'"
-  @Aloxaf/fzf-tab
-
   id-as"bat"
   as"program"
   from"gh-r"
