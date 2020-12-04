@@ -12,7 +12,6 @@ function from-where {
 
 declare -a zinit_plugins=(
   id-as"z.lua"
-  has"lua"
   @skywind3000/z.lua
 
   id-as"git-extras"
