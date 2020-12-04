@@ -14,6 +14,13 @@ declare -a zinit_plugins=(
   id-as"z.lua"
   @skywind3000/z.lua
 
+  id-as"delta"
+  from"gh-r"
+  as"program"
+  mv'delta-* -> delta'
+  pick'delta/delta'
+  @dandavison/delta
+
   id-as"git-extras"
   has"git"
   src"etc/git-extras-completion.zsh"
