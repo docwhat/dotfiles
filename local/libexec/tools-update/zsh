@@ -26,4 +26,3 @@ find \
 # My stuff
 zc ~/.zshrc ~/.zshenv ~/.zprofile
 zc ~/.zsh/startup/*.{zshrc,zprofile,zshenv}(N^/)
-zc ~/.zsh/functions/*(N^/)
