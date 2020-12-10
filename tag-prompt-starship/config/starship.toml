@@ -47,7 +47,6 @@ $crystal\
 $cmd_duration\
 $custom\
 $line_break\
-${custom.sudo}\
 $lua\
 $jobs\
 $battery\
@@ -80,12 +79,13 @@ shell = ["bash", "--noprofile", "--norc"]
 style = "fg:33"
 when = "true"
 
-[custom.sudo]
-command = "echo -n '🔓'"
-description = "sudo: valid timestamp marker"
-format = "$output "
-style = ""
-when = "sudo -vn &>/dev/null"
+# This triggers security alerts when mail_badpass is set.
+# [custom.sudo]
+# command = "echo -n '🔓'"
+# description = "sudo: valid timestamp marker"
+# format = "$output "
+# style = ""
+# when = "sudo -vn &>/dev/null"
 
 # [custom.ssh_no_keys]
 # description = "SSH missing keys"
