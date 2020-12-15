@@ -19,7 +19,27 @@ join_array() {
     exit
   fi
 }
-zstyle ":fzf-tab:complete:($(join_array \| exa lsd nvim vim vi cat bat rm cp mv icp imv less more)):*" fzf-preview "$functions[:tmp-fzf-preview]"
+
+declare -ra cmds=(
+bat
+cat
+cd
+cp
+exa
+emacs
+icp
+imv
+less
+lsd
+more
+mv
+nvim
+rm
+vi
+vim
+)
+
+zstyle ":fzf-tab:complete:($(join_array \| "${cmds[@]}" )):*" fzf-preview "$functions[:tmp-fzf-preview]"
 unfunction :tmp-fzf-preview
 zstyle ":fzf-tab:complete:*" fzf-flags '--preview-window=right:50%:rounded'
 
