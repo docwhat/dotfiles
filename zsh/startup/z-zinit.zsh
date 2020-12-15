@@ -59,6 +59,12 @@ declare -a zinit_plugins=(
   pick"shfmt"
   @mvdan/sh
 
+  id-as"hadolint"
+  from"gh-r"
+  as"program"
+  mv'hadolint-* -> hadolint'
+  @hadolint/hadolint
+
   id-as"shellcheck"
   as"program"
   from"gh-r"
