@@ -14,13 +14,6 @@ declare -a zinit_plugins=(
   id-as"z.lua"
   @skywind3000/z.lua
 
-  id-as"delta"
-  from"gh-r"
-  as"program"
-  mv'delta-* -> delta'
-  pick'delta/delta'
-  @dandavison/delta
-
   id-as"git-extras"
   has"git"
   src"etc/git-extras-completion.zsh"
@@ -28,6 +21,42 @@ declare -a zinit_plugins=(
   atpull'%atclone'
   @tj/git-extras
   # TODO: is it a bug that 'zi clist' does not show completions?
+
+  id-as"256color"
+  @chrissicool/zsh-256color
+
+  id-as"completion-generator"
+  @RobSis/zsh-completion-generator
+
+  id-as"fast-syntax-highlighting"
+  atinit"ZINIT[COMPINIT_OPTS]='-i -d "${ZSH_COMPDUMP}"'; zicompinit; zicdreplay"
+  @zdharma/fast-syntax-highlighting
+
+  id-as"zsh-autopair"
+  @hlissner/zsh-autopair
+
+  id-as"alias-tips"
+  pick"alias-tips.plugin.zsh"
+  atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
+  @djui/alias-tips
+
+  id-as"autosuggestions"
+  atload"_zsh_autosuggest_start"
+  @zsh-users/zsh-autosuggestions
+
+  id-as"completions"
+  atpull'zinit creinstall -q .'
+  blockf
+  @zsh-users/zsh-completions
+)
+
+declare -a zinit_programs=(
+  id-as"delta"
+  from"gh-r"
+  as"program"
+  mv'delta-* -> delta'
+  pick'delta/delta'
+  @dandavison/delta
 
   id-as"gh"
   from"gh-r"
@@ -38,12 +67,6 @@ declare -a zinit_plugins=(
   atpull'%atclone'
   pick"src/bin/gh"
   @cli/cli
-
-  id-as"256color"
-  @chrissicool/zsh-256color
-
-  id-as"completion-generator"
-  @RobSis/zsh-completion-generator
 
   id-as"jq"
   from"gh-r"
@@ -71,18 +94,6 @@ declare -a zinit_plugins=(
   mv"shellcheck* -> shellcheck"
   pick"shellcheck/shellcheck"
   @koalaman/shellcheck
-
-  id-as"fast-syntax-highlighting"
-  atinit"ZINIT[COMPINIT_OPTS]='-i -d "${ZSH_COMPDUMP}"'; zicompinit; zicdreplay"
-  @zdharma/fast-syntax-highlighting
-
-  id-as"zsh-autopair"
-  @hlissner/zsh-autopair
-
-  id-as"alias-tips"
-  pick"alias-tips.plugin.zsh"
-  atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
-  @djui/alias-tips
 
   id-as"bat"
   as"program"
@@ -120,15 +131,6 @@ declare -a zinit_plugins=(
   pick"lsd/lsd"
   atload'alias ls="lsd"'
   @Peltoche/lsd
-
-  id-as"autosuggestions"
-  atload"_zsh_autosuggest_start"
-  @zsh-users/zsh-autosuggestions
-
-  id-as"completions"
-  atpull'zinit creinstall -q .'
-  blockf
-  @zsh-users/zsh-completions
 )
 
 # macOS items
@@ -141,6 +143,8 @@ if [[ "${OSTYPE}" == darwin* ]]; then
 fi
 
 zinit wait lucid light-mode for "${zinit_plugins[@]}"
+
+zinit wait=1 lucid light-mode as"program" for "${zinit_programs[@]}"
 
 unset zinit_plugins
 
