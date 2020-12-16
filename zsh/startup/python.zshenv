@@ -1,9 +1,9 @@
-declare -aU system_python_bin_dirs=( /usr/local/opt/python[@1-9]*/bin(/N) )
-declare -aU user_python_bin_dirs=( ~/Library/Python/*/bin(/N:A) )
+## This setups the command line python tricks
+export PYTHONSTARTUP="${HOME}/.pythonrc.py"
 
-for dir in "${(@Oa)user_python_bin_dirs}" "${(@Oa)system_python_bin_dirs}"; do
-  path+=("$dir")
-done
-unset system_python_bin_dirs user_python_bin_dirs
+## This gets 'requests' to use the SSL cert bundle
+if [ -r /usr/local/etc/openssl/cert.pem ]; then
+  export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.pem
+fi
 
 # vim: set ft=zsh :
