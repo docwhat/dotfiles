@@ -45,7 +45,9 @@ declare -a zinit_plugins=(
   @zsh-users/zsh-autosuggestions
 
   id-as"completions"
-  atpull'zinit creinstall -q .'
+  as"completion"
+  atpull'zinit creinstall -q "$PWD"'
+  atdelete"zinit cuninstall completions"
   blockf
   @zsh-users/zsh-completions
 )
@@ -53,14 +55,12 @@ declare -a zinit_plugins=(
 declare -a zinit_programs=(
   id-as"delta"
   from"gh-r"
-  as"program"
   mv'delta-* -> delta'
   pick'delta/delta'
   @dandavison/delta
 
   id-as"gh"
   from"gh-r"
-  as"program"
   has"git"
   mv"gh* -> src"
   atclone'src/bin/gh completion -s zsh > src/bin/_gh'
@@ -75,7 +75,6 @@ declare -a zinit_programs=(
   @stedolan/jq
 
   id-as"shfmt"
-  as"program"
   from"gh-r"
   atclone"mv shfmt* shfmt"
   atpull'%atclone'
@@ -84,32 +83,28 @@ declare -a zinit_programs=(
 
   id-as"hadolint"
   from"gh-r"
-  as"program"
   mv'hadolint-* -> hadolint'
   @hadolint/hadolint
 
   id-as"shellcheck"
-  as"program"
   from"gh-r"
   mv"shellcheck* -> shellcheck"
   pick"shellcheck/shellcheck"
   @koalaman/shellcheck
 
   id-as"bat"
-  as"program"
   from"gh-r"
   mv"bat-* -> src"
-  atclone'mkdir -p man/man1 bin completions'
-  atclone'mv src/bat bin/'
-  atclone'mv src/autocomplete/bat.zsh bin/_bat'
-  atclone'mv src/*.1 man/man1/'
+  atclone'mkdir -p man/man1 bin'
+  atclone'cp -f src/bat bin/bat'
+  atclone'cp -f src/autocomplete/bat.zsh bin/_bat'
+  atclone'cp -f src/*.1 man/man1/'
   atpull'%atclone'
   pick"bin/bat"
   atload'alias less="bat"'
   @sharkdp/bat
 
   id-as"fd"
-  as"program"
   from"gh-r"
   mv"fd-* -> files"
   atclone'mkdir -p "$ZPFX/share/man/man1"'
@@ -119,13 +114,11 @@ declare -a zinit_programs=(
   @sharkdp/fd
 
   id-as"bat-extras"
-  as"program"
   atclone'./build.sh --prefix "$ZPFX" --install && mv man/*.1 "$ZPFX/share/man/man1"'
   atpull'%atclone'
   @eth-p/bat-extras
 
   id-as"lsd"
-  as"program"
   from"gh-r"
   mv"lsd* -> lsd"
   pick"lsd/lsd"
@@ -142,9 +135,9 @@ if [[ "${OSTYPE}" == darwin* ]]; then
   )
 fi
 
-zinit wait lucid light-mode for "${zinit_plugins[@]}"
+zinit wait'0a' lucid light-mode for "${zinit_plugins[@]}"
 
-zinit wait=1 lucid light-mode as"program" for "${zinit_programs[@]}"
+zinit wait'0b' lucid light-mode as"program" for "${zinit_programs[@]}"
 
 unset zinit_plugins
 
