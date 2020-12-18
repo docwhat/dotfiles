@@ -135,9 +135,9 @@ if [[ "${OSTYPE}" == darwin* ]]; then
   )
 fi
 
-zinit wait'0a' lucid light-mode for "${zinit_plugins[@]}"
+zinit wait'0a' lucid for "${zinit_plugins[@]}"
 
-zinit wait'0b' lucid light-mode as"program" for "${zinit_programs[@]}"
+zinit wait'0b' lucid as"program" for "${zinit_programs[@]}"
 
 unset zinit_plugins
 
