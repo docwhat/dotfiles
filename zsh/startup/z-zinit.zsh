@@ -10,6 +10,19 @@ function from-where {
   print -l $^fpath/$_comps[$1](N) | offset
 }
 
+function _zsh_autosuggest_custom_config {
+  local -ra widgets_to_change=( forward-char vi-forward-char )
+
+  ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=${ZSH_AUTOSUGGEST_ACCEPT_WIDGETS:|widgets_to_change}
+  ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=( "${widgets_to_change[@]}" )
+
+  ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8,underline"
+  ZSH_AUTOSUGGEST_STRATEGY=( match_prev_cmd completion )
+  ZSH_AUTOSUGGEST_USE_ASYNC=t
+  ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c60,)|z *|zf *|cd *"
+}
+
 declare -a zinit_plugins=(
   id-as"z.lua"
   @skywind3000/z.lua
@@ -42,6 +55,7 @@ declare -a zinit_plugins=(
 
   id-as"autosuggestions"
   atload"_zsh_autosuggest_start"
+  atload"_zsh_autosuggest_custom_config"
   @zsh-users/zsh-autosuggestions
 
   id-as"completions"
