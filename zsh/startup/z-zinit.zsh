@@ -118,6 +118,11 @@ declare -a zinit_programs=(
   atload'alias less="bat"'
   @sharkdp/bat
 
+  id-as"bat-extras"
+  atclone'./build.sh --prefix "$ZPFX" --install && mv man/*.1 "$ZPFX/share/man/man1"'
+  atpull'%atclone'
+  @eth-p/bat-extras
+
   id-as"fd"
   from"gh-r"
   mv"fd-* -> files"
@@ -127,17 +132,16 @@ declare -a zinit_programs=(
   pick"files/fd"
   @sharkdp/fd
 
-  id-as"bat-extras"
-  atclone'./build.sh --prefix "$ZPFX" --install && mv man/*.1 "$ZPFX/share/man/man1"'
-  atpull'%atclone'
-  @eth-p/bat-extras
-
   id-as"lsd"
   from"gh-r"
   mv"lsd* -> lsd"
   pick"lsd/lsd"
   atload'alias ls="lsd"'
   @Peltoche/lsd
+
+  id-as"gotestsum"
+  from"gh-r"
+  @gotestyourself/gotestsum
 )
 
 # macOS items
