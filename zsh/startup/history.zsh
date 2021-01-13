@@ -2,8 +2,8 @@ if [[ ! -d ~/.zsh ]]; then
   mkdir -p ~/.zsh
 fi
 HISTFILE=~/.zsh/history
-HISTSIZE=50000
-SAVEHIST=$(( $HISTSIZE - 200 )) # Give space for saving dups
+SAVEHIST=50000
+HISTSIZE=$((SAVEHIST * 1.20))
 
 setopt HIST_BEEP
 setopt EXTENDED_HISTORY
