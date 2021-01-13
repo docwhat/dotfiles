@@ -16,8 +16,6 @@
   "suggest.enablePreview": true,
   "suggest.snippetIndicator": " ✂️",
 
-  "docker.enable": true,
-
   // CocList (fzf)
   "list.insertMappings": {
     "<C-t>": "action:tabe",
@@ -42,40 +40,5 @@
   "diagnostic.errorSign": "",
   "diagnostic.hintSign": "履",
   "diagnostic.infoSign": "",
-  "diagnostic.warningSign": "",
-
-  // Additional Language Servers
-  "languageserver": {
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile", "Dockerfile"],
-      "args": ["--stdio"]
-    },
-    "bash": {
-      "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    },
-    "flow": {
-      "command": "flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "initializationOptions": {},
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"]
-    },
-    "golang": {
-      "command": "/Users/docwhat/go/bin/gopls",
-      "filetypes": ["go"],
-      "initializationOptions": {},
-      "trace.server": "verbose",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"]
-    },
-    "lua": {
-      "command": "lua-lsp",
-      "filetypes": ["lua"]
-    }
-  }
+  "diagnostic.warningSign": ""
 }
