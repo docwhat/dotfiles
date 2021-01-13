@@ -1,7 +1,10 @@
-*.vim                                                                 text eol=lf
-*.zsh                                                                 text eol=lf
-*.zshrc                                                               text eol=lf
-*.zshenv                                                              text eol=lf
-*.zprofile                                                            text eol=lf
-**/spell/*.add                                                        text eol=lf filter=wordlist
+*.vim            text eol=lf
+*.zsh            text eol=lf
+*.zshrc          text eol=lf
+*.zshenv         text eol=lf
+*.zprofile       text eol=lf
+**/spell/*.add   text eol=lf filter=wordlist
+
+test-files/**     linguist-vendored
+
 "tag-macos/Library/Application Support/iTerm2/DynamicProfiles/*.json" text eol=lf filter=itermprofile
