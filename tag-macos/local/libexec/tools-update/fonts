@@ -12,8 +12,7 @@ typeset -a fonts
 fonts=(
 FiraCode
 Hack
-SourceCodePro
-LiberationMono
+IBMPlexMono
 )
 
 declare -r fonts cachedir
