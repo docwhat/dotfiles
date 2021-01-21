@@ -157,6 +157,8 @@ zinit wait'0a' lucid for "${zinit_plugins[@]}"
 
 zinit wait'0b' lucid as"program" for "${zinit_programs[@]}"
 
+zinit pack for ls_colors
+
 unset zinit_plugins
 
 # EOF
