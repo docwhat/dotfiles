@@ -99,6 +99,7 @@ let g:coc_global_extensions = [
       \ 'coc-eslint',
       \ 'coc-flow',
       \ 'coc-go',
+      \ 'coc-highlight',
       \ 'coc-html',
       \ 'coc-java',
       \ 'coc-jest',
@@ -185,13 +186,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'tbastos/vim-lua'
 
 " Display
+Plug 'sainnhe/gruvbox-material', { 'as': 'colorscheme-gruvbox-material' }
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'nanotech/jellybeans.vim', { 'as': 'colorscheme-jellybeans' }
-" Plug 'tomasr/molokai', { 'as': 'colorscheme-molokai' }
-" Plug 'dracula/vim', { 'as': 'colorscheme-dracula' }
-Plug 'morhetz/gruvbox', { 'as': 'colorscheme-gruvbox' }
 Plug 'luochen1990/rainbow', { 'as': 'rainbow-parentheses' }
 
 " Terraform
