@@ -236,6 +236,8 @@ symbol = "↕️ "
 
 [status]
 disabled = false
+recognize_signal_code = true
+map_symbol = true
 
 [swift]
 symbol = "ﯣ "
