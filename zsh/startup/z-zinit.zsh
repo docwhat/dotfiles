@@ -48,11 +48,6 @@ declare -a zinit_plugins=(
   id-as"zsh-autopair"
   @hlissner/zsh-autopair
 
-  id-as"alias-tips"
-  pick"alias-tips.plugin.zsh"
-  atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
-  @djui/alias-tips
-
   id-as"autosuggestions"
   atload"_zsh_autosuggest_start"
   atload"_zsh_autosuggest_custom_config"
