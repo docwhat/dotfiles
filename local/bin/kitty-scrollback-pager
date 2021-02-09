@@ -1,22 +1,33 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # https://github.com/kovidgoyal/kitty/issues/719
 
-set -eEuo pipefail
+set -eu
 
+# Calculate editor
+if (( ${+commands[nvim]} )); then
+  editor=( nvim )
+else
+  editor=( vim - )
+fi
+declare -ra editor
+
+# Ensure TMPDIR is acceptable.
 if ! [[ -d ${TMPDIR:-} ]]; then
   TMPDIR="/tmp/user-$(id -u)"
-  mkdir -m 0700 "$TMPDIR"
+  # shellcheck disable=SC2174
+  mkdir -p -m 0700 "$TMPDIR"
 fi
-declare -r buffer="${TMPDIR}/kitty_scrollback_buffer.$$"
+declare -r buffer="${TMPDIR}/kitty_scrollback_buffer-${RANDOM}"
 trap 'rm -f "${buffer}"' EXIT
 
-nvim \
+# Fire up (N)Vim
+"${editor[@]}" \
   -u NONE \
   -c "set nonumber nolist showtabline=0 foldcolumn=0 laststatus=0" \
   -c "autocmd TermOpen * normal G" \
   -c "map q :qa!<CR>" \
   -c "set clipboard+=unnamedplus" \
-  -c "silent write! $buffer | terminal cat '$buffer' - "
+  -c "silent write! $buffer | terminal cat $buffer - "
 
 # EOF
