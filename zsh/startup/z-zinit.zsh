@@ -137,7 +137,7 @@ declare -a zinit_programs=(
   from"gh-r"
   mv"exa* -> exa"
   pick"exa/exa"
-  atload'alias ls="exa --icons --time-style=iso"'
+  atload'alias ls="exa --icons --time-style=iso --git"'
   @ogham/exa
 
 
