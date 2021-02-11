@@ -139,3 +139,5 @@
 [delta]
 	keep-plus-minus-markers = true
 	syntax-theme = DarkNeon
+[init]
+	defaultBranch = main
