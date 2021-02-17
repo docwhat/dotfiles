@@ -62,6 +62,15 @@ declare -a zinit_plugins=(
 )
 
 declare -a zinit_programs=(
+  id-as"direnv"
+  from"gh-r"
+  mv"direnv* -> direnv"
+  atclone'./direnv hook zsh > zhook.zsh'
+  atpull'%atclone'
+  pick"direnv"
+  src="zhook.zsh"
+  @direnv/direnv
+
   id-as"delta"
   from"gh-r"
   mv'delta-* -> delta'
