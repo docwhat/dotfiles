@@ -176,7 +176,7 @@ zinit wait'0b' lucid as"program" for "${zinit_programs[@]}"
 
 zinit wait'0c' lucid as"completion" for "${zinit_completion[@]}"
 
-zinit pack for ls_colors
+zinit pack for @ls_colors
 
 unset zinit_plugins
 
