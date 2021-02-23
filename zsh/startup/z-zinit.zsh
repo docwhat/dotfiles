@@ -52,13 +52,6 @@ declare -a zinit_plugins=(
   atload"_zsh_autosuggest_start"
   atload"_zsh_autosuggest_custom_config"
   @zsh-users/zsh-autosuggestions
-
-  id-as"completions"
-  as"completion"
-  atpull'zinit creinstall -q "$PWD"'
-  atdelete"zinit cuninstall completions"
-  blockf
-  @zsh-users/zsh-completions
 )
 
 declare -a zinit_programs=(
@@ -155,6 +148,19 @@ declare -a zinit_programs=(
   @gotestyourself/gotestsum
 )
 
+declare -a zinit_completion=(
+  id-as"misc-completions"
+  atpull'zinit creinstall -q "$PWD"'
+  atdelete"zinit cuninstall completions"
+  blockf
+  @zsh-users/zsh-completions
+
+  id-as"conda-completion"
+  has"conda"
+  atload'eval "$(conda shell.zsh hook 2>/dev/null)"'
+  @esc/conda-zsh-completion
+)
+
 # macOS items
 if [[ "${OSTYPE}" == darwin* ]]; then
   # Gets docker completion from Docker for Mac's files.
@@ -167,6 +173,8 @@ fi
 zinit wait'0a' lucid for "${zinit_plugins[@]}"
 
 zinit wait'0b' lucid as"program" for "${zinit_programs[@]}"
+
+zinit wait'0c' lucid as"completion" for "${zinit_completion[@]}"
 
 zinit pack for ls_colors
 
