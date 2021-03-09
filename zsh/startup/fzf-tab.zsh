@@ -12,7 +12,15 @@ join_array() {
     file --brief "$realpath"
   fi
   if [[ -d $realpath ]]; then
-    lsd -1 --color=always --icon=always --tree "$realpath"
+    if (( ${+commands[exa]} )); then
+      exa --color=always --icons --classify --tree "$realpath"
+    elif (( ${+commands[lsd]} )); then
+      lsd -1 --color=always --icon=always --tree "$realpath"
+    elif (( ${+commands[tree]} )); then
+      tree "$realpath"
+    else
+      ls "$realpath"
+    fi
   elif [[ -f $realpath ]]; then
     bat -pp --color=always --line-range=:30 "$realpath"
   else
