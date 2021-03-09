@@ -34,11 +34,6 @@ Install:andUse("Hammer", {
   hotkeys = {config_reload = {hyper, "r"}, toggle_console = {hyper, "y"}},
   start = true,
 })
-
-Install:andUse("SleepCorners", {
-  config = {neverSleepCorner = "LR", sleepNowCorner = "LL"},
-  start = true,
-})
 -- -- Handy for debugging. From:
 -- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
 -- -- luacheck: globals inspect
