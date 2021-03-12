@@ -42,12 +42,12 @@ $memory_usage\
 $aws\
 $gcloud\
 $openstack\
+$lua\
 $env_var\
 $crystal\
 $cmd_duration\
 $custom\
 $line_break\
-$lua\
 $jobs\
 $battery\
 $time\
