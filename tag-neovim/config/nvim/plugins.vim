@@ -130,6 +130,15 @@ Plug 'Shougo/neoyank.vim'
 Plug 'honza/vim-snippets'
 Plug 'cohama/lexima.vim'
 
+" Treesitter
+if has('nvim-0.5.0')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'nvim-treesitter/playground'
+  Plug 'nvim-treesitter/completion-treesitter'
+  Plug 'p00f/nvim-ts-rainbow'
+endif
+
 " NGinX
 Plug 'chr4/nginx.vim'
 
