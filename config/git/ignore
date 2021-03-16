@@ -1,4 +1,8 @@
-# To make edits, delete these initial comments, or else your changes may be lost!
+# Global gitignore
+# If you really want to include something from this list,
+# use a `!` rule in your local gitignore.
+# e.g.
+#     !needs-to-be-committed.bak
 
 .DS_Store
 .AppleDouble
@@ -37,4 +41,12 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# vim : set ft=config :
+# Files that probably contain secrets
+*.crt
+*.csr
+*.der
+*.p12
+*.pem
+.env
+
+# vim : set ft=gitignore :
