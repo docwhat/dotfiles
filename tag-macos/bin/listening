@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# https://stackoverflow.com/a/30029855/108857
+
+set -eEuo pipefail
+
+export PATH="/usr/sbin:/usr/bin"
+
+scan() {
+  sudo -H \
+    lsof \
+    +c 0 \
+    -iTCP \
+    -sTCP:LISTEN \
+    -n \
+    -P
+}
+
+if (( $# == 0 )); then
+  scan
+elif (( $# == 1 )); then
+  scan | (
+    grep -i -E --color "\b$1\b" ||
+      grep -i -E --color "$1"
+  )
+else
+  echo "Usage: listening [pattern]"
+fi
+
+# EOF
