@@ -16,13 +16,11 @@ scan() {
     -P
 }
 
-if (( $# == 0 )); then
+if (($# == 0)); then
   scan
-elif (( $# == 1 )); then
-  scan | (
-    grep -i -E --color "\b$1\b" ||
-      grep -i -E --color "$1"
-  )
+elif (($# == 1)); then
+  scan | grep --ignore-case --extended-regexp --color "\b$1\b" 2>/dev/null ||
+    scan | grep --ignore-case --extended-regexp --color --fixed-strings "$1"
 else
   echo "Usage: listening [pattern]"
 fi
