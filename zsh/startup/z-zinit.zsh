@@ -25,6 +25,7 @@ function _zsh_autosuggest_custom_config {
 
 declare -a zinit_plugins=(
   id-as"z.lua"
+  atclone'mkdir -p "$(dirname "$_ZL_DATA")"; touch "$_ZL_DATA"'
   @skywind3000/z.lua
 
   id-as"git-extras"

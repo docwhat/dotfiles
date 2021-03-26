@@ -6,7 +6,7 @@ if [[ -d "/usr/local/opt/node@${PREFERRED_NODE}/bin" ]]; then
 fi
 
 for p in "${HOME}/.yarn/bin" "${HOME}/.config/yarn/global/node_modules/.bin"; do
-  if [ -d "$(dirname "$p")" ]; then
+  if [[ -d "$p"(:h) ]]; then
     path=( "$p" "${path[@]}" )
   fi
 done
