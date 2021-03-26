@@ -169,6 +169,7 @@ if [[ "${OSTYPE}" == darwin* ]]; then
   # Gets docker completion from Docker for Mac's files.
   zinit_plugins+=(
     id-as"docker-completion"
+    has"docker"
     chr-fritz/docker-completion.zshplugin
   )
 fi
