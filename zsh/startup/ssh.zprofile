@@ -1,7 +1,7 @@
 if (( $+commands[ssh-add] )); then
   {
     if (( $+commands[keychain] )); then
-      eval "$(keychain --eval --quick --noask --nogui --quiet --inherit 'any' --agents 'ssh' --ignore-missing id_rsa id_dsa)"
+      eval "$(keychain --eval --quick --noask --nogui --quiet --inherit 'any' --agents 'ssh' --ignore-missing id_rsa id_dsa id_ed25519)"
     fi
 
     # Used for TMUX
