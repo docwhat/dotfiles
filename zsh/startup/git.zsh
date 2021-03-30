@@ -1,22 +1,36 @@
-function clone-repo() {
-  local url="$1"
+function git-repo() {
+  local -r url="$1"
 
-  local tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/repo.XXXXXXXXXX")"
-  if ! gh repo clone "$url" "$tmpdir"; then
-    local ec=$?
-    rm -rf "$tmpdir"
-    return $ec
+  local -r clonedir=$(guess-src-dir-from-git-url "$url")
+
+  if ! [[ -d "$clonedir" ]]; then
+    mkdir -p "$(dirname "$clonedir")"
+
+    local -r uhost=$(ruby -ruri -e 'print URI(ARGV.first).host' "$url")
+
+    if [[ -z "$uhost" ]]; then
+      if ! (( ${+commands[gh]} )); then
+        echo "The 'gh' utility is required: https://github.com/cli/cli"
+      fi
+
+      gh repo clone "$url" "$clonedir" || return $?
+    else
+      git clone "$url" "$clonedir" || return $?
+    fi
   fi
 
-  local dir="$(preferred-checkout-dir "$tmpdir")"
-  if [[ -d $dir ]]; then
-    echo "Repo '$dir' already cloned." 1>&2
-    rm -rf "$tmpdir"
-    cd "$dir"
-    return 0
-  fi
+  cd "$clonedir"
+}
 
-  mkdir -p "$(dirname "$dir")"
-  mv "$tmpdir" "$dir"
-  cd "$dir"
+function guess-src-dir-from-git-url() {
+  local -r url=$1
+
+  local -r uhost=$(ruby -ruri -e 'print URI(ARGV.first).host' "$url")
+
+  if [[ -z "$uhost" ]]; then
+    echo "${HOME}/src/github.com/$url"
+  else
+    local -r upath=$(ruby -ruri -e 'print URI(ARGV.first).path.sub(/^\//,"").sub(/\.git$/,"").split(/\//)[0,2].join("/")' "$url")
+    echo "${HOME}/src/$uhost/$upath"
+  fi
 }

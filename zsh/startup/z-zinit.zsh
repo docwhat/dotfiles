@@ -170,7 +170,7 @@ if [[ "${OSTYPE}" == darwin* ]]; then
   zinit_plugins+=(
     id-as"docker-completion"
     has"docker"
-    chr-fritz/docker-completion.zshplugin
+    @chr-fritz/docker-completion.zshplugin
   )
 fi
 
