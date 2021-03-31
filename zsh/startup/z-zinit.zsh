@@ -104,6 +104,13 @@ declare -a zinit_programs=(
   pick"shellcheck/shellcheck"
   @koalaman/shellcheck
 
+  id-as"ripgrep"
+  as"command"
+  from"gh-r"
+  mv"ripgrep* -> rg"
+  pick"rg/rg"
+  @BurntSushi/ripgrep
+
   id-as"bat"
   from"gh-r"
   mv"bat-* -> src"
@@ -113,7 +120,7 @@ declare -a zinit_programs=(
   atclone'cp -f src/*.1 man/man1/'
   atpull'%atclone'
   pick"bin/bat"
-  atload'alias less="bat"'
+  atload'alias less=bat rg=batgrep'
   @sharkdp/bat
 
   id-as"bat-extras"
