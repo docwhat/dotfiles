@@ -65,6 +65,15 @@ declare -a zinit_programs=(
   src="zhook.zsh"
   @direnv/direnv
 
+  id-as"pyenv"
+  atclone"./libexec/pyenv init - > zpyenv.zsh"
+  atinit'export PYENV_ROOT="$PWD"'
+  atpull"%atclone"
+  pick'bin/pyenv'
+  src"zpyenv.zsh"
+  nocompile'!'
+  @pyenv/pyenv
+
   id-as"delta"
   from"gh-r"
   mv'delta-* -> delta'
@@ -105,7 +114,6 @@ declare -a zinit_programs=(
   @koalaman/shellcheck
 
   id-as"ripgrep"
-  as"command"
   from"gh-r"
   mv"ripgrep* -> rg"
   pick"rg/rg"
