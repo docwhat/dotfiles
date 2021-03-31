@@ -145,6 +145,11 @@ declare -a zinit_programs=(
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"'
   @ogham/exa
 
+  id-as"docker-show-context"
+  from"gh-r"
+  mv"docker-show-context* -> docker-show-context"
+  has"docker"
+  @pwaller/docker-show-context
 
   id-as"gotestsum"
   from"gh-r"
