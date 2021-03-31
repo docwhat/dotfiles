@@ -105,12 +105,11 @@
 [help]
 	autocorrect = 1
 
-[url "https://github.com/"]
-	insteadOf = git://github.com/
-
 [url "git@github.com:"]
-	pushInsteadOf = https://github.com/
-	pushInsteadOf = git://github.com/
+	insteadOf = https://github.com/
+	insteadOf = git://github.com/
+[url "git@gitlab.com:"]
+	insteadOf = https://gitlab.com/
 
 ; Added by the GitHub.app
 [filter "hawser"]
