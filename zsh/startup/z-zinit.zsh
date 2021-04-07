@@ -154,7 +154,7 @@ declare -a zinit_programs=(
   id-as"exa"
   from"gh-r"
   mv"exa* -> exa"
-  pick"exa/exa"
+  pick"bin/exa"
   atload'alias ls="exa --icons --time-style=iso --git --classify --color-scale --color=auto"'
   atload'alias ll="exa --icons --time-style=iso --git --classify --color-scale --color=auto --long -i --extended"'
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"'
