@@ -15,5 +15,5 @@ DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
 # Local man files
 if [ -d ~/.local/share/man ]; then
-  manpath=( "${manpath[@]}" ~/.local/share/man )
+  manpath+=( ~/.local/share/man )
 fi
