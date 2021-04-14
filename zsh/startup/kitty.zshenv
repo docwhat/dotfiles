@@ -1,5 +1,7 @@
 # vim: set ft=zsh :
 
-export "KITTY_CONFIG_DIRECTORY=${HOME}/.config/kitty"
+if (( ${+commands[starship]} )); then
+  export "KITTY_CONFIG_DIRECTORY=${HOME}/.config/kitty"
+fi
 
 # EOF

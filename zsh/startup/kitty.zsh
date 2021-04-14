@@ -1,8 +1,13 @@
-if (( $+commands[kitty] )); then
+if (( ${+commands[kitty]} )); then
+  mkdir -p ~/.cache/kitty
+
   autoload -Uz compinit
   compinit
   kitty +complete setup zsh | source /dev/stdin
-  icat() {
-    kitty + icat "$@"
-  }
+
+  if [[ -n $KITTY_WINDOW_ID ]]; then
+    icat() {
+      kitty + icat "$@"
+    }
+  fi
 fi

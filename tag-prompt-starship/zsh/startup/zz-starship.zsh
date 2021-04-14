@@ -11,10 +11,14 @@ zinit light starship/starship
 if (( ${+commands[starship]} )); then
   eval "$(starship init zsh)"
 
-  if (( ${+commands[kitty]} )); then
+  if (( ${+commands[kitty]} )) && [[ -n $KITTY_WINDOW_ID ]]; then
+    function docwhat-pretty-dir() {
+      starship module directory | sed $'s/\e\[[0-9;]*m//g; s/ $//g'
+    }
+
     function docwhat-starship-precmd() {
       # strip color and trailing space
-      kitty @ set-tab-title "$(starship module directory | sed $'s/\e\[[0-9;]*m//g; s/ $//g')"
+      kitty @ set-tab-title "$(docwhat-pretty-dir)"
     }
     precmd_functions+=(docwhat-starship-precmd)
 
