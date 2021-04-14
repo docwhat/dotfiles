@@ -12,7 +12,7 @@
 	lg = log --graph --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
 	ls = log --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
 	home = rev-parse --show-toplevel
-	fap = fetch --all --prune --prune-tags
+	paf = fetch --all --prune --prune-tags
 
 	# gh -- GitHub CLI
 	fork = !gh repo fork
@@ -37,6 +37,15 @@
 	sw = switch
 	up = !git fetch && git rebase
 	w  = whatchanged
+
+	show-merged = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short))' --python refs/heads | python3
+	show-merged-zero = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short), end=\"\\0\")' --python refs/heads | python3
+
+	show-gone = ! git for-each-ref --format='if %(upstream:track) == \"[gone]\": print(%(refname:short))' --python | python3
+	show-gone-zero = ! git for-each-ref --format='if %(upstream:track) == \"[gone]\": print(%(refname:short), end=\"\\0\")' --python | python3
+
+	nuke-gone = ! git fetch --all --prune --prune-tags && git show-gone-zero | xargs -0t git branch -D
+	nuke-merged = ! git fetch --all --prune --prune-tags && git show-merged-zero | xargs -0t git branch -d
 
 [instaweb]
 	port = 2001
