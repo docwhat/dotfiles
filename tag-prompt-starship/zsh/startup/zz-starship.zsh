@@ -13,17 +13,21 @@ if (( ${+commands[starship]} )); then
 
   if (( ${+commands[kitty]} )) && [[ -n $KITTY_WINDOW_ID ]]; then
     function docwhat-pretty-dir() {
+      # strip color and trailing space
       starship module directory | sed $'s/\e\[[0-9;]*m//g; s/ $//g'
     }
 
     function docwhat-starship-precmd() {
-      # strip color and trailing space
-      kitty @ set-tab-title "$(docwhat-pretty-dir)"
+      if [[ -n "$KITTY_WINDOW_ID" ]]; then
+        kitty @ set-tab-title "--match=id:$KITTY_WINDOW_ID" "$(docwhat-pretty-dir)"
+      fi
     }
     precmd_functions+=(docwhat-starship-precmd)
 
     function docwhat-starship-preexec() {
-      kitty @ set-tab-title "$1"
+      if [[ -n "$KITTY_WINDOW_ID" ]]; then
+        kitty @ set-tab-title "--match=id:$KITTY_WINDOW_ID" "$1"
+      fi
     }
     preexec_functions+=(docwhat-starship-preexec)
   fi
