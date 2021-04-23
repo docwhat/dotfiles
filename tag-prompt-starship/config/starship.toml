@@ -115,19 +115,34 @@ truncation_length = 3
 format = "[$read_only]($read_only_style)[$path]($style) "
 style = "bold italic #87A752"
 
-read_only = " "
+read_only = " "
 read_only_style = "red dimmed"
 
 [directory.substitutions]
-
+"/etc" = " "
+"Documents" = " "
+"Downloads" = " "
+"Dropbox" = " "
+"Movies" = " "
+"Music" = " "
+"Pictures" = " "
+"go" = "ﳑ"
 "~" = " "
-# "~/src/github.com" = " "
-# "src/github.com" = " "
-# "github.com" = " "
+"~/src/gist.github.com" = " "
+"~/src/github.com" = " "
+"~/src/gitlab.com" = " "
 
 # "/" = "[/](dimmed)" # https://github.com/starship/starship/issues/1837
 
-[docker]
+[docker_context]
+detect_extensions = [".dockerfile"]
+detect_files = [
+  'docker-compose.yml',
+  'docker-compose.yaml',
+  'Dockerfile',
+  '.dockerignore',
+]
+only_with_files = false
 symbol = " "
 
 [elixir]
@@ -141,14 +156,14 @@ commit_hash_length = 5
 tag_disabled = false
 
 [git_status]
-conflicted_count.enabled = true
-deleted_count.enabled = true
-modified_count.enabled = true
-renamed_count.enabled = true
-show_sync_count.enabled = true
-staged_count.enabled = true
-stashed_count.enabled = true
-untracked_count.enabled = true
+# conflicted_count.enabled = true
+# deleted_count.enabled = true
+# modified_count.enabled = true
+# renamed_count.enabled = true
+# show_sync_count.enabled = true
+# staged_count.enabled = true
+# stashed_count.enabled = true
+# untracked_count.enabled = true
 
 format = """([\
 $stashed\
@@ -175,14 +190,11 @@ untracked = '[$count ](#ffaadd)'
 
 [git_branch]
 # symbol = " "
-# symbol = " "
-symbol = " "
+symbol = " "
+# symbol = " "
 
 [golang]
 symbol = " "
-
-[haskell]
-symbol = " "
 
 [hostname]
 format = "[$hostname]($style) "
@@ -197,8 +209,10 @@ symbol = " "
 symbol = " "
 
 [kubernetes]
-# format = 'on [⛵ $context \($namespace\)](dimmed green) '
 disabled = true
+
+[lua]
+symbol = " "
 
 [memory_usage]
 symbol = " "
@@ -236,14 +250,14 @@ symbol = "↕️ "
 
 [status]
 disabled = false
-recognize_signal_code = true
 map_symbol = true
+recognize_signal_code = true
 
 [swift]
 symbol = "ﯣ "
 
 [terraform]
-symbol = "💠 "
+symbol = "歷 "
 
 [username]
 format = "[$user]($style) "
