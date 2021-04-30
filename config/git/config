@@ -132,10 +132,6 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
-
-[include]
-	path = ~/.config/git/local
-
 [filter "wordlist"]
 	smudge = cat
 	clean = env LC_ALL=C sort -u
@@ -149,3 +145,6 @@
 	syntax-theme = DarkNeon
 [init]
 	defaultBranch = main
+	templatedir = ~/.config/git/templates
+[include]
+	path = ~/.config/git/local
