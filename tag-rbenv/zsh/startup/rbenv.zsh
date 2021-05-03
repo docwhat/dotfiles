@@ -1,4 +1,10 @@
 if (( ${+commands[rbenv]} )); then
-  add-rehash-hook command rbenv rehash
+  mkdir -p "$RBENV_ROOT"
+
   eval "$(rbenv init - --no-rehash zsh)"
+
+  add-rehash-hook command rbenv rehash
+else
+  echo "Use rbenv-install to install ruby..."
+  echo "    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash"
 fi
