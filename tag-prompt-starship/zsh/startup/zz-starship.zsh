@@ -19,14 +19,14 @@ if (( ${+commands[starship]} )); then
 
     function docwhat-starship-precmd() {
       if [[ -n "$KITTY_WINDOW_ID" ]]; then
-        kitty @ set-tab-title "--match=id:$KITTY_WINDOW_ID" "$(docwhat-pretty-dir)"
+        kitty @ set-tab-title "--match=id:$((KITTY_WINDOW_ID - 1))" "$(docwhat-pretty-dir)"
       fi
     }
     precmd_functions+=(docwhat-starship-precmd)
 
     function docwhat-starship-preexec() {
       if [[ -n "$KITTY_WINDOW_ID" ]]; then
-        kitty @ set-tab-title "--match=id:$KITTY_WINDOW_ID" "$1"
+        kitty @ set-tab-title "--match=id:$((KITTY_WINDOW_ID - 1))" "$1"
       fi
     }
     preexec_functions+=(docwhat-starship-preexec)
