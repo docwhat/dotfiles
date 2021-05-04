@@ -33,6 +33,8 @@
   // Code Lens
   "codeLens.enable": true,
 
+  "Lua.diagnostics.disable": ["undefined-global"],
+
   // Linting/Warnings
   "diagnostic.virtualText": true,
   "diagnostic.displayByAle": false,

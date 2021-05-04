@@ -15,7 +15,7 @@ end
 
 -- luacheck: globals hyper shift_hyper Install
 local hyper = {"cmd", "alt", "ctrl"}
-local shift_hyper = {"cmd", "alt", "ctrl", "shift"}
+-- local shift_hyper = {"cmd", "alt", "ctrl", "shift"}
 Install = hs.loadSpoon("SpoonInstall")
 -- Install.use_syncinstall = true
 
@@ -38,6 +38,26 @@ Install:andUse("Hammer", {
 -- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
 -- -- luacheck: globals inspect
 -- inspect = require("inspect")
+
+-- hs.hotkey.bind({"ctrl", "alt"}, "space", function()
+hs.hotkey.bind({"alt"}, "return", function()
+  local app = hs.application.get("kitty")
+
+  if app then
+      if not app:mainWindow() then
+          app:selectMenuItem({"kitty", "New OS window"})
+      elseif app:isFrontmost() then
+          app:hide()
+      else
+          app:activate()
+      end
+  else
+      hs.application.launchOrFocus("kitty")
+      app = hs.application.get("kitty")
+  end
+
+  app:mainWindow():moveToUnit'[99.5,50,0.5,0]'
+end)
 
 Install:andUse("FadeLogo", {config = {default_run = 1.0}, start = true})
 
