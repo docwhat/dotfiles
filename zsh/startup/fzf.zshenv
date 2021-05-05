@@ -5,11 +5,11 @@ if [ -d ~/.fzf ]; then
   export FZF_COMPLETION_TRIGGER='**'
   declare -a fzf_default_opts
 
-  if (( $+commands[rg] )); then
+  if (( ${+commands[rg]} )); then
     export FZF_DEFAULT_COMMAND='rg --files --ignore-vcs --hidden'
-  elif (( $+commands[ag] )); then
+  elif (( ${+commands[ag]} )); then
     export FZF_DEFAULT_COMMAND='ag --hidden -g'
-  elif (( $+commands[fd] )); then
+  elif (( ${+commands[fd]} )); then
     export FZF_DEFAULT_COMMAND='fd --type f'
   fi
 

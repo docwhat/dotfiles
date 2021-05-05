@@ -4,7 +4,7 @@ autoload -U is-at-least
 
 if is-at-least 5.2; then
   # Get kubectl completion
-  if (( $+commands[kubectl] )) && \
+  if (( ${+commands[kubectl]} )) && \
     [[ -n ~/.zsh/functions/_kubectl(#qN.mh+24) ]]; then
       {
       env KUBECONFIG= \
@@ -13,7 +13,7 @@ if is-at-least 5.2; then
       } &!
   fi
 
-  if (( $+commands[tkn] )) && \
+  if (( ${+commands[tkn]} )) && \
     [[ -n ~/.zsh/functions/_tkn(#qN.mh+24) ]]; then
       {
         tkn completion zsh \
@@ -21,7 +21,7 @@ if is-at-least 5.2; then
       } &!
   fi
 
-  if (( $+commands[helm] )) && \
+  if (( ${+commands[helm]} )) && \
     [[ -n ~/.zsh/functions/_helm(#qN.mh+24) ]]; then
       {
         helm completion zsh \

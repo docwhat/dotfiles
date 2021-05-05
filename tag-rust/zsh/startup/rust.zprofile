@@ -1,4 +1,4 @@
-if (( $+commands[rustup] )); then
+if (( ${+commands[rustup]} )); then
   # Rustup Completions
   if [[ -n ~/.zsh/functions/_rustup(#qN.mh+24) ]]; then
     {

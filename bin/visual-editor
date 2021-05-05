@@ -2,23 +2,23 @@
 
 set -eu
 
-if (( $+commands[nvr] )) && [[ -n "${NVIM_LISTEN_ADDRESS:-}" ]]; then
+if (( ${+commands[nvr]} )) && [[ -n "${NVIM_LISTEN_ADDRESS:-}" ]]; then
   exec nvr --nostart --remote-tab-wait +'setlocal bufhidden=wipe' "$@"
 fi
 
-if (( $+commands[mvim] )); then
+if (( ${+commands[mvim]} )); then
   exec mvim -f "$@"
 fi
 
-if (( $+commands[gvim] )); then
+if (( ${+commands[gvim]} )); then
   exec gvim "$@"
 fi
 
-if (( $+commands[code] )); then
+if (( ${+commands[code]} )); then
   exec code --wait "$@"
 fi
 
-if (( $+commands[atom] )); then
+if (( ${+commands[atom]} )); then
   exec atom --wait "$@"
 fi
 

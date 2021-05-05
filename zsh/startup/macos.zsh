@@ -1,6 +1,6 @@
 if [[ "${OSTYPE}" == darwin* ]]; then
   alias ldd="/usr/bin/otool -L"
-  if (( $+commands[gfind] )); then
+  if (( ${+commands[gfind]} )); then
     alias find=gfind
   fi
 

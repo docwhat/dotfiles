@@ -15,7 +15,7 @@ export LESS='-AFiMnqRsuXx4'
 # x4 - tabs=4
 
 # Less pipe/highlighter
-if (( $+commands[highlight] )); then
+if (( ${+commands[highlight]} )); then
   if [ "$COLORTERM" = truecolor ]; then
     lf=truecolor
   elif [[ $(echotc Co) -ge 256 ]]; then
@@ -26,13 +26,13 @@ if (( $+commands[highlight] )); then
   LESSOPEN="| ${commands[highlight]} %s --out-format=${lf} --base16 --style=gruvbox-dark-hard --force --no-trailing-nl"
   unset lf
   export LESSOPEN
-elif (( $+commands[src-hilite-lesspipe.sh] )); then
+elif (( ${+commands[src-hilite-lesspipe.sh]} )); then
   LESSOPEN='| /usr/bin/env src-hilite-lesspipe.sh.sh %s 2>&-'
   export LESSOPEN
-elif (( $+commands[lesspipe] )); then
+elif (( ${+commands[lesspipe.sh]} )); then
   LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
   export LESSOPEN LESS_ADVANCED_PREPROCESSOR=1
-elif (( $+commands[lesspipe] )); then
+elif (( ${+commands[lesspipe]} )); then
   LESSOPEN='| /usr/bin/env lesspipe %s 2>&-'
   export LESSOPEN
 fi
@@ -40,7 +40,7 @@ fi
 export REACT_EDITOR=atom
 
 # Use NeoVim if it exists
-if (( $+commands[nvim] )); then
+if (( ${+commands[nvim]} )); then
   alias vim=nvim
   alias vi=nvim
   alias view="nvim -R -c 'set nomodifiable'"

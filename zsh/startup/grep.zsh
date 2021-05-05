@@ -1,4 +1,4 @@
-if (( $+commands[grep] )); then
+if (( ${+commands[grep]} )); then
   unset GREP_OPTIONS
   alias grep='grep --color=auto'
 

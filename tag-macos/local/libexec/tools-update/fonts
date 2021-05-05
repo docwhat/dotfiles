@@ -35,7 +35,7 @@ if [[ "${OSTYPE}" != darwin* ]]; then
   exit 0
 fi
 
-if ! (( $+commands[jq] )); then
+if ! (( ${+commands[jq]} )); then
   print -P "  %F{yellow}Skipping%F{reset}: Install %F{green}jq%F{reset} to install fonts."
   exit 0
 fi

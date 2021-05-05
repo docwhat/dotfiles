@@ -6,13 +6,13 @@ set -euo pipefail
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-if ! (( $+commands[nvim] )) > /dev/null; then
-  print -P "  %F{yellow}Skipping%F{reset}: %F{green}nvim%F{reset} isn't available"
+if ! (( ${+commands[vim]} )) > /dev/null; then
+  print -P "  %F{yellow}Skipping%F{reset}: %F{green}vim%F{reset} isn't available"
   exit 0
 fi
 
 env \
-  vim \
+  "${commands[vim]}" \
   -c ':PlugUpdate' \
   -c ':if v:shell_error == 0 | :PlugUpgrade | endif' \
   -c ':if v:shell_error == 0 | :qa! | endif'

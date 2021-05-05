@@ -1,6 +1,6 @@
 # vim: ft=zsh :
 
-if (( $+commands[dotnet] )); then
+if (( ${+commands[dotnet]} )); then
   _dotnet_zsh_complete() {
     local completions=("$(dotnet complete "$words")")
 

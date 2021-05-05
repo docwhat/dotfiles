@@ -1,4 +1,4 @@
-if (( $+commands[ccze] )); then
+if (( ${+commands[ccze]} )); then
   function tailf()
   {
     tail -F "$@" | =ccze -C
