@@ -119,7 +119,7 @@ declare -a zinit_programs=(
   atclone'cp -f src/*.1 man/man1/'
   atpull'%atclone'
   pick"bin/bat"
-  atload'alias less=bat rg=batgrep'
+  atload'alias rg=batgrep'
   @sharkdp/bat
 
   id-as"bat-extras"

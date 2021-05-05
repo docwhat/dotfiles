@@ -1,10 +1,9 @@
 # vi: ft=zsh :
 
 # Less Options
-export LESS='-AFgiMnqRsuXx4'
+export LESS='-AFiMnqRsuXx4'
 # A  - SEARCH-SKIP-SCREEN
 # F  - quit-if-one-screen
-# g  - hilite-search
 # i  - ignore-case
 # M  - LONG-PROMPT
 # n  - line-numbers
@@ -49,7 +48,7 @@ if (( $+commands[nvim] )); then
 fi
 
 # Pager/Editors
-export PAGER="less"
+export PAGER="bat"
 export ACK_PAGER="less -R -+F"
 export MANPAGER="${HOME}/bin/manpager"
 
