@@ -1,0 +1,81 @@
+#!/bin/bash
+
+set -eEuo pipefail
+
+export PATH="${PATH/${HOME}\/bin/}"
+
+if ! command -v less >/dev/null 2>&1; then
+  more "$@"
+fi
+
+less_version=$(env LESS= LESSKEY= less -V | head -n1 | cut -d' ' -f2)
+less_version=${less_version%.*}
+declare -ir less_version=${less_version:-0}
+
+configdir=${XDG_CONFIG_HOME:-$HOME/.config}/less
+cachedir=${XDG_CACHE_HOME:-$HOME/.cache}/less
+
+export LESSKEY="${configdir}/config"
+export LESSHISTFILE="${cachedir}/history"
+export LESSHISTSIZE=1000
+
+unset LESSKEY
+
+if ! [[ -d $cachedir ]]; then
+  mkdir -p "$cachedir"
+fi
+
+# Less Options
+LESS='-AFiMnqRsuXx4 --jump-target=3 '
+# A  - SEARCH-SKIP-SCREEN
+# F  - quit-if-one-screen
+# i  - ignore-case
+# M  - LONG-PROMPT
+# n  - line-numbers
+# q  - silent
+# R  - RAW-CONTROL-CHARS
+# s  - squeeze-blank-lines
+# u  - underline-special
+# X  - no-init
+# x4 - tabs=4
+if ((less_version >= 581)); then
+  # incremental search
+  LESS+=" --incsearch"
+
+  # save marks between sessions
+  LESS+=" --save-marks"
+
+  # Color Theme
+  LESS+=" --use-color"
+  LESS+=" -DSkR$"
+fi
+export LESS
+
+unset LESSPIPE
+unset LESSOPEN
+# # Less pipe/highlighter
+# if (( ${+commands[highlight]} )); then
+# if [ "$COLORTERM" = truecolor ]; then
+# lf=truecolor
+# elif [[ $(echotc Co) -ge 256 ]]; then
+# lf=xterm256
+# else
+# lf=ansi
+# fi
+# LESSOPEN="| ${commands[highlight]} %s --out-format=${lf} --base16 --style=gruvbox-dark-hard --force --no-trailing-nl"
+# unset lf
+# export LESSOPEN
+# elif (( ${+commands[src-hilite-lesspipe.sh]} )); then
+# LESSOPEN='| /usr/bin/env src-hilite-lesspipe.sh.sh %s 2>&-'
+# export LESSOPEN
+# elif (( ${+commands[lesspipe.sh]} )); then
+# LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
+# export LESSOPEN LESS_ADVANCED_PREPROCESSOR=1
+# elif (( ${+commands[lesspipe]} )); then
+# LESSOPEN='| /usr/bin/env lesspipe %s 2>&-'
+# export LESSOPEN
+# fi
+
+exec less "$@"
+
+# EOF
