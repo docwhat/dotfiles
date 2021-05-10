@@ -12,8 +12,8 @@ fi
 
 # Pager/Editors
 export PAGER="bat"
-export ACK_PAGER="less -R -+F"
-export BAT_PAGER="less -R -+F"
+export ACK_PAGER="less -RF"
+export BAT_PAGER="less -RF"
 export MANPAGER="${HOME}/bin/manpager"
 
 export EDITOR="${HOME}/bin/editor"
