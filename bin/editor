@@ -6,7 +6,7 @@ if (( ${+commands[nvr]} )) && [[ -n "${NVIM_LISTEN_ADDRESS:-}" ]]; then
   exec nvr --remote-tab-wait-silent +'setlocal bufhidden=wipe' "$@"
 fi
 
-if (( $[+commands[nvim]] )); then
+if (( ${+commands[nvim]} )); then
   exec nvim "$@"
 fi
 
