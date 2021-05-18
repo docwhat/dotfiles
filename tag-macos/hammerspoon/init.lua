@@ -29,11 +29,11 @@ spoon.SpoonInstall.repos.zzspoons = {
 Install:andUse("ControlEscape", {start = true})
 
 Install:andUse("Hammer", {
-  repo = "zzspoons",
-  -- config = {auto_reload_config = false},
-  hotkeys = {config_reload = {hyper, "r"}, toggle_console = {hyper, "y"}},
-  start = true,
-})
+    repo = "zzspoons",
+    -- config = {auto_reload_config = false},
+    hotkeys = {config_reload = {hyper, "r"}, toggle_console = {hyper, "y"}},
+    start = true,
+  })
 -- -- Handy for debugging. From:
 -- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
 -- -- luacheck: globals inspect
@@ -44,19 +44,21 @@ hs.hotkey.bind({"alt"}, "return", function()
   local app = hs.application.get("kitty")
 
   if app then
-      if not app:mainWindow() then
-          app:selectMenuItem({"kitty", "New OS window"})
-      elseif app:isFrontmost() then
-          app:hide()
-      else
-          app:activate()
-      end
+    if not app:mainWindow() then
+      app:selectMenuItem({"kitty", "New OS window"})
+    elseif app:isFrontmost() then
+      app:hide()
+    else
+      app:activate()
+    end
   else
-      hs.application.launchOrFocus("kitty")
-      app = hs.application.get("kitty")
+    hs.application.launchOrFocus("kitty")
+    app = hs.application.get("kitty")
   end
 
-  app:mainWindow():moveToUnit'[99.5,50,0.5,0]'
+  if app then
+    app:mainWindow():moveToUnit'[99.5,50,0.5,0]'
+  end
 end)
 
 Install:andUse("FadeLogo", {config = {default_run = 1.0}, start = true})
