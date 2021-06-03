@@ -155,15 +155,6 @@ commit_hash_length = 5
 tag_disabled = false
 
 [git_status]
-# conflicted_count.enabled = true
-# deleted_count.enabled = true
-# modified_count.enabled = true
-# renamed_count.enabled = true
-# show_sync_count.enabled = true
-# staged_count.enabled = true
-# stashed_count.enabled = true
-# untracked_count.enabled = true
-
 format = """([\
 $stashed\
 $ahead_behind\
@@ -180,7 +171,7 @@ style = ""
 ahead = '[ $count祝](bg:#1188ff fg:#ffffff)'
 behind = '[ $count ](bg:#338833 fg:#ffffff)'
 diverged = '[ $behind_count ](bg:#338833 fg:#ffffff)[ $ahead_count祝](bg:#1188ff fg:#ffffff)'
-stashed = '[ $count ](bg:#1188ff fg:#ffffff)'
+stashed = '[$count ](fg:#1188ff)'
 
 # files
 deleted = '[$count ](#dd0000)'
