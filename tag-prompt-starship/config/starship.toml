@@ -75,6 +75,7 @@ symbol = " "
 
 [custom.shell]
 command = "starship-shell"
+description = "show icons for the shell"
 shell = ["bash", "--noprofile", "--norc"]
 style = "fg:33"
 when = "true"
@@ -119,14 +120,12 @@ read_only = " "
 read_only_style = "red dimmed"
 
 [directory.substitutions]
-"/etc" = " "
 "Documents" = " "
 "Downloads" = " "
 "Dropbox" = " "
 "Movies" = " "
 "Music" = " "
 "Pictures" = " "
-"go" = "ﳑ"
 "~" = " "
 "~/src/gist.github.com" = " "
 "~/src/github.com" = " "
@@ -177,16 +176,19 @@ $conflicted\
 ]($style))"""
 style = ""
 
-ahead = '[$count ](bg:#1e90ff fg:#ffffff) '
-behind = '[$count ](bg:#32cd32 fg:#ffffff) '
-conflicted = '[$count ](bold red)'
-deleted = '[$count ](bold red)'
-diverged = '[$behind_count $ahead_count ](bg:#ffd700 fg:#000000)'
-modified = '[$count ](#ffd700)'
-renamed = '[$count ](#ff8c00)'
-staged = '[$count ](#32cd32)'
-stashed = '[$count ](#0088ff)'
-untracked = '[$count ](#ffaadd)'
+# commits
+ahead = '[ $count祝](bg:#1188ff fg:#ffffff)'
+behind = '[ $count ](bg:#338833 fg:#ffffff)'
+diverged = '[ $behind_count ](bg:#338833 fg:#ffffff)[ $ahead_count祝](bg:#1188ff fg:#ffffff)'
+stashed = '[ $count ](bg:#1188ff fg:#ffffff)'
+
+# files
+deleted = '[$count ](#dd0000)'
+conflicted = '[$count ](#ff0000)'
+modified = '[$count ](#ff8800)'
+renamed = '[$count ](#00dd00)'
+staged = '[$count ](#00ff00)'
+untracked = '[$count ](#888888)'
 
 [git_branch]
 # symbol = " "
