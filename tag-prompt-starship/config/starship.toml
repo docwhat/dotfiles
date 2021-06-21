@@ -250,7 +250,7 @@ recognize_signal_code = true
 symbol = "ﯣ "
 
 [terraform]
-symbol = "歷 "
+symbol = "歷"
 
 [username]
 format = "[$user]($style) "
