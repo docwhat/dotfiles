@@ -73,6 +73,7 @@ declare -a zinit_programs=(
 
   id-as"gh"
   from"gh-r"
+  ver"latest"
   has"git"
   mv"gh* -> src"
   atclone'src/bin/gh completion -s zsh > src/bin/_gh'
