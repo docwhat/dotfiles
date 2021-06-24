@@ -1,7 +1,7 @@
 # vim: ft=gitconfig :
 
 [alias]
-	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/'
+	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/' | sort
 	share    = !git daemon --reuseaddr --base-path=./.git --verbose --export-all
 	unstaged = reset HEAD --
 
@@ -34,6 +34,7 @@
 	st = status --show-stash
 	sv = status --verbose
 	sw = switch
+	swd = !git switch $(git default-branch)
 	up = !git fetch && git rebase
 	w  = whatchanged
 	f = fetch --all --prune --prune-tags --no-auto-gc --jobs=3 --progress --show-forced-updates
@@ -46,6 +47,10 @@
 
 	nuke-gone = ! git f --quiet && git show-gone-zero | xargs -0t git branch -D
 	nuke-merged = ! git f --quiet && git show-merged-zero | xargs -0t git branch -d
+
+	default-branch = ! basename "$(git rev-parse --abbrev-ref origin/HEAD)"
+	retag = "!r() { set -ex ; git tag -d \"$1\" && git tag \"$@\"; }; r"
+
 
 [instaweb]
 	port = 2001
