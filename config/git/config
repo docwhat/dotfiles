@@ -1,5 +1,8 @@
 # vim: ft=gitconfig :
 
+# sources of fun aliases:
+# https://gist.github.com/NigelThorne/dcb2ff06c6b48eccd9c547260937b4b4
+
 [alias]
 	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/' | sort
 	share    = !git daemon --reuseaddr --base-path=./.git --verbose --export-all
@@ -8,9 +11,11 @@
 	graph = log --graph --abbrev-commit --decorate --date=relative --all
 
 	### Logs
-	lc       = log ORIG_HEAD.. --stat --no-merges
-	lg = log --graph --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
-	ls = log --pretty=format:'%C(yellow)%h%C(reset) %C(cyan)%cr%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)%aN%C(reset) %C(auto)%d%C(reset)'
+	lc = log ORIG_HEAD.. --stat --no-merges
+	lg = ls  --date=relative --graph --all
+	ls = log --abbrev-commit --decorate --date=short    --oneline
+	lu = ls --date=relative '@{upstream}..HEAD'
+	lp = ls --date=relative '@{push}..HEAD'
 	home = rev-parse --show-toplevel
 
 	# gh -- GitHub CLI
@@ -20,7 +25,7 @@
 	aa = add --all
 	ap = add --patch
 	ca = commit --amend
-	cah = commit --amend -CHEAD
+	cah = commit --amend --reuse-message=HEAD
 	ci = commit --verbose
 	cm = commit -m
 	co = checkout
@@ -30,14 +35,25 @@
 	pt = !git push && git push --tags
 	rv = remote -v
 	s  = status --short --branch --show-stash
-	ss = status --show-stash
-	st = status --show-stash
-	sv = status --verbose
+	sv = status --verbose --show-stash
 	sw = switch
 	swd = !git switch $(git default-branch)
-	up = !git fetch && git rebase
+	up = pull --rebase --autostash
 	w  = whatchanged
 	f = fetch --all --prune --prune-tags --no-auto-gc --jobs=3 --progress --show-forced-updates
+
+
+	# Find branches containing commit
+	fb = "!f() { git br -a --contains $1; }; f"
+
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+
+	# Find commits by source code
+	fc = "!f() { git  --date=short -S$1; }; f"
+
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
 	show-merged = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short))' --python refs/heads | python3
 	show-merged-zero = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short), end=\"\\0\")' --python refs/heads | python3
@@ -85,6 +101,7 @@
 	tool = Kaleidoscope
 	renames = copy
 	colorMoved = default
+	algorithm = histogram
 
 [diff "scpt"]
 	textconv = osadecompile
@@ -114,9 +131,13 @@
 
 [log]
 	decorate = short
+	abbrevCommit = true
 
 [grep]
 	fullname = true
+
+[pretty]
+	pp = "%C(yellow)%h%C(reset) %C(cyan)%cd%C(reset) %C(white)%<(70,trunc)%s%C(reset) %C(green)[%aN]%C(reset) %C(auto)%d%C(reset)"
 
 [tag]
 	sort = version:refname
