@@ -141,7 +141,7 @@ detect_files = [
   'Dockerfile',
   '.dockerignore',
 ]
-only_with_files = false
+only_with_files = true
 symbol = " "
 
 [elixir]
