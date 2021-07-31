@@ -179,6 +179,5 @@
 	syntax-theme = DarkNeon
 [init]
 	defaultBranch = main
-	templatedir = ~/.config/git/templates
 [include]
 	path = ~/.config/git/local
