@@ -60,6 +60,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'metakirby5/codi.vim'
 Plug 'justinmk/vim-dirvish'
 Plug 'sgur/vim-editorconfig'
+Plug 'wsdjeg/vim-fetch' " Open file:line:col style
 
 " Git & VCS support
 Plug 'tpope/vim-fugitive'
