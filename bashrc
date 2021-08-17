@@ -57,7 +57,7 @@ fi
 if ! shopt -oq posix; then
   # If set, the pattern "**" used in a pathname expansion context will
   # match all files and zero or more directories and subdirectories.
-  shopt -s globstar
+  shopt -s globstar &>/dev/null
 
   if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
     # shellcheck disable=SC1091
