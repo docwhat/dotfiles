@@ -1,58 +1,6 @@
 add_newline = false
 
-format = """
-${custom.shell}\
-$username\
-$hostname\
-$shlvl\
-$kubernetes\
-$directory\
-$git_branch\
-$git_commit\
-$git_state\
-$git_status\
-$hg_branch\
-$docker_context\
-$package\
-$cmake\
-$dart\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$golang\
-$helm\
-$java\
-$julia\
-$nim\
-$nodejs\
-$ocaml\
-$perl\
-$php\
-$purescript\
-$python\
-$ruby\
-$rust\
-$swift\
-$terraform\
-$zig\
-$nix_shell\
-$conda\
-$memory_usage\
-$aws\
-$gcloud\
-$openstack\
-$lua\
-$env_var\
-$crystal\
-$cmd_duration\
-$custom\
-$line_break\
-$jobs\
-$battery\
-$time\
-$status\
-$character"""
+format = "${custom.shell}$all"
 
 [aws]
 disabled = true
@@ -150,13 +98,26 @@ symbol = " "
 [elm]
 symbol = " "
 
+[git_branch]
+# symbol = " "
+symbol = " "
+# symbol = " "
+
+[git_metrics]
+disabled = true
+added_style = "bold #679A68"
+deleted_style = "bold #9A6768"
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+
 [git_commit]
 commit_hash_length = 5
 tag_disabled = false
 
+[git_state]
+cherry_pick = "[🍒 PICKING](bold red)"
+
 [git_status]
-format = """([\
-$stashed\
+format = """[\
 $ahead_behind\
 $deleted\
 $renamed\
@@ -164,27 +125,23 @@ $modified\
 $staged\
 $untracked\
 $conflicted\
-]($style))"""
+$stashed\
+]($style)"""
 style = ""
 
+stashed = '[](fg:#1188ff) '
+
+deleted = '[](#ff0000) '
+renamed = '[](#ff8800) '
+modified = '[](#ffff00) '
+staged = '[](#00ff00) '
+untracked = '[](#ff0000) '
+conflicted = '[$count](#ff0000) '
+
 # commits
-ahead = '[ $count祝](bg:#1188ff fg:#ffffff)'
-behind = '[ $count ](bg:#338833 fg:#ffffff)'
-diverged = '[ $behind_count ](bg:#338833 fg:#ffffff)[ $ahead_count祝](bg:#1188ff fg:#ffffff)'
-stashed = '[$count ](fg:#1188ff)'
-
-# files
-deleted = '[$count ](#dd0000)'
-conflicted = '[$count ](#ff0000)'
-modified = '[$count ](#ff8800)'
-renamed = '[$count ](#00dd00)'
-staged = '[$count ](#00ff00)'
-untracked = '[$count ](#888888)'
-
-[git_branch]
-# symbol = " "
-symbol = " "
-# symbol = " "
+ahead = '[ $count祝](bg:#1188ff fg:#f0f0f0) '
+behind = '[ $count](bg:#338833 fg:#f0f0f0) '
+diverged = '[ $behind_count ](bg:#338833 fg:#f0f0f0)[ $ahead_count祝](bg:#1188ff fg:#f0f0f0) '
 
 [golang]
 symbol = " "
