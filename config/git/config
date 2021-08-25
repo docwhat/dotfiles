@@ -78,7 +78,6 @@
 	excludesfile = ~/.config/git/ignore
 	attributesfile = ~/.config/git/attributes
 	autocrlf = input
-	pager = delta
 
 [merge]
 	ff = only
@@ -174,9 +173,30 @@
 	smudge = cat
 [pull]
 	ff = only
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+	singleKey = true
 [delta]
+	syntax-theme = gruvbox-dark
+	features = decorations
+[delta "interactive"]
 	keep-plus-minus-markers = true
-	syntax-theme = DarkNeon
+[delta "decorations"]
+	; commit-decoration-style = blue ol
+	; commit-style = raw
+	file-style = "#ff0000"
+	file-decoration-style = "#0088ff ul ol"
+	hunk-header-decoration-style = "#0088ff box"
+	hunk-header-line-number-style = "#11aa11"
+	hunk-header-style = line-number syntax
+[delta "light"]
+	light = true
+	syntax-theme = Github
 [init]
 	defaultBranch = main
 [include]
