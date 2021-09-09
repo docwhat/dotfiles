@@ -2,8 +2,6 @@ nodenv/nodenv-update
 nodenv/node-build
 
 nodenv/nodenv-aliases
-nodenv/nodenv-default-packages
 nodenv/nodenv-each
 nodenv/nodenv-vars
-
 hurrymaplelad/nodenv-package-json-engine
