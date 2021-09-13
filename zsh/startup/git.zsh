@@ -1,6 +1,5 @@
 function git-repo() {
   local -r url="$1"
-
   local -r clonedir=$(guess-src-dir-from-git-url "$url")
 
   if ! [[ -d "$clonedir" ]]; then
@@ -23,7 +22,8 @@ function git-repo() {
 }
 
 function guess-src-dir-from-git-url() {
-  local -r url=$1
+  local -r url=$(ruby -e 'print ARGV.first.sub(/^([^@]+)@([^:\/]+):/, "ssh://\\1@\\2/")' "$1")
+
 
   local -r uhost=$(ruby -ruri -e 'print URI(ARGV.first).host' "$url")
 

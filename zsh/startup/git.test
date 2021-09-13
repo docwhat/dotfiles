@@ -1,0 +1,45 @@
+#!/usr/bin/env zsh
+
+set -eu
+
+cd "$(cd "$(dirname "$0")"; pwd)"
+source ./git.zsh
+
+declare -a failures=()
+
+test_guess() {
+  local input=$1
+  local expected="${HOME}/src/$2"
+
+  local got=$(guess-src-dir-from-git-url "$input")
+
+  if [[ "$got" != "$expected" ]]; then
+    failures+=( "Expected \"$input\" to return \"$expected\" but got \"$got\"." )
+  fi
+}
+
+test_guess \
+  "docwhat/dotfiles" \
+  "github.com/docwhat/dotfiles"
+
+test_guess \
+  "git@github.com:docwhat/rule.git" \
+  "github.com/docwhat/rule"
+
+test_guess \
+  "https://github.com/docwhat/lure.git" \
+  "github.com/docwhat/lure"
+
+
+for failure in "${failures[@]}"; do
+  echo
+  echo " ${failure}"
+done
+
+if (( $#failures )); then
+  exit 2
+else
+  echo "OK"
+fi
+
+# EOF
