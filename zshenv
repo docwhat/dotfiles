@@ -1,5 +1,14 @@
 # vim: ft=zsh :
 
+# Export and uniq. paths
+typeset -xU \
+  fpath \
+  FPATH \
+  path \
+  PATH \
+  manpath \
+  MANPATH
+
 # The path has to be set *first*
 path=(
   "$HOME/bin"

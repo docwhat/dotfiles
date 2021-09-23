@@ -19,9 +19,6 @@ for config_file (~/.zsh/startup/*.zsh(rN)); do
 done
 unset config_file
 
-# Fix the paths up
-typeset -xU fpath path manpath
-
 # unsetopt XTRACE
 # exec 2>&3 3>&-
 

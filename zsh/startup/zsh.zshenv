@@ -1,4 +1,4 @@
-fpath=(~/.zsh/functions "${fpath[@]}")
+fpath=(~/.zsh/functions "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/site-functions" "${fpath[@]}")
 autoload -Uz ~/.zsh/functions/*(N:t)
 
 # Set the time builtin format.
@@ -14,6 +14,4 @@ skip_global_compinit=1
 DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
 # Local man files
-if [ -d ~/.local/share/man ]; then
-  manpath+=( ~/.local/share/man )
-fi
+manpath+=( "${XDG_DATA_HOME:-$HOME/.local/share}/man" )
