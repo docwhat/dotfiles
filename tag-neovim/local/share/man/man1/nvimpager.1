@@ -5,3 +5,167 @@
 .nh
 .ad l
 .\" Begin generated content:
+.TH "nvimpager" "1" "2021-09-23" "nvimpager v0.10.2"
+.P
+.SH NAME
+.P
+nvimpager - using neovim as a pager
+.P
+.SH SYNOPSIS
+.P
+\fBnvimpager\fR [\fB-acp\fR] [--] [nvim options and files] 
+.br
+\fBnvimpager\fR \fB-h\fR 
+.br
+\fBnvimpager\fR \fB-v\fR
+.P
+.SH DESCRIPTION
+.P
+Nvimpager is a small program that can be used like most other pagers.\&
+Internally it uses neovim with the default TUI to display the text.\& This means
+it has all the fancy syntax highlighting, mouse support and other features of
+neovim available in the pager, possibly including plugins!\&
+.P
+.SH COMMAND LINE OPTIONS
+.P
+Nvimpager itself interprets only very few options but all neovim options can
+also be specified.\& If options to neovim are specified before the first file
+name they must be preceded by "--" to prevent nvimpager from trying to
+interpret them.\&
+.P
+The following options are interpreted by nvimpager itself:
+.P
+\fB-a\fR
+.RS 4
+Run in "auto mode" (default).\& Auto mode will detect the terminal size and
+switch to pager mode if the content to display would not fit on one screen.\& If
+the content will fit on one screen it will switch to cat mode.\& This overrides
+any previous \fB-c\fR and \fB-p\fR options.\&
+.P
+.RE
+\fB-c\fR
+.RS 4
+Run in "cat mode".\& Do not start the neovim TUI, only use neovim for syntax
+highlighting and print the result to stdout.\& This overrides any previous \fB-a\fR
+and \fB-p\fR options.\&
+.P
+.RE
+\fB-h\fR
+.RS 4
+Show the help screen and exit
+.P
+.RE
+\fB-p\fR
+.RS 4
+Run in "pager mode".\& Start the neovim TUI to display the given content.\& This
+overrides any previous \fB-a\fR and \fB-c\fR options.\&
+.P
+.RE
+\fB-v\fR
+.RS 4
+Show version information and exit
+.P
+.RE
+.SH CONFIGURATION
+.P
+Like neovim itself nvimpager will honour \fB$XDG_CONFIG_HOME\fR and
+\fB$XDG_DATA_HOME\fR, which default to \fB~/.\&config\fR and \fB~/.\&local\fR respectively.\&
+The main config directory is \fB$XDG_CONFIG_HOME/nvimpager\fR and the main user
+config file is \fB$XDG_CONFIG_HOME/nvimpager/init.\&vim\fR.\& The site directory is
+\fB$XDG_DATA_HOME/.\&local/share/nvimpager/site\fR.\& The manifest for remote plugins
+is read from (and written to) \fB$XDG_DATA_HOME/nvimpager/rplugin.\&vim\fR.\&
+.P
+The rest of the \fB&runtimepath\fR is configured like for neovim.\& The \fB-u\fR option
+of \fBnvim\fR(1) itself can be used to change the main config file from the command
+line.\&
+.P
+The default config files for neovim are not used by design as these
+potentially load many plugins and do a lot of configuration that is only
+relevant for editing.\& If one really wants to use the same config files for
+both nvimpager and nvim it is possible to do so by symlinking the config and
+site directories and the rplugin file.\&
+.P
+.SS Environment variables
+.P
+The environment variable \fB$NVIM\fR can be used to specify an nvim executable to
+use.\&  If unset it defaults to \fBnvim\fR.\&
+.P
+.SS Configuration variables
+.P
+The script exposes a lua table called \fBnvimpager\fR to \fB--cmd\fR/\fB-c\fR options and
+the \fBinit.\&vim\fR file.\& It can be modified to change some options that are
+specific to nvimpager.\&
+.P
+The following fields (options) exist:
+.P
+.TS
+allbox;l c c lx
+l c c lx.
+T{
+\fBoption\fR
+T}	T{
+\fBtype\fR
+T}	T{
+\fBdefault\fR
+T}	T{
+\fBexplanation\fR
+T}
+T{
+maps
+T}	T{
+bool
+T}	T{
+true
+T}	T{
+if some default less like maps should be defined inside pager mode
+T}
+.TE
+.sp 1
+So to disable all mappings defined by nvimpager the user can put
+.P
+.nf
+.RS 4
+lua nvimpager\&.maps = false
+.fi
+.RE
+.P
+in the init file (or on the command line).\&
+.P
+.SH EXAMPLES
+.P
+To use nvimpager to view a file (with neovim's syntax highlighting if the
+filetype is detected):
+.P
+.nf
+.RS 4
+nvimpager file
+.fi
+.RE
+.P
+Pipe text into nvimpager to view it:
+.P
+.nf
+.RS 4
+echo text | nvimpager
+.fi
+.RE
+.P
+Use nvimpager as your default \fB$PAGER\fR to view man pages or git diffs:
+.P
+.nf
+.RS 4
+export PAGER=nvimpager
+man nvimpager
+git diff
+.fi
+.RE
+.P
+.SH SEE ALSO
+.P
+\fBnvim(1)\fR https://github.\&com/neovim/neovim
+.P
+\fBvimpager(1)\fR https://github.\&com/rkitover/vimpager
+.P
+.SH AUTHORS
+.P
+Lucas Hoffmann
