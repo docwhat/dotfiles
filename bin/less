@@ -53,28 +53,6 @@ export LESS
 
 unset LESSPIPE
 unset LESSOPEN
-# # Less pipe/highlighter
-# if (( ${+commands[highlight]} )); then
-# if [ "$COLORTERM" = truecolor ]; then
-# lf=truecolor
-# elif [[ $(echotc Co) -ge 256 ]]; then
-# lf=xterm256
-# else
-# lf=ansi
-# fi
-# LESSOPEN="| ${commands[highlight]} %s --out-format=${lf} --base16 --style=gruvbox-dark-hard --force --no-trailing-nl"
-# unset lf
-# export LESSOPEN
-# elif (( ${+commands[src-hilite-lesspipe.sh]} )); then
-# LESSOPEN='| /usr/bin/env src-hilite-lesspipe.sh.sh %s 2>&-'
-# export LESSOPEN
-# elif (( ${+commands[lesspipe.sh]} )); then
-# LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
-# export LESSOPEN LESS_ADVANCED_PREPROCESSOR=1
-# elif (( ${+commands[lesspipe]} )); then
-# LESSOPEN='| /usr/bin/env lesspipe %s 2>&-'
-# export LESSOPEN
-# fi
 
 exec less "$@"
 
