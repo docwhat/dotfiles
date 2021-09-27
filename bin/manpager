@@ -7,7 +7,9 @@ function has_exe() {
 }
 
 function pager() {
-  if command -v bat 2>/dev/null >&2; then
+  if command -v nvimpager 2>/dev/null >&2; then
+    nvimpager
+  elif command -v bat 2>/dev/null >&2; then
     bat -l man
   elif [ -t 1 ]; then
     if has_exe nvim; then

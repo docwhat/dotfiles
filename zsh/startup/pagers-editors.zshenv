@@ -1,19 +1,22 @@
 # vi: ft=zsh :
 
-export REACT_EDITOR=atom
+export REACT_EDITOR=code
 
 # Use NeoVim if it exists
 if (( ${+commands[nvim]} )); then
   alias vim=nvim
   alias vi=nvim
-  alias view="nvim -R -c 'set nomodifiable'"
+  alias view="nvimpager"
   alias vimdiff="nvim -d"
+  export ACK_PAGER="nvimpager"
+  export BAT_PAGER="nvimpager"
+else
+  export ACK_PAGER="less -RF"
+  export BAT_PAGER="less -RF"
 fi
 
 # Pager/Editors
 export PAGER="bat"
-export ACK_PAGER="less -RF"
-export BAT_PAGER="less -RF"
 export MANPAGER="${HOME}/bin/manpager"
 
 export EDITOR="${HOME}/bin/editor"
