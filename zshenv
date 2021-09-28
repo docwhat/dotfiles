@@ -32,7 +32,7 @@ manpath=(
 )
 
 # Load my customized environment.
-for config_file (~/.zsh/startup/*.zshenv(rN)); do
+for config_file (~/.zsh/startup/*-env.zsh(rN)); do
   source "${config_file}"
 done
 unset config_file
