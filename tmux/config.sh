@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ -n "$tmux_dir" ] || tmux_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+[ -n "$tmux_dir" ] || tmux_dir="$(cd "$(dirname "${BASH_SOURCE[0]:-$PWD}")" >/dev/null && pwd)"
 declare -r tmux_dir
 cd "$tmux_dir"
 

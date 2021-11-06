@@ -1,12 +1,16 @@
 #!/bin/bash
 
-[[ -n $tmux_dir ]] || tmux_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+[[ -n $tmux_dir ]] || tmux_dir="$(cd "$(dirname "${BASH_SOURCE[0]:-$PWD}")" >/dev/null && pwd)"
 declare -r tmux_dir
 cd "$tmux_dir"
 
 set -euo pipefail
 
-tmux_version="$(tmux -V | cut -d ' ' -f 2 | sed 's/[^0-9.]*//g')"
+# tmux 1.2a
+tmux_version="$(
+  tmux -V |
+    awk 'BEGIN { FS="[^0-9.]+" } { print $2 }'
+)"
 
 function tmux_is_at_least() {
   if [[ $tmux_version == "$1" ]] || [[ $tmux_version == master ]]; then
@@ -44,7 +48,7 @@ reverse_array() {
   local -a result=
 
   for word in "${original[@]}"; do
-    result+=("$word")
+    result=("$word" "${result[@]}")
   done
   echo "${result[@]}"
 }

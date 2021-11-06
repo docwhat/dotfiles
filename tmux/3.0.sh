@@ -10,11 +10,11 @@ tmux bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
 
 # Screen kill window.
 # unbind k
-tmux bind-key k confirm-before kill-window
+tmux bind-key -T prefix k confirm-before kill-window
 
 # Screen style last window
 # unbind space
-tmux bind-key space last-window
+tmux bind-key -T prefix space last-window
 
 tmux bind-key S command-prompt -p "fssh: " "new-window 'fssh %1'"
 tmux bind-key M command-prompt -p "fmosh: " "new-window 'fmosh %1'"
