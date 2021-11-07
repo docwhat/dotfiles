@@ -23,6 +23,9 @@ function _zsh_autosuggest_custom_config {
   ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c60,)|z *|zf *|cd *"
 }
 
+mkdir -p "$ZPFX/share/man/man1"
+manpath=("$ZPFX/share/man" "${manpath[@]}")
+
 zinit wait lucid for \
   id-as"z.lua" \
   atclone'mkdir -p "$(dirname "$_ZL_DATA")"; touch "$_ZL_DATA"' \
@@ -68,6 +71,7 @@ zinit wait lucid for \
   pick'delta/delta' \
   @dandavison/delta
 
+# Must go before bat-extras
 zinit wait lucid for \
   from"gh-r" \
   as"command" \
@@ -117,20 +121,23 @@ zinit wait lucid for \
 zinit wait lucid for \
   from"gh-r" \
   as"program" \
-  mv"bat-* -> src" \
-  atclone'mkdir -p man/man1 bin' \
-  atclone'cp -f src/bat bin/bat' \
-  atclone'cp -f src/autocomplete/bat.zsh bin/_bat' \
-  atclone'cp -f src/*.1 man/man1/' \
+  pick"bat" \
+  atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
+  atclone'cp -f bat*/bat bat' \
+  atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZPFX/share/man/man1/bat.1"' \
   atpull'%atclone' \
-  pick"bin/bat" \
-  atload'alias rg=batgrep' \
   @sharkdp/bat
 
 zinit wait lucid for \
   as"program" \
-  atclone'./build.sh --prefix "$ZPFX" --install && mv man/*.1 "$ZPFX/share/man/man1"' \
+  has"bat" \
+  has"shfmt" \
+  pick"bin/*" \
+  atclone'./build.sh --no-verify --manuals --prefix "$ZPFX"' \
+  atclone'ln -nsf "$PWD/man/"*.1 "$ZPFX/share/man/man1"' \
+  atclone'ln -nsf "$PWD/bin/"* "$ZPFX/bin"' \
   atpull'%atclone' \
+  atload'alias rg=batgrep' \
   @eth-p/bat-extras
 
 zinit wait lucid for \
