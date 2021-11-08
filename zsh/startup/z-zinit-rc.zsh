@@ -23,9 +23,6 @@ function _zsh_autosuggest_custom_config {
   ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c60,)|z *|zf *|cd *"
 }
 
-mkdir -p "$ZPFX/share/man/man1"
-manpath=("$ZPFX/share/man" "${manpath[@]}")
-
 zinit wait lucid for \
   id-as"z.lua" \
   atclone'mkdir -p "$(dirname "$_ZL_DATA")"; touch "$_ZL_DATA"' \
@@ -124,7 +121,7 @@ zinit wait lucid for \
   pick"bat" \
   atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
   atclone'cp -f bat*/bat bat' \
-  atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZPFX/share/man/man1/bat.1"' \
+  atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
   atpull'%atclone' \
   @sharkdp/bat
 
@@ -134,7 +131,7 @@ zinit wait lucid for \
   has"shfmt" \
   pick"bin/*" \
   atclone'./build.sh --no-verify --manuals --prefix "$ZPFX"' \
-  atclone'ln -nsf "$PWD/man/"*.1 "$ZPFX/share/man/man1"' \
+  atclone'ln -nsf "$PWD/man/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
   atclone'ln -nsf "$PWD/bin/"* "$ZPFX/bin"' \
   atpull'%atclone' \
   atload'alias rg=batgrep' \
@@ -145,8 +142,7 @@ zinit wait lucid for \
   as"program" \
   mv"fd-* -> files" \
   pick"files/fd" \
-  atclone'mkdir -p "$ZPFX/share/man/man1"' \
-  atclone'mv files/fd.1 "$ZPFX/share/man/man1/"' \
+  atclone'mv files/fd.1 "$ZINIT[MAN_DIR]/man1/"' \
   atpull'%atclone' \
   @sharkdp/fd
 
