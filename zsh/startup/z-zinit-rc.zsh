@@ -127,8 +127,6 @@ zinit wait lucid for \
 
 zinit wait lucid for \
   as"program" \
-  has"bat" \
-  has"shfmt" \
   pick"bin/*" \
   atclone'./build.sh --no-verify --manuals --prefix "$ZPFX"' \
   atclone'ln -nsf "$PWD/man/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
