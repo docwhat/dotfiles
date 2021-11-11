@@ -128,11 +128,13 @@ zinit wait lucid for \
 zinit wait lucid for \
   as"program" \
   pick"bin/*" \
-  atclone'./build.sh --no-verify --manuals --prefix "$ZPFX"' \
+  atclone'./build.sh --no-verify --minify=none --manuals --prefix "$ZPFX"' \
   atclone'ln -nsf "$PWD/man/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
   atclone'ln -nsf "$PWD/bin/"* "$ZPFX/bin"' \
   atpull'%atclone' \
   atload'alias rg=batgrep' \
+  atload'command -v less 2>/dev/null >&2 && alias man="MANPAGER=less batman"' \
+  atload'eval "$(batpipe)"' \
   @eth-p/bat-extras
 
 zinit wait lucid for \
