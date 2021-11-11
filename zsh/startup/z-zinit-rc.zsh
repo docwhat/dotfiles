@@ -82,6 +82,8 @@ zinit wait lucid for \
   as"command" \
   mv"ripgrep-* -> rg" \
   pick"rg/rg" \
+  atclone'ln -nsf "$PWD"/rg*/doc/rg.1 "$ZINIT[MAN_DIR]"/man1/rg.1' \
+  atpull'%atclone' \
   @BurntSushi/ripgrep
 
 zinit wait lucid for \
