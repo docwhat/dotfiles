@@ -198,4 +198,6 @@ fi
 
 zinit pack for 'ls_colors'
 
+manpath=( $ZPFX/man "${manpath[@]}" )
+
 # EOF
