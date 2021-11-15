@@ -134,8 +134,8 @@ zinit wait lucid for \
   atclone'ln -nsf "$PWD/man/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
   atclone'ln -nsf "$PWD/bin/"* "$ZPFX/bin"' \
   atpull'%atclone' \
-  atload'alias rg=batgrep' \
-  atload'command -v less 2>/dev/null >&2 && alias man="MANPAGER=less batman"' \
+  atload'alias rg=batgrep && compdef _rg batgrep' \
+  atload'command -v less 2>/dev/null >&2 && alias man="MANPAGER=less batman" && compdef _man batman' \
   atload'eval "$(batpipe)"' \
   @eth-p/bat-extras
 
