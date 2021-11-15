@@ -190,16 +190,6 @@ zinit wait lucid for \
   atload'eval "$(conda shell.zsh hook 2>/dev/null)"' \
   @esc/conda-zsh-completion
 
-# macOS items
-if [[ "${OSTYPE}" == darwin* ]]; then
-  # Gets docker completion from Docker for Mac's files.
-  zinit wait lucid for \
-    id-as"docker-completion" \
-    as"completion" \
-    has"docker" \
-    @chr-fritz/docker-completion.zshplugin
-fi
-
 zinit pack for 'ls_colors'
 
 manpath=( $ZPFX/man "${manpath[@]}" )
