@@ -24,57 +24,68 @@ function _zsh_autosuggest_custom_config {
 }
 
 zinit wait lucid for \
-  id-as"z.lua" \
   atclone'mkdir -p "$(dirname "$_ZL_DATA")"; touch "$_ZL_DATA"' \
+  id-as'auto' \
   @skywind3000/z.lua
 
 zinit wait lucid for \
-  id-as"git-extras" \
-  has"git" \
-  src"etc/git-extras-completion.zsh" \
+  has'git' \
+  src'etc/git-extras-completion.zsh' \
   atclone'make PREFIX=$ZPFX uninstall >/dev/null ; make PREFIX=$ZPFX <<(yes n)' \
   atpull'%atclone' \
+  id-as'auto' \
   @tj/git-extras
 
-zinit wait lucid for @chrissicool/zsh-256color
-
-zinit wait lucid for @RobSis/zsh-completion-generator
+zinit wait lucid for \
+  id-as'auto' \
+  @chrissicool/zsh-256color
 
 zinit wait lucid for \
-  atinit"ZINIT[COMPINIT_OPTS]='-i -d "${ZSH_COMPDUMP}"'; zicompinit; zicdreplay" \
+  id-as'auto' \
+  @RobSis/zsh-completion-generator
+
+zinit wait lucid for \
+  atinit'ZINIT[COMPINIT_OPTS]="-i -d ${(qq)ZSH_COMPDUMP}"; zicompinit; zicdreplay' \
+  id-as'auto' \
   @zdharma-continuum/fast-syntax-highlighting
 
-zinit wait lucid for @hlissner/zsh-autopair
+zinit wait lucid for \
+  id-as'auto' \
+  @hlissner/zsh-autopair
 
 zinit wait lucid for \
-  atload"_zsh_autosuggest_start" \
-  atload"_zsh_autosuggest_custom_config" \
+  atload'_zsh_autosuggest_start' \
+  atload'_zsh_autosuggest_custom_config' \
+  id-as'auto' \
   @zsh-users/zsh-autosuggestions
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"command" \
-  mv"direnv* -> direnv" \
-  pick"direnv" \
+  from'gh-r' \
+  as'command' \
+  mv'direnv* -> direnv' \
+  pick'direnv' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' \
-  src="zhook.zsh" \
+  src='zhook.zsh' \
+  id-as'auto' \
   @direnv/direnv
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"command" \
+  from'gh-r' \
+  as'command' \
   mv'delta-* -> delta' \
   pick'delta/delta' \
+  id-as'auto' \
   @dandavison/delta
 
 # Must go before bat-extras
 zinit wait lucid for \
-  from"gh-r" \
-  as"command" \
-  atclone"mv shfmt* shfmt" \
+  from'gh-r' \
+  as'command' \
+  atclone'mv shfmt* shfmt' \
   atpull'%atclone' \
-  pick"shfmt" \
+  pick'shfmt' \
+  id-as'shfmt' \
   @mvdan/sh
 
 zinit wait lucid for \
@@ -82,112 +93,125 @@ zinit wait lucid for \
   as"command" \
   mv"ripgrep-* -> rg" \
   pick"rg/rg" \
-  atclone'ln -nsf "$PWD"/rg*/doc/rg.1 "$ZINIT[MAN_DIR]"/man1/rg.1' \
+  atclone'ln -nsf "$PWD"/rg*/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
   atpull'%atclone' \
+  id-as'rg' \
   @BurntSushi/ripgrep
 
 zinit wait lucid for \
-  id-as"gh" \
-  from"gh-r" \
-  as"program" \
-  ver"latest" \
-  has"git" \
-  mv"gh* -> src" \
+  from'gh-r' \
+  as'program' \
+  ver'latest' \
+  has'git' \
+  mv'gh* -> src' \
   atclone'src/bin/gh completion -s zsh > src/bin/_gh' \
   atpull'%atclone' \
-  pick"src/bin/gh" \
+  pick'src/bin/gh' \
+  id-as'gh' \
   @cli/cli
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  mv"jq-* -> jq" \
+  from'gh-r' \
+  as'program' \
+  mv'jq-* -> jq' \
+  id-as'auto' \
   @stedolan/jq
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
+  from'gh-r' \
+  as'program' \
   mv'hadolint-* -> hadolint' \
+  id-as'auto' \
   @hadolint/hadolint
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  mv"shellcheck* -> shellcheck" \
-  pick"shellcheck/shellcheck" \
+  from'gh-r' \
+  as'program' \
+  mv'shellcheck* -> shellcheck' \
+  pick'shellcheck/shellcheck' \
+  id-as'auto' \
   @koalaman/shellcheck
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  pick"bat" \
+  from'gh-r' \
+  as'program' \
+  pick'bat' \
   atclone'cp -f bat*/autocomplete/bat.zsh _bat' \
   atclone'cp -f bat*/bat bat' \
   atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
   atpull'%atclone' \
+  id-as'auto' \
   @sharkdp/bat
 
 zinit wait lucid for \
-  as"program" \
-  pick"bin/*" \
-  atclone'./build.sh --no-verify --minify=none --manuals --prefix "$ZPFX"' \
+  as'program' \
+  pick'bin/*' \
+  atclone'./build.sh --minify=none --manuals --prefix "$ZPFX"' \
   atclone'ln -nsf "$PWD/man/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
   atclone'ln -nsf "$PWD/bin/"* "$ZPFX/bin"' \
   atpull'%atclone' \
   atload'alias rg=batgrep && compdef _rg batgrep' \
   atload'command -v less 2>/dev/null >&2 && alias man="MANPAGER=less batman" && compdef _man batman' \
   atload'eval "$(batpipe)"' \
+  id-as'auto' \
   @eth-p/bat-extras
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  mv"fd-* -> files" \
-  pick"files/fd" \
+  from'gh-r' \
+  as'program' \
+  mv'fd-* -> files' \
+  pick'files/fd' \
   atclone'mv files/fd.1 "$ZINIT[MAN_DIR]/man1/"' \
   atpull'%atclone' \
+  id-as'auto' \
   @sharkdp/fd
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  mv"lsd* -> lsd" \
-  pick"lsd/lsd" \
+  from'gh-r' \
+  as'program' \
+  mv'lsd* -> lsd' \
+  pick'lsd/lsd' \
+  id-as'auto' \
   @Peltoche/lsd
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  mv"exa* -> exa" \
-  pick"bin/exa" \
+  from'gh-r' \
+  as'program' \
+  mv'exa* -> exa' \
+  pick'bin/exa' \
   atload'alias ls="exa --icons --time-style=iso --git --classify --color-scale --color=auto"' \
   atload'alias ll="exa --icons --time-style=iso --git --classify --color-scale --color=auto --long -i --extended"' \
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"' \
+  id-as'auto' \
   @ogham/exa
 
 zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
-  mv"docker-show-context* -> docker-show-context" \
-  has"docker" \
+  from'gh-r' \
+  as'program' \
+  mv'docker-show-context* -> docker-show-context' \
+  has'docker' \
+  id-as'auto' \
   @pwaller/docker-show-context
 
-zinit wait lucid for \
-  from"gh-r" \
-  as"program" \
+zinit wait'[[ -f go.mod ]] || { g=( *.go([1]N) ) && [[ -f $g ]] } || [[ -n ${ZLAST_COMMANDS[(r)gotest*]} ]]' lucid for \
+  from'gh-r' \
+  as'program' \
+  id-as'auto' \
   @gotestyourself/gotestsum
 
 zinit wait lucid for \
-  as"completion" \
+  as'completion' \
   atpull'zinit creinstall -q "$PWD"' \
-  atdelete"zinit cuninstall completions" \
+  atdelete'zinit cuninstall completions' \
   blockf \
+  id-as'auto' \
   @zsh-users/zsh-completions
 
 zinit wait lucid for \
-  as"completion" \
-  has"conda" \
+  as'completion' \
+  has'conda' \
   atload'eval "$(conda shell.zsh hook 2>/dev/null)"' \
+  id-as'auto' \
   @esc/conda-zsh-completion
 
 zinit pack for 'ls_colors'
