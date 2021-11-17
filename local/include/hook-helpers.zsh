@@ -48,13 +48,12 @@ function hh_git
     fi
   else
     pushd "${dir}" > /dev/null
-    if [[ -z "$(git status --porcelain=v2)" ]]; then
-      git pull --rebase 2>/dev/null | offset | colorize yellow
-      git log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' | offset
-    else
-      echo "Can't update ${dir} repository due to changes:" | offset | colorize red
-      git -c color.status=always status --short | offset | offset
-    fi
+    git -c color.status=always pull --rebase --autostash |&
+      offset
+    git -c color.status=always log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' |&
+      offset
+    git -c color.status=always status --short --branch --show-stash |&
+      offset
     popd > /dev/null
   fi
 }
