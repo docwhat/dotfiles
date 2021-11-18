@@ -56,17 +56,26 @@ for font in "${fonts[@]}"; do
   fetch_or_update \
     "https://github.com/ryanoasis/nerd-fonts/releases/download/${release}/${font}.zip" \
     "${zipfile}"
-  unzip -uo "${zipfile}" '*.otf' -x '*Windows*' '*Mono.*' -d ~/Library/Fonts/NerdFonts \
-  || unzip -uo "${zipfile}" '*.ttf' -x '*Windows*' '*Mono.*' -d ~/Library/Fonts/NerdFonts
+  unzip -uo "${zipfile}" '*Mono.otf' -x '*Windows*' -d ~/Library/Fonts/NerdFonts \
+  || unzip -uo "${zipfile}" '*Mono.ttf' -x '*Windows*' -d ~/Library/Fonts/NerdFonts
 done
 
+# Remove duplicates
+rm -f ~/Library/Fonts/NerdFonts/Blex*{Thin,Light,Text,Medium,SemiBold}\ Italic*(N)
+
+# Install SF-Mono Nerd Font!
+zipfile="${cachedir}/SFMono-Nerd-Font.zip"
+fetch_or_update \
+  "https://github.com/shaunsingh/SFMono-Nerd-Font-Ligaturized/archive/refs/heads/main.zip" \
+  "${zipfile}"
+unzip -juo "${zipfile}" '*.otf' -d ~/Library/Fonts/NerdFonts
+
 # Install SF-Mono fonts for general usage.
-terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts
+terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/
 if ! [[ -d $terminal_font_dir ]]; then
   terminal_font_dir="/System/${terminal_font_dir}"
 fi
 declare -r terminal_font_dir
-
-rsync -av --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
+rsync -avP --chmod=Fa-x --inplace --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
 
 # EOF
