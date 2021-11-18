@@ -6,5 +6,5 @@ if (( ${+commands[rbenv]} )); then
   add-rehash-hook command rbenv rehash
 else
   echo "Use rbenv-install to install ruby..."
-  echo "    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash"
+  echo "    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash"
 fi
