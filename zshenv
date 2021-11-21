@@ -13,6 +13,7 @@ typeset -xU \
 path=(
   "$HOME/bin"
   "$HOME/.local/bin"
+  /snap/bin
   /usr/local/sbin
   /usr/local/bin
   /usr/local/share/npm/bin
