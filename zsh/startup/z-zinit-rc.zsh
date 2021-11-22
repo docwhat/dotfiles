@@ -30,13 +30,21 @@ if [[ $OSTYPE == darwin* ]] && [[ $CPUTYPE == arm* ]]; then
   _bpicks[jq]='*osx*(amd64|arm)*'
 fi
 
-zinit wait lucid for \
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode id-as'auto' for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+zinit wait lucid light-mode for \
   has'lua' \
   atclone'mkdir -p "$(dirname "$_ZL_DATA")"; touch "$_ZL_DATA"' \
   id-as'auto' \
   @skywind3000/z.lua
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   has'git' \
   src'etc/git-extras-completion.zsh' \
   atclone'make PREFIX=$ZPFX uninstall >/dev/null ; make PREFIX=$ZPFX <<(yes n)' \
@@ -44,30 +52,30 @@ zinit wait lucid for \
   id-as'auto' \
   @tj/git-extras
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   id-as'auto' \
   @chrissicool/zsh-256color
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   id-as'auto' \
   @RobSis/zsh-completion-generator
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   atinit'ZINIT[COMPINIT_OPTS]="-i -d ${(qq)ZSH_COMPDUMP}"; zicompinit; zicdreplay' \
   id-as'auto' \
   @zdharma-continuum/fast-syntax-highlighting
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   id-as'auto' \
   @hlissner/zsh-autopair
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   atload'_zsh_autosuggest_start' \
   atload'_zsh_autosuggest_custom_config' \
   id-as'auto' \
   @zsh-users/zsh-autosuggestions
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'command' \
   mv'direnv* -> direnv' \
@@ -78,7 +86,7 @@ zinit wait lucid for \
   id-as'auto' \
   @direnv/direnv
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'command' \
   mv'delta-* -> delta' \
@@ -88,7 +96,7 @@ zinit wait lucid for \
   @dandavison/delta
 
 # Must go before bat-extras
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'command' \
   atclone'mv shfmt* shfmt' \
@@ -97,7 +105,7 @@ zinit wait lucid for \
   id-as'shfmt' \
   @mvdan/sh
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from"gh-r" \
   as"command" \
   mv"ripgrep-* -> rg" \
@@ -108,7 +116,7 @@ zinit wait lucid for \
   id-as'rg' \
   @BurntSushi/ripgrep
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   ver'latest' \
@@ -120,7 +128,7 @@ zinit wait lucid for \
   id-as'gh' \
   @cli/cli
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   mv'jq-* -> jq' \
@@ -128,14 +136,14 @@ zinit wait lucid for \
   --bpick="$_bpicks[jq]" \
   @stedolan/jq
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   mv'hadolint-* -> hadolint' \
   id-as'auto' \
   @hadolint/hadolint
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   has'xz' \
@@ -145,7 +153,7 @@ zinit wait lucid for \
   id-as'auto' \
   @koalaman/shellcheck
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   pick'bat' \
@@ -157,7 +165,7 @@ zinit wait lucid for \
   id-as'auto' \
   @sharkdp/bat
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   as'program' \
   pick'bin/*' \
   atclone'./build.sh --no-verify --minify=none --manuals --prefix "$ZPFX"' \
@@ -170,7 +178,7 @@ zinit wait lucid for \
   id-as'auto' \
   @eth-p/bat-extras
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   mv'fd-* -> files' \
@@ -181,7 +189,7 @@ zinit wait lucid for \
   id-as'auto' \
   @sharkdp/fd
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   mv'lsd* -> lsd' \
@@ -190,7 +198,7 @@ zinit wait lucid for \
   id-as'auto' \
   @Peltoche/lsd
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   mv'exa* -> exa' \
@@ -201,7 +209,7 @@ zinit wait lucid for \
   id-as'auto' \
   @ogham/exa
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   mv'docker-show-context* -> docker-show-context' \
@@ -209,13 +217,13 @@ zinit wait lucid for \
   id-as'auto' \
   @pwaller/docker-show-context
 
-zinit wait'[[ -f go.mod ]] || { g=( *.go([1]N) ) && [[ -f $g ]] } || [[ -n ${ZLAST_COMMANDS[(r)gotest*]} ]]' lucid for \
+zinit wait'[[ -f go.mod ]] || { g=( *.go([1]N) ) && [[ -f $g ]] } || [[ -n ${ZLAST_COMMANDS[(r)gotest*]} ]]' lucid light-mode for \
   from'gh-r' \
   as'program' \
   id-as'auto' \
   @gotestyourself/gotestsum
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   as'completion' \
   atpull'zinit creinstall -q "$PWD"' \
   atdelete'zinit cuninstall completions' \
@@ -223,14 +231,14 @@ zinit wait lucid for \
   id-as'auto' \
   @zsh-users/zsh-completions
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
   as'completion' \
   has'conda' \
   atload'eval "$(conda shell.zsh hook 2>/dev/null)"' \
   id-as'auto' \
   @esc/conda-zsh-completion
 
-zinit pack for 'ls_colors'
+zinit pack light-mode for 'ls_colors'
 
 manpath=( $ZPFX/man "${manpath[@]}" )
 
