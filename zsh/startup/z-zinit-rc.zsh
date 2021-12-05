@@ -28,6 +28,8 @@ if [[ $OSTYPE == darwin* ]] && [[ $CPUTYPE == arm* ]]; then
   _bpicks[rust]='*(x86_64|arm)*darwin*'
   _bpicks[haskell]='*darwin*(x86_64|arm)*'
   _bpicks[jq]='*osx*(amd64|arm)*'
+  _bpicks[gh]='*macos*(amd64|arm)*'
+  _bpicks[exa]='*macos*(x86_64|arm)*'
 fi
 
 # Load a few important annexes, without Turbo
@@ -125,6 +127,7 @@ zinit wait lucid light-mode for \
   atclone'src/bin/gh completion -s zsh > src/bin/_gh' \
   atpull'%atclone' \
   pick'src/bin/gh' \
+  --bpick="$_bpicks[gh]" \
   id-as'gh' \
   @cli/cli
 
@@ -201,11 +204,11 @@ zinit wait lucid light-mode for \
 zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
-  mv'exa* -> exa' \
   pick'bin/exa' \
   atload'alias ls="exa --icons --time-style=iso --git --classify --color-scale --color=auto"' \
   atload'alias ll="exa --icons --time-style=iso --git --classify --color-scale --color=auto --long -i --extended"' \
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"' \
+  --bpick="$_bpicks[exa]" \
   id-as'auto' \
   @ogham/exa
 

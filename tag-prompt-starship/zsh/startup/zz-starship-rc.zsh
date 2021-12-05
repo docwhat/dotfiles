@@ -1,7 +1,13 @@
+
+if [[ $OSTYPE == darwin* ]] && [[ $CPUTYPE == arm* ]]; then
+  _bpicks[starship]='*starship-aarch64-apple-darwin*'
+fi
+
 zinit ice \
   --id-as=starship \
   --from=gh-r \
   --as=program \
+  --bpick="$_bpicks[starship]" \
   --atclone='starship completions zsh > ~/.zsh/functions/_starship' \
   --atpull='%atclone' \
   --atload='!eval $(starship init zsh)'
