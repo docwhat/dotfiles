@@ -1,3 +1,10 @@
+unset ZINIT ZPFX
+declare -A ZINIT
+ZINIT[HOME_DIR]="$XDG_DATA_HOME/zinit"
+ZPFX="${ZINIT[HOME_DIR]}/polaris"
+ZINIT[MAN_DIR]="$ZPFX/man"
+ZINIT[ZERO]="${ZINIT[HOME_DIR]}/zinit.git/zinit.zsh"
+
 # skywind3000/z.lua
 export _ZL_ADD_ONCE=1
 export _ZL_DATA="$XDG_DATA_HOME/z.lua/database"
