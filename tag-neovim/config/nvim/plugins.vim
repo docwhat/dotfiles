@@ -73,7 +73,6 @@ Plug 'scrooloose/nerdcommenter', { 'tag': '*' }
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'fszymanski/fzf-gitignore', {'do': ':UpdateRemotePlugins'}
 " " TODO: Consider fzy instead? https://github.com/jhawthorn/fzy
 
 " Neovim Development
@@ -219,7 +218,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'plytophogy/vim-diffchanges'
 
 " zinit syntax
-Plug 'zinit-zsh/zinit-vim-syntax'
+Plug 'zdharma-continuum/zinit-vim-syntax'
 
 call plug#end()
 
