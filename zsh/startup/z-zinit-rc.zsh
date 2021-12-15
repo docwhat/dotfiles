@@ -226,10 +226,11 @@ zinit wait'[[ -f go.mod ]] || { g=( *.go([1]N) ) && [[ -f $g ]] } || [[ -n ${ZLA
   id-as'auto' \
   @gotestyourself/gotestsum
 
+# atpull'zinit creinstall -q "$PWD"'
 zinit wait lucid light-mode for \
   as'completion' \
-  atpull'zinit creinstall -q "$PWD"' \
   atdelete'zinit cuninstall completions' \
+  atload"zicompinit; zicdreplay" \
   blockf \
   id-as'auto' \
   @zsh-users/zsh-completions
