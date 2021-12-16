@@ -84,7 +84,7 @@ zinit wait lucid light-mode for \
   pick'direnv' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' \
-  src='zhook.zsh' \
+  src'zhook.zsh' \
   id-as'auto' \
   @direnv/direnv
 
