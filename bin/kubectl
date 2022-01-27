@@ -81,6 +81,8 @@ class App
       iopath = Pathname.new(io.path)
       iopath.chmod(0o755)
       iopath.rename exact_path
+    else
+      die "Don't know what to do with #{io.inspect}"
     end
 
     path.delete if path.symlink?
@@ -96,9 +98,11 @@ class App
          .map { |pth| pth + 'kubectl' })
         .select(&:file?)
         .select(&:executable?)
-        .map(&:realpath)
-        .reject { |pth| PROGRAM_NAME == pth }
-        .first || exit(127)
+        .reject { |pth| PROGRAM_NAME == pth.realpath }
+        .first || begin
+          STDERR.puts "FATAL: At least one existing version of kubectl must be available."
+          exit(127)
+        end
     end.to_s
   end
 
