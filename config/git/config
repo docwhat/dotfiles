@@ -94,6 +94,7 @@
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
 
 [difftool]
+	keepBackup = false
 	prompt = false
 
 [diff]
