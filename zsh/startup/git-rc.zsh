@@ -12,9 +12,9 @@ function git-repo() {
         echo "The 'gh' utility is required: https://github.com/cli/cli"
       fi
 
-      gh repo clone "$url" "$clonedir" || return $?
+      gh repo clone "$url" "$clonedir" -- --filter=blob:none || return $?
     else
-      git clone "$url" "$clonedir" || return $?
+      git clone --filter=blob:none "$url" "$clonedir" || return $?
     fi
   fi
 
