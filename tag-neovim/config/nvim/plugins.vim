@@ -76,7 +76,6 @@ Plug 'junegunn/fzf.vim'
 " " TODO: Consider fzy instead? https://github.com/jhawthorn/fzy
 
 " Neovim Development
-Plug 'tweekmonster/nvimdev.nvim'
 Plug 'tweekmonster/helpful.vim'
 Plug 'syngan/vim-vimlint'
 Plug 'ynkdir/vim-vimlparser'
