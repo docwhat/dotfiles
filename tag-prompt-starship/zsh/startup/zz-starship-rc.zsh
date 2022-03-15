@@ -1,6 +1,6 @@
 
 if [[ $OSTYPE == darwin* ]] && [[ $CPUTYPE == arm* ]]; then
-  _bpicks[starship]='*starship-aarch64-apple-darwin*'
+  _bpicks[starship]="*aarch64-apple*.tar.gz"
 fi
 
 zinit ice \
