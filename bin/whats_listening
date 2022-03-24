@@ -180,6 +180,10 @@ whats_listening [options]
 
 Show what is listening on a port.
 
+This is a wrapper around the native netstat command for your OS and emits
+identical output.  Looking at which PIDs are listening on given ports is a
+common command but is different depending on the OS.
+
 =head1 OPTIONS
 
 =over
