@@ -1,0 +1,162 @@
+#!/usr/bin/env bash
+
+set -eu
+
+darwin_cmd() {
+  local -ir wanted_ipv=$1 wanted_port=$2
+  local -r wanted_protocol=$3
+  local protocol family
+
+  printf "%-4s %5s %13s\t%5s\t%5s\n" "" PROTO ADDRESS PORT PID
+  for protocol in tcp udp; do
+    [[ $wanted_protocol == tcp ]] && [[ $protocol != tcp ]] && continue
+    [[ $wanted_protocol == udp ]] && [[ $protocol != udp ]] && continue
+    for family in inet inet6; do
+      ((wanted_ipv == 4)) && [[ $family != inet ]] && continue
+      ((wanted_ipv == 6)) && [[ $family != inet6 ]] && continue
+      local addrport pid
+      local addr
+      local -i port
+      local ipv
+      if [[ $family == inet ]]; then
+        ipv=IPv4
+      else
+        ipv=IPv6
+      fi
+      netstat -a -L -n -v -f "$family" -p "$protocol" | while read -r j1 addrport j2 j3 pid j4; do
+        [[ $addrport == *listen* ]] && continue
+        [[ $pid -eq 0 ]] && continue
+        addr=${addrport%.*}
+        port=${addrport##*.}
+        ((wanted_port > 0)) && ((wanted_port != port)) && continue
+
+        printf "%-4s %-3s %15s\t%5d\t%5d\n" "$ipv" "${protocol^^}" "$addr" "$port" "$pid"
+      done
+    done
+  done |
+    sort -n -k 5 -k 4
+}
+
+linux_cmd() {
+  set -x
+  local -ir wanted_ipv=$1 wanted_port=$2
+  local -r wanted_protocol=$3
+
+  printf "%-4s %5s %13s\t%5s\t%5s\n" "" PROTO ADDRESS PORT PID
+
+  local protocol family
+  for family in inet inet6; do
+    ((wanted_ipv == 4)) && [[ $family != inet ]] && continue
+    ((wanted_ipv == 6)) && [[ $family != inet6 ]] && continue
+    local addrport pid
+    local addr
+    local ipv
+    if [[ $family == inet ]]; then
+      ipv=IPv4
+    else
+      ipv=IPv6
+    fi
+    netstat -l -n -p --protocol="$family" | while read -r protocol j1 j2 addrport j3 j4 pid; do
+      echo "$protocol $addrport $pid"
+      local -i port
+      case "${protocol,,}" in
+      tcp) [[ $wanted_protocol == tcp ]] || continue ;;
+      udp) [[ $wanted_protocol == udp ]] || continue ;;
+      *) continue ;;
+      esac
+      addr=${addrport%:*}
+      port=${addrport##*:}
+      ((wanted_port > 0)) && ((wanted_port != port)) && continue
+
+      printf "%-4s %-3s %15s\t%5d\t%5d\n" "$ipv" "${protocol^^}" "$addr" "$port" "$pid"
+    done
+  done
+}
+
+usage() {
+  if (($# > 0)); then
+    pod2usage "-exit=0" "-verbose=1" "-utf8" "-formatter=Pod::Text::Termcap" "$0" || :
+    {
+      echo "USAGE ERROR: $*"
+    } 1>&2
+    exit 2
+  fi
+
+  pod2usage "-exit=0" "-verbose=3" "-utf8" "-formatter=Pod::Text::Termcap" "$0" || :
+  exit 0
+}
+
+app() {
+  local -i ipv=0 port=0
+  local protocol=both
+  while (($#)); do
+    case "$1" in
+    -p | --port)
+      shift
+      port=$1
+      ;;
+    --port=*) port=${1#--port=} ;;
+    -4) ipv=4 ;;
+    -6) ipv=6 ;;
+    -t | -tcp | --tcp) protocol=tcp ;;
+    -u | -udp | --udp) protocol=udp ;;
+    -H | -h | --h | --help) usage ;;
+    -*) usage "Unknown argument: $1" ;;
+    *) usage "Unknown argument: $1" ;;
+    esac
+    shift
+  done
+
+  readonly ipv port protocol
+
+  local cmd=''
+  case "$OSTYPE" in
+  darwin*) cmd=darwin_cmd ;;
+  linux*) cmd=linux_cmd ;;
+  *) usage "Unknown OS: $OSTYPE" ;;
+  esac
+  readonly cmd
+
+  "$cmd" "$ipv" "$port" "$protocol"
+}
+
+app "$@"
+
+: <<=cut
+=pod
+
+=head1 NAME
+
+whats_listening - Show what is listening
+
+=head1 SYNOPSIS
+
+whats_listening [options]
+
+=head1 DESCRIPTION
+
+Show what is listening on a port.
+
+=head1 OPTIONS
+
+=over
+
+=item B<-p> I<port> or B<--port> I<port>
+
+Only show processes listening on I<port>.
+
+=item B<-4> or B<-6>
+
+Only show IPv4 or IPv6 addresses.  Default is both.
+
+=item B<-t> or B<-tcp> or B<--tcp>
+
+Only show TCP connections.  Default is to show both UDP and TCP.
+
+=item B<-u> or B<-udp> or B<--udp>
+
+Only show UDP connections.  Default is to show both UDP and TCP.
+
+=back
+
+=cut
