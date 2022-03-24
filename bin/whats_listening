@@ -2,6 +2,35 @@
 
 set -eu
 
+declare -i use_names=1
+
+header() {
+  printf "%-4s %15s\t%9s\t%5s\n" "" ADDRESS PORT PID
+}
+
+row() {
+  local -r ipv=$1 proto=$2 addr=$3 port=$4 pid=$5
+
+  local str_addr
+  if ((use_names)); then
+    case "$addr" in
+    127.0.0.1) str_addr='localhost' ;;
+    ::1) str_addr='localhost' ;;
+    \*) str_addr='all' ;;
+    0.0.0.0) str_addr='all' ;;
+    ::) str_addr='all' ;;
+    *) str_addr=$addr ;;
+    esac
+  else
+    case "$addr" in
+    \*) if [[ ${ipv,,} == ipv4 ]]; then str_addr=0.0.0.0; else str_addr=::; fi ;;
+    *) str_addr=$addr ;;
+    esac
+  fi
+
+  printf "%-4s %15s\t%5d/%3s\t%5s\n" "$ipv" "$str_addr" "$port" "${proto,,}" "$pid"
+}
+
 darwin_cmd() {
   local -ir wanted_ipv=$1 wanted_port=$2
   local -r wanted_protocol=$3
@@ -23,26 +52,26 @@ darwin_cmd() {
       else
         ipv=IPv6
       fi
-      netstat -a -L -n -v -f "$family" -p "$protocol" | while read -r j1 addrport j2 j3 pid j4; do
-        [[ $addrport == *listen* ]] && continue
-        [[ $pid -eq 0 ]] && continue
-        addr=${addrport%.*}
-        port=${addrport##*.}
-        ((wanted_port > 0)) && ((wanted_port != port)) && continue
+      netstat -a -L -n -v -f "$family" -p "$protocol" |
+        awk '{ print $2" "$5 }' |
+        while read -r addrport pid; do
+          [[ $addrport == *listen* ]] && continue
+          [[ $pid -eq 0 ]] && continue
+          addr=${addrport%.*}
+          port=${addrport##*.}
+          ((wanted_port > 0)) && ((wanted_port != port)) && continue
 
-        printf "%-4s %-3s %15s\t%5d\t%5d\n" "$ipv" "${protocol^^}" "$addr" "$port" "$pid"
-      done
+          row "$ipv" "$protocol" "$addr" "$port" "$pid"
+        done
     done
-  done |
-    sort -n -k 5 -k 4
+  done
 }
 
 linux_cmd() {
-  set -x
   local -ir wanted_ipv=$1 wanted_port=$2
   local -r wanted_protocol=$3
 
-  printf "%-4s %5s %13s\t%5s\t%5s\n" "" PROTO ADDRESS PORT PID
+  header
 
   local protocol family
   for family in inet inet6; do
@@ -56,20 +85,29 @@ linux_cmd() {
     else
       ipv=IPv6
     fi
-    netstat -l -n -p --protocol="$family" | while read -r protocol j1 j2 addrport j3 j4 pid; do
-      echo "$protocol $addrport $pid"
-      local -i port
-      case "${protocol,,}" in
-      tcp) [[ $wanted_protocol == tcp ]] || continue ;;
-      udp) [[ $wanted_protocol == udp ]] || continue ;;
-      *) continue ;;
-      esac
-      addr=${addrport%:*}
-      port=${addrport##*:}
-      ((wanted_port > 0)) && ((wanted_port != port)) && continue
+    netstat -l -n -p -W --protocol="$family" 2>/dev/null |
+      awk 'BEGIN { FIELDWIDTHS="4 16:20 40:5" } /^(tcp|udp)/ { print $1" \t "$2" \t "$3 }' |
+      while read -r protocol addrport rest; do
+        local pid=${rest%%/*}
+        case "${protocol,,}" in
+        tcp*)
+          protocol=tcp
+          [[ $wanted_protocol == udp ]] && continue
+          ;;
+        udp*)
+          protocol=udp
+          [[ $wanted_protocol == tcp ]] && continue
+          ;;
+        *) continue ;;
+        esac
+        local addr
+        local -i port
+        addr=${addrport%:*}
+        port=${addrport##*:}
+        ((wanted_port > 0)) && ((wanted_port != port)) && continue
 
-      printf "%-4s %-3s %15s\t%5d\t%5d\n" "$ipv" "${protocol^^}" "$addr" "$port" "$pid"
-    done
+        row "$ipv" "$protocol" "$addr" "$port" "$pid"
+      done
   done
 }
 
@@ -87,10 +125,14 @@ usage() {
 }
 
 app() {
-  local -i ipv=0 port=0
+  local -i ipv=0 port=0 do_sort=1
   local protocol=both
   while (($#)); do
     case "$1" in
+    -s | --sort) do_sort=1 ;;
+    -S | --no-sort) do_sort=0 ;;
+    -n) use_names=0 ;;
+    -N) use_names=1 ;;
     -p | --port)
       shift
       port=$1
@@ -117,7 +159,8 @@ app() {
   esac
   readonly cmd
 
-  "$cmd" "$ipv" "$port" "$protocol"
+  "$cmd" "$ipv" "$port" "$protocol" |
+    if ((do_sort)); then sort -n -k 5 -k 4; else cat; fi
 }
 
 app "$@"
@@ -156,6 +199,22 @@ Only show TCP connections.  Default is to show both UDP and TCP.
 =item B<-u> or B<-udp> or B<--udp>
 
 Only show UDP connections.  Default is to show both UDP and TCP.
+
+=item B<-s> or B<--sort>
+
+Sort the output by the PID and PORT.  The default is sorted.
+
+=item B<-S> or B<--no-sort>
+
+The output order is unspecified.  The default is sorted.
+
+=item B<-n>
+
+Show network addresses instead of names for localhost (127.0.0.1 and ::1) and any (0.0.0.0 & ::).
+
+=item B<-n>
+
+Show names for localhost (127.0.0.1 and ::1) and any (0.0.0.0 & ::) instead of network addresses.
 
 =back
 
