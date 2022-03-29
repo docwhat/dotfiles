@@ -7,6 +7,7 @@ require 'open-uri'
 require 'open3'
 require 'pathname'
 require 'rbconfig'
+require 'fileutils'
 
 # Kubernetes client needs to be within 1 minor version of the server.
 class App
@@ -80,7 +81,16 @@ class App
       io.close
       iopath = Pathname.new(io.path)
       iopath.chmod(0o755)
-      iopath.rename exact_path
+      begin
+        iopath.rename exact_path
+      rescue Errno::EXDEV => ex
+        if ex.message.to_s.include? "Invalid cross-device link"
+          FileUtils.cp iopath.to_s, exact_path.to_s
+          iopath.delete
+        else
+          raise ex
+        end
+      end
     else
       die "Don't know what to do with #{io.inspect}"
     end
