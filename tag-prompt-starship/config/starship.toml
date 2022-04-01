@@ -202,6 +202,15 @@ symbol = "↕️ "
 disabled = false
 map_symbol = true
 recognize_signal_code = true
+pipestatus = true
+style = ""
+
+symbol = "💀"
+success_symbol = ""
+not_executable_symbol = "🚫"
+not_found_symbol = "🔍"
+sigint_symbol = "🔫"
+signal_symbol = "🚦"
 
 [swift]
 symbol = "ﯣ "
