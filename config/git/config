@@ -7,6 +7,7 @@
 	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/' | sort
 	share    = !git daemon --reuseaddr --base-path=./.git --verbose --export-all
 	unstaged = reset HEAD --
+	tags     = tag
 
 	graph = log --graph --abbrev-commit --decorate --date=relative --all
 
@@ -41,19 +42,20 @@
 	up = pull --rebase --autostash
 	w  = whatchanged
 	f = fetch --all --prune --prune-tags --no-auto-gc --jobs=3 --progress --show-forced-updates
+	ft = fetch --tags --prune-tags --progress --show-forced-updates
 
 
 	# Find branches containing commit
-	fb = "!f() { git br -a --contains $1; }; f"
+	findbranch = "!f() { git br -a --contains $1; }; f"
 
 	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
+	findtags = "!f() { git describe --always --contains $1; }; f"
 
 	# Find commits by source code
-	fc = "!f() { git  --date=short -S$1; }; f"
+	findbysource = "!f() { git  --date=short -S$1; }; f"
 
 	# Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	findbycommit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
 	show-merged = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short))' --python refs/heads | python3
 	show-merged-zero = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short), end=\"\\0\")' --python refs/heads | python3
