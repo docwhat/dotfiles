@@ -186,7 +186,7 @@ zinit wait lucid light-mode for \
   as'program' \
   mv'fd-* -> files' \
   pick'files/fd' \
-  atclone'mv files/fd.1 "$ZINIT[MAN_DIR]/man1/"' \
+  atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
   atpull'%atclone' \
   --bpick="$_bpicks[rust]" \
   id-as'auto' \
@@ -197,6 +197,7 @@ zinit wait lucid light-mode for \
   as'program' \
   mv'lsd* -> lsd' \
   pick'lsd/lsd' \
+  atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
   --bpick="$_bpicks[rust]" \
   id-as'auto' \
   @Peltoche/lsd
@@ -205,6 +206,8 @@ zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   pick'bin/exa' \
+  atclone'ln -svf "$PWD/man/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
+  atclone'ln -svf "$PWD/man/"*.5 "${ZINIT[MAN_DIR]}/man5"' \
   atload'alias ls="exa --icons --time-style=iso --git --classify --color-scale --color=auto"' \
   atload'alias ll="exa --icons --time-style=iso --git --classify --color-scale --color=auto --long -i --extended"' \
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"' \
