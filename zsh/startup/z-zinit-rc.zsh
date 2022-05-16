@@ -79,7 +79,7 @@ zinit wait lucid light-mode for \
 
 zinit wait lucid light-mode for \
   from'gh-r' \
-  as'command' \
+  as'program' \
   mv'direnv* -> direnv' \
   pick'direnv' \
   atclone'./direnv hook zsh > zhook.zsh' \
@@ -90,7 +90,7 @@ zinit wait lucid light-mode for \
 
 zinit wait lucid light-mode for \
   from'gh-r' \
-  as'command' \
+  as'program' \
   mv'delta-* -> delta' \
   pick'delta/delta' \
   --bpick="$_bpicks[rust]" \
@@ -100,7 +100,7 @@ zinit wait lucid light-mode for \
 # Must go before bat-extras
 zinit wait lucid light-mode for \
   from'gh-r' \
-  as'command' \
+  as'program' \
   atclone'mv shfmt* shfmt' \
   atpull'%atclone' \
   pick'shfmt' \
