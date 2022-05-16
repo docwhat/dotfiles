@@ -108,14 +108,20 @@ zinit wait lucid light-mode for \
   @mvdan/sh
 
 zinit wait lucid light-mode for \
-  from"gh-r" \
-  as"command" \
-  mv"ripgrep-* -> rg" \
-  pick"rg/rg" \
-  atclone'ln -nsf "$PWD"/rg*/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
-  atpull'%atclone' \
-  --bpick="$_bpicks[rust]" \
+  from'gh-r' \
+  as'program' \
+  pick'rg' \
   id-as'rg' \
+  @microsoft/ripgrep-prebuilt
+
+zinit wait lucid light-mode for \
+  from'gh-r' \
+  as'completion' \
+  nocompile \
+  mv'ripgrep-* -> ripgrep' \
+  atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
+  atpull'%atclone' \
+  id-as'rg-man' \
   @BurntSushi/ripgrep
 
 zinit wait lucid light-mode for \
