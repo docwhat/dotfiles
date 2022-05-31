@@ -35,10 +35,10 @@ fi
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode id-as'auto' for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+    '@zdharma-continuum/zinit-annex-as-monitor' \
+    '@zdharma-continuum/zinit-annex-bin-gem-node' \
+    '@zdharma-continuum/zinit-annex-patch-dl' \
+    '@zdharma-continuum/zinit-annex-rust'
 
 zinit wait lucid light-mode for \
   has'lua' \
@@ -119,6 +119,7 @@ zinit wait lucid light-mode for \
   as'completion' \
   nocompile \
   mv'ripgrep-* -> ripgrep' \
+  mv'ripgrep/completion/_rg -> _rg' \
   atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
   atpull'%atclone' \
   id-as'rg-man' \
