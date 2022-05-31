@@ -119,7 +119,6 @@ zinit wait lucid light-mode for \
   as'completion' \
   nocompile \
   mv'ripgrep-* -> ripgrep' \
-  mv'ripgrep/completion/_rg -> _rg' \
   atclone'ln -nsf "$PWD"/ripgrep/doc/rg.1 "$ZINIT[MAN_DIR]/man1/rg.1"' \
   atpull'%atclone' \
   id-as'rg-man' \
