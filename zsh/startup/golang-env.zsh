@@ -5,6 +5,6 @@ if [ -d "$HOME/.go" -a ! -d "$HOME/go" ]; then
 fi
 
 [ -d "$GOPATH" ] || mkdir -p "$GOPATH"
-path=($path "${GOPATH}/bin")
+path+=("${GOPATH}/bin")
 
 # vim: set ft=zsh :

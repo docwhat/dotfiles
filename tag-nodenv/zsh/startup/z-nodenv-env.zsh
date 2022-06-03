@@ -15,5 +15,5 @@ if [ "${ZSH_ENABLENODE}" != false ]; then
   ## Set the shell for NODENV
   NODENV_SHELL=zsh
 
-  path+="$NODENV_ROOT/bin"
+  path+=("$NODENV_ROOT/bin")
 fi

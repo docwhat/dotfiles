@@ -8,7 +8,7 @@ if [ "$ZSH_ENABLEPYTHON" != false ]; then
 
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
-  path+="${PYENV_ROOT}/bin"
+  path+=("${PYENV_ROOT}/bin")
 fi
 
 # EOF

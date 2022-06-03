@@ -253,6 +253,4 @@ zinit wait lucid light-mode for \
 
 zinit pack light-mode for 'ls_colors'
 
-manpath=( $ZPFX/man "${manpath[@]}" )
-
 # EOF

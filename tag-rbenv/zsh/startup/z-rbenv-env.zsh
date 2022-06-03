@@ -5,5 +5,5 @@ if [ "$ZSH_ENABLERUBY" != false ]; then
 
   export RBENV_SHELL=zsh
 
-  path+="${RBENV_ROOT}/bin"
+  path+=("${RBENV_ROOT}/bin")
 fi

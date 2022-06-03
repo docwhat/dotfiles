@@ -24,6 +24,7 @@ manpath=(
   /usr/share/man
   /usr/X11/man
   /opt/X11/share/man
+  "${manpath[@]}"
 )
 
 # Load my customized environment.

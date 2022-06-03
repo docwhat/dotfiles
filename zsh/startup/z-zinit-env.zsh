@@ -20,4 +20,6 @@ if [[ -z $GENCOMPL_PY ]] && [[ -z "${commandds[python]}" ]] && [[ -n "${commands
 fi
 GENCOMPL_FPATH="${ZSH_CACHE_DIR}/completion-generator"
 
+manpath=( $ZPFX/man "${manpath[@]}" )
+
 # EOF

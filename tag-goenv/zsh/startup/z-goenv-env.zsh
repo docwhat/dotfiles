@@ -8,7 +8,7 @@ if [ "$ZSH_ENABLEGO" != false ]; then
 
   export GOENV_VIRTUALENV_DISABLE_PROMPT=1
 
-  path+="${GOENV_ROOT}/bin"
+  path+=("${GOENV_ROOT}/bin")
 fi
 
 # EOF
