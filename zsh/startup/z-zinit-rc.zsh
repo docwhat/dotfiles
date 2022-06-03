@@ -4,10 +4,18 @@ if (( ${+functions[compinit]} )); then
 fi
 
 function from-where {
+local candidate
   echo "Completion used:"
   whence -v $_comps[$1] | offset
   echo "Candidate completions:"
-  print -l $^fpath/$_comps[$1](N) | offset
+  for candidate in $^fpath/$_comps[$1](N^/); do
+    echo -n "  "
+    if (( ${+commands[exa]} )); then
+      exa --long --no-permissions --no-filesize --no-user --no-time "$candidate"
+    else
+      ls -l "$candidate"
+    fi
+  done
 }
 
 function _zsh_autosuggest_custom_config {
