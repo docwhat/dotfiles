@@ -31,15 +31,6 @@ function _zsh_autosuggest_custom_config {
   ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c60,)|z *|zf *|cd *"
 }
 
-declare -A _bpicks=()
-if [[ $OSTYPE == darwin* ]] && [[ $CPUTYPE == arm* ]]; then
-  _bpicks[rust]='*(x86_64|arm)*darwin*'
-  _bpicks[haskell]='*darwin*(x86_64|arm)*'
-  _bpicks[jq]='*osx*(amd64|arm)*'
-  _bpicks[gh]='*macos*(amd64|arm)*'
-  _bpicks[exa]='*macos*(x86_64|arm)*'
-fi
-
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode id-as'auto' for \
@@ -101,7 +92,6 @@ zinit wait lucid light-mode for \
   as'program' \
   mv'delta-* -> delta' \
   pick'delta/delta' \
-  --bpick="$_bpicks[rust]" \
   id-as'auto' \
   @dandavison/delta
 
@@ -141,7 +131,6 @@ zinit wait lucid light-mode for \
   atclone'src/bin/gh completion -s zsh > src/bin/_gh' \
   atpull'%atclone' \
   pick'src/bin/gh' \
-  --bpick="$_bpicks[gh]" \
   id-as'gh' \
   @cli/cli
 
@@ -150,7 +139,6 @@ zinit wait lucid light-mode for \
   as'program' \
   mv'jq-* -> jq' \
   id-as'auto' \
-  --bpick="$_bpicks[jq]" \
   @stedolan/jq
 
 zinit wait lucid light-mode for \
@@ -166,7 +154,6 @@ zinit wait lucid light-mode for \
   has'xz' \
   mv'shellcheck* -> shellcheck' \
   pick'shellcheck/shellcheck' \
-  --bpick="$_bpicks[haskell]" \
   id-as'auto' \
   @koalaman/shellcheck
 
@@ -178,7 +165,6 @@ zinit wait lucid light-mode for \
   atclone'cp -f bat*/bat bat' \
   atclone'ln -nsf "$PWD/bat"*/bat.1 "$ZINIT[MAN_DIR]/man1/bat.1"' \
   atpull'%atclone' \
-  --bpick="$_bpicks[rust]" \
   id-as'auto' \
   @sharkdp/bat
 
@@ -202,7 +188,6 @@ zinit wait lucid light-mode for \
   pick'files/fd' \
   atclone'ln -svf "$PWD/files/"*.1 "$ZINIT[MAN_DIR]/man1/"' \
   atpull'%atclone' \
-  --bpick="$_bpicks[rust]" \
   id-as'auto' \
   @sharkdp/fd
 
@@ -212,7 +197,6 @@ zinit wait lucid light-mode for \
   mv'lsd* -> lsd' \
   pick'lsd/lsd' \
   atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
-  --bpick="$_bpicks[rust]" \
   id-as'auto' \
   @Peltoche/lsd
 
@@ -225,7 +209,6 @@ zinit wait lucid light-mode for \
   atload'alias ls="exa --icons --time-style=iso --git --classify --color-scale --color=auto"' \
   atload'alias ll="exa --icons --time-style=iso --git --classify --color-scale --color=auto --long -i --extended"' \
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"' \
-  --bpick="$_bpicks[exa]" \
   id-as'auto' \
   @ogham/exa
 
