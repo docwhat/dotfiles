@@ -1,13 +1,7 @@
 # vim: ft=zsh :
 
-# Export and uniq. paths
-typeset -xU \
-  fpath \
-  FPATH \
-  path \
-  PATH \
-  manpath \
-  MANPATH
+# unique paths
+typeset -U manpath path fpath
 
 # The path has to be set *first*
 path=(
