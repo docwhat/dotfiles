@@ -36,7 +36,5 @@ if [[ -d ~/.fzf ]]; then
       fd --type d --hidden --follow --exclude ".git" . "$1"
     }
   fi
-
-  manpath+=( ~/.fzf/man )
 fi
 # vim: set ft=zsh :
