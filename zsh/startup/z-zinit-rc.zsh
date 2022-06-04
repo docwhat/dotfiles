@@ -178,8 +178,8 @@ zinit wait lucid light-mode for \
   atload'eval "$(batpipe)"' \
   atload'alias rg=batgrep' \
   atload'if command -v less >/dev/null; then alias man="MANPAGER=less batman"; else alias man=batman; fi' \
-  atload'zpcompdef _rg batgrep' \
-  atload'zpcompdef _man batman' \
+  atload'zicompdef _rg batgrep' \
+  atload'zicompdef _man batman' \
   id-as'auto' \
   @eth-p/bat-extras
 
@@ -206,8 +206,9 @@ zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
   pick'bin/exa' \
-  atclone'ln -svf "$PWD/man/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
-  atclone'ln -svf "$PWD/man/"*.5 "${ZINIT[MAN_DIR]}/man5"' \
+  atclone'ln -nsvf "$PWD/man/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
+  atclone'ln -nsvf "$PWD/man/"*.5 "${ZINIT[MAN_DIR]}/man5"' \
+  atclone'ln -nsvf "$PWD/completions/exa.zsh" "${ZINIT[COMPLETIONS_DIR]}/_exa"' \
   atload'alias ls="exa --icons --time-style=iso --git --classify --color-scale --color=auto"' \
   atload'alias ll="exa --icons --time-style=iso --git --classify --color-scale --color=auto --long -i --extended"' \
   atload'alias tree="exa --icons --time-style=iso --git --classify --color-scale --color=auto --tree"' \
