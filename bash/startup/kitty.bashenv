@@ -1,6 +1,0 @@
-#!/bin/bash
-# shellcheck shell=bash
-
-export "KITTY_CONFIG_DIRECTORY=${HOME}/.config/kitty"
-
-# EOF
