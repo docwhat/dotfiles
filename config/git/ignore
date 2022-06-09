@@ -49,4 +49,6 @@ Temporary Items
 *.pem
 .env
 
+.boxy-state.json
+
 # vim : set ft=gitignore :
