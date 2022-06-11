@@ -2,16 +2,21 @@
 
 set -eu
 
+setopt nullglob
+
 declare -ar broken=(
-  ~/.zsh/**/*(N-@)
-  ~/bin/**/*(N-@)
-  ~/.local/bin/**/*(N-@)
-  ~/.local/libexec/**/*(N-@)
-  ~/.local/share/**/*(N-@)
-  ~/.config/**/*(N-@)
-  ~/.*(N-@)
+  ~/.zsh/**/*(-@)
+  ~/bin/**/*(-@)
+  ~/.local/bin/**/*(-@)
+  ~/.local/libexec/**/*(-@)
+  ~/.local/share/**/*(-@)
+  ~/.config/**/*(-@)
+  ~/.*(-@)
 )
 
-rm -vf "${(@)broken}"
+if (( ${#broken[*]} > 0 )); then
+  echo "Removing broken symlinks"
+  rm -vf "${(@)broken}"
+fi
 
 # EOF
