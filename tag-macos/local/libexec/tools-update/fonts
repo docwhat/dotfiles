@@ -6,23 +6,19 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-cachedir="$HOME/.cache/tools-update/fonts"
-
-typeset -a fonts
-fonts=(
-FiraCode
-Hack
-IBMPlexMono
-)
-
-declare -r fonts cachedir
+if curl --help all | grep -q etag; then
+  curl_has_etag=1
+else
+  curl_has_etag=0
+fi
+declare -ir curl_has_etag
 
 fetch_or_update() {
-  local url destination
-  url=$1
-  destination=$2
-  if [ ! -r "$destination" ]; then
+  local -r url=$1 destination=$2
+  if ! [[ -r "$destination" ]]; then
     curl -sSfL -o "$destination" "$url"
+  elif (( curl_has_etag )); then
+    curl -sSfL --etag-save "$destination".etag --etag-compare "$destination".etag -o "$destination" "$url"
   else
     curl -sSfL -z "$destination" -o "$destination" "$url"
   fi
@@ -35,40 +31,12 @@ if [[ "${OSTYPE}" != darwin* ]]; then
   exit 0
 fi
 
-if ! (( ${+commands[jq]} )); then
-  print -P "  %F{yellow}Skipping%F{reset}: Install %F{green}jq%F{reset} to install fonts."
-  exit 0
-fi
+rm -f ~/Library/Fonts/NerdFonts/*(N.) ~/Library/Fonts/TerminalAppFonts/(N.)
+mkdir -p ~/Library/Fonts/NerdFonts ~/Library/Fonts/TerminalAppFonts/
 
-release=$(curl -sSfn "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | jq -r '.tag_name')
-declare -r release
-
-print -P "Fetching Nerd Fonts %F{green}${release}%F{reset}"
-
-mkdir -p "$cachedir" ~/Library/Fonts/NerdFonts
-
-for file in ~/Library/Fonts/NerdFonts/*(.N); do
-  rm "${file}"
-done
-
-for font in "${fonts[@]}"; do
-  zipfile="${cachedir}/${font}.zip"
-  fetch_or_update \
-    "https://github.com/ryanoasis/nerd-fonts/releases/download/${release}/${font}.zip" \
-    "${zipfile}"
-  unzip -uo "${zipfile}" '*Mono.otf' -x '*Windows*' -d ~/Library/Fonts/NerdFonts \
-  || unzip -uo "${zipfile}" '*Mono.ttf' -x '*Windows*' -d ~/Library/Fonts/NerdFonts
-done
-
-# Remove duplicates
-rm -f ~/Library/Fonts/NerdFonts/Blex*{Thin,Light,Text,Medium,SemiBold}\ Italic*(N)
-
-# Install SF-Mono Nerd Font!
-zipfile="${cachedir}/SFMono-Nerd-Font.zip"
 fetch_or_update \
-  "https://github.com/shaunsingh/SFMono-Nerd-Font-Ligaturized/archive/refs/heads/main.zip" \
-  "${zipfile}"
-unzip -juo "${zipfile}" '*.otf' -d ~/Library/Fonts/NerdFonts
+  "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/complete/Symbols-2048-em%20Nerd%20Font%20Complete.ttf" \
+  ~/Library/Fonts/NerdFonts/"Symbols Nerd Font.ttf"
 
 # Install SF-Mono fonts for general usage.
 terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/
