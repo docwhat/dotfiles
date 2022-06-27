@@ -14,9 +14,18 @@ function {
   local exe==docker
   local base_dir=${exe:A:h:h}
   local comp
+  local target
 
   for comp in docker docker-compose docker-machine; do
-    [[ -f "$base_dir"/etc/"$comp".zsh-completion ]] && \
-    ln -nsf "$base_dir"/etc/"$comp".zsh-completion ~/.zsh/functions/_"$comp"
+    target=~/.zsh/functions/_"$comp"
+
+    # remove broken links
+    if ! [[ -L "$target" ]]; then rm -f "$target"; fi
+
+    if [[ -a "$base_dir/etc/$comp.zsh-completion" ]]; then
+      ln -nsf "$base_dir/etc/$comp.zsh-completion" "$target"
+    elif [[ -a "$base_dir/etc/_$comp" ]];then
+      ln -nsf "$base_dir/etc/_$comp" "$target"
+    fi
   done
 }
