@@ -12,8 +12,8 @@ class Plugins
     @plugins = VIM.evaluate 'g:plugs'
   end
 
-  def to_json
-    JSON.pretty_generate(@plugins) + "\n"
+  def to_json(_)
+    format "%s\n", JSON.pretty_generate(@plugins)
   end
 
   def data_cache
