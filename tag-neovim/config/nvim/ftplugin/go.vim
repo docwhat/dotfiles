@@ -17,15 +17,6 @@ if has_key(g:plugs, 'vim-go') " {{{
 
   let g:go_term_enabled = 1
 
-  let g:go_list_type = 'quickfix'
-
-  " GoMetoLinter is deprecated now.
-  let g:go_metalinter_command = 'gometalinter'
-
-  let g:go_addtags_transform = 'snakecase'
-
-  let g:go_fmt_command = 'goimports'
-
   if has_key(g:plugs, 'ale')
     let g:go_fmt_experimental = 0
     let g:go_fmt_autosave = 0
