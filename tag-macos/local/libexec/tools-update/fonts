@@ -31,19 +31,38 @@ if [[ "${OSTYPE}" != darwin* ]]; then
   exit 0
 fi
 
-rm -f ~/Library/Fonts/NerdFonts/*(N.) ~/Library/Fonts/TerminalAppFonts/(N.)
-mkdir -p ~/Library/Fonts/NerdFonts ~/Library/Fonts/TerminalAppFonts/
+for folder in NerdFonts TerminalAppFonts Microsoft; do
+  rm -f ~/Library/Fonts/"$folder"/*(N.)
+  mkdir -p ~/Library/Fonts/"$folder"
+done
 
-fetch_or_update \
-  "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/complete/Symbols-2048-em%20Nerd%20Font%20Complete.ttf" \
-  ~/Library/Fonts/NerdFonts/"Symbols Nerd Font.ttf"
+function {
+  fetch_or_update \
+    "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/complete/Symbols-2048-em%20Nerd%20Font%20Complete.ttf" \
+    ~/Library/Fonts/NerdFonts/"Symbols Nerd Font.ttf"
+}
 
-# Install SF-Mono fonts for general usage.
-terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/
-if ! [[ -d $terminal_font_dir ]]; then
-  terminal_font_dir="/System/${terminal_font_dir}"
-fi
-declare -r terminal_font_dir
-rsync -avP --chmod=Fa-x --inplace --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
+declare -r cachedir="$HOME/.cache/tools-update/fonts"
+
+function {
+  local release
+  release=$(curl -sSfn "https://api.github.com/repos/microsoft/cascadia-code/releases/latest" | jq -r '.tag_name')
+  mkdir -p "$cachedir"
+  zipfile="${cachedir}/cascadia-code.zip"
+  fetch_or_update \
+    "https://github.com/microsoft/cascadia-code/releases/download/${release}/CascadiaCode-${release#v}.zip" \
+    "${zipfile}"
+  unzip -uoj "${zipfile}" '*.otf' -x '*PL-*' -d ~/Library/Fonts/Microsoft
+}
+
+function {
+  # Install SF-Mono fonts for general usage.
+  local terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/
+  if ! [[ -d $terminal_font_dir ]]; then
+    terminal_font_dir="/System/${terminal_font_dir}"
+  fi
+  local -r terminal_font_dir
+  rsync -avP --chmod=Fa-x --inplace --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
+}
 
 # EOF
