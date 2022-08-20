@@ -108,7 +108,7 @@ let g:coc_global_extensions = [
       \ 'coc-omni',
       \ 'coc-prettier',
       \ 'coc-pyls',
-      \ 'coc-rls',
+      \ 'coc-rust-analyzer',
       \ 'coc-sh',
       \ 'coc-snippets',
       \ 'coc-solargraph',
