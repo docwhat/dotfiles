@@ -155,6 +155,9 @@
 	insteadOf = git://github.com/
 [url "git@gitlab.com:"]
 	insteadOf = https://gitlab.com/
+# avoid issues with cargo-edit
+[url "https://github.com/rust-lang/crates.io-index"]
+  insteadOf = https://github.com/rust-lang/crates.io-index
 
 ; Added by the GitHub.app
 [filter "hawser"]
