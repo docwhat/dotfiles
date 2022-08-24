@@ -193,6 +193,23 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @sharkdp/fd
 
+zinit \
+    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
+    atpull'%atclone' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> _fzf_completion' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> $ZPFX/man/man1/fzf-tmux.1' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 -> $ZPFX/man/man1/fzf.1' \
+    from'gh-r' \
+    id-as'auto' \
+    lucid \
+    nocompile \
+    pick'/dev/null' \
+    sbin'fzf' \
+  for @junegunn/fzf
+
+# Load the plugin
+zinit wait lucid light-mode for id-as'auto' has'fzf' @Aloxaf/fzf-tab
+
 zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
@@ -245,6 +262,7 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @esc/conda-zsh-completion
 
-zinit pack light-mode for 'ls_colors'
+zinit wait pack light-mode for 'ls_colors'
+
 
 # EOF

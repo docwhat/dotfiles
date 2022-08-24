@@ -53,7 +53,4 @@ zstyle ":fzf-tab:complete:*" fzf-flags '--preview-window=right:50%:rounded'
 
 zstyle ':fzf-tab:*:' prefix ''
 
-# Load the plugin
-zinit wait lucid light-mode for id-as'auto' has'fzf' @Aloxaf/fzf-tab
-
 # EOF
