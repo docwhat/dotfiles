@@ -17,6 +17,14 @@ function {
         # This ensures homebrew goes early in the fpath.
         fpath=($brewfpath "${fpath[@]}")
       fi
+
+      # Homebrew's zsh doesn't always add all the default paths, depending on
+      # where the HOMEBREW_PREFIX is pointing.
+      local brew_site_path="${HOMEBREW_PREFIX}/share/zsh/site-functions"
+      if [[ -d "$brew_site_path" ]]; then
+        fpath+=$brew_site_path
+      fi
+
       break
     fi
   done
