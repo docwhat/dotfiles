@@ -158,6 +158,9 @@
 # avoid issues with cargo-edit
 [url "https://github.com/rust-lang/crates.io-index"]
   insteadOf = https://github.com/rust-lang/crates.io-index
+# avoid issues with cargo audit
+[url "https://github.com/RustSec/advisory-db.git"]
+	insteadOf = https://github.com/RustSec/advisory-db.git
 
 ; Added by the GitHub.app
 [filter "hawser"]
