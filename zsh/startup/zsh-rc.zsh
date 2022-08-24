@@ -23,7 +23,18 @@ function compute_host_completion
 }
 compute_host_completion
 
-alias reload='exec zsh -l'
+function reload() {
+  if [[ "$ZSH_ARGZERO" == -* ]] && [[ -x "$SHELL" ]]; then
+    # Initial login shell; use SHELL (set by the login process).
+    exec "$SHELL" -l
+  elif [[ -x "$ZSH_ARGZERO" ]]; then
+    # Non-initial login shell; use ZSH_ARGZERO to keep using the same shell.
+    exec "$ZSH_ARGZERO" -l
+  else
+    # Dunno what's going on, fallback to plain "zsh".
+    exec zsh -l
+  fi
+}
 
 zstyle ':completion:*'           use-cache on
 zstyle ':completion:*'           cache-path "${ZSH_CACHE_DIR}"
