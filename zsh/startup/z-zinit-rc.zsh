@@ -125,7 +125,6 @@ zinit wait lucid light-mode for \
 zinit wait lucid light-mode for \
   from'gh-r' \
   as'program' \
-  ver'latest' \
   has'git' \
   mv'gh* -> src' \
   atclone'src/bin/gh completion -s zsh > src/bin/_gh' \
