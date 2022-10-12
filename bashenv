@@ -31,6 +31,14 @@ fi
 unset color_prompt force_color_prompt
 export PS4
 
+for bashenv_env in ~/.bash/startup/*-env.bash; do
+  if [[ -r "$bashenv_env" ]]; then
+    # shellcheck disable=SC1090
+    . "$bashenv_env"
+  fi
+done
+unset bashenv_env
+
 # MUST BE LAST
 eval "$tracestate"
 unset tracestate

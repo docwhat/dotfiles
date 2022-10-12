@@ -71,8 +71,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
-for rc in ~/.bash/startup/*-rc.bash; do
-  . "$rc"
+for bash_rc in ~/.bash/startup/*-rc.bash; do
+  if [[ -r "$bash_rc" ]]; then
+    # shellcheck disable=SC1090
+    . "$bash_rc"
+  fi
 done
+unset bash_rc
 
 # EOF
