@@ -261,6 +261,15 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @esc/conda-zsh-completion
 
+zinit wait lucid light-mode for \
+  has'lua' \
+  has'node' \
+  ver'stable' \
+  from'gh-r' \
+  sbin'**/nvim' \
+  id-as'auto' \
+  @neovim/neovim
+
 zinit wait pack light-mode for 'ls_colors'
 
 
