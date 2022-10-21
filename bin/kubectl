@@ -51,6 +51,8 @@ class App
         case host_cpu
         when /x86_64/
           'amd64'
+        when /aarch64/
+          'arm64'
         else
           die "I don't know what arch #{host_cpu.inspect} is."
         end
