@@ -192,21 +192,27 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @sharkdp/fd
 
-zinit \
-    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
-    atpull'%atclone' \
-    dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> _fzf_completion' \
-    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> $ZPFX/man/man1/fzf-tmux.1' \
-    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 -> $ZPFX/man/man1/fzf.1' \
+zinit wait lucid light-mode \
     from'gh-r' \
     id-as'auto' \
-    lucid \
     nocompile \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> completion.zsh' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh -> key-bindings.zsh' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> $ZPFX/man/man1/fzf-tmux.1' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> man/fzf-tmux.1' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 -> man/fzf.1' \
+    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
+    atclone'ln -nsvf "$PWD/man/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
+    atpull'%atclone' \
     pick'/dev/null' \
     sbin'fzf' \
+    sbin'fzf-tmux' \
+    multisrc'key-bindings.zsh' \
+    multisrc'completion.zsh' \
   for @junegunn/fzf
 
-# Load the plugin
+
 zinit wait lucid light-mode for id-as'auto' has'fzf' @Aloxaf/fzf-tab
 
 zinit wait lucid light-mode for \
