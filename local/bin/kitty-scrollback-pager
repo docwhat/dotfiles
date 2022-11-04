@@ -1,33 +1,64 @@
 #!/usr/bin/env zsh
 
-# https://github.com/kovidgoyal/kitty/issues/719
+# https://sw.kovidgoyal.net/kitty/overview/#the-scrollback-buffer
+# https://github.com/kovidgoyal/kitty/issues/719#issuecomment-952039731
 
 set -eu
 
-# Calculate editor
-if (( ${+commands[nvim]} )); then
-  editor=( nvim )
-else
-  editor=( vim - )
-fi
-declare -ra editor
-
 # Ensure TMPDIR is acceptable.
 if ! [[ -d ${TMPDIR:-} ]]; then
-  TMPDIR="/tmp/user-$(id -u)"
+  TMPDIR="$HOME/.cache/kitty-scrollback-pager"
   # shellcheck disable=SC2174
   mkdir -p -m 0700 "$TMPDIR"
 fi
-declare -r buffer="${TMPDIR}/kitty_scrollback_buffer-${RANDOM}"
-trap 'rm -f "${buffer}"' EXIT
 
-# Fire up (N)Vim
-"${editor[@]}" \
-  -u NONE \
-  -c "set nonumber nolist showtabline=0 foldcolumn=0 laststatus=0" \
-  -c "autocmd TermOpen * normal G" \
-  -c "map q :qa!<CR>" \
-  -c "set clipboard+=unnamedplus" \
-  -c "silent write! $buffer | terminal cat $buffer - "
+declare -r random=${RANDOM}
+declare -r buffer="${TMPDIR}/kitty_scrollback_buffer-${random}"
+declare -r script="${TMPDIR}/kitty_scrollback_script-${random}.bash"
+trap 'rm -f "${buffer}" ${script}' EXIT
+
+{
+sed -e "s/"$'\x1b'"]8;;file:[^\]*[\]//g"
+sleep 0.01
+printf $'\x1b'"]2;"
+} >"$buffer"
+
+
+if (( $# == 3 )); then
+    INPUT_LINE_NUMBER=${1:-0}
+    CURSOR_LINE=${2:-1}
+    CURSOR_COLUMN=${3:-1}
+    VIM_AUTOCMD_TERMCLOSE_CMD="call cursor(max([0,${INPUT_LINE_NUMBER}-1])+${CURSOR_LINE}, ${CURSOR_COLUMN})"
+else
+    VIM_AUTOCMD_TERMCLOSE_CMD="normal G"
+fi
+
+if (( ${+commands[nvim]} )); then
+  exec nvim 0</dev/null \
+    -u NONE \
+    -c "map <silent> q :qa!<CR>" \
+    -c "set scrollback=100000 termguicolors laststatus=0 clipboard+=unnamedplus" \
+    -c "autocmd TermEnter * stopinsert" \
+    -c "autocmd TermClose * ${VIM_AUTOCMD_TERMCLOSE_CMD}" \
+    -c "terminal cat ${(q)buffer}"
+elif (( ${+commands[vim]} )); then
+  exec vim - 0</dev/null \
+    -R \
+    -N \
+    -u NONE \
+    -c 'map q :qa!<CR>' \
+    -c "set nonumber nolist showtabline=0 foldcolumn=0 laststatus=0 clipboard+=unnamedplus" \
+    -c "autocmd TerminalOpen * only" \
+    -c "autocmd TerminalOpen * ${VIM_AUTOCMD_TERMCLOSE_CMD}" \
+    -c "terminal cat ${(q)buffer}"
+elif (( ${+commands[less]} )); then
+  exec less
+elif (( ${+commands[most]} )); then
+  exec most
+elif (( ${+commands[more]} )); then
+  exec more
+else
+  exit 10
+fi
 
 # EOF
