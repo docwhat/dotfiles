@@ -1,4 +1,6 @@
+# Bat configuration
 --wrap=never
 --italic-text=always
 # Waiting for https://github.com/sharkdp/bat/issues/1032
 --style=auto
+--theme=TwoDark
