@@ -31,13 +31,21 @@ function _zsh_autosuggest_custom_config {
   ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c60,)|z *|zf *|cd *"
 }
 
+zinit wait lucid light-mode for \
+  has'docker' \
+  as"completion" \
+  id-as"docker-completion/_docker" \
+  nocompile \
+  is-snippet \
+  '@https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker'
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode id-as'auto' for \
-    '@zdharma-continuum/zinit-annex-as-monitor' \
-    '@zdharma-continuum/zinit-annex-bin-gem-node' \
-    '@zdharma-continuum/zinit-annex-patch-dl' \
-    '@zdharma-continuum/zinit-annex-rust'
+  '@zdharma-continuum/zinit-annex-as-monitor' \
+  '@zdharma-continuum/zinit-annex-bin-gem-node' \
+  '@zdharma-continuum/zinit-annex-patch-dl' \
+  '@zdharma-continuum/zinit-annex-rust'
 
 zinit wait lucid light-mode for \
   has'lua' \
