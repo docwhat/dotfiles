@@ -286,5 +286,10 @@ zinit wait lucid light-mode for \
 
 zinit wait pack light-mode for 'ls_colors'
 
+zinit wait lucid light-mode for \
+  as'completion' \
+  has'nix-env' \
+  id-as'auto' \
+  @spwhitt/nix-zsh-completions
 
 # EOF
