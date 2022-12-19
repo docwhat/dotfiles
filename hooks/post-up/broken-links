@@ -2,21 +2,32 @@
 
 set -eu
 
-setopt nullglob
+declare -a broken=(
+  ~/.zsh/**/*(ND-@)
+  ~/bin/**/*(ND-@)
+  ~/.local/bin/**/*(ND-@)
 
-declare -ar broken=(
-  ~/.zsh/**/*(-@)
-  ~/bin/**/*(-@)
-  ~/.local/bin/**/*(-@)
-  ~/.local/libexec/**/*(-@)
-  ~/.local/share/**/*(-@)
-  ~/.config/**/*(-@)
-  ~/.*(-@)
+  ~/.local/libexec/*(ND-@)
+  ~/.local/libexec/*/*(ND-@)
+  ~/.local/libexec/*/*/*(ND-@)
+  ~/.local/libexec/*/*/*/*(ND-@)
+
+  ~/.local/share/*(ND-@)
+  ~/.local/share/*/*(ND-@)
+  ~/.local/share/*/*/*(ND-@)
+  ~/.local/share/*/*/*/*(ND-@)
+
+  ~/.config/**/*(ND-@)
+  ~/*(ND-@)
 )
 
 if (( ${#broken[*]} > 0 )); then
   echo "Removing broken symlinks"
-  rm -vf "${(@)broken}"
+  {
+    # Needs to work with macOS & GNU `find`.
+    # Detects broken symlinks from */.dotfiles*/ specificially.
+    find -L "${(@)broken}" -type l -lname '*/.dotfiles*' -exec rm -vf '{}' '+'
+  } 2>&1 | offset
 fi
 
 # EOF
