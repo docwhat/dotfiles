@@ -2,9 +2,7 @@
 
 set -eu
 
-host=$1
-
-infocmp "$TERM" | ssh "${host}" "cat > ~/.ssh/$TERM.info"
-ssh "${host}" "tic ~/.ssh/$TERM.info"
+infocmp "$TERM" | ssh "$@" "cat > ~/.ssh/$TERM.info"
+ssh "$@" "tic ~/.ssh/$TERM.info"
 
 # EOF
