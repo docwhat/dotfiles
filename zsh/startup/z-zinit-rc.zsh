@@ -276,6 +276,15 @@ zinit wait lucid light-mode for \
   @esc/conda-zsh-completion
 
 zinit wait lucid light-mode for \
+  has'kubectl' \
+  pick'/dev/null' \
+  sbin'kubectx' \
+  sbin'kubens' \
+  atclone'ln -sf completion/_kubectx.zsh _kubectx; ln -sf completion/_kubens.zsh _kubens' \
+  atpull'%atclone' \
+  @ahmetb/kubectx
+
+zinit wait lucid light-mode for \
   has'lua' \
   has'node' \
   ver'stable' \
