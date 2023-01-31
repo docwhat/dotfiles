@@ -4,6 +4,7 @@ set -eu
 
 declare -a broken=(
   ~/.zsh/**/*(ND-@)
+  ~/.bash/**/*(ND-@)
   ~/bin/**/*(ND-@)
   ~/.local/bin/**/*(ND-@)
 
