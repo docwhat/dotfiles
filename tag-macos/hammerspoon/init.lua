@@ -41,26 +41,25 @@ Install:andUse("Hammer", {
 
 -- hs.hotkey.bind({"ctrl", "alt"}, "space", function()
 hs.hotkey.bind({ "alt" }, "return", function()
-  local kittyID = "net.kovidgoyal.kitty"
-  local app = hs.application.get("kitty")
+  local termID = "com.github.wez.wezterm"
+  local app = hs.application.get("WezTerm")
 
   if app then
     if not app:mainWindow() then
-      app:selectMenuItem({ "kitty", "New OS window" })
+      app:selectMenuItem({ "WezTerm", "New OS window" })
     elseif app:isFrontmost() then
       app:hide()
     else
       app:activate()
     end
   else
-    app = hs.application.open(kittyID, 10, true)
+    app = hs.application.open(termID, 10, true)
     if not app then
       return
     end
   end
 
   app:mainWindow():moveToUnit '[99.9,50,0.1,0]'
-  app:mainWindow().setShadows(false)
 end)
 
 Install:andUse("FadeLogo", { config = { default_run = 1.0 }, start = true })
