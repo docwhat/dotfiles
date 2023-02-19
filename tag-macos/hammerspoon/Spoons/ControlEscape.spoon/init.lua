@@ -4,7 +4,8 @@
 --- as the `escape` key. If the `control` key is held down and used in
 --- combination with another key, then provide the normal `control` key
 --- behavior.
-local obj = {}
+
+local obj={}
 obj.__index = obj
 
 -- Metadata
@@ -26,43 +27,46 @@ function obj:init()
 
   -- Create an eventtap to run each time the modifier keys change (i.e., each
   -- time a key like control, shift, option, or command is pressed or released)
-  self.controlTap = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(event)
-    local newModifiers = event:getFlags()
+  self.controlTap = hs.eventtap.new({hs.eventtap.event.types.flagsChanged},
+    function(event)
+      local newModifiers = event:getFlags()
 
-    -- If this flag change does not involve a *change* to the up/down state of
-    -- the `control` key (i.e., it was up before and it's still up, or it was
-    -- down before and it's still down), then don't take any action.
-    if self.lastModifiers['ctrl'] == newModifiers['ctrl'] then return false end
-
-    -- If the `control` key has changed to the down state, then start the
-    -- timer. If the `control` key changes to the up state before the timer
-    -- expires, then send `escape`.
-    if not self.lastModifiers['ctrl'] then
-      self.lastModifiers = newModifiers
-      self.sendEscape = true
-      self.controlKeyTimer:start()
-    else
-      self.lastModifiers = newModifiers
-      self.controlKeyTimer:stop()
-      if self.sendEscape then
-        -- Return an escape key event for being pressed and released.
-        return true, {
-            hs.eventtap.event.newKeyEvent({}, 'escape', true),
-            hs.eventtap.event.newKeyEvent({}, 'escape', false),
-        }
+      -- If this change to the modifier keys does not invole a *change* to the
+      -- up/down state of the `control` key (i.e., it was up before and it's
+      -- still up, or it was down before and it's still down), then don't take
+      -- any action.
+      if self.lastModifiers['ctrl'] == newModifiers['ctrl'] then
+        return false
       end
+
+      -- If the `control` key has changed to the down state, then start the
+      -- timer. If the `control` key changes to the up state before the timer
+      -- expires, then send `escape`.
+      if not self.lastModifiers['ctrl'] then
+        self.lastModifiers = newModifiers
+        self.sendEscape = true
+        self.controlKeyTimer:start()
+      else
+        if self.sendEscape then
+          hs.eventtap.keyStroke({}, 'escape', 1)
+        end
+        self.lastModifiers = newModifiers
+        self.controlKeyTimer:stop()
+      end
+      return false
     end
-    return false
-  end)
+  )
 
   -- Create an eventtap to run each time a normal key (i.e., a non-modifier key)
   -- enters the down state. We only want to send `escape` if `control` is
   -- pressed and released in isolation. If `control` is pressed in combination
   -- with any other key, we don't want to send `escape`.
-  self.keyDownEventTap = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
-    self.sendEscape = false
-    return false
-  end)
+  self.keyDownEventTap = hs.eventtap.new({hs.eventtap.event.types.keyDown},
+    function(event)
+      self.sendEscape = false
+      return false
+    end
+  )
 end
 
 --- ControlEscape:start()
