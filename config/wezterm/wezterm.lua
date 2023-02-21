@@ -12,6 +12,7 @@ return {
     fade_out_duration_ms = 180,
   },
   audible_bell = "Disabled",
+  use_fancy_tab_bar = false,
   leader = { key = "`", timeout_milliseconds = 1000 },
   keys = {
     -- Send LEADER when pressed twice
@@ -43,6 +44,13 @@ return {
     { key = 'r',     mods = 'LEADER|SHIFT', action = act.ReloadConfiguration },
     -- Unicode Select
     { key = 'u',     mods = 'LEADER',       action = act.CharSelect { copy_on_select = true, copy_to = 'ClipboardAndPrimarySelection' } },
+    -- Pass Thru emacs undo
+    { key = '_', mods = 'SHIFT|CTRL',       action = act.SendKey { key = "_", mods = "SHIFT|CTRL" } },
+    { key = '/', mods = 'CTRL',             action = act.SendKey { key = "_", mods = "SHIFT|CTRL" } },
+    -- Make command+z send emacs undo.
+    { key = 'z', mods = 'SUPER',            action = act.SendKey { key = "_", mods = "SHIFT|CTRL" } },
+    -- Missing command+plus to increase font.
+    { key = '+', mods = 'SUPER',            action = act.IncreaseFontSize },
   },
   -- map  `>e                  kitten hints
   -- map  `>f                  kitten hints --type path --program -
