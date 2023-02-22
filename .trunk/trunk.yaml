@@ -1,10 +1,10 @@
 version: 0.1
 cli:
-  version: 1.4.0
+  version: 1.5.0
 plugins:
   sources:
     - id: trunk
-      ref: v0.0.8
+      ref: v0.0.11
       uri: https://github.com/trunk-io/plugins
 lint:
   disabled:
@@ -12,15 +12,15 @@ lint:
     - taplo
     - rubocop
   enabled:
-    - black@22.12.0
+    - black@23.1.0
     - gitleaks@8.15.3
     - shellcheck@0.9.0
     - flake8@6.0.0
     - shfmt@3.5.0
-    - prettier@2.8.3
+    - prettier@2.8.4
     - hadolint@2.12.0
     - markdownlint@0.33.0
-    - golangci-lint@1.50.1
+    - golangci-lint@1.51.2
     - gofmt@1.19.3
     - git-diff-check
 runtimes:
