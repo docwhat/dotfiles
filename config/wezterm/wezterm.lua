@@ -12,7 +12,10 @@ return {
     fade_out_duration_ms = 180,
   },
   audible_bell = "Disabled",
-  use_fancy_tab_bar = false,
+
+  use_fancy_tab_bar = true,
+  tab_bar_at_bottom = true,
+
   leader = { key = "`", timeout_milliseconds = 1000 },
   keys = {
     -- Send LEADER when pressed twice
