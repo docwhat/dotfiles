@@ -25,7 +25,7 @@ return {
     -- Go to previous tab
     { key = 'p',     mods = 'LEADER',       action = act.ActivateTabRelative( -1) },
     -- Go to last tab
-    { key = 'Space', mods = 'LEADER',       action = act.ActivateTabRelative( -1) },
+    { key = 'Space', mods = 'LEADER',       action = act.ActivateLastTab },
     -- Open new tab with current directory
     { key = 'c',     mods = 'LEADER',       action = act.SpawnTab('CurrentPaneDomain') },
     -- Switch to tab N
