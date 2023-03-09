@@ -7,6 +7,12 @@ plugins:
       ref: v0.0.12
       uri: https://github.com/trunk-io/plugins
 lint:
+  files:
+    - name: lua
+      extensions:
+        - lua
+      shebangs:
+        - lua
   disabled:
     - isort
     - taplo
@@ -23,6 +29,17 @@ lint:
     - golangci-lint@1.51.2
     - gofmt@1.19.3
     - git-diff-check
+    - stylua@SYSTEM
+  definitions:
+    - name: stylua
+      files: [lua]
+      commands:
+        - output: rewrite
+          run: stylua --stdin-filepath ${target} -
+          stdin: true
+          formatter: true
+          run_linter_from: workspace
+          success_codes: [0]
 runtimes:
   enabled:
     - go@1.18.3

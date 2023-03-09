@@ -1,0 +1,4 @@
+column_width = 160
+quote_style = "AutoPreferSingle"
+no_call_parentheses = false
+collapse_simple_statement = "Always"
