@@ -103,23 +103,23 @@ return {
 			}),
 			desc = "Goto [S]ymbol",
 		},
-				{
-					"<leader>sS",
-					telescope("lsp_workspace_symbols", {
-						symbols = {
-							"Class",
-							"Function",
-							"Method",
-							"Constructor",
-							"Interface",
-							"Module",
-							"Struct",
-							"Trait",
-							"Field",
-							"Property",
-						},
-					}),
-					desc = "Goto [S]ymbol (Workspace)",
+		{
+			"<leader>sS",
+			telescope("lsp_workspace_symbols", {
+				symbols = {
+					"Class",
+					"Function",
+					"Method",
+					"Constructor",
+					"Interface",
+					"Module",
+					"Struct",
+					"Trait",
+					"Field",
+					"Property",
 				},
+			}),
+			desc = "Goto [S]ymbol (Workspace)",
+		},
 	},
 }

@@ -7,10 +7,10 @@
 -- Make the console dark
 hs.console.darkMode(true)
 if hs.console.darkMode() then
-  hs.console.outputBackgroundColor { white = 0 }
-  hs.console.consoleCommandColor { white = 1 }
-  hs.console.consolePrintColor { white = 1 }
-  hs.console.alpha(1)
+	hs.console.outputBackgroundColor({ white = 0 })
+	hs.console.consoleCommandColor({ white = 1 })
+	hs.console.consolePrintColor({ white = 1 })
+	hs.console.alpha(1)
 end
 
 -- luacheck: globals hyper shift_hyper Install
@@ -20,8 +20,8 @@ Install = hs.loadSpoon("SpoonInstall")
 -- Install.use_syncinstall = true
 
 spoon.SpoonInstall.repos.zzspoons = {
-  url = "https://github.com/zzamboni/zzSpoons",
-  desc = "zzamboni's spoon repository",
+	url = "https://github.com/zzamboni/zzSpoons",
+	desc = "zzamboni's spoon repository",
 }
 
 -- Load Hammerspoon bits from https://github.com/jasonrudolph/ControlEscape.spoon
@@ -29,10 +29,10 @@ spoon.SpoonInstall.repos.zzspoons = {
 Install:andUse("ControlEscape", { start = true })
 
 Install:andUse("Hammer", {
-  repo = "zzspoons",
-  -- config = {auto_reload_config = false},
-  hotkeys = { config_reload = { hyper, "r" }, toggle_console = { hyper, "y" } },
-  start = true,
+	repo = "zzspoons",
+	-- config = {auto_reload_config = false},
+	hotkeys = { config_reload = { hyper, "r" }, toggle_console = { hyper, "y" } },
+	start = true,
 })
 -- -- Handy for debugging. From:
 -- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
@@ -41,25 +41,25 @@ Install:andUse("Hammer", {
 
 -- hs.hotkey.bind({"ctrl", "alt"}, "space", function()
 hs.hotkey.bind({ "alt" }, "return", function()
-  local termID = "com.github.wez.wezterm"
-  local app = hs.application.get("WezTerm")
+	local termID = "com.github.wez.wezterm"
+	local app = hs.application.get("WezTerm")
 
-  if app then
-    if not app:mainWindow() then
-      app:selectMenuItem({ "WezTerm", "New OS window" })
-    elseif app:isFrontmost() then
-      app:hide()
-    else
-      app:activate()
-    end
-  else
-    app = hs.application.open(termID, 10, true)
-    if not app then
-      return
-    end
-  end
+	if app then
+		if not app:mainWindow() then
+			app:selectMenuItem({ "WezTerm", "New OS window" })
+		elseif app:isFrontmost() then
+			app:hide()
+		else
+			app:activate()
+		end
+	else
+		app = hs.application.open(termID, 10, true)
+		if not app then
+			return
+		end
+	end
 
-  app:mainWindow():moveToUnit '[99.9,50,0.1,0]'
+	app:mainWindow():moveToUnit("[99.9,50,0.1,0]")
 end)
 
 Install:andUse("FadeLogo", { config = { default_run = 1.0 }, start = true })
