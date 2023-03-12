@@ -42,5 +42,6 @@
   "diagnostic.errorSign": "",
   "diagnostic.hintSign": "履",
   "diagnostic.infoSign": "",
-  "diagnostic.warningSign": ""
+  "diagnostic.warningSign": "",
+  "snippets.ultisnips.pythonPrompt": false
 }
