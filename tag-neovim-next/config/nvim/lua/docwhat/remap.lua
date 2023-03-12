@@ -1,65 +1,110 @@
--- Since space is the leader, don't do anything on only space.
-vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+local function map(mode, shortcut, command, opts)
+  if opts == nil then
+    opts = {}
+  end
+  if not opts.remap == nil then
+    opts.remap = true
+  end
+  if not opts.silent == nil then
+    opts.silent = true
+  end
+  vim.keymap.set(mode, shortcut, command, opts)
+end
+local function nmap(shortcut, command, opts)
+  map("n", shortcut, command, opts)
+end
+local function vmap(shortcut, command, opts)
+  map("v", shortcut, command, opts)
+end
+local function xmap(shortcut, command, opts)
+  map("x", shortcut, command, opts)
+end
+local function cmap(shortcut, command, opts)
+  map("c", shortcut, command, opts)
+end
 
 -- [P]roject [V]iew
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("n", "-", vim.cmd.Explore)
+nmap("<leader>pv", vim.cmd.Ex)
+nmap("-", vim.cmd.Explore)
 
 -- Move selected lines up and down.
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vmap("J", ":m '>+1<CR>gv=gv")
+vmap("K", ":m '<-2<CR>gv=gv")
+
+-- Prevent highlight being lost on (de)indent.
+xmap("<", "<gv")
+xmap(">", ">gv")
 
 -- When [J]oining, don't change cursor position.
-vim.keymap.set("n", "J", "mzJ`z")
+nmap("J", "mzJ`z")
 
 -- Have C-d and C-u keep the cursor in the center of the screen.
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+nmap("<C-d>", "<C-d>zz")
+nmap("<C-u>", "<C-u>zz")
 
 -- Have search forward and backwards keep the cursor in the center of the screen.
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+nmap("n", "nzzzv")
+nmap("N", "Nzzzv")
 
--- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+-- Pastes over a visual/selected item without clobbering the
+-- unnamed register.  Allows lots of multiple pastes in a row.
+xmap("<leader>p", [["_dP]])
 
--- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+-- Copies to the PRIMARY selections.
+map({ "n", "v" }, "<leader>y", [["+y]])
+nmap("<leader>Y", [["+Y]])
 
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+-- Delete, sending it into the black-hole register.
+map({ "n", "v" }, "<leader>d", [["_d]])
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+-- Format!
+nmap("<leader>f", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+nmap("<C-k>", "<cmd>cnext<CR>zz")
+nmap("<C-j>", "<cmd>cprev<CR>zz")
+nmap("<leader>k", "<cmd>lnext<CR>zz")
+nmap("<leader>j", "<cmd>lprev<CR>zz")
 
 -- Remap for dealing with word wrap
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true, silent = true })
+map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true, silent = true })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+nmap("[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
+nmap("]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
+nmap("<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+nmap("<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- Expand %% into the directory on commands.
-vim.keymap.set("c", "%%", "<c-r>=expand('%:h').'/'<cr>")
+cmap("%%", "<c-r>=expand('%:h').'/'<cr>")
 
 -- I use emacs bindings in command mode and shells.
-vim.keymap.set("c", "<C-a>", "<Home>")
-vim.keymap.set("c", "<C-e>", "<End>")
+cmap("<C-a>", "<home>")
+cmap("<C-e>", "<end>")
+cmap("<C-b>", "<left>")
+cmap("<C-f>", "<right>")
 
--- Make quitting readonly buffers easier.
-vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		if not vim.opt.modifiable:get() or vim.opt.readonly:get() then
-			vim.keymap.set("n", "q", vim.cmd.quit, { desc = "[Q]uit this buffer" })
-		end
-	end,
-	group = vim.api.nvim_create_augroup("DocwhatRemapGroup", { clear = true }),
-	pattern = "*",
-})
+-- Alternative way to save and exit in Normal mode.
+-- NOTE: Adding `redraw` helps with `cmdheight=0` if buffer is not modified
+nmap("<C-S>", "<Cmd>silent! update | redraw<CR>", { desc = "Save" })
+map({ "i", "x" }, "<C-S>", "<Esc><Cmd>silent! update | redraw<CR>", { desc = "Save and go to Normal mode" })
+
+-- Toggle for common options.
+nmap(
+  "tb",
+  '<Cmd>lua vim.o.bg = vim.o.bg == "dark" and "light" or "dark"; print(vim.o.bg)<CR>',
+  { desc = "Toggle 'background'" }
+)
+nmap("tc", "<Cmd>setlocal cursorline! cursorline?<CR>", { desc = "Toggle 'cursorline'" })
+nmap("tC", "<Cmd>setlocal cursorcolumn! cursorcolumn?<CR>", { desc = "Toggle 'cursorcolumn'" })
+nmap(
+  "th",
+  '<Cmd>let v:hlsearch = 1 - v:hlsearch | echo (v:hlsearch ? "  " : "no") . "hlsearch"<CR>',
+  { desc = "Toggle search highlight" }
+)
+nmap("ti", "<Cmd>setlocal ignorecase! ignorecase?<CR>", { desc = "Toggle 'ignorecase'" })
+nmap("tl", "<Cmd>setlocal list! list?<CR>", { desc = "Toggle 'list'" })
+nmap("tn", "<Cmd>setlocal number! number?<CR>", { desc = "Toggle 'number'" })
+nmap("tr", "<Cmd>setlocal relativenumber! relativenumber?<CR>", { desc = "Toggle 'relativenumber'" })
+nmap("ts", "<Cmd>setlocal spell! spell?<CR>", { desc = "Toggle 'spell'" })
+nmap("tw", "<Cmd>setlocal wrap! wrap?<CR>", { desc = "Toggle 'wrap'" })
