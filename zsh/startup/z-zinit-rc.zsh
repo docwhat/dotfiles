@@ -75,6 +75,12 @@ zinit wait lucid light-mode for \
   @zdharma-continuum/fast-syntax-highlighting
 
 zinit wait lucid light-mode for \
+  atinit"ZAQ_PREFIXES=('git cm( [^ ]##)#')" \
+  atinit"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(zaq)" \
+  id-as'auto' \
+  @ianthehenry/zsh-autoquoter
+
+zinit wait lucid light-mode for \
   id-as'auto' \
   @hlissner/zsh-autopair
 
