@@ -48,9 +48,13 @@ lint:
       commands:
         - formatter: true
           output: rewrite
-          run: stylua --verify --stdin-filepath ${target} -
+          run: stylua --verify --search-parent-directories --stdin-filepath ${target} -
           stdin: true
           success_codes: [0, 1]
+      run_linter_from: workspace
+      good_without_config: true
+      direct_configs:
+        - .stylua.toml
       environment:
         - name: PATH
           list: ["${linter}"]
