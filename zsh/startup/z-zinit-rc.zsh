@@ -293,7 +293,7 @@ zinit wait lucid light-mode for \
 zinit wait lucid light-mode for \
   has'lua' \
   has'node' \
-  ver'stable' \
+  ver'nightly' \
   from'gh-r' \
   sbin'**/nvim' \
   id-as'auto' \
