@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+#DESC# nvim plugins and plugin manager #DESC#
+
+set -euo pipefail
+
+DOTFILES_DIR=~/.dotfiles
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
+if ! (( ${+commands[nvim]} )) > /dev/null; then
+  print -P "  %F{yellow}Skipping%F{reset}: %F{green}nvim%F{reset} isn't available"
+  exit 0
+fi
+
+nvim --headless "+Lazy! sync" +qa
+
+# EOF
