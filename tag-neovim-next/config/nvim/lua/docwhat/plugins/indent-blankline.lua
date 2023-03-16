@@ -1,24 +1,24 @@
 local M = {
-  "lukas-reineke/indent-blankline.nvim",
+  'lukas-reineke/indent-blankline.nvim',
 }
 
 M.opts = {
-  space_char_blankline = " ",
+  space_char_blankline = ' ',
   show_current_context = true,
   show_current_context_start = true,
   show_end_of_line = true,
   char_highlight_list = {
-    "IndentBlanklineIndent1",
-    "IndentBlanklineIndent2",
-    "IndentBlanklineIndent3",
-    "IndentBlanklineIndent4",
-    "IndentBlanklineIndent5",
-    "IndentBlanklineIndent6",
+    'IndentBlanklineIndent1',
+    'IndentBlanklineIndent2',
+    'IndentBlanklineIndent3',
+    'IndentBlanklineIndent4',
+    'IndentBlanklineIndent5',
+    'IndentBlanklineIndent6',
   },
 }
 
 M.config = function(_, opts)
-  require("indent_blankline").setup(opts)
+  require('indent_blankline').setup(opts)
 
   vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
   vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])

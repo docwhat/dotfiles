@@ -1,48 +1,48 @@
 local M = {}
-local act = require("wezterm").action
+local act = require('wezterm').action
 
-M.leader = { key = "`", timeout_milliseconds = 1000 }
+M.leader = { key = '`', timeout_milliseconds = 1000 }
 M.keys = {
-	-- Send LEADER when pressed twice
-	{ key = "`", mods = "LEADER", action = act.SendString("`") },
-	-- Go to next tab
-	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
-	-- Go to previous tab
-	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
-	-- Go to last tab
-	{ key = "Space", mods = "LEADER", action = act.ActivateLastTab },
-	-- Open new tab with current directory
-	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
-	-- Switch to tab N
-	{ key = "1", mods = "LEADER", action = act.ActivateTab(0) },
-	{ key = "2", mods = "LEADER", action = act.ActivateTab(1) },
-	{ key = "3", mods = "LEADER", action = act.ActivateTab(2) },
-	{ key = "4", mods = "LEADER", action = act.ActivateTab(3) },
-	{ key = "5", mods = "LEADER", action = act.ActivateTab(4) },
-	{ key = "6", mods = "LEADER", action = act.ActivateTab(5) },
-	{ key = "7", mods = "LEADER", action = act.ActivateTab(6) },
-	{ key = "8", mods = "LEADER", action = act.ActivateTab(7) },
-	{ key = "9", mods = "LEADER", action = act.ActivateTab(8) },
-	{ key = "0", mods = "LEADER", action = act.ActivateTab(9) },
-	-- Copy Mode
-	{ key = "[", mods = "LEADER", action = act.ActivateCopyMode },
-	-- Paste from clipboard
-	{ key = "]", mods = "LEADER", action = act.PasteFrom("Clipboard") },
-	-- Reload config
-	{ key = "r", mods = "LEADER|SHIFT", action = act.ReloadConfiguration },
-	-- Unicode Select
-	{
-		key = "u",
-		mods = "LEADER",
-		action = act.CharSelect({ copy_on_select = true, copy_to = "ClipboardAndPrimarySelection" }),
-	},
-	-- Pass Thru emacs undo
-	{ key = "_", mods = "SHIFT|CTRL", action = act.SendKey({ key = "_", mods = "SHIFT|CTRL" }) },
-	{ key = "/", mods = "CTRL", action = act.SendKey({ key = "_", mods = "SHIFT|CTRL" }) },
-	-- Make command+z send emacs undo.
-	{ key = "z", mods = "SUPER", action = act.SendKey({ key = "_", mods = "SHIFT|CTRL" }) },
-	-- Missing command+plus to increase font.
-	{ key = "+", mods = "SUPER", action = act.IncreaseFontSize },
+  -- Send LEADER when pressed twice
+  { key = '`', mods = 'LEADER', action = act.SendString('`') },
+  -- Go to next tab
+  { key = 'n', mods = 'LEADER', action = act.ActivateTabRelative(1) },
+  -- Go to previous tab
+  { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
+  -- Go to last tab
+  { key = 'Space', mods = 'LEADER', action = act.ActivateLastTab },
+  -- Open new tab with current directory
+  { key = 'c', mods = 'LEADER', action = act.SpawnTab('CurrentPaneDomain') },
+  -- Switch to tab N
+  { key = '1', mods = 'LEADER', action = act.ActivateTab(0) },
+  { key = '2', mods = 'LEADER', action = act.ActivateTab(1) },
+  { key = '3', mods = 'LEADER', action = act.ActivateTab(2) },
+  { key = '4', mods = 'LEADER', action = act.ActivateTab(3) },
+  { key = '5', mods = 'LEADER', action = act.ActivateTab(4) },
+  { key = '6', mods = 'LEADER', action = act.ActivateTab(5) },
+  { key = '7', mods = 'LEADER', action = act.ActivateTab(6) },
+  { key = '8', mods = 'LEADER', action = act.ActivateTab(7) },
+  { key = '9', mods = 'LEADER', action = act.ActivateTab(8) },
+  { key = '0', mods = 'LEADER', action = act.ActivateTab(9) },
+  -- Copy Mode
+  { key = '[', mods = 'LEADER', action = act.ActivateCopyMode },
+  -- Paste from clipboard
+  { key = ']', mods = 'LEADER', action = act.PasteFrom('Clipboard') },
+  -- Reload config
+  { key = 'r', mods = 'LEADER|SHIFT', action = act.ReloadConfiguration },
+  -- Unicode Select
+  {
+    key = 'u',
+    mods = 'LEADER',
+    action = act.CharSelect({ copy_on_select = true, copy_to = 'ClipboardAndPrimarySelection' }),
+  },
+  -- Pass Thru emacs undo
+  { key = '_', mods = 'SHIFT|CTRL', action = act.SendKey({ key = '_', mods = 'SHIFT|CTRL' }) },
+  { key = '/', mods = 'CTRL', action = act.SendKey({ key = '_', mods = 'SHIFT|CTRL' }) },
+  -- Make command+z send emacs undo.
+  { key = 'z', mods = 'SUPER', action = act.SendKey({ key = '_', mods = 'SHIFT|CTRL' }) },
+  -- Missing command+plus to increase font.
+  { key = '+', mods = 'SUPER', action = act.IncreaseFontSize },
 }
 -- map  `>e                  kitten hints
 -- map  `>f                  kitten hints --type path --program -

@@ -4,17 +4,17 @@
 
 return {
   -- Detect tabstop and shiftwidth automatically
-  "tpope/vim-sleuth",
+  'tpope/vim-sleuth',
 
   -- https://editorconfig.org
-  "gpanders/editorconfig.nvim",
+  'gpanders/editorconfig.nvim',
 
   -- lets you align comments, equal signs, etc.
-  "godlygeek/tabular",
+  'godlygeek/tabular',
 
   -- Highlight the word under the cursor.
-  "RRethy/vim-illuminate",
+  'RRethy/vim-illuminate',
 
   -- GitHub copilot.
-  "github/copilot.vim",
+  'github/copilot.vim',
 }

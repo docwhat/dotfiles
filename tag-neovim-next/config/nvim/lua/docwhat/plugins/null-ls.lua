@@ -1,17 +1,17 @@
 return {
-  "jay-babu/mason-null-ls.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  'jay-babu/mason-null-ls.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    "mason.nvim",
-    "plenary.nvim",
+    'mason.nvim',
+    'plenary.nvim',
     {
-      "jose-elias-alvarez/null-ls.nvim",
+      'jose-elias-alvarez/null-ls.nvim',
       dependencies = {
-        "lewis6991/gitsigns.nvim",
-        "ThePrimeagen/refactoring.nvim",
+        'lewis6991/gitsigns.nvim',
+        'ThePrimeagen/refactoring.nvim',
       },
       opts = function()
-        local null_ls = require("null-ls")
+        local null_ls = require('null-ls')
         return {
           sources = {
             null_ls.builtins.code_actions.gitsigns,
@@ -50,17 +50,17 @@ return {
     automatic_setup = true,
     automatic_installation = false,
     ensure_installed = {
-      "editorconfig-checker",
-      "hadolint",
-      "jsonlint",
-      "luacheck",
-      "markdownlint",
-      "prettierd",
-      "shellcheck",
-      "shfmt",
-      "stylua",
-      "yamlfmt",
-      "yamllint",
+      'editorconfig-checker',
+      'hadolint',
+      'jsonlint',
+      'luacheck',
+      'markdownlint',
+      'prettierd',
+      'shellcheck',
+      'shfmt',
+      'stylua',
+      'yamlfmt',
+      'yamllint',
     },
   },
 }
