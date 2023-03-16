@@ -1,10 +1,10 @@
 version: 0.1
 cli:
-  version: 1.5.1
+  version: 1.6.1
 plugins:
   sources:
     - id: trunk
-      ref: v0.0.12
+      ref: v0.0.13
       uri: https://github.com/trunk-io/plugins
 lint:
   files:
@@ -19,7 +19,7 @@ lint:
     - rubocop
   enabled:
     - black@23.1.0
-    - gitleaks@8.16.0
+    - gitleaks@8.16.1
     - shellcheck@0.9.0
     - flake8@6.0.0
     - shfmt@3.5.0
@@ -45,7 +45,6 @@ runtimes:
     - go@1.18.3
     - node@16.14.2
     - python@3.10.3
-    - ruby@3.1.0
 actions:
   enabled:
     - trunk-announce
