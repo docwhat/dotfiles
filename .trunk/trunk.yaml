@@ -13,6 +13,17 @@ lint:
         - lua
       shebangs:
         - lua
+  downloads:
+    - name: stylua
+      version: 0.17.0
+      downloads:
+        - os:
+            linux: linux
+            macos: macos
+          cpu:
+            x86_64: x86_64
+            arm_64: aarch64
+          url: https://github.com/JohnnyMorganz/StyLua/releases/download/v${version}/stylua-${os}-${cpu}.zip
   disabled:
     - isort
     - taplo
@@ -29,17 +40,23 @@ lint:
     - golangci-lint@1.51.2
     - gofmt@1.19.3
     - git-diff-check
-    - stylua@SYSTEM
+    - stylua@0.17.0
   definitions:
     - name: stylua
       files: [lua]
+      download: stylua
       commands:
-        - output: rewrite
-          run: stylua --stdin-filepath ${target} -
+        - formatter: true
+          output: rewrite
+          run: stylua --verify --stdin-filepath ${target} -
           stdin: true
-          formatter: true
-          run_linter_from: workspace
-          success_codes: [0]
+          success_codes: [0, 1]
+      environment:
+        - name: PATH
+          list: ["${linter}"]
+      version_command:
+        parse_regex: ${semver}
+        run: stylua --version
 runtimes:
   enabled:
     - go@1.18.3
