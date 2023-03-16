@@ -1,5 +1,5 @@
 return {
-	"kylechui/nvim-surround",
-	version = "*",
-	opts = {},
+  "kylechui/nvim-surround",
+  version = "*",
+  opts = {},
 }
