@@ -101,6 +101,9 @@ return {
     {
       'williamboman/mason.nvim',
       opts = {
+        ui = {
+          border = 'rounded',
+        },
         ensure_installed = {
           'flake8',
           'shfmt',
