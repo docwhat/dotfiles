@@ -1,3 +1,5 @@
+-- Description: Graphical representation of the Neovim undo tree
+-- luacheck: globals vim
 return {
   'mbbill/undotree',
   version = 'rel_*',

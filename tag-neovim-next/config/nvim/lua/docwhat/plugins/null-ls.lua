@@ -1,3 +1,5 @@
+-- Description: Null-ls configuration
+-- luacheck: globals vim
 local N = {
   'jose-elias-alvarez/null-ls.nvim',
 }

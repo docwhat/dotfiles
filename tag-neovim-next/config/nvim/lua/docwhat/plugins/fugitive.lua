@@ -1,3 +1,5 @@
+-- Description: Git integration
+-- luacheck: globals vim
 return {
   'tpope/vim-fugitive',
   keys = {

@@ -1,3 +1,5 @@
+-- Description: Pretty next generation UI features
+-- luacheck: globals vim
 local M = {
   'folke/noice.nvim',
 }

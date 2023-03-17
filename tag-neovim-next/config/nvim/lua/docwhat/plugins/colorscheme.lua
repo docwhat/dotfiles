@@ -1,3 +1,5 @@
+-- Description: Color scheme configuration
+-- luacheck: globals vim
 return {
   'sainnhe/gruvbox-material',
   lazy = false,

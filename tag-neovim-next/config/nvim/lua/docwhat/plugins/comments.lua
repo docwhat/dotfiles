@@ -1,3 +1,5 @@
+-- Description: Plugins to add, remove and update comments
+-- luacheck: globals vim
 return {
   {
     'echasnovski/mini.comment',

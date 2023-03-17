@@ -1,3 +1,5 @@
+-- Description: Set options
+-- luacheck: globals vim
 local o = vim.opt
 
 -- Enable auto write

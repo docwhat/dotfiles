@@ -1,3 +1,5 @@
+-- Description: Autocmds for Neovim
+-- luacheck: globals vim
 local function augroup(name) vim.api.nvim_create_augroup('docwhat_' .. name, { clear = true }) end
 
 -- Check if we need to reload the file when it changed

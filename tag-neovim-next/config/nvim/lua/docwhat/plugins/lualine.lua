@@ -1,3 +1,5 @@
+-- Description: Status line configuration
+-- luacheck: globals vim
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',

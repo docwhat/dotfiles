@@ -1,3 +1,5 @@
+-- Description: Popup search and selection dialogs
+-- luacheck: globals vim
 local function builtin(builtin_name, opts)
   local args = { builtin = builtin_name, opts = opts }
   return function() require('telescope.builtin')[args.builtin](args.opts) end

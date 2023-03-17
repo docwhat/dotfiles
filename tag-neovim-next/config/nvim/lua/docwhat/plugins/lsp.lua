@@ -1,3 +1,5 @@
+-- Description: Language server configuration for Neovim
+-- luacheck: globals vim
 local missingGlobalVimFix = function()
   -- Fix Undefined global 'vim'
   require('lsp-zero').configure('lua_ls', {

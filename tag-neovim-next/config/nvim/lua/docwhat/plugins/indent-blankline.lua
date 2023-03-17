@@ -1,4 +1,4 @@
--- Rainbow indentations
+-- Description: Indentation guides for Neovim with 🌈rainbow🌈 colors
 -- luacheck: globals vim
 local M = {
   'lukas-reineke/indent-blankline.nvim',
