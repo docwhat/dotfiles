@@ -1,14 +1,14 @@
 -- Description: Null-ls configuration
 -- luacheck: globals vim
 local N = {
-  'jose-elias-alvarez/null-ls.nvim',
+  "jose-elias-alvarez/null-ls.nvim",
 }
 N.dependencies = {
-  'lewis6991/gitsigns.nvim',
-  'ThePrimeagen/refactoring.nvim',
+  "lewis6991/gitsigns.nvim",
+  "ThePrimeagen/refactoring.nvim",
 }
 N.opts = function()
-  local null_ls = require('null-ls')
+  local null_ls = require("null-ls")
 
   return {
     debug = true,
@@ -45,12 +45,12 @@ N.opts = function()
 end
 
 local M = {
-  'jay-babu/mason-null-ls.nvim',
+  "jay-babu/mason-null-ls.nvim",
 }
-M.event = { 'BufReadPre', 'BufNewFile' }
+M.event = { "BufReadPre", "BufNewFile" }
 M.dependencies = {
-  'mason.nvim',
-  'plenary.nvim',
+  "mason.nvim",
+  "plenary.nvim",
   N,
 }
 
@@ -58,23 +58,23 @@ M.opts = {
   automatic_setup = true,
   automatic_installation = false,
   ensure_installed = {
-    'editorconfig-checker',
-    'hadolint',
-    'jsonlint',
-    'luacheck',
-    'markdownlint',
-    'prettierd',
-    'shellcheck',
-    'shfmt',
-    'stylua',
-    'yamlfmt',
-    'yamllint',
+    "editorconfig-checker",
+    "hadolint",
+    "jsonlint",
+    "luacheck",
+    "markdownlint",
+    "prettierd",
+    "shellcheck",
+    "shfmt",
+    "stylua",
+    "yamlfmt",
+    "yamllint",
   },
 }
 
 M.config = function(_, opts)
-  require('mason-null-ls').setup(opts)
-  require('mason-null-ls').setup_handlers()
+  require("mason-null-ls").setup(opts)
+  require("mason-null-ls").setup_handlers()
 end
 
 return M

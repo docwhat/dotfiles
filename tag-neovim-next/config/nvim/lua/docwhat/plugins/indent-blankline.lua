@@ -1,29 +1,29 @@
 -- Description: Indentation guides for Neovim with 🌈rainbow🌈 colors
 -- luacheck: globals vim
 local M = {
-  'lukas-reineke/indent-blankline.nvim',
+  "lukas-reineke/indent-blankline.nvim",
 }
 
 M.opts = {
   -- https://en.wikipedia.org/wiki/Box-drawing_character is useful
   -- for finding characters to use.
   --
-  char = '┆',
-  context_char = '┇',
+  char = "┆",
+  context_char = "┇",
   show_current_context = true,
   char_highlight_list = {
-    'IndentBlanklineIndent1',
-    'IndentBlanklineIndent2',
-    'IndentBlanklineIndent3',
-    'IndentBlanklineIndent4',
-    'IndentBlanklineIndent5',
-    'IndentBlanklineIndent6',
-    'IndentBlanklineIndent7',
+    "IndentBlanklineIndent1",
+    "IndentBlanklineIndent2",
+    "IndentBlanklineIndent3",
+    "IndentBlanklineIndent4",
+    "IndentBlanklineIndent5",
+    "IndentBlanklineIndent6",
+    "IndentBlanklineIndent7",
   },
 }
 
 M.config = function(_, opts)
-  require('indent_blankline').setup(opts)
+  require("indent_blankline").setup(opts)
 
   vim.cmd([[highlight! link IndentBlanklineContextChar Normal]])
 

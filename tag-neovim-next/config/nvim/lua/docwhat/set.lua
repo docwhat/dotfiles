@@ -33,12 +33,14 @@ o.winblend = 10
 
 -- Define which helper symbols to show
 -- eol:↴,
-o.listchars = 'extends:…,precedes:…,nbsp:␣,tab:␉·'
+o.listchars = "extends:…,precedes:…,nbsp:␣,tab:␉·"
 -- Show some helper symbols
 o.list = true
 
 -- Enable syntax highlighing if it wasn't already (as it is time consuming)
-if vim.fn.exists('syntax_on') ~= 1 then vim.cmd([[syntax enable]]) end
+if vim.fn.exists("syntax_on") ~= 1 then
+  vim.cmd([[syntax enable]])
+end
 
 -- Save undo history
 o.undofile = true
@@ -52,13 +54,13 @@ o.timeoutlen = 500
 o.scrolloff = 6
 
 -- Always show the signcolumn, otherwise it would shift the text each time
-o.signcolumn = 'yes'
+o.signcolumn = "yes"
 
 -- Draw a bar to show where the 80 character column is.
-o.colorcolumn = '80'
+o.colorcolumn = "80"
 
 -- Command-line completion mode
-o.wildmode = 'longest:full,full'
+o.wildmode = "longest:full,full"
 
 -- Horizontal splits will be below
 o.splitbelow = true
@@ -68,23 +70,23 @@ o.splitright = true
 -- Reduce command line messages
 o.shortmess:append({ W = true, c = true })
 
-if vim.fn.has('nvim-0.9') == 1 then
+if vim.fn.has("nvim-0.9") == 1 then
   -- Disable completion scanning messages
   o.shortmess:append({ C = true })
   -- Reduce scroll during window split
-  o.splitkeep = 'screen'
+  o.splitkeep = "screen"
 end
 
-o.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize' }
+o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 
-if vim.fn.has('nvim-0.7') == 1 then
+if vim.fn.has("nvim-0.7") == 1 then
   o.fillchars:append({
-    vert = '║',
-    horiz = '═',
-    horizdown = '╦',
-    horizup = '╩',
-    verthoriz = '╬',
-    vertleft = '╣',
-    vertright = '╠',
+    vert = "║",
+    horiz = "═",
+    horizdown = "╦",
+    horizup = "╩",
+    verthoriz = "╬",
+    vertleft = "╣",
+    vertright = "╠",
   })
 end
