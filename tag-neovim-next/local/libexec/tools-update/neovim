@@ -11,6 +11,22 @@ if ! (( ${+commands[nvim]} )) > /dev/null; then
   exit 0
 fi
 
-nvim --headless "+Lazy! sync" +qa
+{
+  echo "TSUpdate" | colorize green
+  nvim --headless \
+    "+TSUpdateSync"\
+    "+qa" 2>&1 | offset | colorize yellow
+
+  echo "Lazy sync" | colorize green
+  nvim --headless \
+    "+MasonUpdate" \
+    "+qa" 2>&1 | offset | colorize yellow
+
+  echo "Lazy sync" | colorize green
+  nvim --headless \
+    "+Lazy! sync" \
+    "+qa" 2>&1 | offset | colorize yellow
+
+} | offset
 
 # EOF
