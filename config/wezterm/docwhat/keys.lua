@@ -44,7 +44,7 @@ M.keys = {
   { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
   {
     key = "p",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = act.PaneSelect({ alphabet = "", mode = "Activate" }),
   },
   { key = "Z", mods = "LEADER", action = act.TogglePaneZoomState }, --
