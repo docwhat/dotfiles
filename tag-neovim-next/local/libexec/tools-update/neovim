@@ -17,7 +17,7 @@ fi
     "+TSUpdateSync"\
     "+qa" 2>&1 | offset | colorize yellow
 
-  echo "Lazy sync" | colorize green
+  echo "MasonUpdate" | colorize green
   nvim --headless \
     "+MasonUpdate" \
     "+qa" 2>&1 | offset | colorize yellow
