@@ -1,7 +1,7 @@
 local M = {}
 local wezterm = require("wezterm")
 
-M.font = wezterm.font("Cascadia Mono")
+M.font = wezterm.font("Cascadia Code")
 M.font_size = 16.0
 
 M.color_scheme = "Gruvbox dark, hard (base16)"
