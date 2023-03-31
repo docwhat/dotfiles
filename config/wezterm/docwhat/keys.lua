@@ -85,7 +85,7 @@ M.keys = {
   -- Open Debug REPL
   { key = "d", mods = "LEADER|SHIFT", action = act.ShowDebugOverlay },
   -- Open Command Palette
-  -- { key = "p", mods = "LEADER|SHIFT",       action = act.ActivateCommandPalette },
+  { key = "p", mods = "LEADER|SHIFT", action = act.ActivateCommandPalette },
 }
 
 return M
