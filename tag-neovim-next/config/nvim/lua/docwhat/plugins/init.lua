@@ -17,4 +17,7 @@ return {
 
   -- GitHub copilot.
   "github/copilot.vim",
+
+  -- Janet syntax highlighting.
+  "janet-lang/janet.vim",
 }
