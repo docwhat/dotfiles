@@ -74,7 +74,6 @@ M.opts = {
 
 M.config = function(_, opts)
   require("mason-null-ls").setup(opts)
-  require("mason-null-ls").setup_handlers()
 end
 
 return M
