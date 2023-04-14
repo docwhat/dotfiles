@@ -1,0 +1,10 @@
+[[language]]
+name = "janet"
+scope = "source.janet"
+roots = ["project.janet"]
+file-types = ["janet"]
+grammar = "janet"
+
+[[grammar]]
+name = "janet"
+source = { git = "https://github.com/sogaiu/tree-sitter-janet-simple" }
