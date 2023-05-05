@@ -1,10 +1,10 @@
 version: 0.1
 cli:
-  version: 1.6.1
+  version: 1.9.1
 plugins:
   sources:
     - id: trunk
-      ref: v0.0.13
+      ref: v0.0.16
       uri: https://github.com/trunk-io/plugins
 lint:
   files:
@@ -29,18 +29,20 @@ lint:
     - taplo
     - rubocop
   enabled:
-    - black@23.1.0
-    - gitleaks@8.16.1
+    - ruff@0.0.264
+    - yamllint@1.31.0
+    - black@23.3.0
+    - gitleaks@8.16.3
     - shellcheck@0.9.0
     - flake8@6.0.0
     - shfmt@3.5.0
-    - prettier@2.8.4
+    - prettier@2.8.8
     - hadolint@2.12.0
-    - markdownlint@0.33.0
-    - golangci-lint@1.51.2
+    - markdownlint@0.34.0
+    - golangci-lint@1.52.2
     - gofmt@1.19.3
     - git-diff-check
-    - stylua@0.17.0
+    - stylua@0.17.1
   definitions:
     - name: stylua
       files: [lua]
@@ -63,9 +65,9 @@ lint:
         run: stylua --version
 runtimes:
   enabled:
-    - go@1.18.3
-    - node@16.14.2
-    - python@3.10.3
+    - go@1.19.5
+    - node@18.12.1
+    - python@3.10.8
 actions:
   enabled:
     - trunk-announce
