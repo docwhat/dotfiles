@@ -2,47 +2,27 @@
 """ ~/.pythonrc.py
 PYTHONRC - Really Neat way to make the python shell fun and usable!
 
-Copy this file to $HOME/.pythonrc.py
-In windows, copy it to $HOMEDRIVE:$HOMEPATH\.pythonrc.py
+Copy this file to some place in your home directory.
 
 This is called when interactive python interpreter is instructed to:
     import user
 You can force this to import everytime by setting an environment variable:
-    export PYTHONSTARTUP="$HOME/.pythonrc.py"
-It makes command history persistent, allows TAB expansion, adds time
-stamp.
-"""
-
-"""
-Copyright (c) 2005 Christian Höltje
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+    export PYTHONSTARTUP="path/to/this/file.py"
 """
 
 
-class pythonrc:
+class PythonStartup:
     histfile = None
     debug = None
 
     def init(cls):
         """Initialize a nice environment to run in"""
-        import os
 
-        cls.debug = os.getenv("PYTHONRC_DEBUG")
+        from os import getenv, path
 
-        if os.getenv("NOPYTHONRC"):
+        cls.debug = getenv("PYTHONRC_DEBUG")
+
+        if getenv("NOPYTHONRC"):
             # Not loading the python environment
             cls.dp("Skipping loading the pythonrc environment stuff")
             return
@@ -56,11 +36,11 @@ class pythonrc:
 
         if readline:
             # Set the history file
-            cls.histfile = os.path.join(os.getenv("HOME", "."), ".python_history")
+            cls.histfile = path.join(getenv("HOME", "."), ".python_history")
             cls.dp("Using history file '%s'" % cls.histfile)
 
             # Read the history file
-            if os.path.exists(cls.histfile):
+            if path.exists(cls.histfile):
                 readline.read_history_file(cls.histfile)
                 cls.dp("Using existing history information")
             else:
@@ -75,7 +55,6 @@ class pythonrc:
             cls.dp("Marked start of history file")
 
             # Allow Tab Completion
-            import rlcompleter  # This sets up python specific completion
 
             readline.parse_and_bind("tab: complete")
             cls.dp("Started completion")
@@ -126,4 +105,4 @@ class pythonrc:
 
 
 if __name__ == "__main__":
-    pythonrc.init()
+    PythonStartup.init()

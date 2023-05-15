@@ -1,15 +1,7 @@
 # https://github.com/sorin-ionescu/prezto/blob/e9197234cfd051effa75fa98344f845e1d818972/modules/python/init.zsh#L149-L178
 # Load PIP completion.
 # Detect and use one available from among 'pip', 'pip3' variants
-if [[ -n $PYENV_ROOT ]] && (( ${+commands[pyenv]} )); then
-  for pip in pip{,3}; do
-    pip_command="$(pyenv which "$pip" 2>/dev/null)"
-    [[ -n $pip_command ]] && break
-  done
-  unset pip
-else
-  pip_command="$commands[(i)pip(|[3])]"
-fi
+pip_command="$commands[(i)pip(|[3])]"
 
 if [[ -n $pip_command ]]; then
   cache_file="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/pip-cache.zsh"
