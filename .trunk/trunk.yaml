@@ -4,7 +4,7 @@ cli:
 plugins:
   sources:
     - id: trunk
-      ref: v0.0.16
+      ref: v0.0.17
       uri: https://github.com/trunk-io/plugins
 lint:
   files:
@@ -29,7 +29,7 @@ lint:
     - taplo
     - rubocop
   enabled:
-    - ruff@0.0.264
+    - ruff@0.0.265
     - yamllint@1.31.0
     - black@23.3.0
     - gitleaks@8.16.3
