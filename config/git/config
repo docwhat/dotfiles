@@ -4,9 +4,9 @@
 # https://gist.github.com/NigelThorne/dcb2ff06c6b48eccd9c547260937b4b4
 
 [alias]
-	aliases  = !git config --get-regexp alias | sed -e 's/^alias\\.\\(.*\\)$/\\1/' -e 's/^\\([^ ]\\{1,\\}\\) \\(.*\\)$/\\1 = \\2/' | sort
+	aliases  = "!f() { local -r k=$1; shift; printf 'git config --global %s %q\n' \"$k\" \"$*\"; }; git config --get-regexp '^alias' | while IFS= read -r line; do f $line; done | sort"
 	share    = !git daemon --reuseaddr --base-path=./.git --verbose --export-all
-	unstaged = reset HEAD --
+	unstage  = reset HEAD --
 	tags     = tag
 
 	graph = log --graph --abbrev-commit --decorate --date=relative --all
@@ -17,6 +17,8 @@
 	ls = log --abbrev-commit --decorate --date=short    --oneline
 	lu = ls --date=relative '@{upstream}..HEAD'
 	lp = ls --date=relative '@{push}..HEAD'
+
+
 	home = rev-parse --show-toplevel
 
 	# gh -- GitHub CLI
@@ -32,7 +34,7 @@
 	co = checkout
 	d  = diff
 	dc = diff --cached
-	l  = log -1
+	l  = !printf '====> ' && git rev-parse --abbrev-ref HEAD && git log '@{u}..'
 	pt = !git push && git push --tags
 	rv = remote -v
 	s  = status --short --branch --show-stash
@@ -41,7 +43,7 @@
 	swd = !git switch $(git default-branch)
 	up = pull --rebase --autostash
 	w  = whatchanged
-	f = fetch --all --prune --prune-tags --no-auto-gc --jobs=3 --progress --show-forced-updates
+	f = fetch --all --prune --no-auto-gc --jobs=3 --progress --show-forced-updates
 	ft = fetch --tags --prune-tags --progress --show-forced-updates
 
 
@@ -57,14 +59,14 @@
 	# Find commits by commit message
 	findbycommit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
-	show-merged = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short))' --python refs/heads | python3
-	show-merged-zero = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short), end=\"\\0\")' --python refs/heads | python3
+	show-not-main = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short))' --python refs/heads | python3
+	show-not-main-zero = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short), end=\"\\0\")' --python refs/heads | python3
 
 	show-gone = ! git for-each-ref --format='if %(upstream:track) == \"[gone]\": print(%(refname:short))' --python | python3
 	show-gone-zero = ! git for-each-ref --format='if %(upstream:track) == \"[gone]\": print(%(refname:short), end=\"\\0\")' --python | python3
 
 	nuke-gone = ! git f --quiet && git show-gone-zero | xargs -0t git branch -D
-	nuke-merged = ! git f --quiet && git show-merged-zero | xargs -0t git branch -d
+	nuke-not-main = ! git f --quiet && git show-not-main-zero | xargs -0t git branch -d
 
 	default-branch = ! basename "$(git rev-parse --abbrev-ref origin/HEAD)"
 	retag = "!r() { set -ex ; git tag -d \"$1\" && git tag \"$@\"; }; r"
