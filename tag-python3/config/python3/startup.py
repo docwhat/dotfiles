@@ -1,6 +1,6 @@
 # -*- coding: iso-8859-15 -*-
-""" ~/.pythonrc.py
-PYTHONRC - Really Neat way to make the python shell fun and usable!
+"""
+PYTHONRC - Really Neat way to make the python shell fun and usable!.
 
 Copy this file to some place in your home directory.
 
@@ -16,7 +16,7 @@ class PythonStartup:
     debug = None
 
     def init(cls):
-        """Initialize a nice environment to run in"""
+        """Initialize a nice environment to run in."""
 
         from os import getenv, path
 
@@ -77,7 +77,7 @@ class PythonStartup:
     init = classmethod(init)
 
     def dp(cls, *msgs):
-        "Debugging Print"
+        """Debugging Print."""
         if cls.debug:
             for msg in msgs:
                 print("PYTHONRC: %s" % msg)
@@ -85,7 +85,7 @@ class PythonStartup:
     dp = classmethod(dp)
 
     def strtime(cls):
-        "Returns the time in a nicely formatted string"
+        """Return the time in a nicely formatted string."""
         import time
 
         fmtstr = "%A %I:%M %p, %B %d, %Y %Z"
@@ -94,7 +94,7 @@ class PythonStartup:
     strtime = classmethod(strtime)
 
     def exit(cls):
-        "Method to run when everything exits"
+        """Run when everything exits."""
         cls.dp("Exiting...")
         if cls.readline:
             cls.readline.add_history("# leaving %s" % cls.strtime())
