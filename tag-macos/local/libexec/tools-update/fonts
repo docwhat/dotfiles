@@ -6,6 +6,15 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
+fail() {
+  print -P "%F{red}Error%F{reset}: $*" >&2
+  return 1
+}
+
+installed() {
+  print -P "%F{green}Installed%F{reset}: $*"
+}
+
 if curl --help all | grep -q etag; then
   curl_has_etag=1
 else
@@ -36,33 +45,46 @@ for folder in NerdFonts TerminalAppFonts Microsoft; do
   mkdir -p ~/Library/Fonts/"$folder"
 done
 
-function {
-  fetch_or_update \
-    "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/NerdFontsSymbolsOnly/complete/Symbols-2048-em%20Nerd%20Font%20Complete.ttf" \
-    ~/Library/Fonts/NerdFonts/"Symbols Nerd Font.ttf"
-}
-
 declare -r cachedir="$HOME/.cache/tools-update/fonts"
 
+# These are self-contained blocks of code to prevent leaking variables.
+
 function {
+  local -r name=NerdFontsSymbolsOnly
+  local release
+  release=$(curl -sSfn "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | jq -r '.tag_name')
+  mkdir -p "$cachedir"
+  zipfile="${cachedir}/${name}.zip"
+  fetch_or_update \
+    "https://github.com/ryanoasis/nerd-fonts/releases/download/${release}/${name}.zip" \
+    "${zipfile}"
+  unzip -uojq "${zipfile}" '*.ttf' -d ~/Library/Fonts/NerdFonts
+  installed "${name} ${release}"
+}
+
+function {
+  local -r name=CascadiaCode
   local release
   release=$(curl -sSfn "https://api.github.com/repos/microsoft/cascadia-code/releases/latest" | jq -r '.tag_name')
   mkdir -p "$cachedir"
-  zipfile="${cachedir}/cascadia-code.zip"
+  zipfile="${cachedir}/${name}.zip"
   fetch_or_update \
-    "https://github.com/microsoft/cascadia-code/releases/download/${release}/CascadiaCode-${release#v}.zip" \
+    "https://github.com/microsoft/cascadia-code/releases/download/${release}/${name}-${release#v}.zip" \
     "${zipfile}"
-  unzip -uoj "${zipfile}" '*.otf' -x '*PL-*' -d ~/Library/Fonts/Microsoft
+  unzip -uojq "${zipfile}" '*.otf' -x '*PL-*' -d ~/Library/Fonts/Microsoft
+  installed "${name} ${release}"
 }
 
 function {
   # Install SF-Mono fonts for general usage.
+  local -r name=SF-Mono
   local terminal_font_dir=/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/
   if ! [[ -d $terminal_font_dir ]]; then
     terminal_font_dir="/System/${terminal_font_dir}"
   fi
   local -r terminal_font_dir
-  rsync -avP --chmod=Fa-x --inplace --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
+  rsync -a --chmod=Fa-x --inplace --delete "$terminal_font_dir" ~/Library/Fonts/TerminalAppFonts/
+  installed "${name}"
 }
 
 # EOF
