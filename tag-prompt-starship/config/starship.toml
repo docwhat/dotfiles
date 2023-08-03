@@ -7,9 +7,9 @@ disabled = true
 symbol = " "
 
 [battery]
-charging_symbol = ""
-discharging_symbol = ""
-full_symbol = ""
+charging_symbol = "󰂄"
+discharging_symbol = "󰂃"
+full_symbol = "󰁹"
 
 [cmd_duration]
 min_time = 3_000 # ms
@@ -68,13 +68,13 @@ read_only = " "
 read_only_style = "red dimmed"
 
 [directory.substitutions]
-"Documents" = " "
-"Downloads" = " "
+"Documents" = "󱧶 "
+"Downloads" = "󰉍 "
 "Dropbox" = " "
-"Movies" = " "
-"Music" = " "
-"Pictures" = " "
-"~" = " "
+"Movies" = "󱧺 "
+"Music" = "󱍙 "
+"Pictures" = "󰉏 "
+"~" = "󱂵 "
 "~/src/gist.github.com" = " "
 "~/src/github.com" = " "
 "~/src/gitlab.com" = " "
@@ -133,15 +133,15 @@ stashed = '[](fg:#1188ff) '
 
 deleted = '[](#ff0000) '
 renamed = '[](#ff8800) '
-modified = '[](#ffff00) '
+modified = '[󰆗](#ffff00) '
 staged = '[](#00ff00) '
 untracked = '[](#ff0000) '
 conflicted = '[$count](#ff0000) '
 
 # commits
-ahead = '[ $count祝](bg:#1188ff fg:#f0f0f0) '
-behind = '[ $count](bg:#338833 fg:#f0f0f0) '
-diverged = '[ $behind_count ](bg:#338833 fg:#f0f0f0)[ $ahead_count祝](bg:#1188ff fg:#f0f0f0) '
+ahead = '[ $count󰕒](bg:#1188ff fg:#f0f0f0) '
+behind = '[ $count󰇚](bg:#338833 fg:#f0f0f0) '
+diverged = '[ $behind_count󰇚 ](bg:#338833 fg:#f0f0f0)[ $ahead_count󰕒](bg:#1188ff fg:#f0f0f0) '
 
 [golang]
 symbol = " "
@@ -165,10 +165,10 @@ disabled = true
 symbol = " "
 
 [memory_usage]
-symbol = " "
+symbol = "󰍛 "
 
 [nim]
-symbol = " "
+symbol = ""
 
 [nix_shell]
 symbol = " "
@@ -177,7 +177,7 @@ symbol = " "
 symbol = " "
 
 [package]
-symbol = " "
+symbol = "󰏗 "
 
 [perl]
 symbol = " "
@@ -213,10 +213,10 @@ sigint_symbol = "🔫"
 signal_symbol = "🚦"
 
 [swift]
-symbol = "ﯣ "
+symbol = "󰛥 "
 
 [terraform]
-symbol = "歷"
+symbol = "󱁢"
 
 [username]
 format = "[$user]($style) "
