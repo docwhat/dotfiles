@@ -147,7 +147,7 @@ return {
 
     -- Additional
     { "folke/neodev.nvim" },
-    { "j-hui/fidget.nvim", opts = {} },
+    { "j-hui/fidget.nvim", branch = "legacy", event = "LspAttach", opts = {} },
   },
   config = function()
     missingGlobalVimFix()
