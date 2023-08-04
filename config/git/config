@@ -51,9 +51,6 @@
 	f = fetch --all --prune --no-auto-gc --jobs=3 --progress --show-forced-updates
 	ft = fetch --tags --prune-tags --progress --show-forced-updates
 
-	# Gum flavored aliases
-	c = "!git commit -m \"$(gum input --width 50 --placeholder 'Summary of changes')\" -m \"$(gum write --width 80 --placeholder 'Details of changes (CTRL+D to finish)')\" #"
-
 	# Find branches containing commit
 	findbranch = "!f() { git br -a --contains $1; }; f"
 

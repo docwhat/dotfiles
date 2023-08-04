@@ -1,0 +1,131 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly cache_home="${XDG_CACHE_HOME:-${HOME}/.cache}"
+readonly cache_dir="${cache_home}/git-c"
+
+gum_type() {
+  local -a cmd=(
+    gum
+    choose
+    ""
+    "fix"
+    "feat"
+    "refactor"
+    "test"
+    "chore"
+    "docs"
+    "style"
+    "perf"
+    "build"
+    "revert"
+    "wip"
+    --height=12
+  )
+
+  if [[ -f "${cache_dir}/last_type" ]]; then
+    cmd+=(--selected="$(cat "${cache_dir}/last_type")")
+  fi
+
+  "${cmd[@]}"
+}
+
+gum_summary() {
+  local -a cmd=(
+    gum
+    input
+    --width=50
+    --placeholder="Imperitive description of change"
+  )
+
+  if [[ -f "${cache_dir}/last_summary" ]]; then
+    cmd+=(--value="$(cat "${cache_dir}/last_summary")")
+  fi
+
+  "${cmd[@]}"
+}
+
+gum_details() {
+  local -a cmd=(
+    gum
+    write
+    --width=80
+    --placeholder="Details of changes (CTRL+D to finish)"
+  )
+
+  if [[ -f "${cache_dir}/last_details" ]]; then
+    cmd+=(--value="$(cat "${cache_dir}/last_details")")
+  fi
+
+  "${cmd[@]}"
+}
+
+git_commit() {
+  local -r type="$1"
+  local -r summary="$2"
+  local -r details="$3"
+  local -a cmd=(
+    git
+    commit
+  )
+
+  if [[ -n ${type} ]]; then
+    cmd+=(-m "${type}: ${summary}")
+  else
+    cmd+=(-m "${summary}")
+  fi
+
+  if [[ -n ${details} ]]; then
+    cmd+=(-m "${details}")
+  fi
+
+  "${cmd[@]}"
+}
+
+init_cache() {
+  mkdir -p "${cache_dir}"
+  trap destroy_cleanup EXIT
+}
+
+destroy_cleanup() {
+  # shellcheck disable=2317 # Used indirectly via trap.
+  rm -rf "${cache_dir}"
+}
+
+run() {
+  local type summary details
+
+  if ! command -v gum &>/dev/null; then
+    echo "gum is required"
+    exit 1
+  fi
+
+  # Ensure cache dir exists
+  init_cache
+
+  # Fetch & cache type
+  type="$(gum_type)"
+  echo "${type}" >"${cache_dir}/last_type"
+
+  # Fetch summary
+  summary="$(gum_summary)"
+
+  # Abort if summary is empty
+  if [[ -z ${summary} ]]; then
+    echo "Summary is required"
+    exit 1
+  else
+    # Cache summary incase of failure.
+    echo "${summary}" >"${cache_dir}/last_summary"
+  fi
+
+  details="$(gum_details)"
+  echo "${details}" >"${cache_dir}/last_details"
+
+  git_commit "${type}" "${summary}" "${details}"
+}
+
+run
+
+# EOF
