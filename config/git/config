@@ -5,9 +5,14 @@
 
 [alias]
 	aliases  = "!f() { local -r k=$1; shift; printf 'git config --global %s %q\n' \"$k\" \"$*\"; }; git config --get-regexp '^alias' | while IFS= read -r line; do f $line; done | sort"
+	debug    = "!set -x; GIT_TRACE=2 GIT_CURL_VERBOSE=2 GIT_TRACE_PERFORMANCE=2 GIT_TRACE_PACK_ACCESS=2 GIT_TRACE_PACKET=2 GIT_TRACE_PACKFILE=2 GIT_TRACE_SETUP=2 GIT_TRACE_SHALLOW=2 git"
+	# Quote / unquote a sh command, converting it to / from a git alias string
 	share    = !git daemon --reuseaddr --base-path=./.git --verbose --export-all
 	unstage  = reset HEAD --
 	tags     = tag
+
+	quote-string   = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
+	unquote-string = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/g'; printf \"\\n\" #"
 
 	graph = log --graph --abbrev-commit --decorate --date=relative --all
 
@@ -46,6 +51,8 @@
 	f = fetch --all --prune --no-auto-gc --jobs=3 --progress --show-forced-updates
 	ft = fetch --tags --prune-tags --progress --show-forced-updates
 
+	# Gum flavored aliases
+	c = "!git commit -m \"$(gum input --width 50 --placeholder 'Summary of changes')\" -m \"$(gum write --width 80 --placeholder 'Details of changes (CTRL+D to finish)')\" #"
 
 	# Find branches containing commit
 	findbranch = "!f() { git br -a --contains $1; }; f"
