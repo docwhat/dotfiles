@@ -9,7 +9,7 @@ _showed_traceback=f
 
 function _exit_trap() {
   local _ec="$?"
-  if [[ $_ec != 0 && ${_showed_traceback} != t ]]; then
+  if [[ ${_ec} != 0 && ${_showed_traceback} != t ]]; then
     traceback 1
   fi
 }
@@ -32,9 +32,9 @@ function traceback() {
   echo "Traceback (last called is first):" 1>&2
   for ((i = start; i < end; i++)); do
     j=$((i - 1))
-    local function="${FUNCNAME[$i]}"
-    local file="${BASH_SOURCE[$i]}"
-    local line="${BASH_LINENO[$j]}"
+    local function="${FUNCNAME[${i}]}"
+    local file="${BASH_SOURCE[${i}]}"
+    local line="${BASH_LINENO[${j}]}"
     echo "     ${function}() in ${file}:${line}" 1>&2
   done
 }
@@ -44,11 +44,11 @@ typeset -ar terms=(
   xtermc
   xterm-color
   xterm-256color
-  \
+
   screen
   screen-256color
   screen.xterm-new
-  \
+
   tmux
   tmux-256color
 )
@@ -58,17 +58,17 @@ declare -r tidir="${cachedir}/terminfo.tmp"
 declare -r tarfile="${cachedir}/terminfo.src.gz"
 
 fetch_term_source() {
-  if [ ! -r "$tarfile" ]; then
-    curl -LsSf -o "$tarfile" http://invisible-island.net/datafiles/current/terminfo.src.gz
+  if [[ ! -r ${tarfile} ]]; then
+    curl -LsSf -o "${tarfile}" http://invisible-island.net/datafiles/current/terminfo.src.gz
   else
-    curl -LsSf -z "$tarfile" -o "$tarfile" http://invisible-island.net/datafiles/current/terminfo.src.gz
+    curl -LsSf -z "${tarfile}" -o "${tarfile}" http://invisible-island.net/datafiles/current/terminfo.src.gz
   fi
 }
 
 unpack_terms() {
-  rm -rf "$cachedir"/*.tmp
-  gzip -dc "$tarfile" >"${cachedir}/terminfo.src"
-  env TERMINFO="$tidir" tic "${cachedir}/terminfo.src"
+  rm -rf "${cachedir}"/*.tmp
+  gzip -dc "${tarfile}" >"${cachedir}/terminfo.src"
+  env TERMINFO="${tidir}" tic "${cachedir}/terminfo.src"
 }
 
 correct_backspace() {
@@ -77,12 +77,12 @@ correct_backspace() {
   # Fix backspace character
   for term in "${terms[@]}"; do
     tmpfile="terms.tmp/${term}.terminfo"
-    env TERMINFO="$tidir" \
-      infocmp -1IL "$term" |
+    env TERMINFO="${tidir}" \
+      infocmp -1IL "${term}" |
       sed 's/key_backspace=^[hH]/key_backspace=\\177/' \
-        >"$tmpfile"
-    env TERMINFO="$tidir" \
-      tic -xa "$tmpfile"
+        >"${tmpfile}"
+    env TERMINFO="${tidir}" \
+      tic -xa "${tmpfile}"
     unset tmpfile
   done
 
@@ -95,15 +95,15 @@ import_terminals() {
   ## Import terminals for use.
   for term in "${terms[@]}"; do
     tmpfile="terms.tmp/${term}.terminfo"
-    env TERMINFO="$tidir" \
-      infocmp -1IL "$term" \
-      >"$tmpfile"
-    tic -xa "$tmpfile"
+    env TERMINFO="${tidir}" \
+      infocmp -1IL "${term}" \
+      >"${tmpfile}"
+    tic -xa "${tmpfile}"
   done
 }
 ## Main
-mkdir -p "$cachedir"
-cd "$cachedir"
+mkdir -p "${cachedir}"
+cd "${cachedir}"
 
 fetch_term_source
 

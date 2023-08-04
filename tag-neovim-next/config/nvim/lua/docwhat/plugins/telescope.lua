@@ -57,9 +57,7 @@ M.opts = {
           return require("trouble.providers.telescope").open_with_trouble(...)
         end,
         ["<a-t>"] = function(...)
-          return require("trouble.providers.telescope").open_selected_with_trouble(
-            ...
-          )
+          return require("trouble.providers.telescope").open_selected_with_trouble(...)
         end,
         ["<a-i>"] = function()
           builtin("find_files", { no_ignore = true })()
