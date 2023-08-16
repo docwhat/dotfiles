@@ -13,7 +13,7 @@ fi
 # Pager/Editors
 export PAGER="bat"
 export ACK_PAGER="less -RF"
-export BAT_PAGER="less -RF"
+export BAT_PAGER="less" # Bat will provide the command line arguments
 export MANPAGER="${HOME}/bin/manpager"
 
 export EDITOR="${HOME}/bin/editor"

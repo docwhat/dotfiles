@@ -183,10 +183,8 @@ zinit wait lucid light-mode for \
   atclone'ln -nsf "$PWD/bin/"* "$ZPFX/bin"' \
   atpull'%atclone' \
   atload'eval "$(batpipe)"' \
-  atload'alias rg=batgrep' \
-  atload'if command -v less >/dev/null; then alias man="MANPAGER=less batman"; else alias man=batman; fi' \
-  atload'zicompdef _rg batgrep' \
-  atload'zicompdef _man batman' \
+  atload'alias rg=batgrep ; zicompdef _rg batgrep' \
+  atload'alias man=batman ; zicompdef _man batman' \
   id-as'auto' \
   @eth-p/bat-extras
 
