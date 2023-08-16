@@ -1,32 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ##marker: NODEJS-CLI-TOOL##
 
-set -eEuo pipefail
-
+packages=(stylelint)
 bin=stylelint
-packages=( stylelint )
-node_version=10
-prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
 
-export NODENV_VERSION=$node_version
+args=(npx --yes)
+for pkg in "${packages[@]}"; do
+  args+=("--package=${pkg}")
+done
+args+=(-- "${bin}" "$@")
 
-function do_install() {
-  npm install --global --prefix "$prefix" "${packages[@]}"
-}
+exec "${args[@]}"
 
-if [ -n "${TOOL_INSTALL:-}" ]; then
-  do_install
-  exit
-fi
-
-global_bin="${prefix}/bin"
-
-if [ -x "${global_bin}/${bin}" ]; then
-  exec "${global_bin}/${bin}" "$@"
-fi
-
-do_install >/dev/null 2>&1
-exec "${global_bin}/${bin}" "$@"
-
-# EOF
+#EOF

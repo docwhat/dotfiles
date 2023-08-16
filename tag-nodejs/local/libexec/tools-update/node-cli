@@ -6,16 +6,10 @@ set -euo pipefail
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 
-cd "${DOTFILES_DIR}/tag-nodejs/bin"
-
 # Rebuild scripts
-./add-node-cli -u *(.*N)
+"${DOTFILES_DIR}/tag-nodejs/bin/"add-node-cli -u "${DOTFILES_DIR}/tag-nodejs/bin/"*(.*N:t)
 
-# Remove cache.
+# Remove obsolete cache.
 rm -rf "${HOME}/.cache/nodejs-cli-tool"
-mkdir -p "${HOME}/.cache/nodejs-cli-tool"
-
-# Install global packages
-yarn global add neovim
 
 # EOF

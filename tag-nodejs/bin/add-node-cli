@@ -1,28 +1,72 @@
 #!/usr/bin/env bash
+# shellcheck disable=2317
 
 set -eEuo pipefail
 
-declare -r template="${HOME}/.dotfiles/tag-nodejs/local/share/node-cli-template.zsh"
+# Colors
+red="$(tput setaf 1 2>/dev/null || true)"
+yellow="$(tput setaf 3 2>/dev/null || true)"
+reset="$(tput sgr0 2>/dev/null || true)"
+readonly red yellow reset
+
+declare -i verbose=1
 
 function error() {
-  echo "$(tput setaf 1)ERROR$(tput sgr0): $*"
+  echo "${red}ERROR${reset}: $*"
   exit 10
 }
 
 function warn() {
-  echo "$(tput setaf 3)WARNING$(tput sgr0): $*"
+  echo "${yellow}WARNING${reset}: $*"
+}
+
+function info() {
+  if ((verbose)); then
+    echo "$*"
+  fi
 }
 
 function stub_path() {
-  local -r bin=$1
-  echo -n "${HOME}/.dotfiles/tag-nodejs/bin/$(basename "$bin")"
+  local -r bin="$1"
+  echo -n "${HOME}/.dotfiles/tag-nodejs/bin/$(basename "${bin}")"
+}
+
+# shellcheck disable=SC2016
+function prstub() {
+  local -r bin="$1"
+  shift
+  local -ra packages=("$@")
+
+  printf '#!/usr/bin/env bash\n'
+  echo
+  printf '##marker: NODEJS-CLI-TOOL##\n'
+  echo
+  # The @Q only works in bash 4.4+
+  # It should be okay in bash <4.4 because package names don't have
+  # have shell sensitive characters (e.g., spaces and quotes).
+  printf 'packages=(%s)\n' "${packages[*]@Q}"
+  printf 'bin=%q\n' "${bin}"
+  echo
+  printf 'args=(npx --yes)\n'
+  printf 'for pkg in "${packages[@]}"; do\n'
+  printf '  args+=("--package=${pkg}")\n'
+  printf 'done\n'
+  printf 'args+=(-- "${bin}" "$@")\n'
+  echo
+  printf 'exec "${args[@]}"\n'
+  echo
+  printf '#EOF\n'
 }
 
 function mkstub() {
-  local -r bin=$1
+  local -r bin="$1"
 
-  path="$(stub_path "$bin")"
-  if "${template}" "$@" >"${path}.tmp"; then
+  local path
+  path="$(stub_path "${bin}")"
+  local -r path
+
+  # shellcheck disable=SC2310
+  if prstub "$@" >"${path}.tmp"; then
     chmod +x "${path}.tmp"
     mv -f "${path}.tmp" "${path}"
   else
@@ -31,197 +75,161 @@ function mkstub() {
   fi
 }
 
+function update_stub() {
+  local -r bin="$1"
+  local path
+
+  path="$(stub_path "${bin}")"
+  local -r path
+
+  if ! [[ -x ${path} ]]; then
+    error "Cannot update ${bin}; it does not exist\!"
+  fi
+
+  if ! grep -qE '^##marker: NODEJS-CLI-TOOL##$' "${path}"; then
+    warn "${path} is not a node-cli; skipping "
+    return
+  fi
+
+  local -a update_packages=()
+  while read -r line; do
+    if [[ ${line} == packages=* ]]; then
+      eval "update_${line}"
+      break
+    fi
+  done <"${path}"
+
+  if (("${#update_packages[@]}" == 0)); then
+    warn "No packages found in ${path}; skipping"
+    return
+  fi
+
+  mkstub "${bin}" "${update_packages[@]}"
+}
+
 function show_help() {
-  echo "Usage: $0 <bin-name> [-p <package-name>...]"
+  echo "Usage: $0 <bin-name> [-p <package-name>...] [-u] [-f] [-q]"
+  echo
+  echo "  -p, --package <package-name>"
+  echo "    Specify a package to install."
+  echo "    You can specify multiple packages."
+  echo "  -u, --update"
+  echo "    Update the stubs for the specified bins."
+  echo "  -f, --overwrite"
+  echo "    Overwrite existing stubs."
+  echo "    This is only valid when creating stubs."
+  echo "  -q, --quiet"
+  echo "    Only print warnings and errors."
+  echo "  -h, --help"
+  echo "    Show this help message."
+  echo
   exit 0
 }
 
-declare -a packages=() bins=()
-declare -i node_version=10
-declare -i is_updating=0
-declare -i is_overwriting=0
-declare -i is_installing=1
-while (($#)); do
-  case "$1" in
-  --help | --h | -h)
-    show_help
-    ;;
-  --package | --p | -p)
+function main() {
+
+  local -a packages=() bins=()
+  local -i is_updating=0
+  local -i is_overwriting=0
+  while (($#)); do
+    case "$1" in
+    --help | --h | -h)
+      show_help
+      ;;
+    --package | --p | -p)
+      shift
+      packages+=("$2")
+      ;;
+    --package=* | --p=* | -p=*)
+      packages+=("${1#*=}")
+      ;;
+    --update | --u | -u)
+      is_updating=1
+      ;;
+    --overwrite | --f | -f)
+      is_overwriting=1
+      ;;
+    --quiet | --q | -q)
+      verbose=0
+      ;;
+    -*)
+      error "I don't understand the flag $1"
+      ;;
+    *)
+      bins+=("$1")
+      ;;
+    esac
     shift
-    packages=("${packages[@]}" "$1")
-    ;;
-  --node | --n | -n)
-    node_version=$2
-    shift
-    ;;
-  --update | --u | -u)
-    is_updating=1
-    ;;
-  --overwrite | --f | -f)
-    is_overwriting=1
-    ;;
-  --no-install | --n | -n)
-    is_installing=0
-    ;;
-  -*)
-    error "I don't understand the flag $1"
-    ;;
-  *)
-    bins=("${bins[@]}" "$1")
-    ;;
-  esac
-  shift
-done
-declare -r \
-  packages \
-  bins \
-  node_version \
-  is_updating \
-  is_overwriting \
-  is_installing
-
-if ! ((${#bins})); then
-  error 'You must specify at least one command!'
-fi
-
-if ((is_updating)); then
-  if (("${#packages[@]}")); then
-    error "You mustn't specify packages when updating."
-  fi
-  if ((is_overwriting)); then
-    error "--overwrite makes no sense when updating."
-  fi
-fi
-
-export NODENV_VERSION=$node_version
-declare -r node_prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
-
-if ((is_updating)); then
-  for bin in "${bins[@]}"; do
-    path="$(stub_path "$bin")"
-    if ! [[ -x $path ]]; then
-      error "Cannot update $bin; it does not exist\!"
-    fi
-
-    if grep -qE '^##marker: NODEJS-CLI-TOOL##$' "$path"; then
-      declare -a update_packages=()
-      declare -i update_node_version=0
-      while read -r line; do
-        if [[ $line == packages=* ]] || [[ $line == node_version=* ]]; then
-          eval "update_${line}"
-        fi
-        if (("${#update_packages[@]}")) && ((update_node_version)); then
-          mkstub "$bin" "$update_node_version" "${update_packages[@]}"
-          break
-        fi
-      done <"$path"
-    else
-      warn "$path is not a node-cli; skipping "
-    fi
   done
-  exit 0
-fi
 
-declare -a bins_to_create=()
-for bin in "${bins[@]}"; do
-  path="$(stub_path "$bin")"
-  if [[ -x $path ]]; then
-    if ! ((is_overwriting)); then
-      warn "$path already exists; skipping"
-      continue
+  local -r \
+    packages \
+    bins \
+    is_updating \
+    is_overwriting
+
+  if ! ((${#bins})); then
+    error 'You must specify at least one command!'
+  fi
+
+  if ((is_updating)); then
+    if (("${#packages[@]}")); then
+      error "You mustn't specify packages when updating."
     fi
-  fi
+    if ((is_overwriting)); then
+      error "--overwrite makes no sense when updating."
+    fi
 
-  bins_to_create+=("$bin")
-done
-declare -r bins_to_create
+    local cksum1 cksum2
+    for bin in "${bins[@]}"; do
+      path="$(stub_path "${bin}")"
+      cksum1="$(cksum "${path}")"
+      update_stub "${bin}"
+      cksum2="$(cksum "${path}")"
+      if [[ ${cksum1} == "${cksum2}" ]]; then
+        info "${bin} is up to date"
+      else
+        info "Updated ${bin}"
+      fi
+    done
 
-if ! (("${#bins_to_create[@]}")); then
-  error 'No bins to create!'
-fi
-
-echo "add-node-cli will do the following:"
-echo "  install:    ${packages[*]}"
-echo "  create:     ${bins_to_create[*]}"
-echo "  using node: ${node_version}"
-echo
-
-npm_bin=$(npm bin --global --prefix "$node_prefix" 2>/dev/null)
-declare -r npm_bin
-
-if ((is_installing)) && ((${#packages[@]})); then
-  npm install --global --prefix "$node_prefix" "${packages[@]}"
-fi
-
-for bin in "${bins[@]}"; do
-  if [[ ! -x "${npm_bin}/${bin}" ]]; then
-    error "cannot find ${bin} in ${packages[*]}"
-  fi
-done
-
-for bin in "${bins_to_create[@]}"; do
-  mkstub "$bin" "$node_version" "${packages[@]}"
-done
-
-rcup -K
-
-exit 0
-
-# EOF
-
-package="$1"
-bin="${2:-$1}"
-
-stub_path=~/.dotfiles/tag-nodejs/bin/"$(basename "$bin")"
-
-if [ -x "$stub_path" ]; then
-  if ! grep -qE '^##marker: NODEJS-CLI-TOOL##$' "$stub_path"; then
-    warn "$stub_path is not a node-cli stub_path"
     exit 0
   fi
 
-  # Load prefious variables
-  eval "$(grep -E '^(package|node_version)=' "$stub_path")"
+  local -a bins_to_create=()
+  for bin in "${bins[@]}"; do
+    path="$(stub_path "${bin}")"
+    if [[ -x ${path} ]]; then
+      if ! ((is_overwriting)); then
+        warn "${path} already exists; skipping"
+        continue
+      fi
+    fi
 
-  if [[ ${2:-} == "$bin" ]]; then
-    package=$1
+    bins_to_create+=("${bin}")
+  done
+  local -r bins_to_create
+
+  if ! (("${#bins_to_create[@]}")); then
+    error 'No bins to create!'
   fi
 
-  if [ -z "${package:-}" ] && [ -z "${bin:-}" ]; then
-    error "$stub_path is a malformed node-cli stub".
-  fi
-  update=1
-  print -P "%F{green}Updating%f $bin (from $package; node $node_version)"
-else
-  update=0
+  echo "add-node-cli will do the following:"
+  echo "  create:     ${bins_to_create[*]}"
+  echo
 
-  print -P "%F{yellow}Creating%f $bin (from $package; node $node_version)"
-fi
+  for bin in "${bins_to_create[@]}"; do
+    if (("${#packages[@]}")); then
+      mkstub "${bin}" "${packages[@]}"
+    else
+      mkstub "${bin}" "${bin}"
+    fi
+  done
 
-prefix="${HOME}/.cache/nodejs-cli-tool/node-${node_version}"
-declare -r package bin node_version prefix stub_path update
-
-if ! ((update)) || [ -n "${TOOL_INSTALL:-}" ]; then
-  npm install --global --prefix "$prefix" "$package"
-
-  if [ ! -x "$(npm bin --global --prefix "$prefix" 2>/dev/null)/${bin}" ]; then
-    error "cannot find $bin in $package"
-  fi
-fi
-
-~/.dotfiles/tag-nodejs/local/share/node-cli-template.zsh \
-  "$package" \
-  "$bin" \
-  "$node_version" \
-  >"${stub_path}.tmp" || (
-  rm -f "${stub_path}.tmp"
-  false
-)
-mv -f "${stub_path}.tmp" "${stub_path}"
-chmod +x "${stub_path}"
-
-if ! ((update)); then
   rcup -K
-fi
+}
+
+main "$@"
+exit 0
 
 # EOF
