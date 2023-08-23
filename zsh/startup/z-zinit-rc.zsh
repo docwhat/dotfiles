@@ -146,7 +146,7 @@ zinit wait lucid light-mode for \
   as'program' \
   mv'jq-* -> jq' \
   id-as'auto' \
-  @stedolan/jq
+  @jqlang/jq
 
 zinit wait lucid light-mode for \
   from'gh-r' \
@@ -228,7 +228,7 @@ zinit wait lucid light-mode for \
   pick'lsd/lsd' \
   atclone'ln -svf "$PWD/lsd/"*.1 "${ZINIT[MAN_DIR]}/man1"' \
   id-as'auto' \
-  @Peltoche/lsd
+  @lsd-rs/lsd
 
 zinit wait lucid light-mode for \
   from'gh-r' \
