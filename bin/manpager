@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=2310
 
 set -euo pipefail
 
@@ -7,27 +8,30 @@ function has_exe() {
 }
 
 function pager() {
-  if command -v bat 2>/dev/null >&2; then
-    bat -l man
-  elif [ -t 1 ]; then
-    if has_exe nvim; then
+  if [[ -t 1 ]]; then
+    if command -v bat 2>/dev/null >&2; then
+      command bat -l man
+      return $?
+    elif has_exe nvim; then
       nvim -R \
         -c 'set filetype=man shiftwidth=8 cmdheight=1 nonumber nolist nomodified nomodifiable' \
         -
-      return
+      return $?
     fi
 
     if has_exe vim; then
       vim -R \
         -c 'set filetype=man shiftwidth=8 cmdheight=1 nonumber nolist nomodified nomodifiable' \
         -
-      return
+      return $?
     fi
 
-    "$PAGER"
+    "${PAGER}"
+    return $?
   else
     "cat"
+    return $?
   fi
 }
 
-exec col -bx | iconv -c | pager
+exec col -bx | iconv -c -t UTF-8 | pager
