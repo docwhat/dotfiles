@@ -36,6 +36,7 @@ Install:andUse("Hammer", {
 })
 -- -- Handy for debugging. From:
 -- --    https://github.com/kikito/inspect.lua/blob/master/inspect.lua
+-- --    https://world.hey.com/jonash/alacritty-drop-down-guake-quake-style-terminal-setup-on-macos-6eef7d73
 -- -- luacheck: globals inspect
 -- inspect = require("inspect")
 
