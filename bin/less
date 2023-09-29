@@ -10,25 +10,25 @@ less=""
 c=$(checksum-and-size "$0")
 
 while read -r bin; do
-  c2=$(checksum-and-size "$bin")
-  if [[ $c2 != $c ]]; then
-    less=$bin
+  c2=$(checksum-and-size "${bin}")
+  if [[ ${c2} != "${c}" ]]; then
+    less=${bin}
     break
   fi
-done < <(type -afp less)
+done < <(type -afp less || true)
 readonly less
 
 # Fallback; can't find less
-if [[ -z $less ]]; then
+if [[ -z ${less} ]]; then
   exec more "$@"
 fi
 
-less_version=$(env LESS= LESSKEY= "$less" -V | head -n1 | cut -d' ' -f2)
+less_version=$(env LESS= LESSKEY= "${less}" -V | head -n1 | cut -d' ' -f2)
 less_version=${less_version%.*}
 declare -ir less_version=${less_version:-0}
 
-configdir=${XDG_CONFIG_HOME:-$HOME/.config}/less
-cachedir=${XDG_CACHE_HOME:-$HOME/.cache}/less
+configdir=${XDG_CONFIG_HOME:-${HOME}/.config}/less
+cachedir=${XDG_CACHE_HOME:-${HOME}/.cache}/less
 
 export LESSKEY="${configdir}/config"
 export LESSHISTFILE="${cachedir}/history"
@@ -36,8 +36,8 @@ export LESSHISTSIZE=1000
 
 unset LESSKEY
 
-if ! [[ -d $cachedir ]]; then
-  mkdir -p "$cachedir"
+if ! [[ -d ${cachedir} ]]; then
+  mkdir -p "${cachedir}"
 fi
 
 # Less Options
@@ -69,6 +69,6 @@ export LESS
 unset LESSPIPE
 unset LESSOPEN
 
-exec "$less" "$@"
+exec "${less}" "$@"
 
 # EOF
