@@ -93,20 +93,36 @@
 [merge]
 	ff = only
 	tool = Kaleidoscope
+	conflictstyle = diff3
 
 [mergetool]
 	keepBackup = false
 	prompt = false
 
-[mergetool "nvr"]
-	cmd = nvr -s -d $LOCAL $BASE $REMOTE $MERGED -c 'wincmd J | wincmd ='
-
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
 
 [difftool]
 	keepBackup = false
 	prompt = false
+
+[difftool "kitty"]
+	cmd = kitty +kitten diff $LOCAL $REMOTE
+
+[mergetool "nvr"]
+	cmd = nvr -s -d $LOCAL $BASE $REMOTE $MERGED -c 'wincmd J | wincmd ='
+[difftool "nvr"]
+	cmd = nvr -s -d $LOCAL $REMOTE
+
+
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+
+[mergetool "vscode"]
+	cmd = code --wait --new-window --merge $REMOTE $LOCAL $BASE $MERGED
+[difftool "vscode"]
+	cmd = code --wait --new-window --diff $LOCAL $REMOTE
 
 [diff]
 	tool = Kaleidoscope
@@ -121,18 +137,6 @@
 [diff "textract"]
 	textconv = textract
 	binary = true
-
-[difftool "kitty"]
-	cmd = kitty +kitten diff $LOCAL $REMOTE
-
-[difftool "nvr"]
-	cmd = nvr -s -d $LOCAL $REMOTE
-
-[difftool "vscode"]
-	cmd = code --wait --new-window --diff $LOCAL $REMOTE
-
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 
 [fetch]
 	prune = true
