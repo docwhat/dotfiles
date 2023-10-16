@@ -12,6 +12,7 @@ fi
 
 # Pager/Editors
 export PAGER="bat"
+export DELTA_PAGER="less"
 export ACK_PAGER="less -RF"
 unset BAT_PAGER # BAT_PAGER causes an infinite loop with bat
 export MANPAGER="${HOME}/bin/manpager"

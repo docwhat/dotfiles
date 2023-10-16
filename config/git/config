@@ -129,6 +129,7 @@
 	renames = copy
 	colorMoved = default
 	algorithm = histogram
+	colorMoved = default
 
 [diff "scpt"]
 	textconv = osadecompile
@@ -201,18 +202,23 @@
 	diffFilter = delta --color-only --features=interactive
 	singleKey = true
 [delta]
-	syntax-theme = gruvbox-dark
-	features = decorations
+	features = decorations dark
+	navigate = true
 [delta "interactive"]
 	keep-plus-minus-markers = true
 [delta "decorations"]
 	; commit-decoration-style = blue ol
 	; commit-style = raw
+	hunk-header-style = line-number syntax
+	side-by-side = false
+	line-numbers = true
+[delta "dark"]
+	dark = true
+	syntax-theme = gruvbox-dark
 	file-style = "#ff0000"
 	file-decoration-style = "#0088ff ul ol"
 	hunk-header-decoration-style = "#0088ff box"
 	hunk-header-line-number-style = "#11aa11"
-	hunk-header-style = line-number syntax
 [delta "light"]
 	light = true
 	syntax-theme = Github
