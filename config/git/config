@@ -63,6 +63,9 @@
 	# Find commits by commit message
 	findbycommit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
+	# Find reachable child commits of a commit
+	children = "!bash -c 'c=${1:-HEAD}; set -- $(git rev-list --all --not \"$c^@\" --children | grep $(git rev-parse \"$c\") ); shift; echo $*' -"
+
 	show-not-main = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short))' --python refs/heads | python3
 	show-not-main-zero = ! git for-each-ref --format='if not %(refname:short) in [\"master\", \"main\", \"dev\"]: print(%(refname:short), end=\"\\0\")' --python refs/heads | python3
 
