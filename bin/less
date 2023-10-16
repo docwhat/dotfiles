@@ -27,44 +27,44 @@ less_version=$(env LESS= LESSKEY= "${less}" -V | head -n1 | cut -d' ' -f2)
 less_version=${less_version%.*}
 declare -ir less_version=${less_version:-0}
 
-configdir=${XDG_CONFIG_HOME:-${HOME}/.config}/less
 cachedir=${XDG_CACHE_HOME:-${HOME}/.cache}/less
 
-export LESSKEY="${configdir}/config"
-export LESSHISTFILE="${cachedir}/history"
-export LESSHISTSIZE=1000
-
 unset LESSKEY
+export LESSHISTFILE="${LESSHISTFILE:-${cachedir}/history}"
+export LESSHISTSIZE="${LESSHISTISZE:-1000}"
 
 if ! [[ -d ${cachedir} ]]; then
   mkdir -p "${cachedir}"
 fi
 
-# Less Options
-LESS='-AFiMnqRsuXx4 --jump-target=3 '
-# A  - SEARCH-SKIP-SCREEN
-# F  - quit-if-one-screen
-# i  - ignore-case
-# M  - LONG-PROMPT
-# n  - line-numbers
-# q  - silent
-# R  - RAW-CONTROL-CHARS
-# s  - squeeze-blank-lines
-# u  - underline-special
-# X  - no-init
-# x4 - tabs=4
-if ((less_version >= 581)); then
-  # incremental search
-  LESS+=" --incsearch"
+# Only configure $LESS if the first character is not a space.
+if [[ ${LESS:0:1} != ' ' ]]; then
+  # Less Options
+  LESS=' -AFiMnqRsuXx4 --jump-target=3 '
+  # A  - SEARCH-SKIP-SCREEN
+  # F  - quit-if-one-screen
+  # i  - ignore-case
+  # M  - LONG-PROMPT
+  # n  - line-numbers
+  # q  - silent
+  # R  - RAW-CONTROL-CHARS
+  # s  - squeeze-blank-lines
+  # u  - underline-special
+  # X  - no-init
+  # x4 - tabs=4
+  if ((less_version >= 581)); then
+    # incremental search
+    LESS+=" --incsearch"
 
-  # save marks between sessions
-  LESS+=" --save-marks"
+    # save marks between sessions
+    LESS+=" --save-marks"
 
-  # Color Theme
-  LESS+=" --use-color"
-  LESS+=" -DSkR$"
+    # Color Theme
+    LESS+=" --use-color"
+    LESS+=" -DSkR$"
+  fi
+  export LESS
 fi
-export LESS
 
 unset LESSPIPE
 unset LESSOPEN
