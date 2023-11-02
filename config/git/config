@@ -51,6 +51,9 @@
 	f = fetch --all --prune --no-auto-gc --jobs=3 --progress --show-forced-updates
 	ft = fetch --tags --prune-tags --progress --show-forced-updates
 
+	# A better version of git rebase -i <branch>
+	rbi = "!f() { local -r mb=$(git merge-base $1 HEAD) && [ -n \"$mb\" ] && git rebase -i $mb; }; f"
+
 	# Find branches containing commit
 	findbranch = "!f() { git br -a --contains $1; }; f"
 
@@ -226,3 +229,5 @@
 	defaultBranch = main
 [include]
 	path = local.inc
+[rerere]
+	enabled = true
