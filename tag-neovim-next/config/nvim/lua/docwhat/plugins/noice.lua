@@ -27,15 +27,13 @@ end
 
 M.dependencies = {
   "MunifTanjim/nui.nvim",
-  "nvim-notify",
   "nvim-treesitter",
-}
-
-table.insert(M.dependencies, {
-  "rcarriga/nvim-notify",
-  opts = {
-    render = "compact",
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      render = "compact",
+    },
   },
-})
+}
 
 return M
