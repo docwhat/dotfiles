@@ -1,32 +1,41 @@
+-- Completion plugin
 local M = {
   "hrsh7th/nvim-cmp",
 }
 
 M.dependencies = {
-  "L3MON4D3/LuaSnip",
-  "rafamadriz/friendly-snippets",
+  "lsp-zero.nvim",
+  "copilot-cmp",
+
   "hrsh7th/cmp-nvim-lsp-signature-help",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-nvim-lua",
   "hrsh7th/cmp-cmdline",
+
+  "L3MON4D3/LuaSnip",
+  "rafamadriz/friendly-snippets",
   "saadparwaiz1/cmp_luasnip",
+
   "lukas-reineke/cmp-under-comparator",
 }
 
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
 M.config = function()
-  -- vim.g.completeopt = "menu,menuone,noselect,noinsert"
+  vim.g.completeopt = "menu,menuone,noselect,noinsert"
 
   require("luasnip.loaders.from_vscode").lazy_load()
 
-  -- local has_words_before = function()
-  --   unpack = unpack or table.unpack
-  --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  --   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  -- end
-
   local cmp = require("cmp")
+  local cmp_action = require("lsp-zero").cmp_action()
   local lspkind = require("lspkind")
   local luasnip = require("luasnip")
   local compare = require("cmp.config.compare")
@@ -41,7 +50,11 @@ M.config = function()
     crates = " cr8",
     nvim_lsp_signature_help = "󰏚 sign",
     path = "󰙅 path",
+    Copilot = "",
   }
+
+  -- Copilot LspKind color
+  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
   local function border(hl_name)
     return {
@@ -56,7 +69,7 @@ M.config = function()
     }
   end
 
-  cmp.setup({
+  local setup_opts = {
     preselect = cmp.PreselectMode.None,
 
     window = {
@@ -75,99 +88,99 @@ M.config = function()
         luasnip.lsp_expand(args.body)
       end,
     },
-    -- enabled = function()
-    --   -- disable completion in comments
-    --   local context = require 'cmp.config.context'
-    --   -- keep command mode completion enabled when cursor is in a comment
-    --   if vim.api.nvim_get_mode().mode == 'c' then
-    --     return true
-    --   else
-    --     return not context.in_treesitter_capture("comment")
-    --         and not context.in_syntax_group("Comment")
-    --   end
-    -- end,
-    -- sorting = {
-    --   priority_weight = 2,
-    --   comparators = {
-    --     --[[ require("cmp_tabnine.compare"), ]]
-    --     compare.offset,
-    --     compare.exact,
-    --     compare.score,
-    --     require("cmp-under-comparator").under,
-    --     compare.recently_used,
-    --     compare.kind,
-    --     compare.sort_text,
-    --     compare.length,
-    --     compare.order,
-    --   },
-    -- },
+
+    enabled = function()
+      -- disable completion in comments
+      local context = require("cmp.config.context")
+      -- keep command mode completion enabled when cursor is in a comment
+      if vim.api.nvim_get_mode().mode == "c" then
+        return true
+      else
+        return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+      end
+    end,
+
+    sorting = {
+      priority_weight = 2,
+      comparators = {
+        require("copilot_cmp.comparators").prioritize,
+
+        -- Below is the default comparitor list and order for nvim-cmp
+        compare.offset,
+        -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+        compare.exact,
+        compare.score,
+        require("cmp-under-comparator").under, -- Not default list.
+        compare.recently_used,
+        compare.locality,
+        compare.kind,
+        compare.sort_text,
+        compare.length,
+        compare.order,
+      },
+    },
 
     mapping = {
-      -- ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-      -- ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-      -- ["<C-e>"] = cmp.maping(cmp.mapping.complete(), { "i", "c" }),
-      --
-      -- ["<C-y>"] = cmp.config.disable,
-      -- ["<C-x>"] = cmp.mapping({
-      --   i = cmp.mapping.abort(),
-      --   c = cmp.mapping.close(),
-      -- }),
-      -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      -- ["<Tab>"] = cmp.mapping(function(fallback)
-      --   if cmp.visible() then
-      --     cmp.select_next_item()
-      --   elseif luasnip.expand_or_jumpable() then
-      --     luasnip.expand_or_jump()
-      --   elseif has_words_before() then
-      --     cmp.complete()
-      --   else
-      --     fallback()
-      --   end
-      -- end, { "i", "s" }),
-      --
-      -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-      --   if cmp.visible() then
-      --     cmp.select_prev_item()
-      --   elseif luasnip.jumpable(-1) then
-      --     luasnip.jump(-1)
-      --   else
-      --     fallback()
-      --   end
-      -- end, { "i", "s" }),
-
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
       ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
 
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      -- Scroll up and down in the completion documentation
+      ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-d>"] = cmp.mapping.scroll_docs(4),
 
+      -- Ctrl+Space to trigger completion menu
       ["<C-Space>"] = cmp.mapping.complete(),
-      ["<Tab>"] = cmp.config.disable,
-      ["<S-Tab>"] = cmp.config.disable,
 
-      ["<ESC>"] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ["<C-x>"] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      -- Navigate between snippet placeholder
+      ["<Tab>"] = vim.schedule_wrap(function(fallback)
+        if cmp.visible() then
+          if has_words_before() then
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
+            return
+          end
+        elseif luasnip.expand_or_jumpable() then
+          cmp_action.luasnip_jump_forward()
+          return
+        end
+
+        fallback()
+      end),
+      ["<S-Tab>"] = vim.schedule_wrap(function(fallback)
+        if not cmp.visible() and luasnip.jumpable(-1) then
+          cmp_action.luasnip_jump_backward()
+          return
+        end
+
+        fallback()
+      end),
+
+      ["<C-e>"] = cmp.mapping.close(),
+      ["<C-c>"] = cmp.mapping.close(),
+      ["<C-g>"] = cmp.mapping.abort(),
+
+      ["<C-y>"] = cmp.config.disable,
+
+      -- `Enter` key to confirm completion
+      ["<CR>"] = cmp.mapping.confirm({ select = false }),
+      ["<S-CR>"] = cmp.mapping.confirm({ select = true }),
     },
 
     sources = cmp.config.sources({
-      { name = "nvim_lsp" },
-      { name = "nvim_lsp_signature_help" },
-      { name = "nvim_lua" },
-      { name = "luasnip" },
+      { name = "copilot", priority = 100 },
+      { name = "nvim_lsp", priority = 90 },
+      { name = "nvim_lsp_signature_help", priority = 90 },
+      { name = "nvim_lua", priority = 80 },
       { name = "path" },
-      -- { name = "cmdline" },
+      { name = "cmdline" },
       { name = "crates" },
       { name = "orgmode" },
     }, {
       { name = "buffer", keyword_length = 3 },
+      { name = "luasnip" },
     }),
+
     formatting = {
       format = function(entry, vim_item)
         lspkind.cmp_format({ with_text = true, maxwidth = 50 })
@@ -178,11 +191,15 @@ M.config = function()
         return vim_item
       end,
     },
+
     -- experimental = {
     --   ghost_text = false,
     -- },
-    -- completion = { completeopt = "menu,menuone,noinsert" },
-  })
+
+    completion = { completeopt = "menu,menuone,noinsert" },
+  }
+
+  cmp.setup(setup_opts)
 
   cmp.setup.cmdline(":", {
     -- mapping = cmp.mapping.preset.cmdline(),
@@ -196,6 +213,7 @@ M.config = function()
         },
       },
     }),
+
     enabled = function()
       -- Set of commands where cmp will be disabled
       local disabled = {
@@ -216,6 +234,7 @@ M.config = function()
       { name = "buffer" },
     },
   })
+
   require("luasnip").config.set_config({ history = true, updateevents = "TextChanged,TextChangedI" })
 end
 

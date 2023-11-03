@@ -15,9 +15,6 @@ return {
   -- Highlight the word under the cursor.
   "RRethy/vim-illuminate",
 
-  -- GitHub copilot.
-  "github/copilot.vim",
-
   -- Janet syntax highlighting.
   "janet-lang/janet.vim",
 }

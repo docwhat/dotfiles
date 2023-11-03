@@ -13,10 +13,6 @@ M.config = function()
   require("mason-lspconfig").setup({
     automatic_installation = true,
     handlers = { lsp_zero.default_setup },
-    ensure_installed = {
-      "gopls",
-      "lua_ls",
-    },
   })
 end
 

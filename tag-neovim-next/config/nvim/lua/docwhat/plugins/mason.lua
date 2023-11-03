@@ -14,6 +14,22 @@ M.config = function()
         package_uninstalled = "",
       },
     },
+    ensure_installed = {
+      -- GoLang
+      "gopls",
+
+      -- Lua
+      "lua_ls",
+
+      -- Shell
+      "bashls",
+      "shfmt",
+      "shellcheck",
+
+      -- Vim
+      "vimls",
+      "vint",
+    },
   })
 end
 
