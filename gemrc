@@ -2,7 +2,7 @@
 backtrace: false
 benchmark: false
 bulk_threshold: 1000
-gem: "--user-install --format-executable --env-shebang --no-rdoc"
+gem: "--no-document"
 sources:
   - https://rubygems.org/
 update_sources: true
