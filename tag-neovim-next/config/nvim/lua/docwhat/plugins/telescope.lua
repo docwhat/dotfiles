@@ -51,6 +51,16 @@ M.opts = {
     prompt_prefix = " ",
     selection_caret = " ",
     show_icon = true,
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--context=0",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+    },
     mappings = {
       i = {
         ["<c-t>"] = function(...)
