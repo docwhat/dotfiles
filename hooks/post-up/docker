@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+declare -r docker_dir="${HOME}/.docker"
+declare -r docker_config="${docker_dir}/config.json"
+declare -r tmp_docker_config="${docker_config}.$$.tmp"
+
+mkdir -p "${docker_dir}"
+
+trap 'rm -f "${tmp_docker_config}"' EXIT
+
+jq --sort-keys \
+  '. + {"detachKeys": "ctrl-z,z"}' "${docker_config}" \
+  >"${docker_config}.$$.tmp"
+
+if ! cmp -s "${docker_config}" "${tmp_docker_config}"; then
+  echo "Updating ${docker_config}"
+  mv "${tmp_docker_config}" "${docker_config}"
+fi
+
+# EOF
