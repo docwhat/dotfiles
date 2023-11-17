@@ -115,7 +115,11 @@ M.keys = {
   },
   --
   -- Quick Copy Line
-  { key = "l", mods = "LEADER|SHIFT", action = act.QuickSelectArgs({ label = "COPY LINE", patterns = { "^.+$" } }) },
+  {
+    key = "l",
+    mods = "LEADER|SHIFT",
+    action = act.QuickSelectArgs({ label = "COPY LINE", patterns = { "^.+$" } }),
+  },
   --
   -- Quick Copy Git SHA1
   {
@@ -228,7 +232,7 @@ M.key_tables = {
   },
 }
 
-M.mouse = {
+M.mouse_bindings = {
   --- Triple click on one character of the command output
   --  to select all of the output
   {
