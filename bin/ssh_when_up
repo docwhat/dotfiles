@@ -5,13 +5,13 @@ set -euo pipefail
 host="$1"
 ping -o "$host"
 
-while ! \ssh "$1" true; do
+while ! \ssh "$@" true; do
   sleep 1
 done
 
 (say "$host is up!" &)
 
-if [ -n "$TMUX" ]; then
+if [ -n "${TMUX-}" ]; then
   exec tmux new-window -n "ssh/${host}" "ssh ${(q)@}"
 else
   exec ssh "$@"
