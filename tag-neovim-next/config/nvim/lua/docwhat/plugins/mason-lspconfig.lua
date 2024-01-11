@@ -9,6 +9,7 @@ M.dependencies = {
 
 M.config = function()
   local lsp_zero = require("lsp-zero")
+  lsp_zero.extend_lspconfig()
 
   require("mason-lspconfig").setup({
     automatic_installation = true,

@@ -25,84 +25,30 @@ local servers = {
   },
   clangd = {},
   lua_ls = {
-    -- enabled = false,
-    -- cmd = { "/home/folke/projects/lua-language-server/bin/lua-language-server" },
-    -- cmd = { 'lua-language-server' },
     single_file_support = true,
     settings = {
       Lua = {
-        runtime = {
-          -- Tell the language server which version of Lua you're using
-          -- (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-        },
         -- Make the server aware of Neovim runtime files
+        runtime = {
+          version = "LuaJIT",
+          path = vim.split(package.path, ";"),
+        },
         workspace = {
-          checkThirdParty = false,
-          library = {
-            vim.env.VIMRUNTIME,
-            -- "${3rd}/luv/library"
-            -- "${3rd}/busted/library",
-          },
-          -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-          -- library = vim.api.nvim_get_runtime_file("", true)
+          library = vim.api.nvim_get_runtime_file("", true),
+          maxPreload = 10000,
+          preloadFileSize = 10000,
         },
         completion = {
-          workspaceWord = true,
-          callSnippet = "Both",
-          -- callSnippet = "Replace",
-        },
-        misc = {
-          parameters = {
-            -- "--log-level=trace",
-          },
-        },
-        hint = {
-          enable = true,
-          setType = false,
-          paramType = true,
-          paramName = "Disable",
-          semicolon = "Disable",
-          arrayIndex = "Disable",
-        },
-        doc = {
-          privateName = { "^_" },
-        },
-        type = {
-          castNumberToInteger = true,
+          callSnippet = "Replace",
         },
         diagnostics = {
-          globals = { "vim" },
-          -- disable = { "incomplete-signature-doc", "trailing-space" },
-          -- -- enable = false,
-          -- groupSeverity = {
-          --   strong = "Warning",
-          --   strict = "Warning",
-          -- },
-          -- groupFileStatus = {
-          --   ["ambiguity"] = "Opened",
-          --   ["await"] = "Opened",
-          --   ["codestyle"] = "None",
-          --   ["duplicate"] = "Opened",
-          --   ["global"] = "Opened",
-          --   ["luadoc"] = "Opened",
-          --   ["redefined"] = "Opened",
-          --   ["strict"] = "Opened",
-          --   ["strong"] = "Opened",
-          --   ["type-check"] = "Opened",
-          --   ["unbalanced"] = "Opened",
-          --   ["unused"] = "Opened",
-          -- },
-          -- unusedLocalExclude = { "_*" },
+          enable = true,
+          globals = { "vim", "use" },
         },
         format = {
           enable = true,
-          defaultConfig = {
-            indent_style = "space",
-            indent_size = "2",
-            continuation_indent_size = "2",
-          },
         },
+        telemetry = { enable = false },
       },
     },
   },
@@ -143,18 +89,36 @@ local servers = {
   rust_analyzer = { -- rustup component add rust-analyzer
     cmd = { "rustup", "run", "stable", "rust-analyzer" },
   },
-  -- sumneko_lua = {
-  --   settings = {
-  --     Lua = {
-  --       workspace = {
-  --         checkThirdParty = false,
-  --       },
-  --       hint = {
-  --         enable = false,
-  --       },
-  --     },
-  --   },
-  -- },
 }
+
+servers.sumneko_lua = servers.lua_ls
+--   settings = {
+--     Lua = {
+--       runtime = {
+--         version = "LuaJIT",
+--         path = vim.split(package.path, ";"),
+--       },
+--       completion = {
+--         callSnippet = "Replace",
+--       },
+--       diagnostics = {
+--         enable = true,
+--         globals = { "vim", "use" },
+--       },
+--       workspace = {
+--         library = vim.api.nvim_get_runtime_file("", true),
+--         maxPreload = 10000,
+--         preloadFileSize = 10000,
+--       },
+--       telemetry = { enable = false },
+--       -- workspace = {
+--       --   checkThirdParty = false,
+--       -- },
+--       -- hint = {
+--       --   enable = false,
+--       -- },
+--     },
+--   },
+-- },
 
 return servers

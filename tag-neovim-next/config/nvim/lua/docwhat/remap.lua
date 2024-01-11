@@ -69,6 +69,7 @@ map({ "n", "v" }, "<leader>d", [["_d]], { desc = "[D]elete into black-hole regis
 
 -- Format!
 nmap("<leader>f", vim.lsp.buf.format, { desc = "[F]ormat entire buffer" })
+xmap("<leader>f", vim.lsp.buf.format, { desc = "[F]ormat selection" })
 
 nmap("<C-k>", "<cmd>cnext<CR>zz", { desc = "Go to next quickfix item" })
 nmap("<C-j>", "<cmd>cprev<CR>zz", { desc = "Go to previous quickfix item" })
@@ -76,8 +77,14 @@ nmap("<leader>k", "<cmd>lnext<CR>zz", { desc = "Go to next location item" })
 nmap("<leader>j", "<cmd>lprev<CR>zz", { desc = "Go to previous location item" })
 
 -- Remap for dealing with word wrap
-map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true, silent = true })
-map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true, silent = true })
+map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true, silent = true, desc = "Move to previous line" })
+map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true, silent = true, desc = "Move to next line" })
+
+-- Buffers
+nmap("]b", "<cmd>bnext<CR>", { desc = "Next [B]uffer" })
+nmap("[b", "<cmd>bprev<CR>", { desc = "Previous [B]uffer" })
+nmap("]B", "<cmd>blast<CR>", { desc = "Last [B]uffer" })
+nmap("[B", "<cmd>bfirst<CR>", { desc = "Next [B]uffer" })
 
 -- Diagnostic keymaps
 nmap("[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })

@@ -11,8 +11,25 @@ M.dependencies = {
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
+  "hrsh7th/cmp-emoji",
   "hrsh7th/cmp-nvim-lua",
   "hrsh7th/cmp-cmdline",
+
+  "ray-x/cmp-treesitter",
+
+  {
+    "tzachar/cmp-fuzzy-path",
+    dependencies = { "tzachar/fuzzy.nvim" },
+  },
+  {
+    "tzachar/cmp-fuzzy-buffer",
+    dependencies = { "tzachar/fuzzy.nvim" },
+  },
+
+  {
+    "petertriho/cmp-git",
+    dependencies = { "plenary.nvim" },
+  },
 
   "L3MON4D3/LuaSnip",
   "rafamadriz/friendly-snippets",
@@ -40,6 +57,7 @@ M.config = function()
   local luasnip = require("luasnip")
   local compare = require("cmp.config.compare")
 
+  local icons = require("docwhat.icons")
   local source_mapping = {
     luasnip = " snip",
     nvim_lsp = "󰯓 lsp",
@@ -50,8 +68,16 @@ M.config = function()
     crates = " cr8",
     nvim_lsp_signature_help = "󰏚 sign",
     path = "󰙅 path",
-    Copilot = "",
+    emoji = "ﲃ emoji",
+    treesitter = " tree",
+    Copilot = " copilot",
   }
+
+  for k, v in pairs(icons.kinds) do
+    if not source_mapping[k] then
+      source_mapping[k] = icons[v]
+    end
+  end
 
   -- Copilot LspKind color
   vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
@@ -99,6 +125,23 @@ M.config = function()
         return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
       end
     end,
+
+    sources = cmp.config.sources({
+      { name = "nvim_lsp" },
+      { name = "nvim_lsp_signature_help" },
+      { name = "nvim_lua" },
+      --   }, {
+      { name = "copilot" },
+      { name = "treesitter" },
+      { name = "fuzzy_path" },
+      { name = "luasnip" },
+      --    }, {
+      { name = "emoji" },
+      { name = "cmdline" },
+      { name = "crates" },
+      { name = "orgmode" },
+      { name = "buffer", keyword_length = 3 },
+    }),
 
     sorting = {
       priority_weight = 2,
@@ -167,20 +210,6 @@ M.config = function()
       ["<S-CR>"] = cmp.mapping.confirm({ select = true }),
     },
 
-    sources = cmp.config.sources({
-      { name = "copilot", priority = 100 },
-      { name = "nvim_lsp", priority = 90 },
-      { name = "nvim_lsp_signature_help", priority = 90 },
-      { name = "nvim_lua", priority = 80 },
-      { name = "path" },
-      { name = "cmdline" },
-      { name = "crates" },
-      { name = "orgmode" },
-    }, {
-      { name = "buffer", keyword_length = 3 },
-      { name = "luasnip" },
-    }),
-
     formatting = {
       format = function(entry, vim_item)
         lspkind.cmp_format({ with_text = true, maxwidth = 50 })
@@ -192,19 +221,26 @@ M.config = function()
       end,
     },
 
-    -- experimental = {
-    --   ghost_text = false,
-    -- },
-
     completion = { completeopt = "menu,menuone,noinsert" },
   }
 
   cmp.setup(setup_opts)
 
-  cmp.setup.cmdline(":", {
-    -- mapping = cmp.mapping.preset.cmdline(),
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype("gitcommit", {
     sources = cmp.config.sources({
-      { name = "path" },
+      { name = "git" },
+    }, {
+      { name = "treesitter" },
+      { name = "buffer" },
+    }),
+  })
+
+  -- normal Ex command
+  cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = "fuzzy_path" },
     }, {
       {
         name = "cmdline",
@@ -213,24 +249,13 @@ M.config = function()
         },
       },
     }),
-
-    enabled = function()
-      -- Set of commands where cmp will be disabled
-      local disabled = {
-        IncRename = true,
-      }
-      -- Get first word of cmdline
-      local cmd = vim.fn.getcmdline():match("%S+")
-      -- Return true if cmd isn't disabled
-      -- else call/return cmp.close(), which returns false
-      return not disabled[cmd] or cmp.close()
-    end,
   })
 
-  -- `/`, `?` cmdline setup.
+  -- forward and backward search command
   cmp.setup.cmdline({ "?", "/" }, {
-    -- mapping = cmp.mapping.preset.cmdline(),
+    mapping = cmp.mapping.preset.cmdline(),
     sources = {
+      { name = "treesitter" },
       { name = "buffer" },
     },
   })

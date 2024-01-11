@@ -3,7 +3,7 @@ local M = {
 }
 
 M.dependencies = {
-  "hrsh7th/cmp-nvim-lsp",
+  "cmp-nvim-lsp",
   "onsails/lspkind-nvim",
   "lsp-zero.nvim",
   "neovim/nvim-lspconfig",
@@ -29,10 +29,10 @@ M.config = function(plugin)
   local lsp = require("lspconfig")
 
   lsp.lua_ls.setup(server.lua_ls)
-  lsp.rust_analyzer.setup(server.rust_analyzer)
-  lsp.clangd.setup(server.clangd)
-  lsp.gopls.setup(server.gopls)
-  lsp.tsserver.setup(server.tsserver)
+  -- lsp.rust_analyzer.setup(server.rust_analyzer)
+  -- lsp.clangd.setup(server.clangd)
+  -- lsp.gopls.setup(server.gopls)
+  -- lsp.tsserver.setup(server.tsserver)
 end
 
 return M

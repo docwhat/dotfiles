@@ -179,22 +179,31 @@ diagnostic.symbol
       end,
     },
   })
-  local map = vim.api.nvim_set_keymap
+  local map = vim.keymap.set
 
-  map("n", "<leader>ia", ":Lspsaga code_action<cr>", { desc = "Code Action", silent = true })
-  map("n", "<leader>if", ":Lspsaga finder<cr>", { desc = "Finder", silent = true })
-  map("n", "<leader>ir", ":Lspsaga rename<cr>", { desc = "Rename", silent = true })
-  map("n", "<leader>io", ":Lspsaga outline<cr>", { desc = "Outline", silent = true })
-  map("n", "<leader>ip", ":Lspsaga peek_definition<cr>", { desc = "Peek Definition", silent = true })
-  map("n", "<leader>it", ":Lspsaga peek_type_definition<cr>", { desc = "Peek Type Definition", silent = true })
-  map("n", "<leader>ig", ":Lspsaga goto_type_definition<cr>", { desc = "Goto Type Definition", silent = true })
-  map("n", "K", ":Lspsaga hover_doc<cr>", { desc = "Hover Doc", silent = true })
-  map("n", "]d", ":Lspsaga diagnostic_jump_next<cr>", { desc = "Next Diagnostic", silent = true })
-  map("n", "[d", ":Lspsaga diagnostic_jump_prev<cr>", { desc = "Previous Diagnostic", silent = true })
+  map("n", "<leader>ia", ":Lspsaga code_action<cr>", { desc = "Code Action (lspsaga)", silent = true })
+  map("n", "<leader>if", ":Lspsaga finder<cr>", { desc = "Finder (lspsaga)", silent = true })
+  map("n", "<leader>ir", ":Lspsaga rename<cr>", { desc = "Rename (lspsaga)", silent = true })
+  map("n", "<leader>io", ":Lspsaga outline<cr>", { desc = "Outline (lspsaga)", silent = true })
+  map("n", "<leader>ip", ":Lspsaga peek_definition<cr>", { desc = "Peek Definition (lspsaga)", silent = true })
+  map(
+    "n",
+    "<leader>it",
+    ":Lspsaga peek_type_definition<cr>",
+    { desc = "Peek Type Definition (lspsaga)", silent = true }
+  )
+  map(
+    "n",
+    "<leader>ig",
+    ":Lspsaga goto_type_definition<cr>",
+    { desc = "Goto Type Definition (lspsaga)", silent = true }
+  )
+  map("n", "K", ":Lspsaga hover_doc<cr>", { desc = "Hover Doc (lspsaga)", silent = true })
+  map("n", "]d", ":Lspsaga diagnostic_jump_next<cr>", { desc = "Next Diagnostic (lspsaga)", silent = true })
+  map("n", "[d", ":Lspsaga diagnostic_jump_prev<cr>", { desc = "Previous Diagnostic (lspsaga)", silent = true })
 
-  -- map("n", "<leader>id", function()
-  --   return vim.diagnostic.open_float
-  -- end, { desc = "Line Diagnostics" })
+  map("n", "<leader>id", vim.diagnostic.open_float, { desc = "Line Diagnostics (lspsaga)" })
+
   map("n", "<leader>il", ":LspInfo<cr>", { desc = "Lsp Info", silent = true })
 end
 

@@ -5,15 +5,22 @@ local M = {
 }
 
 M.dependencies = {
-  "zbirenbaum/copilot.lua",
+  {
+    "zbirenbaum/copilot.lua",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
 }
 
 M.config = function()
+  local lsp_zero = require("lsp-zero")
+  lsp_zero.extend_lspconfig()
+
   require("copilot").setup({
     suggestion = { enabled = false },
     panel = { enabled = false },
   })
-  require("copilot_cmp").setup()
 end
 
 return M
