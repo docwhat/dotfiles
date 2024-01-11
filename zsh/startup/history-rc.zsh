@@ -2,7 +2,7 @@ if [[ ! -d ~/.zsh ]]; then
   mkdir -p ~/.zsh
 fi
 HISTFILE=~/.zsh/history
-SAVEHIST=50000
+SAVEHIST=$((100 * 1000))
 HISTSIZE=$((SAVEHIST * 1.20))
 
 setopt extendedhistory
