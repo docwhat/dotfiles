@@ -36,6 +36,8 @@ M.dependencies = {
   "saadparwaiz1/cmp_luasnip",
 
   "lukas-reineke/cmp-under-comparator",
+
+  "lspkind.nvim",
 }
 
 local has_words_before = function()
@@ -47,12 +49,15 @@ local has_words_before = function()
 end
 
 M.config = function()
+  local lsp_zero = require("lsp-zero")
+  lsp_zero.extend_cmp()
+
   vim.g.completeopt = "menu,menuone,noselect,noinsert"
 
   require("luasnip.loaders.from_vscode").lazy_load()
 
   local cmp = require("cmp")
-  local cmp_action = require("lsp-zero").cmp_action()
+  local cmp_action = lsp_zero.cmp_action()
   local lspkind = require("lspkind")
   local luasnip = require("luasnip")
   local compare = require("cmp.config.compare")

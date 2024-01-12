@@ -2,209 +2,89 @@ local M = {
   "nvimdev/lspsaga.nvim",
 }
 
-M.event = { "BufReadPost", "BufNewFile" }
+M.event = { "LspAttach" }
 
 M.dependencies = {
   "nvim-treesitter",
   "nvim-web-devicons",
 }
 
-M.post_lspconfig_config = function()
-  require("lspsaga").setup({
-    defintion = {
-      height = 0.5,
-      width = 0.6,
-      keys = {
-        edit = "l",
-        vsplit = "v",
-        split = "b",
-        tabe = "t",
-        quit = { "q", "<ESC>" },
-        close = "x",
-      },
+M.config = function()
+  local c = {}
+
+  -- https://nvimdev.github.io/lspsaga/breadcrumbs/
+  c.symbol_in_winbar = { enable = true }
+
+  -- https://nvimdev.github.io/lspsaga/callhierarchy/
+  c.callhierarchy = {}
+
+  -- https://nvimdev.github.io/lspsaga/codeaction/
+  c.code_action = {
+    keys = {
+      quit = { "q", "<ESC>" },
     },
-    outline = {
-      win_position = "right",
-      win_width = 30,
-      auto_preview = true,
-      detail = true,
-      auto_close = true,
-      close_after_jump = false,
-      layout = "normal",
-      max_height = 0.5,
-      left_width = 0.3,
-      keys = {
-        toggle_or_jump = "l",
-        quit = { "q", "<ESC>", "h" },
-        jump = "o",
-      },
-    },
-    ui = {
-      border = "rounded",
-      devicon = true,
-      title = true,
-      expand = "⊟",
-      code_action = "",
-      actionfix = " ",
-      lines = { "╰", "├", "│", "─", "╭" },
-      kind = {},
-      imp_sign = "󰳛",
-    },
-    symbol_in_winbar = {
-      enable = true,
-      separator = "  ",
-      show_file = true,
-      folded_level = 1,
-      color_mode = true,
-      delay = 1,
-    },
-    code_action = {
-      num_shortcut = 2,
-      show_server_name = false,
-      extend_gitsigns = false,
-      keys = {
-        quit = { "q", "<ESC>" },
-        exec = "<CR>",
-      },
-    },
-    rename = {
-      in_select = true,
-      auto_save = false,
-      project_max_width = 0.5,
-      project_max_height = 0.5,
-      keys = {
-        quit = { "q", "<ESC>" },
-        exec = "<CR>",
-        select = "x",
-      },
-    },
-    finder = {
-      max_height = 0.6,
-      max_width = 0.6,
-      right_width = 0.3,
-      default = "ref+imp",
-      methods = {},
-      layout = "float",
-      filter = {},
-      silent = false,
-      keys = {
-        vsplit = "v",
-        split = "b",
-        shuttle = "w",
-        toggle_or_open = "l",
-        quit = "q",
-        close = "x",
-        tabe = "t",
-        tabnew = "T",
-      },
-    },
-    diagnostic = {
-      show_code_action = true,
-      jump_num_shortcut = true,
-      max_width = 0.6,
-      max_height = 0.6,
-      text_hl_follow = true,
-      border_follow = true,
-      extend_relatedInformation = false,
-      show_layout = "float",
-      show_normal_height = 10,
-      max_show_width = 0.9,
-      max_show_height = 0.6,
-      diagnostic_only_current = true,
-      keys = {
-        quit = { "q", "<ESC>" },
-        exec_action = "o",
-        toggle_or_jump = "<CR>",
-        quit_in_show = { "q", "<ESC>" },
-      },
-    },
-  })
-  local signs = {
-    Error = "",
-    Warn = "",
-    Info = "",
-    Hint = "󰠠",
-    Question = "",
   }
-  for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
 
-  vim.diagnostic.config({
-    signs = true,
-    -- underline = false,
-    update_in_insert = false,
-    virtual_lines = false,
-    severity_sort = true,
-    -- No virtual text (distracting!), show popup window on hover.
-    -- virtual_text = { spacing = 4, prefix = "●" },
-    virtual_text = false,
-    -- virtual_text = {
-    --   severity = { min = vim.diagnostic.severity.WARN },
-    -- source = true,
-    --   prefix = vim.fn.has("nvim-0.10") > 0 and function(diagnostic) ---@param diagnostic Diagnostic
-    --     return (icons[diagnostic.severity] or "") .. " "
-    --   end,
-    -- },
-    underline = true,
-    -- underline = {
-    --   -- Do not underline text when severity is low (INFO or HINT).
-    --   -- severity = { min = vim.diagnostic.severity.WARN },
-    -- },
-    float = {
-      source = "always",
-      focusable = true,
-      focus = false,
-      border = "rounded",
-
-      -- Customize how diagnostic message will be shown: show error code.
-      format = function(diagnostic)
-        -- See null-ls.nvim#632, neovim#17222 for how to pick up `code`
-        local user_data
-        user_data = diagnostic.user_data or {}
-        user_data = user_data.lsp or user_data.null_ls or user_data
-        local code = (
-                    -- TODO: symbol is specific to pylint (will be removed)
-diagnostic.symbol
-          or diagnostic.code
-          or user_data.symbol
-          or user_data.code
-        )
-        if code then
-          return string.format("%s (%s)", diagnostic.message, code)
-        else
-          return diagnostic.message
-        end
-      end,
+  -- https://nvimdev.github.io/lspsaga/definition/
+  c.definition = {
+    keys = {
+      quit = { "q", "<ESC>" },
     },
+  }
+
+  -- https://nvimdev.github.io/lspsaga/diagnostic/
+  c.diagnostic = {
+    diagnostic_only_current = true,
+    keys = {
+      quit = { "q", "<ESC>" },
+      quit_in_show = { "q", "<ESC>" },
+    },
+  }
+
+  -- https://nvimdev.github.io/lspsaga/finder/
+  c.finder = {
+    keys = {
+      quit = { "q", "<ESC>" },
+    },
+  }
+
+  -- https://nvimdev.github.io/lspsaga/outline/
+  c.outline = {
+    keys = {
+      quit = { "q", "<ESC>" },
+    },
+  }
+
+  require("lspsaga").setup(c)
+
+  -- Turn off diagnostic virtual text in favor of Lspsaga
+  vim.diagnostic.config({
+    virtual_text = false,
   })
-  local map = vim.keymap.set
-
-  map("n", "<leader>ia", ":Lspsaga code_action<cr>", { desc = "Code Action (lspsaga)", silent = true })
-  map("n", "<leader>if", ":Lspsaga finder<cr>", { desc = "Finder (lspsaga)", silent = true })
-  map("n", "<leader>ir", ":Lspsaga rename<cr>", { desc = "Rename (lspsaga)", silent = true })
-  map("n", "<leader>io", ":Lspsaga outline<cr>", { desc = "Outline (lspsaga)", silent = true })
-  map("n", "<leader>ip", ":Lspsaga peek_definition<cr>", { desc = "Peek Definition (lspsaga)", silent = true })
-  map(
-    "n",
-    "<leader>it",
-    ":Lspsaga peek_type_definition<cr>",
-    { desc = "Peek Type Definition (lspsaga)", silent = true }
-  )
-  map(
-    "n",
-    "<leader>ig",
-    ":Lspsaga goto_type_definition<cr>",
-    { desc = "Goto Type Definition (lspsaga)", silent = true }
-  )
-  map("n", "K", ":Lspsaga hover_doc<cr>", { desc = "Hover Doc (lspsaga)", silent = true })
-  map("n", "]d", ":Lspsaga diagnostic_jump_next<cr>", { desc = "Next Diagnostic (lspsaga)", silent = true })
-  map("n", "[d", ":Lspsaga diagnostic_jump_prev<cr>", { desc = "Previous Diagnostic (lspsaga)", silent = true })
-
-  map("n", "<leader>id", vim.diagnostic.open_float, { desc = "Line Diagnostics (lspsaga)" })
-
-  map("n", "<leader>il", ":LspInfo<cr>", { desc = "Lsp Info", silent = true })
 end
+
+-- nmap - Nvim normal mode keymap
+local function nmap(keys, command, description)
+  vim.keymap.set("n", keys, command, { desc = description, silent = true })
+end
+
+nmap("<leader>io", "<cmd>Lspsaga outline<cr>", "[O]utline")
+nmap("<leader>ia", "<cmd>Lspsaga code_action<cr>", "Code [A]ction")
+--
+nmap("<leader>if", "<cmd>Lspsaga finder<cr>", "[F]inder")
+nmap("<leader>ir", "<cmd>Lspsaga rename<cr>", "[R]ename")
+nmap("<leader>ip", "<cmd>Lspsaga peek_definition<cr>", "[P]eek Definition")
+nmap("<leader>it", "<cmd>Lspsaga peek_type_definition<cr>", "Peek [T]ype Definition")
+nmap("<leader>ig", "<cmd>Lspsaga goto_type_definition<cr>", "[G]oto Type Definition")
+
+nmap("K", "<cmd>Lspsaga hover_doc<cr>", "Hover Doc")
+
+nmap("t", "<cmd>Lspsaga term_toggle<cr>", "[T]erm Toggle(C- C-O t to close)")
+
+nmap("]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next [D]iagnostic")
+nmap("[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous [D]iagnostic")
+nmap("<leader>id", vim.diagnostic.open_float, "Line [D]iagnostics")
+
+nmap("<leader>il", "<cmd>LspInfo<cr>", "[L]sp Info")
 
 return M

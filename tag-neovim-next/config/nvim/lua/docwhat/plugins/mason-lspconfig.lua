@@ -1,20 +1,17 @@
-local M = {
+local Plugin = {
   "williamboman/mason-lspconfig.nvim",
 }
 
-M.dependencies = {
+Plugin.dependencies = {
   "mason.nvim",
-  "lsp-zero.nvim",
 }
 
-M.config = function()
-  local lsp_zero = require("lsp-zero")
-  lsp_zero.extend_lspconfig()
+Plugin.lazy = true
+Plugin.event = "User FileOpened"
 
-  require("mason-lspconfig").setup({
-    automatic_installation = true,
-    handlers = { lsp_zero.default_setup },
-  })
-end
+Plugin.cmd = { "LspInstall", "LspUninstall" }
 
-return M
+Plugin.config = function() end
+-- See lsp-zero.lua for configuration.
+
+return Plugin

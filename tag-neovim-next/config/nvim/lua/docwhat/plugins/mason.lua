@@ -1,36 +1,10 @@
-local M = {
+local Plugin = {
   "williamboman/mason.nvim",
 }
 
-M.build = ":MasonUpdate"
+Plugin.build = ":MasonUpdate"
 
-M.config = function()
-  require("mason").setup({
-    ui = {
-      border = "rounded",
-      icons = {
-        package_installed = "✔",
-        package_pending = "➜",
-        package_uninstalled = "",
-      },
-    },
-    ensure_installed = {
-      -- GoLang
-      "gopls",
+-- See lsp-zero.lua for configuration.
+Plugin.config = function() end
 
-      -- Lua
-      "lua_ls",
-
-      -- Shell
-      "bashls",
-      "shfmt",
-      "shellcheck",
-
-      -- Vim
-      "vimls",
-      "vint",
-    },
-  })
-end
-
-return M
+return Plugin
