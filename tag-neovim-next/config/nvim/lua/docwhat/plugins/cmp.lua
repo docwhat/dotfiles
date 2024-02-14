@@ -265,6 +265,10 @@ M.config = function()
     },
   })
 
+  cmp.setup.filetype("TelescopePrompt", {
+    enabled = false,
+  })
+
   require("luasnip").config.set_config({ history = true, updateevents = "TextChanged,TextChangedI" })
 end
 
