@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
     if not vim.opt.modifiable:get() or vim.opt.readonly:get() then
-      vim.keymap.set("n", "q", vim.cmd.quit, { desc = "[Q]uit this buffer" })
+      vim.keymap.set("n", "q", vim.cmd.quit, { desc = "[Q]uit this buffer", buffer = true })
     end
   end,
   group = augroup("readonly_keymaps"),
