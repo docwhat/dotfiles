@@ -46,8 +46,6 @@ Plugin.config = function()
       lsp_zero.default_setup,
     },
   })
-
-  require("trunk").setup({})
 end
 
 return Plugin
