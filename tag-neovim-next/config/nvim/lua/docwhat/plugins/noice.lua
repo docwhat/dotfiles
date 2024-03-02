@@ -1,7 +1,16 @@
 -- Description: Pretty next generation UI features
 -- luacheck: globals vim
+
 local M = {
   "folke/noice.nvim",
+}
+
+M.event = "VeryLazy"
+
+M.dependencies = {
+  "MunifTanjim/nui.nvim",
+  "nvim-treesitter",
+  "nvim-notify",
 }
 
 M.config = function()
@@ -23,17 +32,34 @@ M.config = function()
       lsp_doc_border = false, -- add a border to hover docs and signature help
     },
   })
-end
 
-M.dependencies = {
-  "MunifTanjim/nui.nvim",
-  "nvim-treesitter",
-  {
-    "rcarriga/nvim-notify",
-    opts = {
-      render = "compact",
-    },
-  },
-}
+  if package.loaded["lualine"] then
+    require("lualine").setup({
+      sections = {
+        lualine_x = {
+          {
+            require("noice").api.status.message.get_hl,
+            cond = require("noice").api.status.message.has,
+          },
+          {
+            require("noice").api.status.command.get,
+            cond = require("noice").api.status.command.has,
+            color = { fg = "#ff9e64" },
+          },
+          {
+            require("noice").api.status.mode.get,
+            cond = require("noice").api.status.mode.has,
+            color = { fg = "#ff9e64" },
+          },
+          {
+            require("noice").api.status.search.get,
+            cond = require("noice").api.status.search.has,
+            color = { fg = "#ff9e64" },
+          },
+        },
+      },
+    })
+  end
+end
 
 return M
