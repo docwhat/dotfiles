@@ -26,6 +26,10 @@ if [[ -n "$HOMEBREW_PREFIX" ]]; then
   if [ -x "$HOMEBREW_PREFIX/opt/openssl/bin/openssl" ]; then
     alias openssl="$HOMEBREW_PREFIX/opt/openssl/bin/openssl"
   fi
+
+  if [ -x "$HOMEBREW_PREFIX/opt/grep/libexec/gnubin/grep" ]; then
+    alias grep="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin/grep --color=auto"
+  fi
 fi
 
 # vim: set ft=zsh :
