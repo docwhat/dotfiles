@@ -131,6 +131,7 @@
 [diff]
 	tool = Kaleidoscope
 	renames = copy
+	renameLimit = 10000
 	colorMoved = default
 	algorithm = histogram
 	colorMoved = default
