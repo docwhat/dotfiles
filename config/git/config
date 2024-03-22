@@ -52,19 +52,20 @@
 	ft = fetch --tags --prune-tags --progress --show-forced-updates
 
 	# A better version of git rebase -i <branch>
-	rbi = "!f() { local -r mb=$(git merge-base $1 HEAD) && [ -n \"$mb\" ] && git rebase -i $mb; }; f"
+	mb = "!f() { git merge-base --fork-point \"${1:-@{push}}\" HEAD; }; f"
+	rbi = "!f() { local -r mb=$(git mb \"$1\") && [ -n \"$mb\" ] && git rebase -i $mb; }; f"
 
 	# Find branches containing commit
-	findbranch = "!f() { git br -a --contains $1; }; f"
+	find-branch = "!f() { git br -a --contains $1; }; f"
 
 	# Find tags containing commit
-	findtags = "!f() { git describe --always --contains $1; }; f"
+	find-tags = "!f() { git describe --always --contains $1; }; f"
 
 	# Find commits by source code
-	findbysource = "!f() { git  --date=short -S$1; }; f"
+	find-by-source = "!f() { git  --date=short -S$1; }; f"
 
 	# Find commits by commit message
-	findbycommit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	find-by-commit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
 	# Find reachable child commits of a commit
 	children = "!bash -c 'c=${1:-HEAD}; set -- $(git rev-list --all --not \"$c^@\" --children | grep $(git rev-parse \"$c\") ); shift; echo $*' -"
