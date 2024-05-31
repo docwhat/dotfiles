@@ -1,4 +1,4 @@
 DOTFILES_DIRS="${HOME}/.dotfiles-personal ${HOME}/.dotfiles-custom ${HOME}/.dotfiles"
 EXCLUDES="*:README.md *:LICENSE *:*.example *:tags *:test-files"
 UNDOTTED="*:Library *:bin"
-TAGS="neovim"
+TAGS="neovim-next"
