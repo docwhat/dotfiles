@@ -67,6 +67,9 @@
 	# Find commits by commit message
 	find-by-commit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
+# br = branch '--format=%(HEAD) %(color:#008800 #112233)%(align:40)%(refname:lstrip=2)%(end) %(objectname:short) %(align:25)%(authordate:relative)%(end) %(authorname) %0a    %(color:white)%(subject)'
+# qbr = branch --format='%(color:#88ff88 black)%(align:50)%(refname:lstrip=2)%(end) %(objectname:short) %(align:25)%(authordate:relative)%(end) %(authorname) %0a    %(color:yellow)%(subject)'
+
 	# Find reachable child commits of a commit
 	children = "!bash -c 'c=${1:-HEAD}; set -- $(git rev-list --all --not \"$c^@\" --children | grep $(git rev-parse \"$c\") ); shift; echo $*' -"
 
@@ -173,7 +176,7 @@
 	insteadOf = https://gitlab.com/
 # avoid issues with cargo-edit
 [url "https://github.com/rust-lang/crates.io-index"]
-  insteadOf = https://github.com/rust-lang/crates.io-index
+	insteadOf = https://github.com/rust-lang/crates.io-index
 # avoid issues with cargo audit
 [url "https://github.com/RustSec/advisory-db.git"]
 	insteadOf = https://github.com/RustSec/advisory-db.git
@@ -227,9 +230,9 @@
 [delta "light"]
 	light = true
 	syntax-theme = Github
-[init]
-	defaultBranch = main
-[include]
-	path = local.inc
 [rerere]
 	enabled = true
+[include]
+	path = local.inc
+
+# vim: filetype=gitconfig noexpandtab :
