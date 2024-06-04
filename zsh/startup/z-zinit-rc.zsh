@@ -205,7 +205,6 @@ zinit wait lucid light-mode \
     dl'https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux' \
     dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> completion.zsh' \
     dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh -> key-bindings.zsh' \
-    dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> $ZPFX/man/man1/fzf-tmux.1' \
     dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> man/fzf-tmux.1' \
     dl'https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 -> man/fzf.1' \
     atclone'mkdir -p $ZPFX/{bin,man/man1}' \
