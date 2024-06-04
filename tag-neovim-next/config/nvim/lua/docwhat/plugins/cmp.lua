@@ -18,11 +18,11 @@ M.dependencies = {
 
   {
     "tzachar/cmp-fuzzy-path",
-    dependencies = { "tzachar/fuzzy.nvim" },
+    dependencies = { "fuzzy.nvim" },
   },
   {
     "tzachar/cmp-fuzzy-buffer",
-    dependencies = { "tzachar/fuzzy.nvim" },
+    dependencies = { "fuzzy.nvim" },
   },
 
   {
@@ -30,9 +30,15 @@ M.dependencies = {
     dependencies = { "plenary.nvim" },
   },
 
-  "L3MON4D3/LuaSnip",
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = { "friendly-snippets" },
+    build = "make install_jsregexp",
+  },
   "rafamadriz/friendly-snippets",
   "saadparwaiz1/cmp_luasnip",
+
+  "tzachar/fuzzy.nvim",
 
   "lukas-reineke/cmp-under-comparator",
 
