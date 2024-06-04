@@ -289,6 +289,11 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @neovim/neovim
 
+zinit wait lucid light-mode for \
+  id-as'auto' \
+  @olets/zsh-window-title
+export ZSH_WINDOW_TITLE_DIRECTORY_DEPTH=${ZSH_WINDOW_TITLE_DIRECTORY_DEPTH:-1}
+
 zinit wait pack light-mode for 'ls_colors'
 
 zinit wait lucid light-mode for \
