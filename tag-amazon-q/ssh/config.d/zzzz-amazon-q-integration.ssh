@@ -1,0 +1,3 @@
+# Amazon Q SSH Integration. Keep at the bottom of this file.
+Match all
+  Include "~/Library/Application Support/amazon-q/ssh"

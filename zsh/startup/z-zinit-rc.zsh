@@ -78,6 +78,7 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @hlissner/zsh-autopair
 
+# This plugin conflicts with Amazon Q.
 if [[ -z ${Q_TERM:-} ]]; then
   zinit wait lucid light-mode for \
     atload'_zsh_autosuggest_start' \
