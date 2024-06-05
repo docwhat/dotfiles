@@ -37,11 +37,6 @@ o.listchars = "extends:…,precedes:…,nbsp:␣,tab:␉·"
 -- Show some helper symbols
 o.list = true
 
--- Enable syntax highlighing if it wasn't already (as it is time consuming)
-if vim.fn.exists("syntax_on") ~= 1 then
-  vim.cmd([[syntax enable]])
-end
-
 -- Save undo history
 o.undofile = true
 
