@@ -18,6 +18,8 @@ declare -a broken=(
   ~/.local/share/*/*/*(ND-@)
   ~/.local/share/*/*/*/*(ND-@)
 
+  ~/.local/share/zinit/**/*(ND-@)
+
   ~/.config/**/*(ND-@)
   ~/*(ND-@)
 )
