@@ -78,11 +78,13 @@ zinit wait lucid light-mode for \
   id-as'auto' \
   @hlissner/zsh-autopair
 
-zinit wait lucid light-mode for \
-  atload'_zsh_autosuggest_start' \
-  atload'_zsh_autosuggest_custom_config' \
-  id-as'auto' \
-  @zsh-users/zsh-autosuggestions
+if [[ -z ${Q_TERM:-} ]]; then
+  zinit wait lucid light-mode for \
+    atload'_zsh_autosuggest_start' \
+    atload'_zsh_autosuggest_custom_config' \
+    id-as'auto' \
+    @zsh-users/zsh-autosuggestions
+fi
 
 zinit wait lucid light-mode for \
   from'gh-r' \
