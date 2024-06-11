@@ -1,10 +1,10 @@
 version: 0.1
 cli:
-  version: 1.21.0
+  version: 1.22.1
 plugins:
   sources:
     - id: trunk
-      ref: v1.4.5
+      ref: v1.5.0
       uri: https://github.com/trunk-io/plugins
 lint:
   files:
@@ -32,19 +32,19 @@ lint:
     - rubocop
   enabled:
     - bandit@1.7.8
-    - checkov@3.2.43
-    - trufflehog@3.70.3
-    - ruff@0.3.4
+    - checkov@3.2.133
+    - trufflehog@3.78.0
+    - ruff@0.4.8
     - yamllint@1.35.1
-    - black@24.3.0
-    - gitleaks@8.18.2
+    - black@24.4.2
+    - gitleaks@8.18.3
     - shellcheck@0.10.0
     - flake8@7.0.0
     - shfmt@3.6.0
-    - prettier@3.2.5
+    - prettier@3.3.2
     - hadolint@2.12.0
-    - markdownlint@0.39.0
-    - golangci-lint@1.57.1
+    - markdownlint@0.41.0
+    - golangci-lint@1.57.2
     - gofmt@1.20.4
     - git-diff-check
     - stylua@0.20.0
