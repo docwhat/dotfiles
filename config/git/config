@@ -236,3 +236,5 @@
 	path = local.inc
 
 # vim: filetype=gitconfig noexpandtab :
+[init]
+	defaultBranch = main
