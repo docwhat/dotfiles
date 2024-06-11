@@ -5,9 +5,9 @@ ruby_version =
   if defined? RUBY_VERSION && defined? RUBY_PATCHLEVEL
     "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}"
   elsif defined? RUBY_DESCRIPTION
-    RUBY_DESCRIPTION.split(' ')[1].sub('p', '-p')
+    RUBY_DESCRIPTION.split(" ")[1].sub("p", "-p")
   else
-    (`ruby -v` || '').split(' ')[1].sub('p', '-p')
+    (`ruby -v` || "").split(" ")[1].sub("p", "-p")
   end
 
 # https://github.com/mmrwoods/dotfiles/blob/master/ruby/pryrc
@@ -40,22 +40,22 @@ ensure
   yield if block_given?
 end
 
-auto_require 'awesome_print'
+auto_require "awesome_print"
 
-auto_require 'pry-doc'
+auto_require "pry-doc"
 
-auto_require 'pry-theme' do
-  Pry.config.theme = 'pry-modern-256'
+auto_require "pry-theme" do
+  Pry.config.theme = "pry-modern-256"
 end
 
-auto_require 'hirb' do
+auto_require "hirb" do
   extend Hirb::Console
 end
 
-auto_require 'hirb-unicode'
+auto_require "hirb-unicode"
 
-auto_require 'pry-nav' do
-  Pry::Commands.command(/^$/, 'repeat last command') do
+auto_require "pry-nav" do
+  Pry::Commands.command(/^$/, "repeat last command") do
     _pry_.run_command Pry.history.to_a.last
   end
 end
@@ -73,22 +73,15 @@ end
 # Configuration
 Pry.config.pager = true
 Pry.config.color = true
-Pry.config.editor = 'vim'
+Pry.config.editor = "vim"
 
 Pry.config.commands.instance_eval do
-  alias_command 'h', 'hist --tail 20', desc: 'Last 20 commands'
-end
-
-# Ensure ~/.pry exists.
-File.expand_path('~/.pry/history').tap do |history_file|
-  dir = File.dirname(history_file)
-  Dir.mkdir dir unless Dir.exist? dir
-  Pry.config.history.file = history_file
+  alias_command "h", "hist --tail 20", desc: "Last 20 commands"
 end
 
 # Welcome message.
 Pry.hooks.add_hook(
-  :before_session, 'pryrc_start_hook'
+  :before_session, "pryrc_start_hook"
 ) do |output, _binding, _pry|
   output.print "Pry running on #{ruby_version} "
   output.print "with RubyGems #{Gem::VERSION} " if defined? Gem::VERSION
@@ -97,9 +90,9 @@ end
 
 # Farewell message.
 Pry.hooks.add_hook(
-  :after_session, 'pryrc_start_hook'
+  :after_session, "pryrc_start_hook"
 ) do |output, _binding, _pry|
-  output.puts 'Buh-bye!'
+  output.puts "Buh-bye!"
 end
 
 # EOF
