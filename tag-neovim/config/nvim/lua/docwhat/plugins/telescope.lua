@@ -111,6 +111,10 @@ M.keys = {
   -- git
   { "<leader>gc", builtin("git_commits"), desc = "[G]it [C]ommits" },
   { "<leader>gs", builtin("git_status"), desc = "[G]it [S]tatus" },
+  -- LSP
+  { "<leader>iR", builtin("lsp_references"), desc = "[R]eferences" },
+  { "<leader>is", builtin("lsp_document_symbols"), desc = "[S]ymbols" },
+  { "<leader>iw", builtin("lsp_workspace_symbols"), desc = "[W]orkspace-wide Symbols" },
   -- search
   { "<leader>sa", builtin("autocommands"), desc = "[S]earch [A]uto Commands" },
   { "<leader>sb", builtin("current_buffer_fuzzy_find"), desc = "[S]earch [B]uffer" },
