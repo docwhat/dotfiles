@@ -15,7 +15,7 @@ end
 local M = {
   "nvim-telescope/telescope.nvim",
   cmd = "Telescope",
-  version = "*",
+  branch = "0.1.x",
 }
 
 M.dependencies = {
@@ -98,93 +98,37 @@ M.opts = {
 }
 
 M.keys = {
-  {
-    "<leader>,",
-    "<cmd>Telescope buffers show_all_buffers=true<cr>",
-    desc = "Switch Buffer",
-  },
+  { "<leader>,", builtin("buffers", { show_all_buffers = true }), desc = "Switch Buffer" },
   { "<leader>/", builtin("live_grep"), desc = "Find in Files (Grep)" },
-  {
-    "<leader>:",
-    "<cmd>Telescope command_history<cr>",
-    desc = "Command History",
-  },
+  { "<leader>:", builtin("command_history"), desc = "Command History" },
   { "<leader><space>", builtin("find_files"), desc = "Find Files (root dir)" },
   -- find
-  { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "[F]ind [B]uffers" },
+  { "<leader>fb", builtin("buffers"), desc = "[F]ind [B]uffers" },
   { "<leader>ff", builtin("find_files"), desc = "[F]ind [F]iles (root dir)" },
   { "<leader>sf", builtin("find_files"), desc = "[S]earch [F]iles" },
-  {
-    "<leader>fF",
-    builtin("find_files", { cwd = false }),
-    desc = "[F]ind [F]iles (cwd)",
-  },
-  { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "[F] [R]ecent Files" },
+  { "<leader>fF", builtin("find_files", { cwd = false }), desc = "[F]ind [F]iles (cwd)" },
+  { "<leader>fr", builtin("oldfiles"), desc = "[F] [R]ecent Files" },
   -- git
-  { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "[G]it [C]ommits" },
-  { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "[G]it [S]tatus" },
+  { "<leader>gc", builtin("git_commits"), desc = "[G]it [C]ommits" },
+  { "<leader>gs", builtin("git_status"), desc = "[G]it [S]tatus" },
   -- search
-  {
-    "<leader>sa",
-    "<cmd>Telescope autocommands<cr>",
-    desc = "[S]earch [A]uto Commands",
-  },
-  {
-    "<leader>sb",
-    "<cmd>Telescope current_buffer_fuzzy_find<cr>",
-    desc = "[S]earch [B]uffer",
-  },
-  {
-    "<leader>sc",
-    "<cmd>Telescope command_history<cr>",
-    desc = "[S]earch [C]ommand History",
-  },
-  { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "[S]earch [C]ommands" },
-  {
-    "<leader>sd",
-    "<cmd>Telescope diagnostics<cr>",
-    desc = "[S]earch [D]iagnostics",
-  },
+  { "<leader>sa", builtin("autocommands"), desc = "[S]earch [A]uto Commands" },
+  { "<leader>sb", builtin("current_buffer_fuzzy_find"), desc = "[S]earch [B]uffer" },
+  { "<leader>sc", builtin("command_history"), desc = "[S]earch [C]ommand History" },
+  { "<leader>sC", builtin("commands"), desc = "[S]earch [C]ommands" },
+  { "<leader>sd", builtin("diagnostics"), desc = "[S]earch [D]iagnostics" },
   { "<leader>sg", builtin("live_grep"), desc = "[S]earch [G]rep (root dir)" },
-  {
-    "<leader>sG",
-    builtin("live_grep", { cwd = false }),
-    desc = "[S]earch [G]rep (cwd)",
-  },
-  {
-    "<leader>sh",
-    "<cmd>Telescope help_tags<cr>",
-    desc = "[S]earch [H]elp Pages",
-  },
-  {
-    "<leader>sH",
-    "<cmd>Telescope highlights<cr>",
-    desc = "[S]earch [H]ighlight Groups",
-  },
-  { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "[S]earch [K]ey Maps" },
-  {
-    "<leader>sM",
-    "<cmd>Telescope man_pages<cr>",
-    desc = "[S]earch [M]an Pages",
-  },
-  { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to [M]ark" },
-  {
-    "<leader>so",
-    "<cmd>Telescope vim_options<cr>",
-    desc = "[S]earch [O]ptions",
-  },
-  { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "[S]earch [R]esume" },
+  { "<leader>sG", builtin("live_grep", { cwd = false }), desc = "[S]earch [G]rep (cwd)" },
+  { "<leader>sh", builtin("help_tags"), desc = "[S]earch [H]elp Pages" },
+  { "<leader>sH", builtin("highlights"), desc = "[S]earch [H]ighlight Groups" },
+  { "<leader>sk", builtin("keymaps"), desc = "[S]earch [K]ey Maps" },
+  { "<leader>sM", builtin("man_pages"), desc = "[S]earch [M]an Pages" },
+  { "<leader>sm", builtin("marks"), desc = "Jump to [M]ark" },
+  { "<leader>so", builtin("vim_options"), desc = "[S]earch [O]ptions" },
+  { "<leader>sR", builtin("resume"), desc = "[S]earch [R]esume" },
   { "<leader>sw", builtin("grep_string"), desc = "[S]earch [W]ord (root dir)" },
-  {
-    "<leader>sW",
-    builtin("grep_string", { cwd = false }),
-    desc = "[S]earch [W]ord (cwd)",
-  },
-  {
-    "<leader>uC",
-    builtin("colorscheme", { enable_preview = true }),
-    desc = "[C]olorscheme with preview",
-  },
+  { "<leader>sW", builtin("grep_string", { cwd = false }), desc = "[S]earch [W]ord (cwd)" },
+  { "<leader>uC", builtin("colorscheme", { enable_preview = true }), desc = "[C]olorscheme with preview" },
   {
     "<leader>ss",
     builtin("lsp_document_symbols", {
