@@ -1,8 +1,8 @@
-# vim: set ft=zsh :
+# vim: set ft=bash :
 
-function {
+homebrew-env() {
   local brewbin
-  for brewbin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+  for brewbin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
     if [[ -x "$brewbin" ]]; then
       eval "$("$brewbin" shellenv zsh)"
       INFOPATH=${INFOPATH%:}
@@ -13,3 +13,5 @@ function {
     fi
   done
 }
+homebrew-env
+unset -f homebrew-env
