@@ -8,15 +8,17 @@ declare -r tmp_docker_config="${docker_config}.$$.tmp"
 
 mkdir -p "${docker_dir}"
 
-trap 'rm -f "${tmp_docker_config}"' EXIT
+if [[ -r ${docker_config} ]]; then
+  trap 'rm -f "${tmp_docker_config}"' EXIT
 
-jq --sort-keys \
-  '. + {"detachKeys": "ctrl-z,z"}' "${docker_config}" \
-  >"${docker_config}.$$.tmp"
+  jq --sort-keys \
+    '. + {"detachKeys": "ctrl-z,z"}' "${docker_config}" \
+    >"${docker_config}.$$.tmp"
 
-if ! cmp -s "${docker_config}" "${tmp_docker_config}"; then
-  echo "Updating ${docker_config}"
-  mv "${tmp_docker_config}" "${docker_config}"
+  if ! cmp -s "${docker_config}" "${tmp_docker_config}"; then
+    echo "Updating ${docker_config}"
+    mv "${tmp_docker_config}" "${docker_config}"
+  fi
 fi
 
 # EOF
