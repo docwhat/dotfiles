@@ -1,0 +1,1 @@
+../../zsh/startup/0homebrew-env.zsh
