@@ -19,6 +19,5 @@ else
 fi
 
 unset color_prompt
-export PS4
 
 # EOF
