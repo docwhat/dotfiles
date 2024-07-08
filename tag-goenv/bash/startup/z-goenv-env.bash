@@ -11,7 +11,10 @@ else
   export GOENV_GOMOD_VERSION_ENABLE=1
 
   export GOENV_ROOT="${GOENV_ROOT:-${XDG_DATA_HOME}/goenv}"
-  export PATH="${PATH}:${GOENV_ROOT}/bin"
+
+  if [[ ":${PATH}:" != *":${GOENV_ROOT}/bin:"* ]]; then
+    export PATH="${PATH}:${GOENV_ROOT}/bin"
+  fi
 fi
 
 # EOF
