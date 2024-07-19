@@ -79,7 +79,7 @@ nmap("<leader>ig", "<cmd>Lspsaga goto_type_definition<cr>", "[G]oto Type Definit
 
 nmap("K", "<cmd>Lspsaga hover_doc<cr>", "Hover Doc")
 
-nmap("t", "<cmd>Lspsaga term_toggle<cr>", "[T]erm Toggle(C- C-O t to close)")
+nmap("tt", "<cmd>Lspsaga term_toggle<cr>", "[T]erm Toggle(C- C-O t to close)")
 
 nmap("]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next [D]iagnostic")
 nmap("[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Previous [D]iagnostic")

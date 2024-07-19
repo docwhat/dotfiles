@@ -210,7 +210,6 @@ M.config = function()
 
       ["<C-e>"] = cmp.mapping.close(),
       ["<C-c>"] = cmp.mapping.close(),
-      ["<C-g>"] = cmp.mapping.abort(),
 
       ["<C-y>"] = cmp.config.disable,
 

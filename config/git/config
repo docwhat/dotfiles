@@ -54,6 +54,7 @@
 	# A better version of git rebase -i <branch>
 	mb = "!f() { git merge-base --fork-point \"${1:-@{push}}\" HEAD; }; f"
 	rbi = "!f() { local -r mb=$(git mb \"$1\") && [ -n \"$mb\" ] && git rebase -i $mb; }; f"
+	rash = rebase --autostash origin/HEAD
 
 	# Find branches containing commit
 	find-branch = "!f() { git br -a --contains $1; }; f"
@@ -152,6 +153,7 @@
 
 [push]
 	default = current
+	autoSetupRemote = true
 
 [log]
 	decorate = short

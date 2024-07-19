@@ -1,16 +1,19 @@
 -- Description: Plugins to add, remove and update comments
 -- luacheck: globals vim
-local M = {
+local Plugin = {
   "echasnovski/mini.comment",
 }
 
-M.version = "*"
-M.event = "VeryLazy"
-M.dependencies = {
+Plugin.version = "*"
+-- Plugin.event = "VeryLazy"
+Plugin.dependencies = {
   { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
 }
 
-M.opts = {
+Plugin.opts = {
+  mappings = {
+    comment = "",
+  },
   hooks = {
     pre = function()
       require("ts_context_commentstring.internal").update_commentstring({})
@@ -18,8 +21,8 @@ M.opts = {
   },
 }
 
-M.config = function(_, opts)
+Plugin.config = function(_, opts)
   require("mini.comment").setup(opts)
 end
 
-return M
+return Plugin
