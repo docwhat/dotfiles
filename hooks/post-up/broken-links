@@ -2,26 +2,34 @@
 
 set -eu
 
+# Wildcards will apply to hidden files.
+setopt GlobDots
+
+# Wildcards with no match don't error.
+setopt NullGlob
+
 declare -a broken=(
-  ~/.zsh/**/*(ND-@)
-  ~/.bash/**/*(ND-@)
-  ~/bin/**/*(ND-@)
-  ~/.local/bin/**/*(ND-@)
+  ~/.zsh/**/*(-@)
+  ~/.bash/**/*(-@)
+  ~/bin/**/*(-@)
+  ~/.local/bin/**/*(-@)
 
-  ~/.local/libexec/*(ND-@)
-  ~/.local/libexec/*/*(ND-@)
-  ~/.local/libexec/*/*/*(ND-@)
-  ~/.local/libexec/*/*/*/*(ND-@)
+  ~/.local/libexec/*(-@)
+  ~/.local/libexec/*/*(-@)
+  ~/.local/libexec/*/*/*(-@)
+  ~/.local/libexec/*/*/*/*(-@)
 
-  ~/.local/share/*(ND-@)
-  ~/.local/share/*/*(ND-@)
-  ~/.local/share/*/*/*(ND-@)
-  ~/.local/share/*/*/*/*(ND-@)
+  ~/.local/share/*(-@)
+  ~/.local/share/*/*(-@)
+  ~/.local/share/*/*/*(-@)
+  ~/.local/share/*/*/*/*(-@)
 
-  ~/.local/share/zinit/**/*(ND-@)
+  ~/.local/share/zinit/**/*(-@)
 
-  ~/.config/**/*(ND-@)
-  ~/*(ND-@)
+  ~/.ssh/**/*(-@)
+
+  ~/.config/**/*(-@)
+  ~/*(-@)
 )
 
 if (( ${#broken[*]} > 0 )); then
