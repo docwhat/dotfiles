@@ -33,6 +33,7 @@ Plugin.opts = {
     lua = { "stylua" },
     python = { "isort", "black" },
     javascript = { { "prettierd", "prettier" } },
+    perl = { "perltidy" },
   },
   -- Set up format-on-save
   format_on_save = { timeout_ms = 500, lsp_fallback = true },
