@@ -8,7 +8,9 @@ if [ ! -d /Applications/Docker.app ] && (( ${+commands[docker-machine]} )); then
 fi
 
 function {
-  (( ${+commands[docker]} )) || return
+  if ! [[ -a "${commands[docker]:A}" ]]; then
+    return
+  fi
   setopt local_options equals extended_glob
 
   local exe==docker
