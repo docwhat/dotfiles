@@ -12,7 +12,9 @@ join_array() {
     file --brief "$realpath"
   fi
   if [[ -d $realpath ]]; then
-    if (( ${+commands[exa]} )); then
+    if (( ${+commands[eza]} )); then
+      eza --color=always --icons --classify --tree "$realpath"
+    elif (( ${+commands[exa]} )); then
       exa --color=always --icons --classify --tree "$realpath"
     elif (( ${+commands[lsd]} )); then
       lsd -1 --color=always --icon=always --tree "$realpath"
