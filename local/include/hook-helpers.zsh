@@ -24,14 +24,55 @@ function hh_curl
 
 function hh_git
 {
-  local name=$1
-  local url=$2
-  local dir="${3:-}"
-  local parent="$(dirname "${dir}")"
+  setopt local_options err_return
+  local usage="Usage: hh_git [--dir DIR] [--branch BRANCH] NAME URL"
+  local name url dir="" branch
 
-  if [ -z "${dir}" ]; then
+  while (( $# > 0 )); do
+    case $1 in
+      --dir|-d)
+        dir=$2
+        shift
+        ;;
+      --dir=*)
+        dir="${1#*=}"
+        ;;
+      --branch|-b)
+        branch=$2
+        shift
+        ;;
+      --branch=*)
+          branch="${1#*=}"
+          ;;
+      *)
+        if [[ -z ${name-} ]]; then
+          name=$1
+        elif [[ -z ${url-} ]]; then
+          url=$1
+        else
+          printf "Unknown argument: %s\n%s\n" "$1" "$usage" 1>&2
+        fi
+          ;;
+      esac
+    shift
+  done
+
+  if [[ -z ${name-} ]]; then
+    printf "Name is required.\n%s\n" "$usage" 1>&2
+    return 1
+  fi
+
+  if [[ -z ${url-} ]]; then
+    printf "URL is required.\n%s\n" "$usage" 1>&2
+    return 1
+  fi
+
+  if [[ -z "${dir-}" ]]; then
     dir="$(basename "${url}" .git)"
   fi
+
+  local parent="$(dirname "${dir}")"
+  local git_options=()
 
   cd "${DOTFILES_DIR}"
 
@@ -43,17 +84,27 @@ function hh_git
       if [ -n "${parent}" ]; then
         mkdir -pv "${parent}" | offset yellow
       fi
-      git clone "${url}" "${dir}" | offset yellow
+
+      if [[ -n "${branch-}" ]]; then
+        local git_options=("--branch" "${branch}")
+      fi
+
+      git clone "${url}" "${dir}" "${git_options[@]}" | offset yellow
       echo 'cloned.'
     fi
   else
     pushd "${dir}" > /dev/null
-    git -c color.status=always pull --rebase --autostash |&
+    if [[ -n "${branch-}" ]]; then
+      local git_options=(origin -- "${branch}")
+      git -c color.status=always -c core.warnAmbiguousRefs=false switch --detach -- "${branch}" |&
+        offset
+    fi
+    git -c color.status=always pull --rebase --autostash "${git_options[@]}" |&
       offset
     git -c color.status=always log --graph --pretty=format:'%Cred%h%Creset - %<(50,trunc)%s%Cgreen (%cr)%C(blue bold)%d%Creset%n' '@{u}..' |&
-      offset
+      offset || :
     git -c color.status=always status --short --branch --show-stash |&
-      offset
+      offset || :
     popd > /dev/null
   fi
 }

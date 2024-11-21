@@ -2,24 +2,21 @@
 
 set -eu
 
+DOTFILES_DIR="${HOME}/.dotfiles"
+source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
+
 setopt no_ksh_arrays
 
-print -P '%F{blue}asdf plugins...%F{reset}'
-
+# Only run if asdf is in the TAGS in the rcrc file.
 if ! grep -q -E "TAGS=.*[\"' ]asdf[\"' ]" ~/.rcrc; then
-  print 'skipped'
   exit 0
 fi
 
-needed_plugins=(
-  # get list of plugins from ~/.tool-versions
-  $(awk '{print $1}' ~/.tool-versions)
-)
+hh_git 'asdf' https://github.com/asdf-vm/asdf.git \
+  --dir="${ASDF_DIR?Make sure ASDF_DIR is set}" \
+  --branch=v0.14.1
 
-given_plugins=(
-  # get currently installed plugins
-  $(asdf plugin-list)
-)
+print -P '%F{blue}asdf plugins...%F{reset}'
 
 ASDF_DIR="${ASDF_DIR:-${HOME}/.asdf}"
 
@@ -27,12 +24,22 @@ if [[ -f "${ASDF_DIR}/asdf.sh" ]]; then
   # shellcheck disable=SC1091
   . "${ASDF_DIR}/asdf.sh"
 
+  needed_plugins=(
+    # get list of plugins from ~/.tool-versions
+    $(awk '{print $1}' ~/.tool-versions)
+  )
+
+  given_plugins=(
+    # get currently installed plugins
+    $(asdf plugin-list)
+  )
+
   for plugin in "${needed_plugins[@]}"; do
     if [[ "${given_plugins[(i)${plugin}]}" -le "${#given_plugins}" ]]; then
-      print -P "%F{green}✓ %F{reset}${plugin}"
+      print -P "  %F{green}✓ %F{reset}${plugin}"
     else
-      print -P "%F{yellow}⚠ %F{reset}${plugin}"
-      asdf plugin-add "${plugin}" 2>/dev/null
+      print -P "  %F{yellow}⚠ %F{reset}${plugin}"
+      asdf plugin add "${plugin}" 2> /dev/null
       asdf install "${plugin}" 2> /dev/null
     fi
   done

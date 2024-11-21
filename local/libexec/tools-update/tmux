@@ -11,12 +11,12 @@ if ! (( ${+commands[tmux]} )) > /dev/null; then
   exit 0
 fi
 
-hh_git 'Tmux Package Manager' https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
+hh_git 'Tmux Package Manager' https://github.com/tmux-plugins/tpm.git --dir=~/.tmux/plugins/tpm
 
 if [ -d ~/.tmux/plugins ]; then
   pushd ~/.tmux/plugins > /dev/null
   for tmux_plugin in *(N/); do
-    hh_git "tmux plugin ${tmux_plugin}" 'none' ~/.tmux/plugins/"$tmux_plugin"
+    hh_git "tmux plugin ${tmux_plugin}" 'none' --dir=~/.tmux/plugins/"$tmux_plugin"
   done
   popd > /dev/null
 fi

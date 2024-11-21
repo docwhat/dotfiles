@@ -32,14 +32,14 @@ function get_updaters {
 }
 
 function default {
-  hh_git 'Dotfiles' https://github.com/docwhat/dotfiles.git ~/.dotfiles
+  hh_git 'Dotfiles' https://github.com/docwhat/dotfiles.git --dir=~/.dotfiles
 
   if [ -d ~/.dotfiles-custom ]; then
-    hh_git 'Custom Dotfiles' 'none' ~/.dotfiles-custom
+    hh_git 'Custom Dotfiles' 'none' --dir=~/.dotfiles-custom
   fi
 
   if [ -d ~/.dotfiles-personal ]; then
-    hh_git 'Personal Dotfiles' 'none' ~/.dotfiles-personal
+    hh_git 'Personal Dotfiles' 'none' --dir=~/.dotfiles-personal
   fi
 
   rcup
