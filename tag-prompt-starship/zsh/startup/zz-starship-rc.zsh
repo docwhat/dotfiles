@@ -1,13 +1,18 @@
 
-zinit ice \
-  --id-as=starship \
-  --from=gh-r \
-  --as=program \
-  --atclone='starship completions zsh > ~/.zsh/functions/_starship' \
-  --atpull='%atclone' \
-  --atload='!eval $(starship init zsh)'
+if (( ${+commands[asdf]} )); then
+  asdf plugin-add starship > /dev/null 2>&1
+  asdf install starship latest > /dev/null 2>&1
+else
+  zinit ice \
+    --id-as=starship \
+    --from=gh-r \
+    --as=program \
+    --atclone='starship completions zsh > ~/.zsh/functions/_starship' \
+    --atpull='%atclone' \
+    --atload='!eval $(starship init zsh)'
 
-zinit light starship/starship
+  zinit light @starship/starship
+fi
 
 if (( ${+commands[starship]} )); then
   eval "$(starship init zsh)"
