@@ -1,20 +1,20 @@
-bat 0.24.0 system
-bat-extras 2024.08.24 system
+bat 0.25.0
+bat-extras 2024.08.24
 delta 0.18.2
+deno 2.2.1
 direnv 2.35.0
-eza 0.20.7 system
-fd 10.2.0 system
-golang 1.23.3 system
+eza 0.20.22
+fd 10.2.0
+fzf 0.60.1
+github-cli 2.67.0
+golang 1.24.0
+hadolint 2.12.0
 lua 5.4.7
-neovim stable system
+neovim 0.10.4
+nodejs 23.8.0
+python 3.13.2
 ripgrep 14.1.1
-shfmt 3.10.0 system
-starship 1.21.1
-deno 2.0.6 system
-shellcheck 0.10.0 system
-nodejs 22.11.0 system
-python 3.13.0t system
-github-cli 2.62.0
-yq 4.44.5 system
-hadolint 2.12.0 system
-fzf 0.56.3 system
+shellcheck 0.10.0
+shfmt 3.10.0
+starship 1.22.1
+yq 4.45.1
