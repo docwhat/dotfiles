@@ -30,6 +30,7 @@ declare -a broken=(
 
   ~/.config/**/*(-@)
   ~/*(-@)
+  ~/.*(-@)
 )
 
 if (( ${#broken[*]} > 0 )); then
