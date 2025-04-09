@@ -1,7 +1,7 @@
-#!bash
+#!/bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-if [ -r ~/.bashenv ]; then
+if [[ -r ~/.bashenv ]]; then
   # shellcheck disable=SC1090
   . ~/.bashenv
 fi
@@ -29,16 +29,17 @@ PROMPT_COMMAND='history -a'
 shopt -s checkwinsize
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
+case "${TERM}" in
 xterm* | rxvt*)
-  PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]$PS1"
+  PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]${PS1}"
   ;;
+*) ;;
 esac
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [[ -x /usr/bin/dircolors ]]; then
   if test -r ~/.dircolors; then
-    eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    eval "$(dircolors -b ~/.dircolors || :)" || eval "$(dircolors -b || :)"
   fi
   alias ls='ls --color=auto -CF'
   alias grep='grep --color=auto'
@@ -49,7 +50,7 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-if [ -f ~/.bash_aliases ]; then
+if [[ -f ~/.bash_aliases ]]; then
   # shellcheck disable=SC1090
   . ~/.bash_aliases
 fi
@@ -62,19 +63,19 @@ if ! shopt -oq posix; then
   if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
     # shellcheck disable=SC1091
     . "/usr/local/etc/profile.d/bash_completion.sh"
-  elif [ -f /usr/share/bash-completion/bash_completion ]; then
+  elif [[ -f /usr/share/bash-completion/bash_completion ]]; then
     # shellcheck disable=SC1091
     . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+  elif [[ -f /etc/bash_completion ]]; then
     # shellcheck disable=SC1091
     . /etc/bash_completion
   fi
 fi
 
 for bash_rc in ~/.bash/startup/*-rc.bash; do
-  if [[ -r "$bash_rc" ]]; then
+  if [[ -r "${bash_rc}" ]]; then
     # shellcheck disable=SC1090
-    . "$bash_rc"
+    . "${bash_rc}"
   fi
 done
 unset bash_rc
