@@ -1,0 +1,31 @@
+#!/bin/bash
+# shellcheck disable=SC2310
+
+set -euo pipefail
+
+die() {
+  echo "FATAL: $*" >&2
+  exit 1
+}
+
+has_tag() {
+  local tag="$1"
+  # shellcheck disable=SC2076
+  [[ " ${TAGS} " =~ " ${tag} " ]]
+}
+
+# Get the variables from the rcm config file.
+# shellcheck disable=SC1091
+source "${HOME}/.rcrc"
+
+# Throw error if tags has both "mise" and "asdf".
+if has_tag "mise" && has_tag "asdf"; then
+  die "Cannot have both 'mise' and 'asdf' tags."
+fi
+
+# Prevent having multiple prompts.
+if has_tag "prompt-p10k" && has_tag "prompt-starship"; then
+  die "Cannot have both 'prompt-p10k' and 'prompt-starship' tags."
+fi
+
+# EOF
