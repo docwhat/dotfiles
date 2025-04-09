@@ -23,7 +23,7 @@ else
   export CLICOLOR=1
   export LSCOLORS="Gxfxcxdxbxegedabagacad"
   alias ls="ls -CF"
-  alias ls="ls -alF"
+  alias ll="ls -alF"
 fi
 
 # EOF
