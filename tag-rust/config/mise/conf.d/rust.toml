@@ -1,0 +1,3 @@
+[tools]
+cargo-binstall = "latest"
+rust = "latest"

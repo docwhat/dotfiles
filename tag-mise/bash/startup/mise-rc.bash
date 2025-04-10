@@ -23,10 +23,13 @@ fi
 # shellcheck disable=2312
 eval "$("${_docwhat_mise_path}" activate bash)"
 
+## Install missing required tools.
+"${_docwhat_mise_path}" --quiet --silent --yes install >/dev/null
+
 ## Load completions
-mise use --global --quiet --silent usage >/dev/null
+"${_docwhat_mise_path}" --quiet --silent --yes use --global usage >/dev/null
 # shellcheck disable=SC1090,SC2312
-source <(mise completion bash --include-bash-completion-lib)
+source <("${_docwhat_mise_path}" completion bash --include-bash-completion-lib)
 
 ## Cleanup
 unset _docwhat_mise_path

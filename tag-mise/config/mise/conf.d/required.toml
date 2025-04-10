@@ -1,0 +1,11 @@
+[tools]
+bat = "latest"
+bat-extras = "latest"
+delta = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+github-cli = "latest"
+gum = "latest"
+ripgrep = "latest"
+usage = "latest"

@@ -21,9 +21,12 @@ fi
 ## Activate mise.
 eval "$("${_docwhat_mise_path}" activate zsh)" || :
 
+## Install missing required tools.
+"${_docwhat_mise_path}" --quiet --silent --yes install >/dev/null
+
 ## Load completions
-mise use --global --quiet --silent usage >/dev/null
-mise completion zsh > ~/.zsh/functions/_mise
+"${_docwhat_mise_path}" --quiet --silent --yes use --global usage >/dev/null
+"${_docwhat_mise_path}" completion zsh > ~/.zsh/functions/_mise
 
 ## Cleanup
 unset _docwhat_mise_path
