@@ -51,4 +51,7 @@ Temporary Items
 
 .boxy-state.json
 
+# Local mise-en-place configuration.
+.mise.local.toml
+
 # vim : set ft=gitignore :
