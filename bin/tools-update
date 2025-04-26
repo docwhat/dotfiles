@@ -2,6 +2,9 @@
 
 set -eu
 
+# Allow ~ to be exanded after = ... e.g., --dir=~/.dotfiles
+set -o magicequalsubst
+
 DOTFILES_DIR=~/.dotfiles
 source "${DOTFILES_DIR}/local/include/hook-helpers.zsh"
 setopt extendedglob
