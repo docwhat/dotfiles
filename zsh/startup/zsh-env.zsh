@@ -12,6 +12,3 @@ skip_global_compinit=1
 
 # Ubuntu/Debian shouldn't muck with my keyboard.
 DEBIAN_PREVENT_KEYBOARD_CHANGES=1
-
-# Local man files
-manpath+=( "${XDG_DATA_HOME:-$HOME/.local/share}/man" )

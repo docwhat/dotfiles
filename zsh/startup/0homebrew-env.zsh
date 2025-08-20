@@ -10,8 +10,7 @@ homebrew-env() {
     if [[ -x "${brewbin}" ]]; then
       eval "$("${brewbin}" shellenv)"
       INFOPATH=${INFOPATH%:}
-      MANPATH=${MANPATH%:}
-      export INFOPATH MANPATH
+      export INFOPATH
 
       break
     fi

@@ -21,6 +21,5 @@ fi
 GENCOMPL_FPATH="${ZSH_CACHE_DIR}/completion-generator"
 
 path=( "$ZPFX/bin" "${path[@]}" )
-manpath=( "$ZPFX/man" "${manpath[@]}" )
 
 # EOF

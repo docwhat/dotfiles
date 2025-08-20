@@ -1,7 +1,7 @@
 # vim: ft=zsh :
 
 # unique paths
-typeset -U manpath path fpath
+typeset -U path fpath
 
 if [[ -z "${__docwhat_zsh_loaded}" ]]; then
   # The path has to be set *first*
@@ -18,14 +18,6 @@ if [[ -z "${__docwhat_zsh_loaded}" ]]; then
     /sbin
     /opt/X11/bin
     "${path[@]}"
-  )
-
-  manpath=(
-    /usr/local/share/man
-    /usr/share/man
-    /usr/X11/man
-    /opt/X11/share/man
-    "${manpath[@]}"
   )
 fi
 
