@@ -28,6 +28,12 @@ eval "$("${_docwhat_mise_path}" activate zsh)" || :
 "${_docwhat_mise_path}" --quiet --silent --yes use --global usage >/dev/null
 "${_docwhat_mise_path}" completion zsh > ~/.zsh/functions/_mise
 
+# Use bat-extras if available
+if (( $+commands[rg] )) && (( $+commands[batgrep] )) && (( $+commands[batman] )); then
+  alias rg=batgrep
+  alias man=batman
+fi
+
 ## Cleanup
 unset _docwhat_mise_path
 

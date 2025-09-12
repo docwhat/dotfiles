@@ -31,6 +31,12 @@ eval "$("${_docwhat_mise_path}" activate bash)"
 # shellcheck disable=SC1090,SC2312
 source <("${_docwhat_mise_path}" completion bash --include-bash-completion-lib)
 
+# Use bat-extras if available
+if command -v rg &>/dev/null && command -v batgrep &>/dev/null && command -v batman &>/dev/null; then
+  alias rg=batgrep
+  alias man=batman
+fi
+
 ## Cleanup
 unset _docwhat_mise_path
 
