@@ -1,2 +1,3 @@
 [tools]
 neovim = "latest"
+node = "24"
