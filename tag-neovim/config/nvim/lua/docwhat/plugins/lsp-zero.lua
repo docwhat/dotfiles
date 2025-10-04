@@ -37,7 +37,6 @@ Plugin.config = function()
 
   require("mason-lspconfig").setup({
     ensure_installed = {
-      "gopls", -- GoLang
       "lua_ls", -- Lua
       "bashls", -- Shell
     },

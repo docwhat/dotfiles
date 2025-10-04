@@ -4,18 +4,21 @@ local M = {
   "nvim-treesitter/nvim-treesitter",
 }
 
+M.lazy = false
+M.branch = "main"
 M.build = ":TSUpdate"
 
-M.dependencies = {
-  "nvim-treesitter/nvim-treesitter-textobjects",
-}
+-- M.dependencies = {
+--   "nvim-treesitter/nvim-treesitter-textobjects",
+-- }
 
 M.config = function()
-  require("nvim-treesitter.configs").setup({
+  require("nvim-treesitter").setup({
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     ensure_installed = {
       "bash",
-      "go",
+      "diff",
+      "gitcommit",
       "lua",
       "markdown",
       "markdown_inline",
@@ -38,6 +41,7 @@ M.config = function()
       additional_vim_regex_highlighting = false,
     },
     textobjects = {
+      enable = true,
       select = {
         enable = true,
         lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
