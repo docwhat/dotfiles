@@ -70,3 +70,15 @@ function c() {
 	} >&2
 	return 1
 }
+
+
+(
+  setopt extendedglob
+
+  if (( ${+commands[gh]} )) && \
+    ! [[ -e ~/.zsh/functions/_gh(#qN.mh+24) ]]; then
+      {
+        gh completion --shell zsh > ~/.zsh/functions/_gh
+      } &!
+  fi
+)
