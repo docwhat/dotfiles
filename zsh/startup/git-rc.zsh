@@ -82,3 +82,6 @@ function c() {
       } &!
   fi
 )
+
+# 1password's CLI tool overrides gh with an alias, this fixes the completion.
+compdef -a _gh gh

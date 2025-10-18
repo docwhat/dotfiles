@@ -15,3 +15,6 @@ setopt GLOB_COMPLETE
 
 setopt EXTENDED_GLOB
 # Treat the `#', `~' and `^' characters as part of patterns for filename generation, etc.  (An initial unquoted `~' always produces named directory expansion.)
+
+setopt COMPLETE_ALIASES
+# When performing completion on the command name, also complete aliases defined in the shell.

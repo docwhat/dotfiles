@@ -31,7 +31,9 @@ eval "$("${_docwhat_mise_path}" activate zsh)" || :
 # Use bat-extras if available
 if (( $+commands[rg] )) && (( $+commands[batgrep] )) && (( $+commands[batman] )); then
   alias rg=batgrep
+  compdef _rg rg
   alias man=batman
+  compdef _man man
 fi
 
 ## Cleanup
