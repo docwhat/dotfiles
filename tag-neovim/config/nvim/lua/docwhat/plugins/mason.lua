@@ -1,10 +1,9 @@
 local Plugin = {
-  "williamboman/mason.nvim",
+  "mason-org/mason.nvim",
 }
 
 Plugin.build = ":MasonUpdate"
 
--- See lsp-zero.lua for configuration.
-Plugin.config = function() end
+Plugin.opts = {}
 
 return Plugin

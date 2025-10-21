@@ -6,7 +6,7 @@ local M = {
 }
 
 M.dependencies = {
-  { "nvim-tree/nvim-web-devicons", opts = {} },
+  { "nvim-web-devicons" },
 }
 
 M.event = "VeryLazy"
