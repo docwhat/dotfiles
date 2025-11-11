@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+exec npx --yes --package 'cline' -- cline "$@"
+
+# EOF
