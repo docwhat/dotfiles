@@ -17,4 +17,9 @@ M.audible_bell = "Disabled"
 M.use_fancy_tab_bar = true
 M.tab_bar_at_bottom = true
 
+-- Workaround for macOS shadow issue
+-- https://github.com/wezterm/wezterm/issues/7275
+M.window_decorations = "MACOS_FORCE_DISABLE_SHADOW"
+M.window_background_opacity = 0.98
+
 return M
