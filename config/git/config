@@ -97,6 +97,7 @@
 	excludesfile = ~/.config/git/ignore
 	attributesfile = ~/.config/git/attributes
 	autocrlf = input
+	ignorecase = false
 
 [merge]
 	ff = only
