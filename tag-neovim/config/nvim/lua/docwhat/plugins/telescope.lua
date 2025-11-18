@@ -21,11 +21,6 @@ local M = {
 M.dependencies = {
   "plenary.nvim",
   "nvim-web-devicons",
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    enabled = vim.fn.executable("make") == 1,
-    build = "make",
-  },
   "tsakirist/telescope-lazy.nvim",
 }
 
@@ -35,10 +30,6 @@ M.config = function(_, opts)
 
   if pcall(require, "notify") then
     telescope.load_extension("notify")
-  end
-
-  if is_available_in_lazy("telescope-fzf-native.nvim") then
-    telescope.load_extension("fzf")
   end
 
   if is_available_in_lazy("telescope-lazy.nvim") then
