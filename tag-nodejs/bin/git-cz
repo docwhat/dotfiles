@@ -1,9 +1,10 @@
 #!/bin/sh
 
 exec npx \
-  --shell \
-  --package=git-cz \
-  git-cz \
+  --yes \
+  --package commitizen \
+  -- \
+  cz \
   "$@"
 
 # EOF
