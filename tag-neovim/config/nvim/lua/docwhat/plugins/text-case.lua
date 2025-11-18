@@ -2,7 +2,7 @@
 -- luacheck: globals vim
 
 local Plugin = {
-  "johmsalas/text-case.nvim"
+  "johmsalas/text-case.nvim",
 }
 
 Plugin.dependencies = { "telescope.nvim" }

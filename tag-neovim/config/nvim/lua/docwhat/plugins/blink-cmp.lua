@@ -1,19 +1,18 @@
 -- Completion plugin
 
 local Plugin = {
-  'saghen/blink.cmp'
+  "saghen/blink.cmp",
 }
-
 
 Plugin.dependencies = {
   -- optional: provides snippets for the snippet source
-  'rafamadriz/friendly-snippets',
+  "rafamadriz/friendly-snippets",
 
   -- Purty LSP menus
-  'lspkind.nvim',
+  "lspkind.nvim",
 
   -- Purty icons.
-  'nvim-web-devicons',
+  "nvim-web-devicons",
 
   -- Emojis
   "moyiz/blink-emoji.nvim",
@@ -23,7 +22,7 @@ Plugin.dependencies = {
 }
 
 -- use a release tag to download pre-built binaries
-Plugin.version = '1.*'
+Plugin.version = "1.*"
 
 -- Copied from version
 -- local default_kind_icons = require("blink-cmp.opts.appearance.kind_icons")
@@ -44,7 +43,7 @@ Plugin.opts = {
   -- C-k: Toggle signature help (if signature.enabled = true)
   --
   -- See :h blink-cmp-config-keymap for defining your own keymap
-  keymap = { preset = 'super-tab' },
+  keymap = { preset = "super-tab" },
 
   -- (Default) Only show the documentation popup when manually triggered
   completion = {
@@ -83,22 +82,22 @@ Plugin.opts = {
               end
               return hl
             end,
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   },
 
   -- Default list of enabled providers defined so that you can extend it
   -- elsewhere in your config, without redefining it, due to `opts_extend`
   sources = {
     default = {
-      'lsp',
-      'path',
-      'snippets',
-      'buffer',
-      'copilot',
-      'emoji',
+      "lsp",
+      "path",
+      "snippets",
+      "buffer",
+      "copilot",
+      "emoji",
     },
     providers = {
       copilot = {
@@ -120,12 +119,9 @@ Plugin.opts = {
         module = "blink-emoji",
         name = "Emoji",
         should_show_items = function()
-          return vim.tbl_contains(
-            { "gitcommit", "markdown" },
-            vim.o.filetype
-          )
+          return vim.tbl_contains({ "gitcommit", "markdown" }, vim.o.filetype)
         end,
-      }
+      },
     },
     -- appearance = {
     --   kind_icons = {

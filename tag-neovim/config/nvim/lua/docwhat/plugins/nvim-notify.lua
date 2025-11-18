@@ -1,9 +1,9 @@
-local M = {
+local Plugin = {
   "rcarriga/nvim-notify",
 }
 
-M.opts = {
+Plugin.opts = {
   render = "wrapped-compact",
 }
 
-return M
+return Plugin
