@@ -19,7 +19,7 @@ M.tab_bar_at_bottom = true
 
 -- Workaround for macOS shadow issue
 -- https://github.com/wezterm/wezterm/issues/7275
-M.window_decorations = "MACOS_FORCE_DISABLE_SHADOW"
+M.window_decorations = "TITLE | RESIZE | MACOS_FORCE_DISABLE_SHADOW"
 M.window_background_opacity = 0.98
 
 return M
