@@ -243,4 +243,6 @@ config.mouse_bindings = {
   },
 }
 
+config.enable_kitty_keyboard = true
+
 return config
