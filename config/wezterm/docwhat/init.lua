@@ -1,4 +1,5 @@
-local M = {}
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
 
 -- mergeTable merges the otherTable into primeTable, overriding duplicate
 -- keys in primeTable, and returns primeTable.
@@ -15,11 +16,11 @@ end
 
 -- Requires moduleName and merges it into M.
 local function mergeModule(moduleName)
-  M = mergeTable(M, require(moduleName))
+  config = mergeTable(config, require(moduleName))
 end
 
 mergeModule("docwhat.display")
 mergeModule("docwhat.keys")
 mergeModule("docwhat.host")
 
-return M
+return config

@@ -1,9 +1,10 @@
-local M = {}
 local w = require("wezterm")
+-- Allow working with both the current release and the nightly
+local config = w.config_builder()
 local act = w.action
 
-M.leader = { key = "`", timeout_milliseconds = 1000 }
-M.keys = {
+config.leader = { key = "`", timeout_milliseconds = 1000 }
+config.keys = {
   --
   -- Send LEADER when pressed twice
   { key = "`", mods = "LEADER", action = act.SendString("`") }, --
@@ -134,7 +135,7 @@ M.keys = {
   { key = "PageDown", mods = "SHIFT", action = act.ScrollByPage(0.8) },
 }
 
-M.key_tables = {
+config.key_tables = {
   copy_mode = {
     { key = "Tab", mods = "NONE", action = act.CopyMode("MoveForwardWord") },
     { key = "Tab", mods = "SHIFT", action = act.CopyMode("MoveBackwardWord") },
@@ -232,7 +233,7 @@ M.key_tables = {
   },
 }
 
-M.mouse_bindings = {
+config.mouse_bindings = {
   --- Triple click on one character of the command output
   --  to select all of the output
   {
@@ -242,4 +243,4 @@ M.mouse_bindings = {
   },
 }
 
-return M
+return config
